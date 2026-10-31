@@ -37,7 +37,7 @@
     $('#pv-desc').textContent = v.descricao;
     $('#pv-endereco').textContent = 'sualoja.com.br';
     $('#pv-abrir').href = 'vitrine.html?v=' + encodeURIComponent(slug);
-    $('#pv-quero').dataset.vitrine = slug;
+    $('#pv-quero').href = 'montar/?vitrine=' + encodeURIComponent(slug);
     var foto = $('#pv-foto');
     foto.src = 'assets/img/vitrines/' + slug + '.jpg';
     foto.alt = 'Vitrine ' + v.nome;
@@ -87,7 +87,7 @@
         '<p>' + esc(v.descricao) + '</p>' +
         '<div class="pv-item-pe"><span class="pv-cores" aria-hidden="true">' + cores + '</span>' +
         '<a class="pv-link" href="#topo" data-experimentar="' + esc(v.slug) + '">Experimentar no provador</a>' +
-        '<a class="pv-btn pv-btn-linha pv-mini" href="#pedido" data-vitrine="' + esc(v.slug) + '">Quero esta</a></div></li>';
+        '<a class="pv-btn pv-btn-linha pv-mini" href="montar/?vitrine=' + encodeURIComponent(v.slug) + '">Quero esta</a></div></li>';
     }).join('');
     var estilos = ['Todas'];
     VITRINES.forEach(function (v) { if (estilos.indexOf(v.estilo) < 0) estilos.push(v.estilo); });
