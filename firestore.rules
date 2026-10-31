@@ -2,7 +2,9 @@ rules_version = '2';
 // Regras do Provador.
 // Princípio: o dono da plataforma (papel "plataforma") lê e escreve o que é dele;
 // o público só LÊ um documento por vez do que a vitrine precisa para abrir (nada financeiro);
-// o público só CRIA pedido de loja, com campos e tamanhos conferidos aqui.
+// o público só CRIA pedido de loja, com campos e tamanhos conferidos aqui;
+// a lojista que monta a loja sozinha cria a loja dela UMA vez (15 dias grátis) e depois só mexe
+// nos dados da vitrine e nas peças. Status, cobrança, plano e prazo do teste são da plataforma.
 service cloud.firestore {
   match /databases/{database}/documents {
 
@@ -22,6 +24,77 @@ service cloud.firestore {
     }
     function plataforma() { return logado() && (papelPorUid() || papelPorEmail()); }
     function texto(v, min, max) { return v is string && v.size() >= min && v.size() <= max; }
+    function dono(id) { return logado() && request.auth.uid == id; }
+    function slugOk(v) { return v is string && v.matches('^[a-z0-9]([a-z0-9-]{0,38}[a-z0-9])?$'); }
+    function digitos(v, max) { return v is string && v.matches('^[0-9]*$') && v.size() <= max; }
+    // prazo do teste: 15 dias a partir de agora (folga de um dia para o relógio do celular)
+    function testeOk(d) {
+      return d.trialAteTs is timestamp
+        && d.trialAteTs > request.time + duration.value(14, 'd')
+        && d.trialAteTs < request.time + duration.value(16, 'd')
+        && d.trialAte is string && d.trialAte.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$');
+    }
+    // marcas @@...@@ que a vitrine usa
+    function marcaOk(m) {
+      return m is map
+        && m.keys().hasOnly(['NOME', 'MARCA', 'MARCA_SUB', 'IG', 'CIDADE', 'CIDADE_CURTA', 'WHATS', 'INICIAIS'])
+        && texto(m.get('NOME', ''), 0, 80) && texto(m.get('MARCA', ''), 0, 80) && texto(m.get('MARCA_SUB', ''), 0, 80)
+        && texto(m.get('IG', ''), 0, 40) && texto(m.get('CIDADE', ''), 0, 80) && texto(m.get('CIDADE_CURTA', ''), 0, 80)
+        && digitos(m.get('WHATS', ''), 13) && texto(m.get('INICIAIS', ''), 0, 4);
+    }
+    // loja nova criada pelo montador: só os campos de criação, status "teste", prazo certo e o endereço público já reservado no mesmo lote
+    function lojaNovaOk(id) {
+      let d = request.resource.data;
+      return d.keys().hasOnly(['id', 'nome', 'marcaCurta', 'marcaSub', 'cidade', 'instagram', 'whatsappLoja', 'vitrine', 'plano', 'status', 'origem',
+          'trialAte', 'trialAteTs', 'criadaEm', 'dono', 'checklist', 'slug'])
+        && d.id == id && d.status == 'teste' && d.origem == 'montador'
+        && texto(d.nome, 1, 80) && texto(d.marcaCurta, 0, 24) && texto(d.marcaSub, 0, 30) && texto(d.cidade, 0, 60)
+        && texto(d.instagram, 0, 40) && digitos(d.whatsappLoja, 13)
+        && slugOk(d.vitrine) && slugOk(d.slug) && d.plano in ['vitrine', 'loja', 'completo'] && testeOk(d)
+        && texto(d.criadaEm, 10, 10)
+        && d.dono is map && d.dono.keys().hasOnly(['uid', 'nome', 'email', 'celular']) && d.dono.uid == id
+        && texto(d.dono.nome, 0, 80) && texto(d.dono.email, 0, 120) && digitos(d.dono.celular, 13)
+        && d.checklist is map && d.checklist.keys().hasOnly(['logo', 'fotos', 'produtos', 'pagamento', 'dominio'])
+        && d.checklist.pagamento == false && d.checklist.dominio == false
+        && getAfter(/databases/$(database)/documents/lojasPublicas/$(d.slug)).data.lojaId == id;
+    }
+    // o que a lojista pode mudar na loja dela depois de publicada
+    function lojaEdicaoOk() {
+      let d = request.resource.data;
+      return d.diff(resource.data).affectedKeys().hasOnly(['nome', 'marcaCurta', 'marcaSub', 'cidade', 'instagram', 'whatsappLoja', 'vitrine', 'dominioPedido'])
+        && texto(d.nome, 1, 80) && texto(d.get('marcaCurta', ''), 0, 80) && texto(d.get('marcaSub', ''), 0, 80)
+        && texto(d.get('cidade', ''), 0, 80) && texto(d.get('instagram', ''), 0, 40) && digitos(d.get('whatsappLoja', ''), 13)
+        && slugOk(d.vitrine) && texto(d.get('dominioPedido', ''), 0, 120);
+    }
+    // a plataforma grava o endereço público com os campos de sempre
+    function publicaPelaPlataforma(slug) {
+      return plataforma()
+        && request.resource.data.keys().hasOnly(['slug', 'vitrine', 'status', 'dominio', 'marca', 'lojaId', 'trialAte', 'trialAteTs'])
+        && request.resource.data.slug == slug;
+    }
+    function lojaViva(id) {
+      return exists(/databases/$(database)/documents/lojas/$(id))
+        && get(/databases/$(database)/documents/lojas/$(id)).data.status in ['teste', 'ativa', 'pausada'];
+    }
+    // foto: data URL de imagem já comprimida pelo montador, ou endereço https
+    function imgOk(v) {
+      return v is string && v.size() > 30 && v.size() < 400000
+        && (v.matches('data:image/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+') || v.matches('https://[^\\s"<>]+'));
+    }
+    function itemOk(itemId) {
+      let d = request.resource.data;
+      return itemId.matches('^[A-Za-z0-9_-]{1,40}$')
+        && d.keys().hasOnly(['nome', 'cat', 'cor', 'hex', 'preco', 'tamanhos', 'img', 'img2', 'novo', 'ordem', 'descricao'])
+        && texto(d.nome, 1, 80)
+        && d.cat in ['conjuntos', 'leggings', 'tops', 'macacoes', 'macaquinhos', 'acessorios']
+        && texto(d.get('cor', ''), 0, 30)
+        && (!('hex' in d) || (d.hex is string && d.hex.matches('^#[0-9A-Fa-f]{6}$')))
+        && d.preco is number && d.preco >= 0 && d.preco <= 100000
+        && d.tamanhos is list && d.tamanhos.size() <= 5 && d.tamanhos.hasOnly(['P', 'M', 'G', 'GG', 'U'])
+        && imgOk(d.img) && (!('img2' in d) || imgOk(d.img2))
+        && d.novo is bool && d.ordem is number
+        && texto(d.get('descricao', ''), 0, 600);
+    }
 
     // papéis: só leitura do próprio documento; quem dá papel é o console/Admin SDK
     match /usuarios/{uid} {
@@ -29,23 +102,45 @@ service cloud.firestore {
       allow list, write: if false;
     }
 
-    // cadastro completo das lojas: dinheiro, dono, cobrança — só a plataforma
+    // cadastro completo das lojas: dinheiro, dono, cobrança. A dona lê a dela, cria uma vez e edita só a vitrine.
     match /lojas/{id} {
-      allow read, write: if plataforma();
+      allow get: if dono(id) || plataforma();
+      allow list, delete: if plataforma();
+      allow create: if (dono(id) && lojaNovaOk(id)) || plataforma();
+      allow update: if (dono(id) && lojaEdicaoOk()) || plataforma();
+    }
+
+    // peças de cada loja (a vitrine lê; a dona ou a plataforma escrevem)
+    match /catalogos/{lojaId}/itens/{itemId} {
+      allow read: if true;
+      allow create, update: if ((dono(lojaId) && lojaViva(lojaId)) || plataforma()) && itemOk(itemId);
+      allow delete: if dono(lojaId) || plataforma();
     }
 
     // o mínimo para a vitrine abrir pelo link ou pelo domínio (um por vez; sem listar)
     match /lojasPublicas/{slug} {
       allow get: if true;
       allow list: if false;
-      allow write: if plataforma()
-        && request.resource.data.keys().hasOnly(['slug', 'vitrine', 'status', 'dominio', 'marca'])
-        && request.resource.data.slug == slug;
+      // a lojista reserva o endereço junto com a criação da loja (mesmo lote), e só se ainda não tinha loja
+      allow create: if (dono(request.resource.data.lojaId)
+          && request.resource.data.keys().hasOnly(['slug', 'vitrine', 'status', 'dominio', 'marca', 'lojaId', 'trialAte', 'trialAteTs'])
+          && request.resource.data.slug == slug && slugOk(slug)
+          && request.resource.data.status == 'teste' && request.resource.data.dominio == ''
+          && slugOk(request.resource.data.vitrine) && marcaOk(request.resource.data.marca) && testeOk(request.resource.data)
+          && !exists(/databases/$(database)/documents/lojas/$(request.auth.uid))
+          && getAfter(/databases/$(database)/documents/lojas/$(request.auth.uid)).data.slug == slug)
+        || publicaPelaPlataforma(slug);
+      allow update: if (dono(resource.data.get('lojaId', ''))
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['vitrine', 'marca'])
+          && slugOk(request.resource.data.vitrine) && marcaOk(request.resource.data.marca))
+        || publicaPelaPlataforma(slug);
+      allow delete: if plataforma();
     }
     match /dominios/{host} {
       allow get: if true;
       allow list: if false;
-      allow write: if plataforma() && request.resource.data.keys().hasOnly(['slug']);
+      allow create, update: if plataforma() && request.resource.data.keys().hasOnly(['slug']);
+      allow delete: if plataforma();
     }
     match /site/planos {
       allow get: if true;
