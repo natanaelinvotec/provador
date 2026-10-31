@@ -57,7 +57,7 @@
    * Regra de cada ação do painel sobre uma loja (igual no modo demo e no Firebase).
    * Devolve { loja, oque } — loja null quando a ação é excluir.
    */
-  var ACOES = ['ativar', 'pausar', 'reativar', 'pagamento', 'isentar', 'cobrar', 'implantacaoPaga', 'gerarSite', 'excluir'];
+  var ACOES = ['ativar', 'pausar', 'reativar', 'pagamento', 'isentar', 'cobrar', 'implantacaoPaga', 'gerarSite', 'dominioPasso', 'excluir'];
   function aplicarAcao(loja, acao, extra, p, agora) {
     if (ACOES.indexOf(acao) < 0) throw new Error('Ação desconhecida');
     agora = agora || new Date();
@@ -82,6 +82,14 @@
       l.vitrine = v; l.siteGeradoEm = agora.toISOString();
       l.checklist = Object.assign({}, l.checklist, { logo: true });
       oque = 'Gerou o site com a vitrine ' + v;
+    } else if (acao === 'dominioPasso') {
+      var passo = extra && extra.passo;
+      if (['chave', 'hosting'].indexOf(passo) < 0) throw new Error('Passo desconhecido');
+      if (!l.dominio) throw new Error('Cadastre o domínio da loja primeiro.');
+      var ps = Object.assign({}, l.dominioPassos);
+      if (extra.feito) ps[passo] = hoje; else delete ps[passo];
+      l.dominioPassos = ps;
+      oque = (extra.feito ? 'Marcou' : 'Desmarcou') + ' "' + (passo === 'chave' ? 'liberado na chave' : 'adicionado no Hosting') + '" para ' + l.dominio;
     } else if (acao === 'excluir') { return { loja: null, oque: 'Excluiu a loja definitivamente' }; }
     return { loja: l, oque: oque };
   }
