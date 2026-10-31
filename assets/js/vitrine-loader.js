@@ -69,7 +69,18 @@
     var plat = window.Plataforma;
     if (p.l || (plat && !plat.ehHostDaPlataforma(location.hostname))) {
       if (p.l && !SLUG.test(p.l)) throw new Error('Endereço de loja inválido.');
-      var loja = p.l ? await plat.lojaPorSlug(p.l) : await plat.lojaPorDominio(location.hostname);
+      var loja;
+      try {
+        loja = p.l ? await plat.lojaPorSlug(p.l) : await plat.lojaPorDominio(location.hostname);
+      } catch (e) {
+        var motivo = String((e && (e.message || e.code)) || e);
+        // chave do navegador sem este domínio na lista de sites: o Google recusa pelo "referer"
+        if (/referer|referrer|API_KEY|api key|blocked/i.test(motivo)) {
+          console.warn('[vitrine] domínio não liberado na chave do navegador:', location.hostname, motivo);
+          throw new Error(p.diag ? 'Este domínio (' + location.hostname + ') ainda não foi liberado na chave do navegador: Google Cloud › Credenciais › Restrições de aplicativo › Sites.' : 'Loja em configuração. Volte em alguns minutos.');
+        }
+        throw new Error(p.diag ? 'Erro ao ler a loja: ' + motivo : 'Não foi possível abrir a loja agora. Tente de novo em instantes.');
+      }
       if (!loja) throw new Error('Loja não encontrada. Confira o link ou fale com o suporte.');
       if (loja.status !== 'ativa') throw new Error('Esta loja ainda não está no ar.');
       if (!SLUG.test(String(loja.vitrine || ''))) throw new Error('Esta loja ainda não tem vitrine.');
