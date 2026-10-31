@@ -8,8 +8,9 @@
  *
  * Coleções no Firestore:
  *   usuarios/{uid}            papeis: ['plataforma']           (dono da plataforma)
- *   lojas/{id}                cadastro completo + cobranca       (só plataforma)
- *   lojasPublicas/{slug}      vitrine, marca, status, dominio    (leitura pública: a loja abre por aqui)
+ *   lojas/{id}                cadastro completo + cobranca       (plataforma; a dona lê a dela e muda só CAMPOS_LOJISTA)
+ *   lojasPublicas/{slug}      vitrine, marca, status, dominio, lojaId, trialAte(Ts)  (leitura pública: a loja abre por aqui)
+ *   catalogos/{lojaId}/itens/{id}  peças da loja, foto comprimida em data URL (leitura pública; escreve a dona ou a plataforma)
  *   dominios/{host}           { slug }                           (leitura pública)
  *   leads/{id}                pedidos de loja do site de vendas  (qualquer um cria; só plataforma lê)
  *   contasPagar/{id}, financeiroPlataforma/{precos|resumo|historico}, comandos/{id}, auditoria/{id}
@@ -119,7 +120,34 @@
     mudar: function (fn) { var d = demo.ler(); var r = fn(d); demo.gravar(d); return r; }
   };
   function lojaPublica(l) {
-    return l ? { slug: l.slug, vitrine: l.vitrine, status: l.status, dominio: l.dominio || '', marca: marcaDaLoja(l) } : null;
+    if (!l) return null;
+    var o = { slug: l.slug, vitrine: l.vitrine, status: l.status, dominio: l.dominio || '', marca: marcaDaLoja(l), lojaId: l.id };
+    if (l.status === 'teste') { o.trialAte = l.trialAte || ''; if (l.trialAteTs) o.trialAteTs = l.trialAteTs; }
+    return o;
+  }
+  // campos que a própria lojista pode mudar na loja dela (o resto, como cobrança e status, é da plataforma)
+  var CAMPOS_LOJISTA = ['nome', 'marcaCurta', 'marcaSub', 'cidade', 'instagram', 'whatsappLoja', 'vitrine', 'dominioPedido'];
+  var CAMPOS_ITEM = ['nome', 'cat', 'cor', 'hex', 'preco', 'tamanhos', 'img', 'img2', 'novo', 'ordem', 'descricao'];
+  function limparItem(i) {
+    var o = {}; CAMPOS_ITEM.forEach(function (k) { if (i[k] !== undefined && i[k] !== null && i[k] !== '') o[k] = i[k]; });
+    o.nome = texto(o.nome, 80) || 'Peça'; o.cor = texto(o.cor, 30); o.descricao = texto(o.descricao, 600);
+    if (['conjuntos', 'leggings', 'tops', 'macacoes', 'macaquinhos', 'acessorios'].indexOf(o.cat) < 0) o.cat = 'conjuntos';
+    if (o.hex && !/^#[0-9A-Fa-f]{6}$/.test(o.hex)) delete o.hex;
+    o.preco = Math.max(0, Math.min(100000, Math.round((Number(o.preco) || 0) * 100) / 100));
+    o.tamanhos = (o.tamanhos || []).filter(function (t) { return ['P', 'M', 'G', 'GG', 'U'].indexOf(t) >= 0; });
+    o.ordem = Number(o.ordem) || 0; o.novo = !!o.novo;
+    return o;
+  }
+  function dadosLojaNova(rz, uid, email) {
+    var l = rz.loja || {}, agora = new Date(), ate = new Date(agora.getTime() + 15 * 864e5);
+    return {
+      id: uid, nome: texto(l.nome, 80), marcaCurta: texto(l.marcaCurta, 24), marcaSub: texto(l.marcaSub, 30), cidade: texto(l.cidade, 60),
+      instagram: texto(l.instagram, 40).replace(/^@/, ''), whatsappLoja: soDigitos(l.whatsappLoja), vitrine: slugify(rz.vitrine) || 'vinho-delicado',
+      plano: ['vitrine', 'loja', 'completo'].indexOf(l.plano) >= 0 ? l.plano : 'loja', status: 'teste', origem: 'montador',
+      trialAte: C.util.dia(ate), trialAteMs: ate.getTime(), criadaEm: C.util.dia(agora),
+      dono: { uid: uid, nome: texto(l.donoNome || l.nome, 80), email: texto(email, 120), celular: soDigitos(l.whatsappLoja) },
+      checklist: { logo: true, fotos: !!(rz.itens && rz.itens.length), produtos: !!(rz.itens && rz.itens.length), pagamento: false, dominio: false }
+    };
   }
   function auditar(d, oque, colecao, alvo) {
     d.auditoria = d.auditoria || [];
@@ -238,7 +266,44 @@
         d.iaDia = {}; d.historico = {}; d.auditoria = []; d.exemplo = false;
       }));
     },
-    restaurarExemplos: function () { demo.gravar(window.Seed.criar()); return Promise.resolve(); }
+    restaurarExemplos: function () { demo.gravar(window.Seed.criar()); return Promise.resolve(); },
+    // ----- lojista (montador e "minha loja") -----
+    itensDaLoja: function (lojaId) { var d = demo.ler(); return Promise.resolve(((d.catalogos || {})[lojaId] || []).slice()); },
+    contaLojista: function () { try { return Promise.resolve(JSON.parse(sessionStorage.getItem('provador:lojista'))); } catch (e) { return Promise.resolve(null); } },
+    criarContaLojista: function (email) {
+      var c = { uid: 'demo-' + slugify(email).slice(0, 20), email: texto(email, 120) };
+      try { sessionStorage.setItem('provador:lojista', JSON.stringify(c)); } catch (e) { /* sem sessão */ }
+      return Promise.resolve(c);
+    },
+    entrarLojista: function (email) { return API_DEMO.criarContaLojista(email); },
+    entrarGoogleLojista: function () { return API_DEMO.criarContaLojista('voce@demo.com'); },
+    sairLojista: function () { try { sessionStorage.removeItem('provador:lojista'); } catch (e) { /* nada */ } return Promise.resolve(); },
+    publicarLojaSozinha: function (rz, conta) {
+      return Promise.resolve(demo.mudar(function (d) {
+        var l = d.lojas[conta.uid] || dadosLojaNova(rz, conta.uid, conta.email);
+        var base = slugify(l.marcaCurta || l.instagram || l.nome) || conta.uid.slice(-6);
+        l.slug = l.slug || base;
+        Object.keys(d.lojas).forEach(function (k) { if (k !== conta.uid && d.lojas[k].slug === l.slug) l.slug = (base + '-' + conta.uid.slice(-4)).slice(0, 40); });
+        d.lojas[conta.uid] = l;
+        d.catalogos = d.catalogos || {};
+        d.catalogos[conta.uid] = (rz.itens || []).map(function (i, n) { return Object.assign({ id: i.id || id() }, limparItem(Object.assign({}, i, { ordem: n }))); });
+        auditar(d, 'Loja criada pelo montador (15 dias grátis)', 'lojas', l.nome);
+        return l;
+      }));
+    },
+    minhaLoja: function (conta) { var d = demo.ler(); var l = d.lojas[conta.uid]; return Promise.resolve(l ? { loja: l, itens: ((d.catalogos || {})[conta.uid] || []).slice() } : null); },
+    salvarMinhaLoja: function (conta, campos) {
+      return Promise.resolve(demo.mudar(function (d) { var l = d.lojas[conta.uid]; CAMPOS_LOJISTA.forEach(function (k) { if (k in campos) l[k] = k === 'instagram' ? texto(campos[k], 40).replace(/^@/, '') : texto(campos[k], 80); }); return l; }));
+    },
+    salvarItemLoja: function (conta, item) {
+      return Promise.resolve(demo.mudar(function (d) {
+        var lista = (d.catalogos = d.catalogos || {})[conta.uid] = d.catalogos[conta.uid] || [];
+        var k = item.id || id(), o = Object.assign({ id: k }, limparItem(item)), i = lista.findIndex(function (x) { return x.id === k; });
+        if (i >= 0) lista[i] = o; else lista.push(o);
+        return o;
+      }));
+    },
+    apagarItemLoja: function (conta, k) { return Promise.resolve(demo.mudar(function (d) { d.catalogos[conta.uid] = (d.catalogos[conta.uid] || []).filter(function (x) { return x.id !== k; }); })); }
   };
 
   /* ---------- modo Firebase ---------- */
@@ -438,7 +503,83 @@
     },
     salvarConfig: function (cfg) { return Promise.resolve(cfg); },
     limparExemplos: function () { return Promise.resolve(); },
-    restaurarExemplos: function () { return Promise.resolve(); }
+    restaurarExemplos: function () { return Promise.resolve(); },
+    // ----- lojista (montador e "minha loja") -----
+    itensDaLoja: function (lojaId) {
+      return firebase().then(function (f) { return f.F.getDocs(f.F.collection(f.db, 'catalogos', lojaId, 'itens')); })
+        .then(function (q) { var a = []; q.forEach(function (d) { a.push(Object.assign({ id: d.id }, d.data())); }); return a; });
+    },
+    contaLojista: function () {
+      return firebase().then(function (f) {
+        return new Promise(function (ok) { var off = f.A.onAuthStateChanged(f.auth, function (u) { off(); ok(u ? { uid: u.uid, email: u.email } : null); }); });
+      });
+    },
+    criarContaLojista: function (email, senha) {
+      return firebase().then(function (f) { return f.A.createUserWithEmailAndPassword(f.auth, email, senha); }).then(function (c) { return { uid: c.user.uid, email: c.user.email }; });
+    },
+    entrarLojista: function (email, senha) {
+      return firebase().then(function (f) { return f.A.signInWithEmailAndPassword(f.auth, email, senha); }).then(function (c) { return { uid: c.user.uid, email: c.user.email }; });
+    },
+    entrarGoogleLojista: function () {
+      return firebase().then(function (f) { return f.A.signInWithPopup(f.auth, new f.A.GoogleAuthProvider()); }).then(function (c) { return { uid: c.user.uid, email: c.user.email }; });
+    },
+    sairLojista: function () { return firebase().then(function (f) { return f.A.signOut(f.auth); }); },
+    publicarLojaSozinha: function (rz, conta) {
+      return firebase().then(function (f) {
+        var F = f.F, db = f.db, ref = F.doc(db, 'lojas', conta.uid);
+        return F.getDoc(ref).then(function (atual) {
+          if (atual.exists()) return Object.assign({ id: conta.uid }, atual.data()); // já publicou antes: só atualiza o catálogo
+          var l = dadosLojaNova(rz, conta.uid, conta.email);
+          var base = slugify(l.marcaCurta || l.instagram || l.nome) || conta.uid.slice(-6);
+          return F.getDoc(F.doc(db, 'lojasPublicas', base)).then(function (s) {
+            l.slug = s.exists() ? (base + '-' + conta.uid.slice(-4).toLowerCase()).slice(0, 40) : base;
+            l.trialAteTs = F.Timestamp.fromMillis(l.trialAteMs); delete l.trialAteMs;
+            var lote = F.writeBatch(db);
+            lote.set(ref, l);
+            lote.set(F.doc(db, 'lojasPublicas', l.slug), { slug: l.slug, vitrine: l.vitrine, status: 'teste', dominio: '', marca: marcaDaLoja(l), lojaId: conta.uid, trialAte: l.trialAte, trialAteTs: l.trialAteTs });
+            return lote.commit().then(function () { return l; });
+          });
+        }).then(function (l) {
+          // fotos em lotes pequenos (cada documento leva uma foto já comprimida)
+          var itens = (rz.itens || []).filter(function (i) { return i && i.img; }).map(function (i, n) { return Object.assign({ id: i.id }, limparItem(Object.assign({}, i, { ordem: n }))); });
+          var lotes = []; for (var n = 0; n < itens.length; n += 6) lotes.push(itens.slice(n, n + 6));
+          return lotes.reduce(function (p, grupo) {
+            return p.then(function () {
+              var b = F.writeBatch(db);
+              grupo.forEach(function (i) { var k = i.id || F.doc(F.collection(db, 'catalogos', conta.uid, 'itens')).id; var o = Object.assign({}, i); delete o.id; b.set(F.doc(db, 'catalogos', conta.uid, 'itens', k), o); });
+              return b.commit();
+            });
+          }, Promise.resolve()).then(function () { return l; });
+        });
+      });
+    },
+    minhaLoja: function (conta) {
+      return firebase().then(function (f) { return f.F.getDoc(f.F.doc(f.db, 'lojas', conta.uid)); }).then(function (s) {
+        if (!s.exists()) return null;
+        var l = Object.assign({ id: s.id }, s.data());
+        if (l.trialAteTs && l.trialAteTs.toMillis) l.trialAteMs = l.trialAteTs.toMillis();
+        return API_FB.itensDaLoja(conta.uid).then(function (itens) { return { loja: l, itens: itens.sort(function (a, b) { return (a.ordem || 0) - (b.ordem || 0); }) }; });
+      });
+    },
+    salvarMinhaLoja: function (conta, campos) {
+      return firebase().then(function (f) {
+        var F = f.F, db = f.db, o = {};
+        CAMPOS_LOJISTA.forEach(function (k) { if (k in campos) o[k] = k === 'instagram' ? texto(campos[k], 40).replace(/^@/, '') : k === 'whatsappLoja' ? soDigitos(campos[k]) : k === 'vitrine' ? slugify(campos[k]) : texto(campos[k], 80); });
+        return F.getDoc(F.doc(db, 'lojas', conta.uid)).then(function (s) {
+          var l = Object.assign({}, s.data(), o), lote = F.writeBatch(db);
+          lote.update(F.doc(db, 'lojas', conta.uid), o);
+          lote.update(F.doc(db, 'lojasPublicas', l.slug), { vitrine: l.vitrine, marca: marcaDaLoja(l) });
+          return lote.commit().then(function () { return l; });
+        });
+      });
+    },
+    salvarItemLoja: function (conta, item) {
+      return firebase().then(function (f) {
+        var F = f.F, col = F.collection(f.db, 'catalogos', conta.uid, 'itens'), k = item.id || F.doc(col).id, o = limparItem(item);
+        return F.setDoc(F.doc(col, k), o).then(function () { return Object.assign({ id: k }, o); });
+      });
+    },
+    apagarItemLoja: function (conta, k) { return firebase().then(function (f) { return f.F.deleteDoc(f.F.doc(f.db, 'catalogos', conta.uid, 'itens', k)); }); }
   };
 
   var api = modo === 'firebase' ? API_FB : API_DEMO;
