@@ -1,0 +1,32 @@
+/* Fontes livres hospedadas na plataforma (geradas por tools/fontes.py). */
+@font-face{font-family:'Poppins';font-style:normal;font-weight:300;font-display:swap;src:url('../fonts/poppins-300.woff') format('woff')}
+@font-face{font-family:'Poppins';font-style:normal;font-weight:400;font-display:swap;src:url('../fonts/poppins-400.woff') format('woff')}
+@font-face{font-family:'Poppins';font-style:normal;font-weight:500;font-display:swap;src:url('../fonts/poppins-500.woff') format('woff')}
+@font-face{font-family:'Poppins';font-style:normal;font-weight:700;font-display:swap;src:url('../fonts/poppins-700.woff') format('woff')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:300;font-display:swap;src:url('../fonts/inter-300.woff') format('woff')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('../fonts/inter-400.woff') format('woff')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url('../fonts/inter-500.woff') format('woff')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url('../fonts/inter-600.woff') format('woff')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url('../fonts/inter-700.woff') format('woff')}
+@font-face{font-family:'Inter Display';font-style:normal;font-weight:600;font-display:swap;src:url('../fonts/interdisplay-600.woff') format('woff')}
+@font-face{font-family:'Inter Display';font-style:normal;font-weight:700;font-display:swap;src:url('../fonts/interdisplay-700.woff') format('woff')}
+@font-face{font-family:'Inter Display';font-style:normal;font-weight:800;font-display:swap;src:url('../fonts/interdisplay-800.woff') format('woff')}
+@font-face{font-family:'Lora';font-style:normal;font-weight:400 700;font-display:swap;src:url('../fonts/lora.woff') format('woff')}
+@font-face{font-family:'Lora';font-style:italic;font-weight:400 700;font-display:swap;src:url('../fonts/lora-italic.woff') format('woff')}
+@font-face{font-family:'Noto Serif Display';font-style:normal;font-weight:200;font-display:swap;src:url('../fonts/notoserif-200.woff') format('woff')}
+@font-face{font-family:'Noto Serif Display';font-style:normal;font-weight:300;font-display:swap;src:url('../fonts/notoserif-300.woff') format('woff')}
+@font-face{font-family:'Noto Serif Display';font-style:normal;font-weight:400;font-display:swap;src:url('../fonts/notoserif-400.woff') format('woff')}
+@font-face{font-family:'Pagella';font-style:normal;font-weight:400;font-display:swap;src:url('../fonts/pagella-400.woff') format('woff')}
+@font-face{font-family:'Pagella';font-style:italic;font-weight:400;font-display:swap;src:url('../fonts/pagella-400i.woff') format('woff')}
+@font-face{font-family:'Pagella';font-style:normal;font-weight:700;font-display:swap;src:url('../fonts/pagella-700.woff') format('woff')}
+@font-face{font-family:'Adventor';font-style:normal;font-weight:400;font-display:swap;src:url('../fonts/adventor-400.woff') format('woff')}
+@font-face{font-family:'Adventor';font-style:normal;font-weight:700;font-display:swap;src:url('../fonts/adventor-700.woff') format('woff')}
+@font-face{font-family:'Heros';font-style:normal;font-weight:400;font-display:swap;src:url('../fonts/heros-400.woff') format('woff')}
+@font-face{font-family:'Heros';font-style:normal;font-weight:700;font-display:swap;src:url('../fonts/heros-700.woff') format('woff')}
+@font-face{font-family:'Heros Cn';font-style:normal;font-weight:400;font-display:swap;src:url('../fonts/heroscn-400.woff') format('woff')}
+@font-face{font-family:'Heros Cn';font-style:normal;font-weight:700;font-display:swap;src:url('../fonts/heroscn-700.woff') format('woff')}
+@font-face{font-family:'Bonum';font-style:normal;font-weight:400;font-display:swap;src:url('../fonts/bonum-400.woff') format('woff')}
+@font-face{font-family:'Bonum';font-style:normal;font-weight:700;font-display:swap;src:url('../fonts/bonum-700.woff') format('woff')}
+@font-face{font-family:'Schola';font-style:normal;font-weight:400;font-display:swap;src:url('../fonts/schola-400.woff') format('woff')}
+@font-face{font-family:'Schola';font-style:normal;font-weight:700;font-display:swap;src:url('../fonts/schola-700.woff') format('woff')}
+@font-face{font-family:'Chorus';font-style:italic;font-weight:500;font-display:swap;src:url('../fonts/chorus-500i.woff') format('woff')}

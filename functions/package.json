@@ -1,0 +1,14 @@
+{
+  "name": "provador-functions",
+  "private": true,
+  "description": "Cálculo do resumo financeiro do painel master (roda no servidor).",
+  "main": "index.js",
+  "engines": { "node": "20" },
+  "scripts": {
+    "test": "node --test test/"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.6.0",
+    "firebase-functions": "^6.0.1"
+  }
+}
