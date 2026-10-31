@@ -42,14 +42,45 @@
     if (base.l) q.set('l', base.l); else if (base.v) q.set('v', base.v);
     q.set('p', page);
     if (base.tema) q.set('tema', base.tema);
+    if (base.rascunho) q.set('rascunho', '1');
     return 'vitrine.html?' + q.toString();
   }
 
   function rewriteLinks(src, base) {
-    return src.replace(/href="([A-Za-z]+)\.dc\.html"/g, function (all, f) {
+    // "Produto.dc.html?item={{p.id}}" leva o id do produto junto (o {{...}} é preenchido na hora de desenhar)
+    return src.replace(/href="([A-Za-z]+)\.dc\.html(?:\?item=(\{\{[a-zA-Z.]+\}\}))?"/g, function (all, f, item) {
       var page = FILE_TO_PAGE[f];
-      return page ? 'href="' + htmlEsc(linkFor(base, page)) + '"' : all;
+      return page ? 'href="' + htmlEsc(linkFor(base, page)) + (item ? '&amp;item=' + item : '') + '"' : all;
     });
+  }
+
+  // decodifica sem fetch(): o CSP do Hosting não libera data: em connect-src
+  function dataUrlBlob(u) {
+    var i = u.indexOf(','), tipo = u.slice(5, i).split(';')[0], bin = atob(u.slice(i + 1)), a = new Uint8Array(bin.length);
+    for (var n = 0; n < bin.length; n++) a[n] = bin.charCodeAt(n);
+    return new Blob([a], { type: tipo });
+  }
+  // fotos guardadas como data URL viram blob: (endereço curto), para a fonte da página não ficar gigante
+  async function emBlob(itens) {
+    return Promise.all((itens || []).map(async function (i) {
+      var o = Object.assign({}, i);
+      for (var k of ['img', 'img2']) {
+        if (o[k] && /^data:image\//.test(o[k])) { try { o[k] = URL.createObjectURL(dataUrlBlob(o[k])); } catch (e) { o[k] = ''; } }
+      }
+      return o;
+    }));
+  }
+  // catálogo de demonstração (fotos livres) usado pelas vitrines-modelo
+  async function itensDemo(vitrine) {
+    if (vitrine === 'ais') return null; // a vitrine da Ais usa as fotos dela
+    try { var r = await fetch('vitrines/demo-catalogo.json', { cache: 'no-cache' }); return r.ok ? (await r.json()).itens : null; } catch (e) { return null; }
+  }
+  function testeValido(loja) {
+    if (loja.status !== 'teste') return false;
+    // o teste vale até o fim do dia (hora local) de trialAte; o Timestamp, quando existe, é a fonte certa
+    var dia = /^\d{4}-\d{2}-\d{2}$/.test(String(loja.trialAte || '')) ? loja.trialAte + 'T23:59:59' : loja.trialAte;
+    var ate = loja.trialAteTs && loja.trialAteTs.toMillis ? loja.trialAteTs.toMillis() : Date.parse(dia || 0);
+    return ate > Date.now();
   }
 
   function showError(msg) {
@@ -82,14 +113,24 @@
         throw new Error(p.diag ? 'Erro ao ler a loja: ' + motivo : 'Não foi possível abrir a loja agora. Tente de novo em instantes.');
       }
       if (!loja) throw new Error('Loja não encontrada. Confira o link ou fale com o suporte.');
-      if (loja.status !== 'ativa') throw new Error('Esta loja ainda não está no ar.');
+      if (loja.status !== 'ativa' && !testeValido(loja)) throw new Error(loja.status === 'teste' ? 'O teste grátis desta loja terminou. Fale com a loja pelo Instagram.' : 'Esta loja ainda não está no ar.');
       if (!SLUG.test(String(loja.vitrine || ''))) throw new Error('Esta loja ainda não tem vitrine.');
-      return { vitrine: loja.vitrine, marca: loja.marca, base: { l: loja.slug }, loja: true };
+      var itens = loja.lojaId && plat.itensDaLoja ? await plat.itensDaLoja(loja.lojaId).catch(function () { return []; }) : [];
+      return { vitrine: loja.vitrine, marca: loja.marca, base: { l: loja.slug }, loja: true, itens: await emBlob(itens) };
     }
-    // 2) demonstração de uma vitrine do catálogo
+    // 2) prévia do montador: rascunho guardado neste navegador
+    if (p.rascunho && window.Rascunho) {
+      var rz = await window.Rascunho.ler();
+      if (rz && rz.loja) {
+        var vit = SLUG.test(String(rz.vitrine || '')) ? rz.vitrine : (p.v || 'vinho-delicado');
+        var itR = rz.itens && rz.itens.length ? await emBlob(rz.itens) : await itensDemo(vit);
+        return { vitrine: vit, marca: plat.marcaDaLoja(rz.loja), base: { v: vit, rascunho: true }, itens: itR };
+      }
+    }
+    // 3) demonstração de uma vitrine do catálogo
     var slug = p.v || 'ais';
     if (!SLUG.test(slug)) throw new Error('Endereço de vitrine inválido.');
-    return { vitrine: slug, marca: null, base: { v: slug } };
+    return { vitrine: slug, marca: null, base: { v: slug }, itens: await itensDemo(slug) };
   }
 
   async function start() {
@@ -103,7 +144,9 @@
       var res = await fetch('vitrines/' + r.vitrine + '/' + PAGES[page] + '.dc.html', { cache: 'no-cache' });
       if (!res.ok) throw new Error('Esta vitrine não tem a página pedida.');
       var src = await res.text();
-      src = rewriteLinks(applyTokens(src, r.marca), r.base);
+      src = applyTokens(src, r.marca);
+      if (r.itens && r.itens.length && window.Catalogo) src = window.Catalogo.aplicar(src, PAGES[page], r.itens, { item: p.item });
+      src = rewriteLinks(src, r.base);
       var props = {};
       if (r.base.tema) props.temaInicial = r.base.tema;
       if (p.tela) props.telaInicial = p.tela;
