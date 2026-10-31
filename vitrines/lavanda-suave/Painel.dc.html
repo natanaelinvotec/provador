@@ -1,0 +1,1077 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>@@MARCA@@ — Painel gerencial</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="assets/css/fontes.css">
+<style>
+body{margin:0}
+*,*::before,*::after{box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+a:hover{color:inherit}
+.ais{--bg:#F0ECF8;--surface:#FFFFFF;--ink:#241F33;--muted:#635C78;--line:#E4DEF0;--wine:#6A4BAA;--on-wine:#FFFFFF;--gold:#9A5B85;--shade:rgba(36,31,51,.05);--s1:#6A4BAA;--s2:#B5652A;--s3:#0E8F6A;--good:#2E7D4F;--warn:#8A5A00;--crit:#A3262A;--info:#2F6497;--ease:cubic-bezier(.22,.61,.36,1);--ease-out:cubic-bezier(.16,1,.3,1);font-family:'Inter',system-ui,sans-serif;font-weight:300;font-size:15px;line-height:1.55;color:var(--ink);background:var(--bg);min-height:100vh;transition:background-color .6s var(--ease),color .6s var(--ease)}
+.ais[data-theme="escuro"]{--bg:#120F19;--surface:#1B1724;--ink:#F3F0FA;--muted:#AFA8C2;--line:#2F2940;--wine:#BBA6F0;--on-wine:#120F19;--gold:#E3A9CF;--shade:rgba(255,255,255,.05);--s1:#987CED;--s2:#D97025;--s3:#14A278;--good:#7FD1A0;--warn:#E9C06A;--crit:#F08A8C;--info:#8DB8EA}
+.serif{font-family:'Pagella', Georgia, serif;font-weight:400;letter-spacing:-.01em}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ic{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;flex:none}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:1.5px solid var(--wine);outline-offset:2px}
+.shell{display:flex;flex-wrap:wrap;align-items:stretch;min-height:100vh}
+.side{flex:1 1 248px;max-width:100%;display:flex;flex-direction:column;gap:28px;padding:28px 18px;background:var(--surface);border-right:1px solid var(--line);transition:background-color .6s var(--ease)}
+.logo{display:inline-flex;flex-direction:column;align-items:flex-start;line-height:1;padding:0 12px}
+.logo-ais{font-weight:300;font-size:34px;letter-spacing:.05em;color:var(--wine)}
+.logo-sub{margin-top:3px;font-size:8.5px;font-weight:400;letter-spacing:.3em;color:var(--gold)}
+.side nav{display:flex;flex-direction:column;gap:2px}
+.nav-btn{position:relative;display:flex;align-items:center;gap:12px;width:100%;min-height:46px;padding:0 14px;border:0;border-radius:12px;background:transparent;color:var(--muted);font:inherit;font-size:15px;text-align:left;cursor:pointer;transition:background-color .3s var(--ease),color .3s var(--ease)}
+.nav-btn:hover{background:var(--shade);color:var(--ink)}
+.nav-btn.on{background:var(--bg);color:var(--ink)}
+.nav-btn.on::before{content:"";position:absolute;left:-18px;top:12px;bottom:12px;width:2px;border-radius:2px;background:var(--wine);animation:grow .5s var(--ease-out) both}
+@keyframes grow{from{transform:scaleY(0)}}
+.nav-btn .badge{margin-left:auto;min-width:22px;padding:0 7px;border-radius:999px;background:var(--wine);color:var(--on-wine);font-size:12px;line-height:20px;text-align:center}
+.side-foot{margin-top:auto;display:flex;flex-direction:column;gap:2px;padding-top:16px;border-top:1px solid var(--line)}
+.content{flex:999 1 560px;min-width:0;padding:28px clamp(16px,3vw,40px) 64px}
+.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 24px;margin-bottom:28px}
+.top h1{margin:0;font-size:clamp(36px,3.4vw,50px);line-height:1}
+.top p{margin:6px 0 0;color:var(--muted)}
+.top-tools{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.demo{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px dashed var(--muted);border-radius:999px;font-size:12.5px;color:var(--muted)}
+.seg{display:inline-flex;padding:4px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
+.seg button{min-height:36px;padding:0 14px;border:0;border-radius:999px;background:transparent;color:var(--muted);font:inherit;font-size:13.5px;cursor:pointer;transition:background-color .35s var(--ease),color .35s var(--ease)}
+.seg button.on{background:var(--ink);color:var(--bg)}
+.icon-btn{display:inline-grid;place-items:center;width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:var(--surface);color:var(--ink);cursor:pointer;transition:background-color .3s var(--ease)}
+.icon-btn:hover{background:var(--bg)}
+.theme-ic{position:relative;width:19px;height:19px}
+.theme-ic .ic{position:absolute;inset:0;transition:transform .7s var(--ease-out),opacity .45s var(--ease)}
+.ais .moon{opacity:0;transform:rotate(-90deg) scale(.5)}
+.ais[data-theme="escuro"] .sun{opacity:0;transform:rotate(90deg) scale(.5)}
+.ais[data-theme="escuro"] .moon{opacity:1;transform:none}
+.avatar{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--wine);color:var(--on-wine);font-size:14px;font-weight:400}
+.view{animation:viewIn .6s var(--ease-out) both}
+@keyframes viewIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:24px;background:var(--surface);border-radius:20px;transition:background-color .6s var(--ease)}
+.kpi{display:flex;flex-direction:column;gap:6px;padding:22px 24px}
+.kpi + .kpi{border-left:1px solid var(--line)}
+.kpi .k-label{font-size:13.5px;color:var(--muted)}
+.kpi .k-value{font-family:'Pagella', Georgia, serif;font-weight:400;font-size:38px;line-height:1.05;font-variant-numeric:lining-nums tabular-nums}
+.kpi .k-delta{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+.kpi .k-delta b{font-weight:400;color:var(--good)}
+.kpi .k-delta b.neg{color:var(--crit)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.card{display:flex;flex-direction:column;gap:18px;min-width:0;padding:24px;background:var(--surface);border-radius:20px;transition:background-color .6s var(--ease)}
+.span2{grid-column:span 2}
+.span3{grid-column:1 / -1}
+.card-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 16px}
+.card-head h2{margin:0;font-size:26px;line-height:1.1}
+.card-head p{margin:0;font-size:13px;color:var(--muted)}
+.plot-wrap{display:grid;grid-template-columns:62px minmax(0,1fr);grid-template-rows:260px 28px}
+.yaxis{position:relative;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.yaxis span{position:absolute;right:10px;transform:translateY(50%)}
+.plot{position:relative;cursor:crosshair}
+.plot svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.gl{position:absolute;left:0;right:0;height:1px;background:var(--line)}
+.area{fill:color-mix(in srgb,var(--s1) 13%,transparent);animation:areaIn 1.2s var(--ease-out) both}
+.line{fill:none;stroke:var(--s1);stroke-width:2;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:3000;stroke-dashoffset:3000;animation:lineIn 1.6s var(--ease-out) forwards}
+@keyframes lineIn{to{stroke-dashoffset:0}}
+@keyframes areaIn{from{opacity:0}}
+.xh{position:absolute;top:0;bottom:0;width:1px;background:var(--muted);opacity:.5;pointer-events:none}
+.hdot{position:absolute;width:10px;height:10px;margin:0 0 -5px -5px;border-radius:50%;background:var(--s1);box-shadow:0 0 0 2px var(--surface);pointer-events:none}
+.tip{position:absolute;top:8px;margin-left:12px;padding:8px 12px;border-radius:10px;background:var(--ink);color:var(--bg);font-size:13px;line-height:1.35;white-space:nowrap;pointer-events:none}
+.tip.left{transform:translateX(calc(-100% - 24px))}
+.tip b{display:block;font-weight:400;font-size:14px}
+.xaxis{grid-column:2;position:relative;font-size:12px;color:var(--muted)}
+.xaxis span{position:absolute;top:8px;transform:translateX(-50%);white-space:nowrap}
+.stack{display:flex;gap:2px;height:14px;border-radius:4px;overflow:hidden}
+.stack i{display:block;height:100%;transition:flex-grow .8s var(--ease-out)}
+.legend{display:flex;flex-direction:column;gap:12px}
+.leg{display:grid;grid-template-columns:12px minmax(0,1fr) auto;align-items:center;gap:10px;font-size:14px}
+.leg .sw{width:12px;height:12px;border-radius:3px}
+.leg .v{font-variant-numeric:tabular-nums;font-weight:400}
+.hbars{display:flex;flex-direction:column;gap:12px}
+.hbar{display:grid;grid-template-columns:minmax(0,170px) minmax(0,1fr) 44px;align-items:center;gap:12px;font-size:14px}
+.hbar .nm{display:flex;align-items:center;gap:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hbar .dotc{width:10px;height:10px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+.hbar .track{position:relative;height:10px}
+.hbar .fill{position:absolute;left:0;top:0;bottom:0;border-radius:0 4px 4px 0;background:var(--s1);transform-origin:left;animation:barX 1s var(--ease-out) both}
+.hbar .val{text-align:right;font-variant-numeric:tabular-nums;font-weight:400}
+@keyframes barX{from{transform:scaleX(0)}}
+.vbars{display:flex;align-items:flex-end;gap:14px;height:220px;padding-top:24px;border-bottom:1px solid var(--line)}
+.vbar{position:relative;flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%}
+.vbar .fill{width:min(56px,70%);border-radius:4px 4px 0 0;background:var(--s1);transform-origin:bottom;animation:barY 1s var(--ease-out) both}
+.vbar .lbl{position:absolute;top:-2px;font-size:13px;font-weight:400;font-variant-numeric:tabular-nums}
+@keyframes barY{from{transform:scaleY(0)}}
+.vlabels{display:flex;gap:14px;font-size:12.5px;color:var(--muted)}
+.vlabels span{flex:1;text-align:center}
+.gbars{display:flex;align-items:flex-end;gap:18px;height:240px;border-bottom:1px solid var(--line)}
+.grp{flex:1;display:flex;align-items:flex-end;justify-content:center;gap:2px;height:100%}
+.gb{position:relative;width:min(28px,40%);border-radius:4px 4px 0 0;transform-origin:bottom;animation:barY 1s var(--ease-out) both;cursor:default}
+.gb.r{background:var(--s1)}
+.gb.d{background:var(--s2)}
+.gb .bt{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);padding:6px 10px;border-radius:8px;background:var(--ink);color:var(--bg);font-size:12.5px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s var(--ease)}
+.gb:hover .bt{opacity:1}
+.tbl-wrap{overflow-x:auto;margin:0 -6px}
+table.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th{padding:10px 12px;text-align:left;font-weight:400;font-size:12.5px;color:var(--muted);border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl td{padding:12px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:0}
+.tbl .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl tbody tr{transition:background-color .25s var(--ease)}
+.tbl tbody tr:hover{background:var(--shade)}
+.st{display:inline-flex;align-items:center;gap:6px;padding:3px 10px 3px 8px;border-radius:999px;font-size:12.5px;white-space:nowrap}
+.st .ic{width:14px;height:14px;stroke-width:1.8}
+.st.good{color:var(--good);background:color-mix(in srgb,var(--good) 12%,transparent)}
+.st.warn{color:var(--warn);background:color-mix(in srgb,var(--warn) 13%,transparent)}
+.st.crit{color:var(--crit);background:color-mix(in srgb,var(--crit) 12%,transparent)}
+.st.info{color:var(--info);background:color-mix(in srgb,var(--info) 12%,transparent)}
+.mini-btn{min-height:36px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--ink);font:inherit;font-size:13px;cursor:pointer;white-space:nowrap;transition:border-color .3s var(--ease),background-color .3s var(--ease)}
+.mini-btn:hover{border-color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 22px;border-radius:999px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);font:inherit;font-weight:400;font-size:14px;cursor:pointer;transition:background-color .35s var(--ease),border-color .35s var(--ease),color .35s var(--ease),transform .3s var(--ease)}
+.btn:hover{background:var(--wine);border-color:var(--wine);color:var(--on-wine)}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+.fbtn{min-height:40px;padding:0 16px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--ink);font:inherit;font-size:13.5px;cursor:pointer;transition:background-color .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease)}
+.fbtn.on{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.prod{display:flex;align-items:center;gap:12px;min-width:220px}
+.prod img{width:44px;height:56px;object-fit:cover;object-position:50% 25%;border-radius:6px;background:var(--bg)}
+.dots{display:flex;gap:4px}
+.dots i{width:12px;height:12px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+.switch{position:relative;width:46px;height:26px;padding:0;border:0;border-radius:999px;background:var(--line);cursor:pointer;transition:background-color .35s var(--ease)}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .45s var(--ease-out)}
+.switch.on{background:var(--wine)}
+.switch.on::after{transform:translateX(20px)}
+.matrix th,.matrix td{text-align:center}
+.matrix th:first-child,.matrix td:first-child{text-align:left}
+.cell{min-width:52px;min-height:38px;padding:0 10px;border:0;border-radius:10px;background:transparent;color:var(--ink);font:inherit;font-size:14.5px;font-variant-numeric:tabular-nums;cursor:pointer;transition:background-color .3s var(--ease)}
+.cell:hover{background:var(--shade)}
+.cell.low{color:var(--warn);background:color-mix(in srgb,var(--warn) 12%,transparent);font-weight:400}
+.cell.out{color:var(--crit);background:color-mix(in srgb,var(--crit) 12%,transparent);font-weight:400}
+.cell.sel{box-shadow:inset 0 0 0 1.5px var(--wine)}
+.cell.flash{animation:flash 1.4s var(--ease-out)}
+@keyframes flash{0%{background:color-mix(in srgb,var(--wine) 40%,transparent);transform:scale(1.15)}100%{transform:none}}
+.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.form .full{grid-column:1 / -1}
+.fld{display:flex;flex-direction:column;gap:6px;font-size:13.5px;color:var(--muted)}
+.fld input,.fld select{min-height:46px;padding:0 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font:inherit;font-size:15px;transition:border-color .3s var(--ease)}
+.fld input:focus,.fld select:focus{outline:none;border-color:var(--ink)}
+.types{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:4px;border-radius:14px;background:var(--bg)}
+.types.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.types button{min-height:40px;border:0;border-radius:10px;background:transparent;color:var(--muted);font:inherit;font-size:14px;cursor:pointer;transition:background-color .35s var(--ease),color .35s var(--ease)}
+.types button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.ferr{margin:0;font-size:13.5px;color:var(--crit);animation:shake .45s var(--ease)}
+@keyframes shake{20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+.moves{display:flex;flex-direction:column}
+.move{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px;animation:viewIn .5s var(--ease-out) both}
+.move:last-child{border-bottom:0}
+.move .q{font-weight:400;font-variant-numeric:tabular-nums}
+.move .sub{display:block;font-size:12.5px;color:var(--muted)}
+.drop{display:grid;place-items:center;gap:6px;min-height:120px;border:1px dashed var(--muted);border-radius:14px;color:var(--muted);font-size:13.5px;text-align:center;padding:16px}
+.panel-form{animation:viewIn .5s var(--ease-out) both}
+.paybox-like{display:flex;flex-direction:column;gap:4px;padding:14px 16px;border-radius:14px;background:var(--bg);font-size:14.5px;transition:background-color .6s var(--ease)}
+.tbl tr.cat-grp td{background:var(--bg)}
+.cat-parent{font-family:'Pagella', Georgia, serif;font-size:20px;font-weight:400}
+.cat-child{position:relative;padding-left:24px}
+.cat-child::before{content:"";position:absolute;left:6px;top:50%;width:11px;height:1px;background:var(--muted)}
+.acc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.acc-st{display:grid;grid-template-columns:48px minmax(0,1fr) auto;align-items:center;gap:12px;padding:8px 10px 8px 8px;border:1px solid var(--line);border-radius:14px}
+.acc-ic{display:grid;place-items:center;width:48px;height:48px;border-radius:10px}
+.acc-ic svg{width:28px;height:28px;fill:none;stroke:var(--ink);stroke-width:1;stroke-linecap:round;stroke-linejoin:round}
+.acc-nm{display:flex;flex-direction:column;align-items:flex-start;gap:4px;font-size:14px;line-height:1.3;min-width:0}
+.acc-btns{display:flex;gap:4px}
+.acc-btns .mini-btn{width:36px;padding:0;font-size:16px}
+.toast{position:fixed;right:28px;bottom:28px;z-index:50;display:flex;align-items:center;gap:12px;max-width:min(440px,calc(100% - 32px));padding:14px 18px;border-radius:14px;background:var(--ink);color:var(--bg);font-size:14px;box-shadow:0 24px 50px -20px rgba(0,0,0,.45);opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .4s var(--ease),transform .6s var(--ease-out)}
+.toast.on{opacity:1;transform:none}
+.ok-note{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+@media (max-width:1100px){
+.grid{grid-template-columns:1fr 1fr}
+.span2{grid-column:1 / -1}
+.kpis{grid-template-columns:1fr 1fr}
+.kpi:nth-child(3){border-left:0}
+.kpi:nth-child(n+3){border-top:1px solid var(--line)}
+}
+@media (max-width:860px){
+.side{flex-basis:100%;border-right:0;border-bottom:1px solid var(--line);padding:16px}
+.side nav{flex-direction:row;overflow-x:auto}
+.nav-btn{width:auto;white-space:nowrap}
+.nav-btn.on::before{left:14px;right:14px;top:auto;bottom:4px;width:auto;height:2px}
+.side-foot{display:none}
+.grid{grid-template-columns:1fr}
+.form{grid-template-columns:1fr}
+.acc-grid{grid-template-columns:1fr}
+.hbar{grid-template-columns:minmax(0,120px) minmax(0,1fr) 40px}
+}
+@media (prefers-reduced-motion:reduce){
+.ais *,.ais *::before,.ais *::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+.line{stroke-dashoffset:0}
+}
+</style>
+<style>
+.ais,.app{font-weight:400}
+.logo-ais{font-family:'Pagella', Georgia, serif !important;font-weight:500 !important;letter-spacing:-.01em;font-style:italic;}
+.serif,.ais h1,.ais h2,.ais h3,.app h1,.app h2,.app h3{font-weight:400 !important;letter-spacing:-.01em !important;font-style:italic;}
+.tier .d,.big,.kit-n,.tiers-inline .big,.promo .tiers b,.tot .t b,.b-row.tot .serif,.tg-row.tot .serif,.hello b,.k-value,.tag-name{font-weight:400 !important}
+.btn,.quick,.tab,.chip,.fbtn,.mini-btn{font-weight:500}
+.cat-label{flex-direction:column !important;align-items:flex-start !important;justify-content:flex-end !important;gap:10px !important}
+</style>
+<style>
+.frame{background:color-mix(in srgb,var(--wine) 16%,var(--surface)) !important}
+</style>
+</helmet>
+<div class="ais" data-theme="{{theme}}">
+<div class="shell">
+<aside class="side" aria-label="Menu do painel">
+<a class="logo" href="Main.dc.html" aria-label="Ir para a loja @@MARCA@@"><span class="logo-ais">@@MARCA@@</span><span class="logo-sub">PAINEL DA LOJA</span></a>
+<nav>
+<sc-for list="{{nav}}" as="n" hint-placeholder-count="6">
+<button class="{{n.cls}}" type="button" onClick="{{n.pick}}" aria-current="{{n.current}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{n.icon}}"></path></svg>{{n.label}}<sc-if value="{{n.hasBadge}}" hint-placeholder-val="{{false}}"><span class="badge">{{n.badge}}</span></sc-if></button>
+</sc-for>
+</nav>
+<div class="side-foot">
+<a class="nav-btn" href="Main.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10l8-6 8 6v10H4z"></path><path d="M10 20v-6h4v6"></path></svg>Ver loja</a>
+<a class="nav-btn" href="AppVendas.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2.5"></rect><path d="M11 18h2"></path></svg>App da vendedora</a>
+</div>
+</aside>
+
+<div class="content">
+<header class="top">
+<div>
+<h1 class="serif">{{pageTitle}}</h1>
+<p>{{pageSub}}</p>
+</div>
+<div class="top-tools">
+<span class="demo">Dados de exemplo</span>
+<sc-if value="{{showPeriod}}" hint-placeholder-val="{{true}}">
+<div class="seg" role="group" aria-label="Período">
+<sc-for list="{{periods}}" as="p" hint-placeholder-count="3">
+<button class="{{p.cls}}" type="button" onClick="{{p.pick}}" aria-pressed="{{p.on}}">{{p.label}}</button>
+</sc-for>
+</div>
+</sc-if>
+<button class="icon-btn" type="button" onClick="{{toggleTheme}}" aria-label="{{themeLabel}}"><span class="theme-ic"><svg class="ic sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"></path></svg><svg class="ic moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"></path></svg></span></button>
+<span class="avatar" aria-label="Conta da @@MARCA@@">@@INICIAIS@@</span>
+</div>
+</header>
+
+<sc-if value="{{isGeral}}" hint-placeholder-val="{{true}}">
+<div class="view">
+<section class="kpis" aria-label="Indicadores">
+<sc-for list="{{kpis}}" as="k" hint-placeholder-count="4">
+<div class="kpi"><span class="k-label">{{k.label}}</span><span class="k-value">{{k.value}}</span><span class="k-delta"><b class="{{k.deltaCls}}">{{k.delta}}</b>{{k.ctx}}</span></div>
+</sc-for>
+</section>
+<div class="grid">
+<section class="card span2" aria-labelledby="fat-t">
+<div class="card-head"><h2 id="fat-t" class="serif">Faturamento</h2><p>{{periodLabel}}, passe o mouse no gráfico para ver cada {{unitName}}</p></div>
+<div class="plot-wrap">
+<div class="yaxis" aria-hidden="true"><sc-for list="{{yTicks}}" as="t" hint-placeholder-count="5"><span style="bottom: {{t.pos}}%">{{t.label}}</span></sc-for></div>
+<div class="plot" onMouseMove="{{hoverChart}}" onMouseLeave="{{leaveChart}}">
+<sc-for list="{{yTicks}}" as="t" hint-placeholder-count="5"><i class="gl" style="bottom: {{t.pos}}%"></i></sc-for>
+<svg viewBox="0 0 1000 260" preserveAspectRatio="none" aria-hidden="true"><path class="area" d="{{areaD}}"></path><path class="line" d="{{lineD}}"></path></svg>
+<sc-if value="{{hasHover}}" hint-placeholder-val="{{false}}">
+<i class="xh" style="left: {{hx}}%"></i>
+<i class="hdot" style="left: {{hx}}%; bottom: {{hy}}%"></i>
+<div class="{{tipCls}}" style="left: {{hx}}%"><span>{{tipLabel}}</span><b>{{tipValue}}</b></div>
+</sc-if>
+</div>
+<div class="xaxis" aria-hidden="true"><sc-for list="{{xTicks}}" as="x" hint-placeholder-count="6"><span style="left: {{x.pos}}%">{{x.label}}</span></sc-for></div>
+</div>
+<table class="sr"><caption>Faturamento por {{unitName}}</caption><tbody><sc-for list="{{seriesRows}}" as="r" hint-placeholder-count="3"><tr><th scope="row">{{r.label}}</th><td>{{r.value}}</td></tr></sc-for></tbody></table>
+</section>
+
+<section class="card" aria-labelledby="canal-t">
+<div class="card-head"><h2 id="canal-t" class="serif">Vendas por canal</h2><p>{{periodLabel}}</p></div>
+<div class="stack" role="img" aria-label="{{channelAria}}"><sc-for list="{{channels}}" as="c" hint-placeholder-count="3"><i style="flex-grow: {{c.pct}}; background: {{c.color}}"></i></sc-for></div>
+<div class="legend"><sc-for list="{{channels}}" as="c" hint-placeholder-count="3"><div class="leg"><i class="sw" style="background: {{c.color}}"></i><span>{{c.label}}</span><span class="v">{{c.pctLabel}}</span></div></sc-for></div>
+<p style="margin: 0; font-size: 13.5px; color: var(--muted)">Instagram e WhatsApp somam vendas fechadas por mensagem e registradas no app da vendedora.</p>
+</section>
+
+<section class="card" aria-labelledby="top-t">
+<div class="card-head"><h2 id="top-t" class="serif">Mais vendidos</h2><p>peças, {{periodLabel}}</p></div>
+<div class="hbars"><sc-for list="{{topProducts}}" as="b" hint-placeholder-count="6"><div class="hbar"><span class="nm">{{b.label}}</span><span class="track"><i class="fill" style="width: {{b.pct}}%"></i></span><span class="val">{{b.value}}</span></div></sc-for></div>
+</section>
+
+<section class="card" aria-labelledby="low-t">
+<div class="card-head"><h2 id="low-t" class="serif">Repor estoque</h2><p>{{lowCount}} tamanhos com 2 peças ou menos</p></div>
+<div class="tbl-wrap"><table class="tbl"><tbody>
+<sc-for list="{{lowList}}" as="l" hint-placeholder-count="5"><tr><td>{{l.name}}</td><td>{{l.size}}</td><td class="num"><span class="{{l.stCls}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{l.icon}}"></path></svg>{{l.status}}</span></td></tr></sc-for>
+</tbody></table></div>
+<button class="btn ghost" type="button" onClick="{{goEstoque}}">Lançar entrada de estoque</button>
+</section>
+
+<section class="card" aria-labelledby="ult-t">
+<div class="card-head"><h2 id="ult-t" class="serif">Últimos pedidos</h2><p>hoje</p></div>
+<div class="moves"><sc-for list="{{recentOrders}}" as="o" hint-placeholder-count="4"><div class="move"><span class="{{o.stCls}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{o.icon}}"></path></svg>{{o.status}}</span><span>{{o.client}}<span class="sub">{{o.id}}, {{o.channel}}</span></span><span class="q">{{o.total}}</span></div></sc-for></div>
+<button class="btn ghost" type="button" onClick="{{goPedidos}}">Ver todos os pedidos</button>
+</section>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isPedidos}}" hint-placeholder-val="{{false}}">
+<div class="view">
+<section class="card">
+<div class="card-head">
+<div class="filters" role="group" aria-label="Filtrar pedidos"><sc-for list="{{orderFilters}}" as="f" hint-placeholder-count="5"><button class="{{f.cls}}" type="button" onClick="{{f.pick}}" aria-pressed="{{f.on}}">{{f.label}}</button></sc-for></div>
+<p>{{ordersCount}}</p>
+</div>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th scope="col">Pedido</th><th scope="col">Cliente</th><th scope="col">Peças</th><th scope="col">Canal</th><th scope="col">Pagamento</th><th scope="col">Situação</th><th scope="col" class="num">Total</th><th scope="col"><span class="sr">Ação</span></th></tr></thead>
+<tbody>
+<sc-for list="{{orders}}" as="o" hint-placeholder-count="8">
+<tr><td>{{o.id}}<span style="display: block; font-size: 12.5px; color: var(--muted)">{{o.when}}</span></td><td>{{o.client}}</td><td>{{o.items}}</td><td>{{o.channel}}</td><td>{{o.payment}}</td><td><span class="{{o.stCls}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{o.icon}}"></path></svg>{{o.status}}</span></td><td class="num">{{o.total}}</td><td class="num"><sc-if value="{{o.hasAction}}" hint-placeholder-val="{{true}}"><button class="mini-btn" type="button" onClick="{{o.act}}">{{o.actLabel}}</button></sc-if></td></tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</sc-if>
+
+<sc-if value="{{isProdutos}}" hint-placeholder-val="{{false}}">
+<div class="view" style="display: flex; flex-direction: column; gap: 20px">
+<sc-if value="{{showNewProduct}}" hint-placeholder-val="{{false}}">
+<section class="card panel-form" aria-labelledby="np-t">
+<div class="card-head"><h2 id="np-t" class="serif">Novo produto</h2><button class="mini-btn" type="button" onClick="{{toggleNewProduct}}">Cancelar</button></div>
+<div class="form">
+<label class="fld full">Nome do produto<input type="text" placeholder="Ex.: Conjunto canelado Recorte"></label>
+<label class="fld">Categoria<select><option>Conjuntos</option><option>Macacões</option><option>Macaquinhos</option><option>Leggings</option><option>Tops</option></select></label>
+<label class="fld">Preço de venda<input type="text" inputmode="decimal" placeholder="R$ 0,00"></label>
+<label class="fld">Cores<input type="text" placeholder="Ex.: Chocolate, Marinho, Nude"></label>
+<label class="fld">Tamanhos<input type="text" value="P, M, G, GG"></label>
+<div class="drop full"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V5M7 10l5-5 5 5M5 19h14"></path></svg>Arraste as fotos aqui ou clique para escolher. Elas vão para o Firebase Storage.</div>
+<div class="full" style="display: flex; gap: 10px; flex-wrap: wrap"><button class="btn" type="button" onClick="{{saveProduct}}">Salvar produto</button><span class="ok-note">O produto entra como rascunho até você ativar na loja.</span></div>
+</div>
+</section>
+</sc-if>
+<section class="card">
+<div class="card-head"><h2 class="serif">Catálogo</h2><button class="btn" type="button" onClick="{{toggleNewProduct}}">Novo produto</button></div>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th scope="col">Produto</th><th scope="col">Categoria</th><th scope="col">Cores</th><th scope="col" class="num">Preço</th><th scope="col" class="num">Em estoque</th><th scope="col">Na loja</th></tr></thead>
+<tbody>
+<sc-for list="{{catalog}}" as="p" hint-placeholder-count="6">
+<tr><td><span class="prod"><sc-if value="{{p.isImg}}" hint-placeholder-val="{{true}}"><img src="{{p.img}}" alt=""></sc-if><sc-if value="{{p.isArt}}" hint-placeholder-val="{{false}}"><span class="acc-ic" style="width: 44px; height: 56px; border-radius: 6px; background: color-mix(in srgb, {{p.tone}} 30%, var(--surface))"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{p.icon}}"></path></svg></span></sc-if>{{p.name}}</span></td><td>{{p.cat}}</td><td><span class="dots"><sc-for list="{{p.dots}}" as="d" hint-placeholder-count="2"><i style="background: {{d.hex}}" title="{{d.name}}"></i></sc-for></span></td><td class="num">{{p.price}}</td><td class="num">{{p.stock}}</td><td><button class="{{p.swCls}}" type="button" role="switch" aria-checked="{{p.visible}}" aria-label="Mostrar {{p.name}} na loja" onClick="{{p.toggle}}"></button></td></tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</sc-if>
+
+<sc-if value="{{isCategorias}}" hint-placeholder-val="{{false}}">
+<div class="view">
+<div class="grid">
+<section class="card span2" aria-labelledby="cat-t">
+<div class="card-head"><h2 id="cat-t" class="serif">Árvore de categorias</h2><p>Categorias sem produtos ficam ocultas na loja até receberem peças.</p></div>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th scope="col">Categoria</th><th scope="col" class="num">Produtos</th><th scope="col">No menu</th></tr></thead>
+<tbody>
+<sc-for list="{{catRows}}" as="c" hint-placeholder-count="12">
+<tr class="{{c.rowCls}}"><td><span class="{{c.nameCls}}">{{c.name}}</span><sc-if value="{{c.isEmpty}}" hint-placeholder-val="{{false}}"><span class="st warn" style="margin-left: 10px">sem produtos</span></sc-if></td><td class="num">{{c.count}}</td><td><button class="{{c.swCls}}" type="button" role="switch" aria-checked="{{c.visible}}" aria-label="Mostrar {{c.name}} no menu" onClick="{{c.toggle}}"></button></td></tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</section>
+<section class="card" aria-labelledby="ncat-t">
+<div class="card-head"><h2 id="ncat-t" class="serif">Nova categoria</h2></div>
+<form class="form" onSubmit="{{addCat}}">
+<label class="fld full">Nome<input type="text" placeholder="Ex.: Shorts, Jaquetas, Bonés" value="{{newCatName}}" onChange="{{setNewCatName}}"></label>
+<label class="fld full">Fica dentro de<select value="{{newCatParent}}" onChange="{{setNewCatParent}}"><option value="">Nenhuma, é principal</option><option value="roupas">Roupas</option><option value="acessorios">Acessórios</option></select></label>
+<sc-if value="{{hasCatErr}}" hint-placeholder-val="{{false}}"><p class="ferr full" role="alert">Escreva o nome da categoria.</p></sc-if>
+<button class="btn full" type="submit">Criar categoria</button>
+<p class="full ok-note">A categoria aparece no menu da loja e no filtro do mostruário assim que tiver o primeiro produto.</p>
+</form>
+</section>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isCombos}}" hint-placeholder-val="{{false}}">
+<div class="view">
+<section class="kpis" aria-label="Resultado das combinações">
+<sc-for list="{{comboKpis}}" as="k" hint-placeholder-count="4">
+<div class="kpi"><span class="k-label">{{k.label}}</span><span class="k-value">{{k.value}}</span><span class="k-delta">{{k.ctx}}</span></div>
+</sc-for>
+</section>
+<div class="grid">
+<section class="card" aria-labelledby="lm-t">
+<div class="card-head"><h2 id="lm-t" class="serif">Leve mais, pague menos</h2><button class="{{lmSwCls}}" type="button" role="switch" aria-checked="{{lmOn}}" aria-label="Ativar leve mais, pague menos" onClick="{{toggleLm}}"></button></div>
+<div class="form">
+<label class="fld">Desconto com 2 peças<input type="number" min="0" max="50" inputmode="numeric" value="{{t2}}" onChange="{{setT2}}"></label>
+<label class="fld">Com 3 ou mais<input type="number" min="0" max="50" inputmode="numeric" value="{{t3}}" onChange="{{setT3}}"></label>
+<label class="fld full">Vale para<select value="{{lmScope}}" onChange="{{setLmScope}}"><option value="tudo">Roupas e acessórios</option><option value="roupas">Só roupas</option><option value="acessorios">Só acessórios</option></select></label>
+</div>
+<div class="paybox-like"><span class="ok-note">Exemplo na sacola</span><span>{{lmExample}}</span></div>
+<button class="btn" type="button" onClick="{{saveLm}}">Salvar regra</button>
+</section>
+
+<section class="card span2" aria-labelledby="kits-t">
+<div class="card-head"><h2 id="kits-t" class="serif">Kits prontos</h2><button class="btn ghost" type="button" onClick="{{toggleNewKit}}">{{newKitLabel}}</button></div>
+<sc-if value="{{showNewKit}}" hint-placeholder-val="{{false}}">
+<div class="panel-form" style="display: flex; flex-direction: column; gap: 14px; padding: 18px; border: 1px dashed var(--muted); border-radius: 16px">
+<label class="fld">Nome do kit<input type="text" placeholder="Ex.: Kit Academia" value="{{kitName}}" onChange="{{setKitName}}"></label>
+<div class="filters" role="group" aria-label="Itens do kit"><sc-for list="{{kitPicks}}" as="k" hint-placeholder-count="6"><button class="{{k.cls}}" type="button" aria-pressed="{{k.on}}" onClick="{{k.toggle}}">{{k.name}}</button></sc-for></div>
+<div class="ok-note">{{kitPreview}}</div>
+<sc-if value="{{hasKitErr}}" hint-placeholder-val="{{false}}"><p class="ferr" role="alert">{{kitErr}}</p></sc-if>
+<div><button class="btn" type="button" onClick="{{saveKit}}">Salvar kit</button></div>
+</div>
+</sc-if>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th scope="col">Kit</th><th scope="col">Itens</th><th scope="col" class="num">Preço cheio</th><th scope="col" class="num">Preço do kit</th><th scope="col">Na loja</th></tr></thead>
+<tbody>
+<sc-for list="{{kitRows}}" as="k" hint-placeholder-count="3">
+<tr><td>{{k.name}}</td><td>{{k.items}}</td><td class="num"><s style="color: var(--muted)">{{k.full}}</s></td><td class="num">{{k.price}}<span style="display: block; font-size: 12.5px; color: var(--wine)">{{k.save}}</span></td><td><button class="{{k.swCls}}" type="button" role="switch" aria-checked="{{k.visible}}" aria-label="Mostrar {{k.name}} na loja" onClick="{{k.toggle}}"></button></td></tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="card span3" aria-labelledby="cj-t">
+<div class="card-head"><h2 id="cj-t" class="serif">Compre junto</h2><button class="{{cjSwCls}}" type="button" role="switch" aria-checked="{{cjOn}}" aria-label="Mostrar compre junto na página do produto" onClick="{{toggleCj}}"></button></div>
+<p style="margin: 0; color: var(--muted)">Sugestões que aparecem na página de cada peça e na sacola. O desconto de leve mais, pague menos vale automaticamente.</p>
+<div class="moves">
+<sc-for list="{{cjRows}}" as="c" hint-placeholder-count="3"><div class="move"><span class="st info">{{c.from}}</span><span>{{c.to}}</span><span class="q">{{c.rate}}<span class="sub" style="text-align: right">levam junto</span></span></div></sc-for>
+</div>
+</section>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isEstoque}}" hint-placeholder-val="{{false}}">
+<div class="view">
+<div class="grid">
+<section class="card span2" aria-labelledby="mx-t">
+<div class="card-head"><h2 id="mx-t" class="serif">Estoque por tamanho</h2><p>{{stockTotal}} peças. Clique em um número para lançar</p></div>
+<div class="tbl-wrap">
+<table class="tbl matrix">
+<thead><tr><th scope="col">Produto e cor</th><th scope="col">P</th><th scope="col">M</th><th scope="col">G</th><th scope="col">GG</th><th scope="col" class="num">Total</th></tr></thead>
+<tbody>
+<sc-for list="{{matrix}}" as="r" hint-placeholder-count="12">
+<tr><td><span style="display: inline-flex; align-items: center; gap: 10px"><i style="width: 12px; height: 12px; border-radius: 50%; background: {{r.hex}}; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15)"></i>{{r.name}}</span></td>
+<sc-for list="{{r.cells}}" as="c" hint-placeholder-count="4"><td><button class="{{c.cls}}" type="button" onClick="{{c.pick}}" aria-label="{{c.label}}">{{c.q}}</button></td></sc-for>
+<td class="num">{{r.total}}</td></tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+<div class="ok-note"><span class="st warn"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6v8M12 18v.5"></path></svg>Baixo</span>2 peças ou menos<span class="st crit"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>Esgotado</span>sem peças</div>
+</section>
+
+<section class="card" aria-labelledby="lanc-t">
+<div class="card-head"><h2 id="lanc-t" class="serif">Lançar movimentação</h2></div>
+<form class="form" onSubmit="{{submitMove}}">
+<div class="types full" role="radiogroup" aria-label="Tipo de movimentação"><sc-for list="{{moveTypes}}" as="t" hint-placeholder-count="3"><button class="{{t.cls}}" type="button" role="radio" aria-checked="{{t.on}}" onClick="{{t.pick}}">{{t.label}}</button></sc-for></div>
+<label class="fld full">Produto e cor<select value="{{mvVar}}" onChange="{{setVar}}"><sc-for list="{{varOptions}}" as="o" hint-placeholder-count="12"><option value="{{o.value}}">{{o.label}}</option></sc-for></select></label>
+<label class="fld">Tamanho<select value="{{mvSize}}" onChange="{{setSize}}"><option value="0">P</option><option value="1">M</option><option value="2">G</option><option value="3">GG</option></select></label>
+<label class="fld">{{qtyLabel}}<input type="number" min="0" inputmode="numeric" value="{{mvQty}}" onChange="{{setQty}}" placeholder="0"></label>
+<sc-if value="{{isEntrada}}" hint-placeholder-val="{{true}}"><label class="fld">Custo por peça<input type="text" inputmode="decimal" placeholder="R$ 0,00" value="{{mvCost}}" onChange="{{setCost}}"></label></sc-if>
+<label class="fld">Observação<input type="text" placeholder="{{obsPlaceholder}}" value="{{mvObs}}" onChange="{{setObs}}"></label>
+<p class="full" style="margin: 0; font-size: 13.5px; color: var(--muted)">Hoje: {{currentStock}}</p>
+<sc-if value="{{hasMoveErr}}" hint-placeholder-val="{{false}}"><p class="ferr full" role="alert">{{moveErr}}</p></sc-if>
+<button class="btn full" type="submit">{{submitLabel}}</button>
+</form>
+</section>
+
+<section class="card span3" aria-labelledby="acc-t">
+<div class="card-head"><h2 id="acc-t" class="serif">Acessórios, tamanho único</h2><p>Use + e − para registrar entradas e vendas rápidas</p></div>
+<div class="acc-grid">
+<sc-for list="{{accStock}}" as="a" hint-placeholder-count="6">
+<div class="acc-st"><span class="acc-ic" style="background: color-mix(in srgb, {{a.tone}} 30%, var(--surface))"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{a.icon}}"></path></svg></span><span class="acc-nm">{{a.name}}<span class="{{a.stCls}}">{{a.qty}} em estoque</span></span><span class="acc-btns"><button class="mini-btn" type="button" onClick="{{a.dec}}" aria-label="Tirar 1 de {{a.name}}">−</button><button class="mini-btn" type="button" onClick="{{a.inc}}" aria-label="Somar 1 a {{a.name}}">+</button></span></div>
+</sc-for>
+</div>
+</section>
+
+<section class="card span3" aria-labelledby="mov-t">
+<div class="card-head"><h2 id="mov-t" class="serif">Movimentações recentes</h2></div>
+<div class="moves"><sc-for list="{{moves}}" as="m" hint-placeholder-count="4"><div class="move"><span class="{{m.stCls}}">{{m.type}}</span><span>{{m.item}}, {{m.size}}<span class="sub">{{m.obs}}</span></span><span class="q">{{m.q}}<span class="sub" style="text-align: right">{{m.when}}</span></span></div></sc-for></div>
+</section>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isFinanceiro}}" hint-placeholder-val="{{false}}">
+<div class="view">
+<section class="kpis" aria-label="Resumo financeiro">
+<sc-for list="{{finKpis}}" as="k" hint-placeholder-count="4">
+<div class="kpi"><span class="k-label">{{k.label}}</span><span class="k-value">{{k.value}}</span><span class="k-delta">{{k.ctx}}</span></div>
+</sc-for>
+</section>
+<div class="grid">
+<section class="card span2" aria-labelledby="rd-t">
+<div class="card-head"><h2 id="rd-t" class="serif">Receitas e despesas</h2><p>últimos 6 meses</p></div>
+<div class="legend" style="flex-direction: row; gap: 20px"><div class="leg" style="grid-template-columns: 12px auto"><i class="sw" style="background: var(--s1)"></i><span>Receitas</span></div><div class="leg" style="grid-template-columns: 12px auto"><i class="sw" style="background: var(--s2)"></i><span>Despesas</span></div></div>
+<div class="gbars">
+<sc-for list="{{finMonths}}" as="m" hint-placeholder-count="6">
+<div class="grp"><i class="gb r" style="height: {{m.rPct}}%"><span class="bt">Receitas {{m.month}}: {{m.r}}</span></i><i class="gb d" style="height: {{m.dPct}}%"><span class="bt">Despesas {{m.month}}: {{m.d}}</span></i></div>
+</sc-for>
+</div>
+<div class="vlabels" style="gap: 18px"><sc-for list="{{finMonths}}" as="m" hint-placeholder-count="6"><span>{{m.month}}</span></sc-for></div>
+</section>
+
+<section class="card" aria-labelledby="nl-t">
+<div class="card-head"><h2 id="nl-t" class="serif">Novo lançamento</h2></div>
+<form class="form" onSubmit="{{submitFin}}">
+<div class="types two full" role="radiogroup" aria-label="Tipo de lançamento"><sc-for list="{{finTypes}}" as="t" hint-placeholder-count="2"><button class="{{t.cls}}" type="button" role="radio" aria-checked="{{t.on}}" onClick="{{t.pick}}">{{t.label}}</button></sc-for></div>
+<label class="fld full">Descrição<input type="text" placeholder="Ex.: Compra de tecido canelado" value="{{fDesc}}" onChange="{{setFDesc}}"></label>
+<label class="fld">Categoria<select value="{{fCat}}" onChange="{{setFCat}}"><sc-for list="{{finCats}}" as="c" hint-placeholder-count="6"><option value="{{c}}">{{c}}</option></sc-for></select></label>
+<label class="fld">Valor<input type="text" inputmode="decimal" placeholder="R$ 0,00" value="{{fVal}}" onChange="{{setFVal}}"></label>
+<label class="fld">Vencimento<input type="date" value="{{fDate}}" onChange="{{setFDate}}"></label>
+<label class="fld">Situação<select value="{{fPaid}}" onChange="{{setFPaid}}"><option value="pago">Pago</option><option value="pendente">Pendente</option></select></label>
+<sc-if value="{{hasFinErr}}" hint-placeholder-val="{{false}}"><p class="ferr full" role="alert">{{finErr}}</p></sc-if>
+<button class="btn full" type="submit">Salvar lançamento</button>
+</form>
+</section>
+
+<section class="card span3" aria-labelledby="cp-t">
+<div class="card-head"><h2 id="cp-t" class="serif">Lançamentos do mês</h2><p>{{pendingText}}</p></div>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th scope="col">Descrição</th><th scope="col">Categoria</th><th scope="col">Vencimento</th><th scope="col">Situação</th><th scope="col" class="num">Valor</th><th scope="col"><span class="sr">Ação</span></th></tr></thead>
+<tbody>
+<sc-for list="{{entries}}" as="e" hint-placeholder-count="8">
+<tr><td>{{e.desc}}</td><td>{{e.cat}}</td><td>{{e.date}}</td><td><span class="{{e.stCls}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{e.icon}}"></path></svg>{{e.status}}</span></td><td class="num">{{e.value}}</td><td class="num"><sc-if value="{{e.pending}}" hint-placeholder-val="{{false}}"><button class="mini-btn" type="button" onClick="{{e.pay}}">Marcar como pago</button></sc-if></td></tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isRelatorios}}" hint-placeholder-val="{{false}}">
+<div class="view">
+<div class="grid">
+<section class="card" aria-labelledby="tam-t">
+<div class="card-head"><h2 id="tam-t" class="serif">Vendas por tamanho</h2><p>peças, {{periodLabel}}</p></div>
+<div class="vbars"><sc-for list="{{bySize}}" as="b" hint-placeholder-count="4"><div class="vbar"><span class="lbl" style="bottom: calc({{b.pct}}% + 6px); top: auto">{{b.value}}</span><i class="fill" style="height: {{b.pct}}%"></i></div></sc-for></div>
+<div class="vlabels"><sc-for list="{{bySize}}" as="b" hint-placeholder-count="4"><span>{{b.label}}</span></sc-for></div>
+</section>
+<section class="card span2" aria-labelledby="cor-t">
+<div class="card-head"><h2 id="cor-t" class="serif">Vendas por cor</h2><p>peças, {{periodLabel}}</p></div>
+<div class="hbars"><sc-for list="{{byColor}}" as="b" hint-placeholder-count="8"><div class="hbar"><span class="nm"><i class="dotc" style="background: {{b.hex}}"></i>{{b.label}}</span><span class="track"><i class="fill" style="width: {{b.pct}}%"></i></span><span class="val">{{b.value}}</span></div></sc-for></div>
+</section>
+<section class="card span3" aria-labelledby="abc-t">
+<div class="card-head"><h2 id="abc-t" class="serif">Curva ABC de produtos</h2><div style="display: flex; gap: 8px; flex-wrap: wrap"><button class="mini-btn" type="button" onClick="{{exportPdf}}">Baixar PDF</button><button class="mini-btn" type="button" onClick="{{exportXls}}">Baixar planilha</button></div></div>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th scope="col">Produto</th><th scope="col" class="num">Peças</th><th scope="col" class="num">Receita</th><th scope="col" class="num">Participação</th><th scope="col" class="num">Acumulado</th><th scope="col">Classe</th></tr></thead>
+<tbody>
+<sc-for list="{{abc}}" as="a" hint-placeholder-count="6">
+<tr><td>{{a.name}}</td><td class="num">{{a.units}}</td><td class="num">{{a.revenue}}</td><td class="num">{{a.share}}</td><td class="num">{{a.acc}}</td><td><span class="{{a.stCls}}">{{a.cls}}</span></td></tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+<p style="margin: 0; font-size: 13.5px; color: var(--muted)">Classe A soma até 80% da receita: são as peças que não podem faltar no estoque.</p>
+</section>
+</div>
+</div>
+</sc-if>
+</div>
+</div>
+<div class="{{toastCls}}" role="status" aria-live="polite"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span>{{toastText}}</span></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"temaInicial":{"editor":"enum","options":["claro","escuro"],"default":"claro","section":"Tema"},"telaInicial":{"editor":"enum","options":["geral","pedidos","produtos","categorias","combinacoes","estoque","financeiro","relatorios"],"default":"geral","section":"Tela"},"$preview":{"width":1440,"height":1600}}'>
+class Component extends DCLogic {
+  componentWillUnmount() { clearTimeout(this.tt); }
+  toast(msg) {
+    clearTimeout(this.tt);
+    this.setState({ toast: msg });
+    this.tt = setTimeout(() => this.setState({ toast: '' }), 3200);
+  }
+  renderVals() {
+    const s = this.state || {};
+    const theme = s.theme || (this.props.temaInicial === 'escuro' ? 'escuro' : 'claro');
+    const view = s.view || this.props.telaInicial || 'geral';
+    const period = s.period || '30d';
+    const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    const brl0 = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+    const num = (v) => v.toLocaleString('pt-BR');
+    const pct = (v) => v.toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + '%';
+    const MES = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+    const IC = {
+      check: 'M5 12.5l4.5 4.5L19 7.5',
+      clock: 'M12 7v5l3 2M12 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18z',
+      send: 'M3 12h12M11 6l6 6-6 6',
+      done: 'M3 12.5l4 4L15 8M9 16.5l1 1L21 8',
+      x: 'M6 6l12 12M18 6L6 18',
+      warn: 'M12 6v8M12 18v.5'
+    };
+    const IMG = {
+      choc: 'vitrines/_ilustracoes/flat-recorte-chocolate.png', serenity: 'vitrines/_ilustracoes/macacao-serenity-academia.png',
+      nadPreto: 'vitrines/_ilustracoes/nadador-preto-modelo.png', macPreto: 'vitrines/_ilustracoes/macaquinho-preto-modelo.png',
+      cruzVinho: 'vitrines/_ilustracoes/cruzado-vinho-modelo.png', costas: 'vitrines/_ilustracoes/macacao-costas-preto-modelo.png'
+    };
+
+    const PRODUCTS = [
+      { id: 'recorte', name: 'Conjunto canelado Recorte', cat: 'Conjuntos', price: 189.9, units: 34, img: IMG.choc },
+      { id: 'serenity', name: 'Macacão longo Serenity', cat: 'Macacões', price: 219.9, units: 22, img: IMG.serenity },
+      { id: 'contorno', name: 'Macaquinho Contorno', cat: 'Macaquinhos', price: 169.9, units: 18, img: IMG.macPreto },
+      { id: 'cruzado', name: 'Conjunto canelado Cruzado', cat: 'Conjuntos', price: 189.9, units: 12, img: IMG.cruzVinho },
+      { id: 'nadador', name: 'Conjunto Nadador', cat: 'Conjuntos', price: 179.9, units: 7, img: IMG.nadPreto },
+      { id: 'costas', name: 'Macacão Costas Abertas', cat: 'Macacões', price: 229.9, units: 3, img: IMG.costas }
+    ];
+    const REV30 = PRODUCTS.reduce((a, p) => a + p.units * p.price, 0);
+    const ORDERS30 = 96;
+
+    const W = [0.62, 0.9, 0.55, 1.05, 0.98, 1.42, 1.6, 0.7, 0.82, 0.95, 1.08, 0.6, 1.4, 1.66, 0.78, 0.72, 1.0, 0.9, 1.12, 1.24, 1.75, 0.66, 0.8, 1.04, 0.86, 1.18, 0.94, 1.3, 1.4, 1.65];
+    const wSum = W.reduce((a, b) => a + b, 0);
+    const DAYS = W.map((w, i) => { const d = new Date(2026, 8, 30 + i); return { label: d.getDate() + ' ' + MES[d.getMonth()], v: Math.round((w / wSum) * REV30 * 100) / 100 }; });
+    const MONTHS = [9800, 11200, 10400, 12800, 13900, 12100, 14500, 15800, 14200, 16900, 17600, REV30].map((v, i) => ({ label: MES[(10 + i) % 12], v: v }));
+    const series = period === '12m' ? MONTHS : (period === '7d' ? DAYS.slice(-7) : DAYS);
+    const fat = series.reduce((a, d) => a + d.v, 0);
+    const factor = fat / REV30;
+    const orders = Math.max(1, Math.round(ORDERS30 * factor));
+    const PERIOD_TXT = { '7d': 'últimos 7 dias', '30d': 'últimos 30 dias', '12m': 'últimos 12 meses' };
+    const DELTA = { '7d': ['+8%', '+5%', '+3%'], '30d': ['+12%', '+9%', '+3%'], '12m': ['+31%', '+24%', '+6%'] };
+    const PREV = { '7d': 'vs. 7 dias anteriores', '30d': 'vs. 30 dias anteriores', '12m': 'vs. 12 meses anteriores' };
+
+    const max = Math.max.apply(null, series.map((d) => d.v));
+    const rawStep = max / 4;
+    const mag = Math.pow(10, Math.floor(Math.log10(rawStep)));
+    const step = [1, 2, 2.5, 5, 10].map((m) => m * mag).find((x) => x >= rawStep);
+    const top = step * Math.ceil(max / step);
+    const n = series.length;
+    const pts = series.map((d, i) => [n === 1 ? 0 : (i / (n - 1)) * 1000, 260 - (d.v / top) * 260]);
+    const lineD = 'M' + pts.map((p) => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' L');
+    const areaD = lineD + ' L1000 260 L0 260 Z';
+    const yTicks = [];
+    for (let v = 0; v <= top + 0.001; v += step) yTicks.push({ pos: (v / top) * 100, label: v >= 1000 ? (v / 1000).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + ' mil' : String(Math.round(v)) });
+    const every = n > 12 ? 5 : 1;
+    const xTicks = series.map((d, i) => ({ pos: n === 1 ? 0 : (i / (n - 1)) * 100, label: d.label, show: i % every === 0 || i === n - 1 })).filter((x) => x.show);
+    const hi = s.hover;
+    const hasHover = hi != null && hi < n;
+    const hd = hasHover ? series[hi] : null;
+
+    const STOCK0 = [[4, 6, 5, 2], [3, 5, 4, 1], [5, 7, 3, 2], [2, 2, 4, 1], [3, 4, 0, 1], [6, 8, 5, 3], [7, 9, 6, 4], [4, 5, 3, 2], [5, 6, 4, 3], [6, 7, 5, 2], [1, 4, 3, 2], [3, 4, 2, 1]];
+    const VARS = [
+      { p: 'recorte', name: 'Conjunto Recorte Chocolate', hex: '#7A4634' },
+      { p: 'recorte', name: 'Conjunto Recorte Marinho', hex: '#2C3A6E' },
+      { p: 'recorte', name: 'Conjunto Recorte Azul royal', hex: '#2448C4' },
+      { p: 'recorte', name: 'Conjunto Recorte Nude', hex: '#D8C4B0' },
+      { p: 'cruzado', name: 'Conjunto Cruzado Vinho', hex: '#5C1F31' },
+      { p: 'cruzado', name: 'Conjunto Cruzado Preto', hex: '#1B1A20' },
+      { p: 'nadador', name: 'Conjunto Nadador Preto', hex: '#151515' },
+      { p: 'nadador', name: 'Conjunto Nadador Café', hex: '#4B3226' },
+      { p: 'serenity', name: 'Macacão Serenity Azul', hex: '#86A9DD' },
+      { p: 'contorno', name: 'Macaquinho Contorno Preto', hex: '#161616' },
+      { p: 'contorno', name: 'Macaquinho Contorno Marinho', hex: '#22315F' },
+      { p: 'costas', name: 'Macacão Costas Abertas Preto', hex: '#141414' }
+    ];
+    const SZ = ['P', 'M', 'G', 'GG'];
+    const stock = s.stock || STOCK0;
+    const stockTotal = stock.reduce((a, r) => a + r.reduce((x, y) => x + y, 0), 0);
+    const lows = [];
+    stock.forEach((r, vi) => r.forEach((q, zi) => { if (q <= 2) lows.push({ vi: vi, zi: zi, q: q }); }));
+    lows.sort((a, b) => a.q - b.q);
+    const mvType = s.mvType || 'entrada';
+    const mvVar = s.mvVar == null ? 3 : s.mvVar;
+    const mvSize = s.mvSize == null ? 1 : s.mvSize;
+    const BASE_MOVES = [
+      { type: 'Saída', item: 'Conjunto Recorte Chocolate', size: 'M', q: '−1', obs: 'Pedido #1096', when: 'hoje', stCls: 'st info' },
+      { type: 'Entrada', item: 'Macacão Serenity Azul', size: 'M', q: '+8', obs: 'Fornecedor, nota 2231', when: '27 out', stCls: 'st good' },
+      { type: 'Ajuste', item: 'Conjunto Cruzado Vinho', size: 'G', q: '= 0', obs: 'Contagem do inventário', when: '26 out', stCls: 'st warn' },
+      { type: 'Saída', item: 'Macaquinho Contorno Marinho', size: 'P', q: '−1', obs: 'Venda na loja física', when: '25 out', stCls: 'st info' }
+    ];
+    const moves = (s.moves || []).concat(BASE_MOVES);
+
+    const ORDERS0 = [
+      { id: '#1096', when: 'hoje, 10:42', client: 'Mariana S.', items: 'Conjunto Recorte chocolate M', channel: 'Site', payment: 'Pix', status: 'pago', total: 189.9 },
+      { id: '#1095', when: 'hoje, 09:15', client: 'Juliana P.', items: 'Macacão Serenity M', channel: 'Instagram', payment: 'Cartão, 3x', status: 'pago', total: 219.9 },
+      { id: '#1094', when: 'ontem, 21:08', client: 'Camila R.', items: 'Macaquinho Contorno preto P, Conjunto Nadador café M', channel: 'Site', payment: 'Pix', status: 'aguardando', total: 349.8 },
+      { id: '#1093', when: 'ontem, 16:30', client: 'Fernanda L.', items: 'Conjunto Cruzado vinho P', channel: 'WhatsApp', payment: 'Cartão', status: 'enviado', total: 189.9 },
+      { id: '#1092', when: '27 out', client: 'Beatriz M.', items: 'Conjunto Recorte nude P', channel: 'Site', payment: 'Boleto', status: 'aguardando', total: 189.9 },
+      { id: '#1091', when: '27 out', client: 'Larissa T.', items: 'Macacão Costas Abertas M', channel: 'Loja física', payment: 'Pix', status: 'entregue', total: 229.9 },
+      { id: '#1090', when: '26 out', client: 'Aline C.', items: 'Conjunto Recorte marinho M (2)', channel: 'Loja física', payment: 'Cartão', status: 'entregue', total: 379.8 },
+      { id: '#1089', when: '26 out', client: 'Patrícia V.', items: 'Macaquinho Contorno marinho G', channel: 'Instagram', payment: 'Pix', status: 'enviado', total: 169.9 }
+    ];
+    const ost = s.ost || {};
+    const ORDERS = ORDERS0.map((o) => Object.assign({}, o, { status: ost[o.id] || o.status }));
+    const ST = {
+      pago: { label: 'Pago', cls: 'st good', icon: IC.check, next: 'enviado', act: 'Marcar como enviado' },
+      aguardando: { label: 'Aguardando pagamento', cls: 'st warn', icon: IC.clock, next: null, act: 'Lembrar cliente' },
+      enviado: { label: 'Enviado', cls: 'st info', icon: IC.send, next: 'entregue', act: 'Marcar como entregue' },
+      entregue: { label: 'Entregue', cls: 'st good', icon: IC.done, next: null, act: '' }
+    };
+    const ofilter = s.ofilter || 'todos';
+    const awaiting = ORDERS.filter((o) => o.status === 'aguardando').length;
+
+    const FIN_BASE = [
+      { id: 'f1', desc: 'Tecido canelado, fornecedor', cat: 'Fornecedores', date: '05/10', type: 'despesa', v: 3200, paid: true },
+      { id: 'f2', desc: 'Aluguel da loja', cat: 'Aluguel', date: '10/10', type: 'despesa', v: 2400, paid: true },
+      { id: 'f3', desc: 'Costura e acabamento', cat: 'Produção', date: '12/10', type: 'despesa', v: 1850, paid: true },
+      { id: 'f4', desc: 'Taxas de cartão e Pix', cat: 'Taxas', date: '15/10', type: 'despesa', v: 620, paid: true },
+      { id: 'f5', desc: 'Anúncios no Instagram', cat: 'Marketing', date: '18/10', type: 'despesa', v: 900, paid: true },
+      { id: 'f6', desc: 'Embalagens e etiquetas', cat: 'Embalagem', date: '05/11', type: 'despesa', v: 400, paid: false },
+      { id: 'f7', desc: 'Energia e internet', cat: 'Contas', date: '08/11', type: 'despesa', v: 500, paid: false }
+    ];
+    const finPaid = s.finPaid || {};
+    const entriesAll = (s.finExtra || []).concat(FIN_BASE).map((e) => Object.assign({}, e, { paid: e.paid || !!finPaid[e.id] }));
+    const extraRec = entriesAll.filter((e) => e.type === 'receita').reduce((a, e) => a + e.v, 0);
+    const desp = entriesAll.filter((e) => e.type === 'despesa').reduce((a, e) => a + e.v, 0);
+    const rec = REV30 + extraRec;
+    const pend = entriesAll.filter((e) => e.type === 'despesa' && !e.paid).reduce((a, e) => a + e.v, 0);
+    const FIN_M = [
+      { month: 'mai', r: 14500, d: 8200 }, { month: 'jun', r: 15800, d: 8900 }, { month: 'jul', r: 14200, d: 8600 },
+      { month: 'ago', r: 16900, d: 9300 }, { month: 'set', r: 17600, d: 9500 }, { month: 'out', r: rec, d: desp }
+    ];
+    const finMax = Math.max.apply(null, FIN_M.map((m) => Math.max(m.r, m.d)));
+    const finType = s.finType || 'despesa';
+    const CATS = ['Fornecedores', 'Produção', 'Aluguel', 'Taxas', 'Marketing', 'Embalagem', 'Contas', 'Vendas', 'Outros'];
+
+    const BY_SIZE = [{ label: 'P', v: 21 }, { label: 'M', v: 39 }, { label: 'G', v: 26 }, { label: 'GG', v: 10 }];
+    const BY_COLOR = [
+      { label: 'Preto', hex: '#151515', v: 27 }, { label: 'Azul serenity', hex: '#86A9DD', v: 22 }, { label: 'Chocolate', hex: '#7A4634', v: 12 },
+      { label: 'Vinho', hex: '#5C1F31', v: 10 }, { label: 'Marinho', hex: '#2C3A6E', v: 9 }, { label: 'Azul royal', hex: '#2448C4', v: 8 },
+      { label: 'Nude', hex: '#D8C4B0', v: 5 }, { label: 'Café', hex: '#4B3226', v: 3 }
+    ];
+    const scaleU = (u) => Math.max(period === '7d' ? 0 : 1, Math.round(u * factor));
+    const sizeMax = Math.max.apply(null, BY_SIZE.map((b) => scaleU(b.v))) || 1;
+    const colorMax = Math.max.apply(null, BY_COLOR.map((b) => scaleU(b.v))) || 1;
+    let accum = 0;
+    const abc = PRODUCTS.map((p) => ({ p: p, r: p.units * p.price })).sort((a, b) => b.r - a.r).map((x) => {
+      accum += x.r;
+      const accPct = (accum / REV30) * 100;
+      const prevPct = ((accum - x.r) / REV30) * 100;
+      const cls = prevPct < 80 ? 'A' : (prevPct < 95 ? 'B' : 'C');
+      return { name: x.p.name, units: scaleU(x.p.units), revenue: brl(x.r * factor), share: pct((x.r / REV30) * 100), acc: pct(accPct), cls: 'Classe ' + cls, stCls: cls === 'A' ? 'st good' : (cls === 'B' ? 'st warn' : 'st info') };
+    });
+
+    const NAV = [
+      { id: 'geral', label: 'Visão geral', icon: 'M4 4h7v7H4zM13 4h7v4h-7zM13 10h7v10h-7zM4 13h7v7H4z' },
+      { id: 'pedidos', label: 'Pedidos', icon: 'M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6' },
+      { id: 'produtos', label: 'Produtos', icon: 'M3 12l9-9h8v8l-9 9zM15.5 8.5h.01' },
+      { id: 'categorias', label: 'Categorias', icon: 'M4 5h6v6H4zM14 5h6v6h-6zM4 15h6v4H4zM14 15h6v4h-6z' },
+      { id: 'combinacoes', label: 'Combinações', icon: 'M7 17L17 7M8 8.5a1.5 1.5 0 1 0 0-.01M16 16.5a1.5 1.5 0 1 0 0-.01' },
+      { id: 'estoque', label: 'Estoque', icon: 'M3 7l9-4 9 4-9 4zM3 7v10l9 4 9-4V7M12 11v10' },
+      { id: 'financeiro', label: 'Financeiro', icon: 'M3 7h18v12H3zM3 11h18M7 15h3' },
+      { id: 'relatorios', label: 'Relatórios', icon: 'M4 20V10M10 20V4M16 20v-7M22 20H2' }
+    ];
+    const TITLES = {
+      geral: ['Bom dia, @@MARCA@@', 'Resumo da loja nos ' + PERIOD_TXT[period] + '.'],
+      pedidos: ['Pedidos', 'Acompanhe pagamento, envio e entrega de cada pedido.'],
+      produtos: ['Produtos', 'Cadastre peças, cores e preços e escolha o que aparece na loja.'],
+      categorias: ['Categorias', 'Organize roupas, acessórios e kits no menu e nos filtros da loja.'],
+      combinacoes: ['Combinações', 'Leve mais, pague menos, kits prontos e sugestões de compre junto.'],
+      estoque: ['Estoque', 'Entradas, saídas e ajustes por tamanho, com alerta de reposição.'],
+      financeiro: ['Financeiro', 'Receitas, despesas e contas a pagar de outubro.'],
+      relatorios: ['Relatórios', 'O que vende mais, em que tamanho e em que cor.']
+    };
+
+    const ACC = [
+      { id: 'garrafa', name: 'Garrafa térmica 750 ml', price: 79.9, tone: '#C9A98B', q: 14, icon: 'M9.5 2.5h5v2.5l1.5 2.2v12.8a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 8 20V7.2l1.5-2.2zM8 10.5h8M8 16.5h8' },
+      { id: 'bolsa', name: 'Bolsa de treino', price: 149.9, tone: '#8E7F86', q: 6, icon: 'M3 10.5A2.5 2.5 0 0 1 5.5 8h13a2.5 2.5 0 0 1 2.5 2.5V19H3zM8.5 8V6a1.5 1.5 0 0 1 1.5-1.5h4A1.5 1.5 0 0 1 15.5 6v2M3 13.5h18M11 13.5v2h2v-2' },
+      { id: 'meias', name: 'Meias cano médio, 3 pares', price: 39.9, tone: '#B9C3CF', q: 20, icon: 'M9 2.5h6v9.5l3.6 3.8a3 3 0 0 1-2.2 5.2h-5.9A4.5 4.5 0 0 1 6 16.5c0-1.6.8-2.8 3-4.5zM9 5.5h6' },
+      { id: 'faixa', name: 'Faixa de cabelo canelada', price: 24.9, tone: '#C48C9E', q: 18, icon: 'M12 6.5c5 0 9 2.5 9 5.5s-4 5.5-9 5.5-9-2.5-9-5.5 4-5.5 9-5.5zM3.6 13.8c1.6 1.5 4.8 2.4 8.4 2.4s6.8-.9 8.4-2.4' },
+      { id: 'xuxinha', name: 'Xuxinhas caneladas, 3 un.', price: 19.9, tone: '#D9C2AE', q: 2, icon: 'M12 4.5a7.5 7.5 0 1 1 0 15 7.5 7.5 0 0 1 0-15zM12 8.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7z' },
+      { id: 'toalha', name: 'Toalha de treino', price: 34.9, tone: '#A9A0A4', q: 9, icon: 'M5 3.5h11a3 3 0 0 1 3 3v14H8a3 3 0 0 1-3-3zM5 17.5a3 3 0 0 1 3-3h11M9 3.5v11' }
+    ];
+    const accQ = s.accQ || {};
+    const aq = (a) => (accQ[a.id] == null ? a.q : accQ[a.id]);
+    const setAq = (a, v) => { const m = Object.assign({}, accQ); m[a.id] = Math.max(0, v); this.setState({ accQ: m }); };
+
+    const CATS0 = [
+      { id: 'roupas', name: 'Roupas', parent: '' },
+      { id: 'conjuntos', name: 'Conjuntos', parent: 'roupas', count: 3 },
+      { id: 'macacoes', name: 'Macacões', parent: 'roupas', count: 2 },
+      { id: 'macaquinhos', name: 'Macaquinhos', parent: 'roupas', count: 1 },
+      { id: 'leggings', name: 'Leggings', parent: 'roupas', count: 0 },
+      { id: 'tops', name: 'Tops', parent: 'roupas', count: 0 },
+      { id: 'acessorios', name: 'Acessórios', parent: '' },
+      { id: 'garrafas', name: 'Garrafas', parent: 'acessorios', count: 1 },
+      { id: 'bolsas', name: 'Bolsas', parent: 'acessorios', count: 1 },
+      { id: 'meias', name: 'Meias', parent: 'acessorios', count: 1 },
+      { id: 'cabelo', name: 'Cabelo', parent: 'acessorios', count: 2 },
+      { id: 'toalhas', name: 'Toalhas', parent: 'acessorios', count: 1 },
+      { id: 'kits', name: 'Kits e combinações', parent: '', count: 3 }
+    ];
+    const allCats = CATS0.concat(s.newCats || []);
+    const catVis = s.catVis || {};
+    const catRows = [];
+    allCats.filter((c) => !c.parent).forEach((p) => {
+      const kids = allCats.filter((c) => c.parent === p.id);
+      const pc = kids.length ? kids.reduce((a, k) => a + (k.count || 0), 0) : (p.count || 0);
+      catRows.push({ c: p, count: pc, top: true });
+      kids.forEach((k) => catRows.push({ c: k, count: k.count || 0, top: false }));
+    });
+
+    const t2 = s.t2 == null ? 5 : s.t2;
+    const t3 = s.t3 == null ? 10 : s.t3;
+    const lmOn = s.lmOn == null ? true : s.lmOn;
+    const cjOn = s.cjOn == null ? true : s.cjOn;
+    const tierOf = (u) => (!lmOn ? 0 : (u >= 3 ? t3 : (u >= 2 ? t2 : 0)));
+    const POOL = PRODUCTS.map((p) => ({ id: p.id, name: p.name, price: p.price })).concat(ACC.map((a) => ({ id: a.id, name: a.name, price: a.price })));
+    const poolById = (id) => POOL.filter((x) => x.id === id)[0];
+    const KITS0 = [
+      { id: 'k1', name: 'Kit Treino Completo', items: ['recorte', 'garrafa', 'faixa'] },
+      { id: 'k2', name: 'Kit Pós-treino', items: ['serenity', 'bolsa', 'toalha'] },
+      { id: 'k3', name: 'Dupla Canelada', items: ['recorte', 'recorte'] }
+    ];
+    const kitsAll = KITS0.concat(s.newKits || []);
+    const kitVis = s.kitVis || {};
+    const kitSel = s.kitSel || {};
+    const kitSelIds = Object.keys(kitSel).filter((k) => kitSel[k]);
+    const kitSelFull = kitSelIds.reduce((a, id) => a + poolById(id).price, 0);
+    const kitSelPct = tierOf(kitSelIds.length);
+    const curStock = stock[mvVar][mvSize];
+    const varName = VARS[mvVar].name;
+
+    return {
+      theme: theme,
+      themeLabel: theme === 'escuro' ? 'Usar tema claro' : 'Usar tema escuro',
+      toggleTheme: () => this.setState({ theme: theme === 'escuro' ? 'claro' : 'escuro' }),
+      nav: NAV.map((n) => ({ label: n.label, icon: n.icon, cls: n.id === view ? 'nav-btn on' : 'nav-btn', current: n.id === view ? 'page' : 'false', hasBadge: n.id === 'pedidos' && awaiting > 0, badge: awaiting, pick: () => this.setState({ view: n.id, hover: null }) })),
+      pageTitle: TITLES[view][0],
+      pageSub: TITLES[view][1],
+      showPeriod: view === 'geral' || view === 'relatorios',
+      periods: [['7d', '7 dias'], ['30d', '30 dias'], ['12m', '12 meses']].map((p) => ({ label: p[1], on: p[0] === period, cls: p[0] === period ? 'on' : '', pick: () => this.setState({ period: p[0], hover: null }) })),
+      isGeral: view === 'geral', isPedidos: view === 'pedidos', isProdutos: view === 'produtos', isEstoque: view === 'estoque', isFinanceiro: view === 'financeiro', isRelatorios: view === 'relatorios',
+      isCategorias: view === 'categorias', isCombos: view === 'combinacoes',
+      catRows: catRows.map((r) => {
+        const vis = catVis[r.c.id] == null ? r.count > 0 : catVis[r.c.id];
+        return {
+          name: r.c.name, count: r.count, isEmpty: r.count === 0, visible: vis,
+          rowCls: r.top ? 'cat-grp' : '', nameCls: r.top ? 'cat-parent' : 'cat-child', swCls: vis ? 'switch on' : 'switch',
+          toggle: () => { const m = Object.assign({}, catVis); m[r.c.id] = !vis; this.setState({ catVis: m }); this.toast(r.c.name + (vis ? ' saiu do menu.' : (r.count === 0 ? ' aparece no menu assim que tiver produtos.' : ' voltou para o menu.'))); }
+        };
+      }),
+      newCatName: s.newCatName || '',
+      setNewCatName: (e) => this.setState({ newCatName: e.target.value }),
+      newCatParent: s.newCatParent || '',
+      setNewCatParent: (e) => this.setState({ newCatParent: e.target.value }),
+      hasCatErr: !!s.catErr,
+      addCat: (e) => {
+        if (e && e.preventDefault) e.preventDefault();
+        const nm = (s.newCatName || '').trim();
+        if (!nm) { this.setState({ catErr: true }); return; }
+        const nc = { id: 'c' + Date.now(), name: nm, parent: s.newCatParent || '', count: 0 };
+        this.setState({ newCats: (s.newCats || []).concat([nc]), newCatName: '', catErr: false });
+        this.toast('Categoria ' + nm + ' criada.');
+      },
+      comboKpis: [
+        { label: 'Pedidos com 2 ou mais peças', value: '38%', ctx: 'dos pedidos de outubro' },
+        { label: 'Ticket com combinação', value: 'R$ 312', ctx: 'sem combinação: R$ 176' },
+        { label: 'Desconto concedido', value: brl0(1120), ctx: 'em outubro' },
+        { label: 'Kits vendidos', value: '16', ctx: 'em outubro' }
+      ],
+      lmOn: lmOn, lmSwCls: lmOn ? 'switch on' : 'switch',
+      toggleLm: () => { this.setState({ lmOn: !lmOn }); this.toast(lmOn ? 'Leve mais, pague menos desativado.' : 'Leve mais, pague menos ativado.'); },
+      t2: String(t2), t3: String(t3),
+      setT2: (e) => this.setState({ t2: Math.max(0, Math.min(50, parseInt(e.target.value, 10) || 0)) }),
+      setT3: (e) => this.setState({ t3: Math.max(0, Math.min(50, parseInt(e.target.value, 10) || 0)) }),
+      lmScope: s.lmScope || 'tudo',
+      setLmScope: (e) => this.setState({ lmScope: e.target.value }),
+      lmExample: lmOn ? 'Conjunto Recorte ' + brl(189.9) + ' + garrafa ' + brl(79.9) + ' = ' + brl(269.8) + '. Com ' + t2 + '% de desconto, a cliente paga ' + brl(Math.round(269.8 * (100 - t2)) / 100) + '.' : 'Regra desativada: a sacola cobra o preço cheio.',
+      saveLm: () => this.toast('Regra salva: 2 peças com ' + t2 + '% e 3 ou mais com ' + t3 + '%.'),
+      showNewKit: !!s.newKit,
+      newKitLabel: s.newKit ? 'Cancelar' : 'Novo kit',
+      toggleNewKit: () => this.setState({ newKit: !s.newKit, kitErr: '' }),
+      kitName: s.kitName || '',
+      setKitName: (e) => this.setState({ kitName: e.target.value }),
+      kitPicks: POOL.map((x) => ({ name: x.name, on: !!kitSel[x.id], cls: kitSel[x.id] ? 'fbtn on' : 'fbtn', toggle: () => { const m = Object.assign({}, kitSel); m[x.id] = !m[x.id]; this.setState({ kitSel: m }); } })),
+      kitPreview: kitSelIds.length === 0 ? 'Escolha 2 ou mais itens para montar o kit.' : (kitSelIds.length === 1 ? '1 item: escolha mais 1 para ativar o desconto.' : kitSelIds.length + ' itens: ' + brl(kitSelFull) + ' com ' + kitSelPct + '% de desconto, sai por ' + brl(Math.round(kitSelFull * (100 - kitSelPct)) / 100) + '.'),
+      hasKitErr: !!s.kitErr,
+      kitErr: s.kitErr || '',
+      saveKit: () => {
+        const nm = (s.kitName || '').trim();
+        if (!nm) { this.setState({ kitErr: 'Dê um nome ao kit, por exemplo Kit Academia.' }); return; }
+        if (kitSelIds.length < 2) { this.setState({ kitErr: 'Um kit precisa de pelo menos 2 itens.' }); return; }
+        const nk = { id: 'n' + Date.now(), name: nm, items: kitSelIds };
+        this.setState({ newKits: (s.newKits || []).concat([nk]), newKit: false, kitName: '', kitSel: {}, kitErr: '' });
+        this.toast('Kit ' + nm + ' criado e publicado na loja.');
+      },
+      kitRows: kitsAll.map((k) => {
+        const full = k.items.reduce((a, id) => a + poolById(id).price, 0);
+        const pctK = tierOf(k.items.length);
+        const price = Math.round(full * (100 - pctK)) / 100;
+        const vis = kitVis[k.id] == null ? true : kitVis[k.id];
+        const names = k.items.map((id) => poolById(id).name);
+        return {
+          name: k.name, items: names.join(', '), full: brl(full), price: brl(price),
+          save: pctK > 0 ? 'economia de ' + brl(full - price) : 'sem desconto',
+          visible: vis, swCls: vis ? 'switch on' : 'switch',
+          toggle: () => { const m = Object.assign({}, kitVis); m[k.id] = !vis; this.setState({ kitVis: m }); }
+        };
+      }),
+      cjOn: cjOn, cjSwCls: cjOn ? 'switch on' : 'switch',
+      toggleCj: () => { this.setState({ cjOn: !cjOn }); this.toast(cjOn ? 'Compre junto escondido da loja.' : 'Compre junto visível na loja.'); },
+      cjRows: [
+        { from: 'Conjunto Recorte', to: 'Garrafa térmica 750 ml, Faixa de cabelo canelada', rate: '27%' },
+        { from: 'Macacão Serenity', to: 'Bolsa de treino, Toalha de treino', rate: '19%' },
+        { from: 'Macaquinho Contorno', to: 'Meias cano médio, Xuxinhas caneladas', rate: '14%' }
+      ],
+      accStock: ACC.map((a) => {
+        const q = aq(a);
+        return { name: a.name, icon: a.icon, tone: a.tone, qty: q, stCls: q === 0 ? 'st crit' : (q <= 2 ? 'st warn' : 'st good'), dec: () => setAq(a, q - 1), inc: () => setAq(a, q + 1) };
+      }),
+      toastCls: s.toast ? 'toast on' : 'toast',
+      toastText: s.toast || '',
+      periodLabel: PERIOD_TXT[period],
+      unitName: period === '12m' ? 'mês' : 'dia',
+      kpis: [
+        { label: 'Faturamento', value: brl0(fat), delta: DELTA[period][0], deltaCls: '', ctx: PREV[period] },
+        { label: 'Pedidos', value: num(orders), delta: DELTA[period][1], deltaCls: '', ctx: PREV[period] },
+        { label: 'Ticket médio', value: brl(fat / orders), delta: DELTA[period][2], deltaCls: '', ctx: PREV[period] },
+        { label: 'Peças em estoque', value: num(stockTotal), delta: String(lows.length), deltaCls: 'neg', ctx: 'tamanhos para repor' }
+      ],
+      yTicks: yTicks,
+      xTicks: xTicks,
+      lineD: lineD,
+      areaD: areaD,
+      seriesRows: series.map((d) => ({ label: d.label, value: brl(d.v) })),
+      hasHover: hasHover,
+      hx: hasHover ? (n === 1 ? 0 : (hi / (n - 1)) * 100) : 0,
+      hy: hasHover ? (hd.v / top) * 100 : 0,
+      tipCls: hasHover && hi / Math.max(1, n - 1) > 0.7 ? 'tip left' : 'tip',
+      tipLabel: hasHover ? hd.label : '',
+      tipValue: hasHover ? brl(hd.v) : '',
+      hoverChart: (e) => {
+        const r = e.currentTarget.getBoundingClientRect();
+        const x = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+        const idx = Math.round(x * (n - 1));
+        if (idx !== s.hover) this.setState({ hover: idx });
+      },
+      leaveChart: () => this.setState({ hover: null }),
+      channels: [['Loja física', 46, 'var(--s1)'], ['Instagram e WhatsApp', 38, 'var(--s2)'], ['Site', 16, 'var(--s3)']].map((c) => ({ label: c[0], pct: c[1], pctLabel: c[1] + '%', color: c[2] })),
+      channelAria: 'Loja física 46%, Instagram e WhatsApp 38%, Site 16%',
+      topProducts: (() => { const list = PRODUCTS.map((p) => ({ label: p.name, v: scaleU(p.units) })); const m = Math.max.apply(null, list.map((x) => x.v)) || 1; return list.map((x) => ({ label: x.label, value: x.v, pct: (x.v / m) * 100 })); })(),
+      lowCount: lows.length,
+      lowList: lows.slice(0, 5).map((l) => ({ name: VARS[l.vi].name, size: SZ[l.zi], status: l.q === 0 ? 'Esgotado' : (l.q === 1 ? '1 peça' : l.q + ' peças'), stCls: l.q === 0 ? 'st crit' : 'st warn', icon: l.q === 0 ? IC.x : IC.warn })),
+      goEstoque: () => this.setState({ view: 'estoque' }),
+      goPedidos: () => this.setState({ view: 'pedidos' }),
+      recentOrders: ORDERS.slice(0, 4).map((o) => ({ id: o.id, client: o.client, channel: o.channel, total: brl(o.total), status: ST[o.status].label, stCls: ST[o.status].cls, icon: ST[o.status].icon })),
+      orderFilters: [['todos', 'Todos'], ['aguardando', 'Aguardando pagamento'], ['pago', 'Pagos'], ['enviado', 'Enviados'], ['entregue', 'Entregues']].map((f) => ({ label: f[1], on: f[0] === ofilter, cls: f[0] === ofilter ? 'fbtn on' : 'fbtn', pick: () => this.setState({ ofilter: f[0] }) })),
+      orders: ORDERS.filter((o) => ofilter === 'todos' || o.status === ofilter).map((o) => {
+        const st = ST[o.status];
+        return {
+          id: o.id, when: o.when, client: o.client, items: o.items, channel: o.channel, payment: o.payment, total: brl(o.total),
+          status: st.label, stCls: st.cls, icon: st.icon, hasAction: !!st.act, actLabel: st.act,
+          act: () => {
+            if (st.next) { const m = Object.assign({}, ost); m[o.id] = st.next; this.setState({ ost: m }); this.toast('Pedido ' + o.id + ' ' + (st.next === 'enviado' ? 'marcado como enviado.' : 'marcado como entregue.')); }
+            else { this.toast('Lembrete de pagamento enviado para ' + o.client + ' pelo WhatsApp.'); }
+          }
+        };
+      }),
+      ordersCount: (() => { const c = ORDERS.filter((o) => ofilter === 'todos' || o.status === ofilter).length; return c === 1 ? '1 pedido' : c + ' pedidos'; })(),
+      showNewProduct: !!s.newProduct,
+      toggleNewProduct: () => this.setState({ newProduct: !s.newProduct }),
+      saveProduct: () => { this.setState({ newProduct: false }); this.toast('Produto salvo como rascunho.'); },
+      catalog: PRODUCTS.map((p) => {
+        const vis = !(s.hidden || {})[p.id];
+        const rows = VARS.map((v, i) => ({ v: v, i: i })).filter((x) => x.v.p === p.id);
+        return {
+          isImg: true, isArt: false, tone: '', icon: '',
+          name: p.name, cat: p.cat, img: p.img, price: brl(p.price),
+          stock: rows.reduce((a, x) => a + stock[x.i].reduce((m, k) => m + k, 0), 0),
+          dots: rows.map((x) => ({ hex: x.v.hex, name: x.v.name })),
+          visible: vis, swCls: vis ? 'switch on' : 'switch',
+          toggle: () => { const h = Object.assign({}, s.hidden || {}); h[p.id] = vis; this.setState({ hidden: h }); this.toast(p.name + (vis ? ' saiu da loja.' : ' voltou para a loja.')); }
+        };
+      }).concat(ACC.map((a) => {
+        const vis = !(s.hidden || {})[a.id];
+        return {
+          isImg: false, isArt: true, tone: a.tone, icon: a.icon, img: '',
+          name: a.name, cat: 'Acessórios', price: brl(a.price), stock: aq(a), dots: [],
+          visible: vis, swCls: vis ? 'switch on' : 'switch',
+          toggle: () => { const h = Object.assign({}, s.hidden || {}); h[a.id] = vis; this.setState({ hidden: h }); this.toast(a.name + (vis ? ' saiu da loja.' : ' voltou para a loja.')); }
+        };
+      })),
+      stockTotal: num(stockTotal),
+      matrix: stock.map((r, vi) => ({
+        name: VARS[vi].name, hex: VARS[vi].hex, total: r.reduce((a, b) => a + b, 0),
+        cells: r.map((q, zi) => {
+          const key = vi + '-' + zi;
+          let cls = 'cell' + (q === 0 ? ' out' : (q <= 2 ? ' low' : ''));
+          if (vi === mvVar && zi === mvSize) cls += ' sel';
+          if (s.flash === key) cls += ' flash';
+          return { q: q, cls: cls, label: VARS[vi].name + ' tamanho ' + SZ[zi] + ': ' + q + ' peças. Lançar movimentação', pick: () => this.setState({ mvVar: vi, mvSize: zi, moveErr: '' }) };
+        })
+      })),
+      moveTypes: [['entrada', 'Entrada'], ['saida', 'Saída'], ['ajuste', 'Ajuste']].map((t) => ({ label: t[1], on: t[0] === mvType, cls: t[0] === mvType ? 'on' : '', pick: () => this.setState({ mvType: t[0], moveErr: '' }) })),
+      varOptions: VARS.map((v, i) => ({ value: String(i), label: v.name })),
+      mvVar: String(mvVar),
+      mvSize: String(mvSize),
+      setVar: (e) => this.setState({ mvVar: parseInt(e.target.value, 10), moveErr: '' }),
+      setSize: (e) => this.setState({ mvSize: parseInt(e.target.value, 10), moveErr: '' }),
+      mvQty: s.mvQty || '',
+      setQty: (e) => this.setState({ mvQty: e.target.value }),
+      mvCost: s.mvCost || '',
+      setCost: (e) => this.setState({ mvCost: e.target.value }),
+      mvObs: s.mvObs || '',
+      setObs: (e) => this.setState({ mvObs: e.target.value }),
+      isEntrada: mvType === 'entrada',
+      qtyLabel: mvType === 'ajuste' ? 'Quantidade contada' : 'Quantidade',
+      obsPlaceholder: mvType === 'entrada' ? 'Fornecedor ou nota fiscal' : (mvType === 'saida' ? 'Pedido, venda na loja, troca' : 'Motivo do ajuste'),
+      currentStock: varName + ', ' + SZ[mvSize] + ': ' + (curStock === 1 ? '1 peça' : curStock + ' peças'),
+      submitLabel: mvType === 'entrada' ? 'Lançar entrada' : (mvType === 'saida' ? 'Lançar saída' : 'Salvar ajuste'),
+      hasMoveErr: !!s.moveErr,
+      moveErr: s.moveErr || '',
+      submitMove: (e) => {
+        if (e && e.preventDefault) e.preventDefault();
+        const q = parseInt(s.mvQty, 10);
+        if (isNaN(q) || q < 0 || (mvType !== 'ajuste' && q === 0)) { this.setState({ moveErr: 'Informe uma quantidade maior que zero.' }); return; }
+        if (mvType === 'saida' && q > curStock) { this.setState({ moveErr: 'Estoque insuficiente: há ' + curStock + ' peças de ' + varName + ' no tamanho ' + SZ[mvSize] + '.' }); return; }
+        const next = mvType === 'entrada' ? curStock + q : (mvType === 'saida' ? curStock - q : q);
+        const st2 = stock.map((r) => r.slice());
+        st2[mvVar][mvSize] = next;
+        const mv = { type: mvType === 'entrada' ? 'Entrada' : (mvType === 'saida' ? 'Saída' : 'Ajuste'), item: varName, size: SZ[mvSize], q: mvType === 'entrada' ? '+' + q : (mvType === 'saida' ? '−' + q : '= ' + q), obs: s.mvObs || (mvType === 'entrada' && s.mvCost ? 'Custo ' + s.mvCost + ' por peça' : 'Lançado pelo painel'), when: 'agora', stCls: mvType === 'entrada' ? 'st good' : (mvType === 'saida' ? 'st info' : 'st warn') };
+        this.setState({ stock: st2, moves: [mv].concat(s.moves || []), mvQty: '', mvCost: '', mvObs: '', moveErr: '', flash: mvVar + '-' + mvSize });
+        this.toast('Estoque atualizado: ' + varName + ' ' + SZ[mvSize] + ' agora tem ' + (next === 1 ? '1 peça.' : next + ' peças.'));
+      },
+      moves: moves.slice(0, 6),
+      finKpis: [
+        { label: 'Receitas', value: brl0(rec), ctx: 'vendas de outubro' },
+        { label: 'Despesas', value: brl0(desp), ctx: 'lançadas no mês' },
+        { label: 'Lucro', value: brl0(rec - desp), ctx: 'receitas menos despesas' },
+        { label: 'Margem', value: pct(((rec - desp) / rec) * 100), ctx: 'do faturamento' }
+      ],
+      finMonths: FIN_M.map((m) => ({ month: m.month, r: brl0(m.r), d: brl0(m.d), rPct: (m.r / finMax) * 100, dPct: (m.d / finMax) * 100 })),
+      finTypes: [['receita', 'Receita'], ['despesa', 'Despesa']].map((t) => ({ label: t[1], on: t[0] === finType, cls: t[0] === finType ? 'on' : '', pick: () => this.setState({ finType: t[0], finErr: '' }) })),
+      finCats: CATS,
+      fDesc: s.fDesc || '', setFDesc: (e) => this.setState({ fDesc: e.target.value }),
+      fCat: s.fCat || 'Fornecedores', setFCat: (e) => this.setState({ fCat: e.target.value }),
+      fVal: s.fVal || '', setFVal: (e) => this.setState({ fVal: e.target.value }),
+      fDate: s.fDate || '2026-11-10', setFDate: (e) => this.setState({ fDate: e.target.value }),
+      fPaid: s.fPaid || 'pendente', setFPaid: (e) => this.setState({ fPaid: e.target.value }),
+      hasFinErr: !!s.finErr, finErr: s.finErr || '',
+      submitFin: (e) => {
+        if (e && e.preventDefault) e.preventDefault();
+        const v = parseFloat(String(s.fVal || '').replace(/[^0-9,.-]/g, '').replace(/\./g, '').replace(',', '.'));
+        if (!s.fDesc) { this.setState({ finErr: 'Escreva uma descrição para encontrar o lançamento depois.' }); return; }
+        if (isNaN(v) || v <= 0) { this.setState({ finErr: 'Informe um valor maior que zero, por exemplo 350,00.' }); return; }
+        const d = (s.fDate || '2026-11-10').split('-');
+        const entry = { id: 'n' + Date.now(), desc: s.fDesc, cat: s.fCat || 'Fornecedores', date: d[2] + '/' + d[1], type: finType, v: v, paid: (s.fPaid || 'pendente') === 'pago' };
+        this.setState({ finExtra: [entry].concat(s.finExtra || []), fDesc: '', fVal: '', finErr: '' });
+        this.toast((finType === 'receita' ? 'Receita' : 'Despesa') + ' de ' + brl(v) + ' lançada.');
+      },
+      pendingText: pend > 0 ? brl(pend) + ' a pagar nos próximos dias' : 'Nenhuma conta pendente',
+      entries: entriesAll.map((e) => ({
+        desc: e.desc, cat: e.cat, date: e.date,
+        value: (e.type === 'despesa' ? '− ' : '+ ') + brl(e.v),
+        status: e.paid ? (e.type === 'despesa' ? 'Pago' : 'Recebido') : (e.type === 'despesa' ? 'A pagar' : 'A receber'),
+        stCls: e.paid ? 'st good' : 'st warn', icon: e.paid ? IC.check : IC.clock, pending: !e.paid,
+        pay: () => { const fp = Object.assign({}, finPaid); fp[e.id] = true; if (String(e.id).charAt(0) === 'n') { this.setState({ finExtra: (s.finExtra || []).map((x) => (x.id === e.id ? Object.assign({}, x, { paid: true }) : x)) }); } else { this.setState({ finPaid: fp }); } this.toast(e.desc + ' marcado como pago.'); }
+      })),
+      bySize: BY_SIZE.map((b) => ({ label: b.label, value: scaleU(b.v), pct: (scaleU(b.v) / sizeMax) * 100 })),
+      byColor: BY_COLOR.map((b) => ({ label: b.label, hex: b.hex, value: scaleU(b.v), pct: (scaleU(b.v) / colorMax) * 100 })),
+      abc: abc,
+      exportPdf: () => this.toast('Relatório em PDF gerado. Na versão real ele baixa direto.'),
+      exportXls: () => this.toast('Planilha gerada. Na versão real ela baixa em .xlsx.')
+    };
+  }
+}
+</script>
+</body>
+</html>

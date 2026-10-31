@@ -1,0 +1,300 @@
+[
+ {
+  "slug": "ais",
+  "nome": "Ais (exclusiva)",
+  "estilo": "Delicado",
+  "publica": false,
+  "descricao": "Vitrine aprovada da Ais Moda Fitness, com as fotos da loja.",
+  "cores": [
+   "#FBF7F5",
+   "#9A2C52",
+   "#8C6A35",
+   "#141113"
+  ]
+ },
+ {
+  "slug": "vinho-delicado",
+  "nome": "Vinho Delicado",
+  "estilo": "Delicado",
+  "publica": true,
+  "descricao": "Serifa fina, vinho e dourado. Para marcas femininas e suaves.",
+  "cores": [
+   "#FBF7F5",
+   "#9A2C52",
+   "#8C6A35",
+   "#141113"
+  ],
+  "fontes": [
+   "Noto Serif Display",
+   "Poppins"
+  ],
+  "modo": "claro",
+  "frase": "Delicadeza também é força"
+ },
+ {
+  "slug": "grafite-lima",
+  "nome": "Grafite Lima",
+  "estilo": "Esportivo",
+  "publica": true,
+  "descricao": "Grafite azulado com lima. Forte, direto, cara de academia.",
+  "cores": [
+   "#F4F5F0",
+   "#56650A",
+   "#3F4650",
+   "#151A22"
+  ],
+  "fontes": [
+   "Inter Display",
+   "Inter"
+  ],
+  "modo": "escuro",
+  "frase": "Atitude também é treino"
+ },
+ {
+  "slug": "rubi-dourado",
+  "nome": "Rubi Dourado",
+  "estilo": "Ousado",
+  "publica": true,
+  "descricao": "Vermelho e dourado sobre preto quente. Para quem gosta de chamar atenção.",
+  "cores": [
+   "#FBF6EF",
+   "#B81D17",
+   "#8A6418",
+   "#141012"
+  ],
+  "fontes": [
+   "Poppins",
+   "Inter"
+  ],
+  "modo": "escuro",
+  "frase": "Força e estilo no treino"
+ },
+ {
+  "slug": "areia-oliva",
+  "nome": "Areia e Oliva",
+  "estilo": "Natural",
+  "publica": true,
+  "descricao": "Tons de areia e oliva com serifa clássica. Yoga, pilates e bem-estar.",
+  "cores": [
+   "#F3F1E9",
+   "#55642A",
+   "#8E6F35",
+   "#14150F"
+  ],
+  "fontes": [
+   "Lora",
+   "Inter"
+  ],
+  "modo": "claro",
+  "frase": "Movimento com calma"
+ },
+ {
+  "slug": "azul-atleta",
+  "nome": "Azul Atleta",
+  "estilo": "Esportivo",
+  "publica": true,
+  "descricao": "Azul royal, laranja e letra condensada. Corrida, cross e performance.",
+  "cores": [
+   "#F3F6FB",
+   "#1D4ED8",
+   "#B45309",
+   "#0B1220"
+  ],
+  "fontes": [
+   "Heros Cn",
+   "Heros"
+  ],
+  "modo": "claro",
+  "frase": "Mais rápido a cada treino"
+ },
+ {
+  "slug": "pink-pulse",
+  "nome": "Pink Pulse",
+  "estilo": "Ousado",
+  "publica": true,
+  "descricao": "Pink vibrante e roxo, letra arredondada. Fitness jovem e cheio de energia.",
+  "cores": [
+   "#FFF5FA",
+   "#C2185B",
+   "#6D28D9",
+   "#170A12"
+  ],
+  "fontes": [
+   "Poppins",
+   "Poppins"
+  ],
+  "modo": "claro",
+  "frase": "Energia que aparece"
+ },
+ {
+  "slug": "preto-puro",
+  "nome": "Preto Puro",
+  "estilo": "Minimalista",
+  "publica": true,
+  "descricao": "Preto, branco e cantos retos. Streetwear e marcas de poucas peças.",
+  "cores": [
+   "#FAFAFA",
+   "#141414",
+   "#5E5E5E",
+   "#0F0F0F"
+  ],
+  "fontes": [
+   "Adventor",
+   "Inter"
+  ],
+  "modo": "claro",
+  "frase": "Menos peças, mais presença"
+ },
+ {
+  "slug": "lavanda-suave",
+  "nome": "Lavanda Suave",
+  "estilo": "Delicado",
+  "publica": true,
+  "descricao": "Lilás e ameixa com serifa clássica. Moda feminina romântica.",
+  "cores": [
+   "#F8F6FC",
+   "#6A4BAA",
+   "#9A5B85",
+   "#120F19"
+  ],
+  "fontes": [
+   "Pagella",
+   "Inter"
+  ],
+  "modo": "claro",
+  "frase": "Leve como deve ser"
+ },
+ {
+  "slug": "caramelo",
+  "nome": "Caramelo",
+  "estilo": "Natural",
+  "publica": true,
+  "descricao": "Caramelo, creme e verde musgo com serifa robusta. Moda casual e básica.",
+  "cores": [
+   "#FAF6F0",
+   "#8A4F1D",
+   "#4F6B52",
+   "#16110D"
+  ],
+  "fontes": [
+   "Bonum",
+   "Inter"
+  ],
+  "modo": "claro",
+  "frase": "Básico que dura"
+ },
+ {
+  "slug": "verde-mata",
+  "nome": "Verde Mata",
+  "estilo": "Natural",
+  "publica": true,
+  "descricao": "Verde profundo e mostarda. Trilha, praia e treino ao ar livre.",
+  "cores": [
+   "#F1F5F1",
+   "#1F6B43",
+   "#8C6A12",
+   "#0D1510"
+  ],
+  "fontes": [
+   "Lora",
+   "Poppins"
+  ],
+  "modo": "escuro",
+  "frase": "Feita para o ar livre"
+ },
+ {
+  "slug": "ameixa-coral",
+  "nome": "Ameixa e Coral",
+  "estilo": "Ousado",
+  "publica": true,
+  "descricao": "Ameixa com toque coral, letra arredondada. Plus size e moda com curvas.",
+  "cores": [
+   "#FFF7F4",
+   "#8E2C5A",
+   "#B23B2A",
+   "#170C14"
+  ],
+  "fontes": [
+   "Poppins",
+   "Inter"
+  ],
+  "modo": "claro",
+  "frase": "Todas as curvas em movimento"
+ },
+ {
+  "slug": "marinho-classico",
+  "nome": "Marinho Clássico",
+  "estilo": "Clássico",
+  "publica": true,
+  "descricao": "Marinho e dourado envelhecido com serifa de livro. Moda masculina e unissex.",
+  "cores": [
+   "#F5F7FA",
+   "#1B2F5B",
+   "#8A6A32",
+   "#0B111D"
+  ],
+  "fontes": [
+   "Schola",
+   "Heros"
+  ],
+  "modo": "claro",
+  "frase": "Clássico que treina junto"
+ },
+ {
+  "slug": "editorial-bronze",
+  "nome": "Editorial Bronze",
+  "estilo": "Luxo",
+  "publica": true,
+  "descricao": "Off-white, bronze e itálico de revista. Marcas premium e coleções cápsula.",
+  "cores": [
+   "#FBFAF7",
+   "#6E5530",
+   "#1C1A17",
+   "#12110F"
+  ],
+  "fontes": [
+   "Pagella",
+   "Adventor"
+  ],
+  "modo": "claro",
+  "frase": "Coleção cápsula, peça a peça"
+ },
+ {
+  "slug": "laranja-energia",
+  "nome": "Laranja Energia",
+  "estilo": "Esportivo",
+  "publica": true,
+  "descricao": "Laranja e petróleo com letra condensada. Crossfit, luta e funcional.",
+  "cores": [
+   "#FFF8F2",
+   "#B8470A",
+   "#0F6B66",
+   "#140D08"
+  ],
+  "fontes": [
+   "Heros Cn",
+   "Inter"
+  ],
+  "modo": "escuro",
+  "frase": "Treino forte pede peça forte"
+ },
+ {
+  "slug": "ceu-pastel",
+  "nome": "Céu Pastel",
+  "estilo": "Leve",
+  "publica": true,
+  "descricao": "Azul céu e rosa pastel, letra geométrica. Moda leve, teen e kids.",
+  "cores": [
+   "#F5F9FD",
+   "#2F6DA8",
+   "#B44E7A",
+   "#0D131B"
+  ],
+  "fontes": [
+   "Adventor",
+   "Poppins"
+  ],
+  "modo": "claro",
+  "frase": "Leveza que acompanha o dia"
+ }
+]

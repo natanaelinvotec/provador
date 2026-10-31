@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>App @@MARCA@@ — Cliente</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="assets/css/fontes.css">
+<style>
+body{margin:0}
+*,*::before,*::after{box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+a:hover{color:inherit}
+.app{--bg:#F1F5F1;--surface:#FFFFFF;--ink:#13241A;--muted:#516357;--line:#D9E3DB;--wine:#1F6B43;--on-wine:#FFFFFF;--gold:#8C6A12;--ease:cubic-bezier(.22,.61,.36,1);--ease-out:cubic-bezier(.16,1,.3,1);position:relative;width:390px;height:844px;overflow:hidden;display:flex;flex-direction:column;font-family:'Poppins',system-ui,sans-serif;font-weight:300;font-size:15px;line-height:1.5;color:var(--ink);background:var(--bg);transition:background-color .6s var(--ease),color .6s var(--ease)}
+.app[data-theme="escuro"]{--bg:#0D1510;--surface:#142019;--ink:#ECF4EE;--muted:#9DB2A3;--line:#24362B;--wine:#6FD19E;--on-wine:#0D1510;--gold:#E0B94A}
+.serif{font-family:'Lora', Georgia, serif;font-weight:600}
+.ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:1.5px solid var(--wine);outline-offset:2px}
+.top{display:flex;justify-content:space-between;align-items:center;padding:20px 20px 8px}
+.hello{display:flex;flex-direction:column;line-height:1.1}
+.hello small{font-size:13px;color:var(--muted)}
+.hello b{font-family:'Lora', Georgia, serif;font-weight:600;font-size:28px}
+.tbtns{display:flex;gap:4px}
+.ib{position:relative;display:grid;place-items:center;width:44px;height:44px;border:0;border-radius:50%;background:var(--surface);color:var(--ink);cursor:pointer}
+.cnt{position:absolute;top:4px;right:2px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--wine);color:var(--on-wine);font-size:10.5px;line-height:17px;text-align:center}
+.scroll{flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:20px}
+.search{display:flex;align-items:center;gap:10px;margin:8px 20px 14px;padding:0 16px;min-height:48px;border-radius:999px;background:var(--surface);color:var(--muted);font-size:14.5px}
+.chips{display:flex;gap:8px;padding:0 20px 16px;overflow-x:auto;scrollbar-width:none}
+.chip{flex:none;min-height:40px;padding:0 16px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--ink);font:inherit;font-size:14px;cursor:pointer;transition:background-color .35s var(--ease),color .35s var(--ease)}
+.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.promo{position:relative;margin:0 20px 22px;padding:20px;border-radius:22px;background:var(--wine);color:var(--on-wine);overflow:hidden;animation:rise .8s var(--ease-out) both}
+.promo h2{margin:0;font-size:30px;line-height:1}
+.promo p{margin:8px 0 14px;font-size:14px;max-width:24ch;opacity:.9}
+.promo .tiers{display:flex;gap:18px}
+.promo .tiers span{display:flex;flex-direction:column;font-size:12.5px;line-height:1.2}
+.promo .tiers b{font-family:'Lora', Georgia, serif;font-weight:600;font-size:30px}
+.promo svg.bf{position:absolute;right:-12px;top:-8px;width:130px;height:96px;fill:none;stroke:currentColor;stroke-width:.6;opacity:.35}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.sec-h{display:flex;justify-content:space-between;align-items:baseline;padding:0 20px 12px}
+.sec-h h3{margin:0;font-size:26px;line-height:1}
+.sec-h a{font-size:13.5px;color:var(--wine)}
+.rail{display:flex;gap:12px;padding:0 20px 24px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.pc{flex:none;width:156px;display:flex;flex-direction:column;gap:8px;scroll-snap-align:start;animation:rise .7s var(--ease-out) both}
+.pc .pic{position:relative;display:block;aspect-ratio:4/5;border-radius:16px;overflow:hidden;background:var(--surface)}
+.pc img{width:100%;height:100%;object-fit:cover;object-position:50% 28%}
+.pc .art{display:grid;place-items:center;width:100%;height:100%}
+.pc .art svg{width:46%;height:46%;fill:none;stroke:var(--ink);stroke-width:.8;stroke-linecap:round;stroke-linejoin:round}
+.pc .add{position:absolute;right:8px;bottom:8px;display:grid;place-items:center;width:40px;height:40px;border:0;border-radius:50%;background:var(--surface);color:var(--ink);cursor:pointer;transition:background-color .3s var(--ease),transform .5s var(--ease-out)}
+.pc .add:active{transform:scale(.9)}
+.pc .add.done{background:var(--wine);color:var(--on-wine)}
+.pc .nm{font-size:14px;line-height:1.3}
+.pc .pr{font-size:14px;font-weight:400}
+.looks{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 20px}
+.look{position:relative;aspect-ratio:3/4;border-radius:18px;overflow:hidden}
+.look img{width:100%;height:100%;object-fit:cover;object-position:50% 25%}
+.look span{position:absolute;left:12px;bottom:12px;padding:4px 12px;border-radius:999px;background:var(--surface);font-size:12.5px}
+.tabbar{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));padding:8px 8px 22px;border-top:1px solid var(--line);background:var(--bg);transition:background-color .6s var(--ease)}
+.tab{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;min-height:52px;padding:6px 0;border:0;background:none;color:var(--muted);font:inherit;font-size:11.5px;cursor:pointer;transition:color .3s var(--ease)}
+.tab.on{color:var(--wine)}
+.tab.on::before{content:"";position:absolute;top:-9px;left:30%;right:30%;height:2px;border-radius:2px;background:var(--wine);animation:grow .45s var(--ease-out)}
+@keyframes grow{from{transform:scaleX(0)}}
+.toast{position:absolute;left:20px;right:20px;bottom:96px;padding:12px 16px;border-radius:14px;background:var(--ink);color:var(--bg);font-size:13.5px;opacity:0;transform:translateY(10px);transition:opacity .4s var(--ease),transform .5s var(--ease-out);pointer-events:none}
+.toast.on{opacity:1;transform:none}
+.th{position:relative;width:22px;height:22px}
+.th .ic{position:absolute;inset:0;transition:transform .7s var(--ease-out),opacity .4s var(--ease)}
+.app .moon{opacity:0;transform:rotate(-90deg) scale(.5)}
+.app[data-theme="escuro"] .sun{opacity:0;transform:rotate(90deg) scale(.5)}
+.app[data-theme="escuro"] .moon{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.app *{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+</style>
+<style>
+.ais,.app{font-weight:300}
+.logo-ais{font-family:'Lora', Georgia, serif !important;font-weight:600 !important;letter-spacing:-.015em;}
+.serif,.ais h1,.ais h2,.ais h3,.app h1,.app h2,.app h3{font-weight:600 !important;letter-spacing:-.015em !important;}
+.tier .d,.big,.kit-n,.tiers-inline .big,.promo .tiers b,.tot .t b,.b-row.tot .serif,.tg-row.tot .serif,.hello b,.k-value,.tag-name{font-weight:600 !important}
+.btn,.quick,.tab,.chip,.fbtn,.mini-btn{font-weight:500}
+.cat-label{flex-direction:column !important;align-items:flex-start !important;justify-content:flex-end !important;gap:10px !important}
+.slide-txt h1{font-size:clamp(40px,5vw,70px) !important;line-height:1.04 !important}
+.cat-name{font-size:clamp(26px,2.5vw,38px) !important}
+.bigline .marquee > span{font-weight:800 !important;-webkit-text-stroke:1.2px var(--muted) !important}
+.ais:not([data-theme="escuro"]) .topbar{background:#1F6B43 !important;color:#FFFFFF !important}
+</style>
+<style>
+.frame{background:color-mix(in srgb,var(--wine) 16%,var(--surface)) !important}
+</style>
+</helmet>
+<div class="app" data-theme="{{theme}}">
+<div class="top">
+<div class="hello"><small>Olá, bem-vinda</small><b>@@NOME@@</b></div>
+<div class="tbtns">
+<button class="ib" type="button" onClick="{{toggleTheme}}" aria-label="{{themeLabel}}"><span class="th"><svg class="ic sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"></path></svg><svg class="ic moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"></path></svg></span></button>
+<a class="ib" href="Sacola.dc.html" aria-label="Sacola com {{bag}} itens"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"></path><path d="M9 8V6.5a3 3 0 0 1 6 0V8"></path></svg><span class="cnt">{{bag}}</span></a>
+</div>
+</div>
+
+<div class="scroll">
+<div class="search"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M20 20l-4.2-4.2"></path></svg>Buscar conjunto, cor ou acessório</div>
+<div class="chips" role="group" aria-label="Categorias">
+<sc-for list="{{chips}}" as="c" hint-placeholder-count="5"><button class="{{c.cls}}" type="button" onClick="{{c.pick}}" aria-pressed="{{c.on}}">{{c.label}}</button></sc-for>
+</div>
+
+<section class="promo" aria-label="Leve mais, pague menos">
+<svg class="bf" viewBox="0 0 40 28" aria-hidden="true"><path d="M20 27V3M20 8C15 7 12 3 12 3 16 3 19 5 20 8M20 8C25 7 28 3 28 3 24 3 21 5 20 8M20 15C14 14 10 9 10 9 15 9 19 12 20 15M20 15C26 14 30 9 30 9 25 9 21 12 20 15M20 22C14 21 10 16 10 16 15 16 19 19 20 22M20 22C26 21 30 16 30 16 25 16 21 19 20 22"></path></svg>
+<h2 class="serif">Leve mais, pague menos</h2>
+<p>Misture roupas e acessórios. O desconto entra sozinho na sacola.</p>
+<div class="tiers"><span><b>5%</b>com 2 peças</span><span><b>10%</b>com 3 ou mais</span></div>
+</section>
+
+<div class="sec-h"><h3 class="serif">{{railTitle}}</h3><a href="Colecao.dc.html">Ver tudo</a></div>
+<div class="rail">
+<sc-for list="{{rail}}" as="p" hint-placeholder-count="4">
+<div class="pc">
+<span class="pic">
+<sc-if value="{{p.isImg}}" hint-placeholder-val="{{true}}"><img src="{{p.img}}" alt="{{p.alt}}"></sc-if>
+<sc-if value="{{p.isArt}}" hint-placeholder-val="{{false}}"><span class="art" style="background: color-mix(in srgb, {{p.tone}} 30%, var(--surface))"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{p.icon}}"></path></svg></span></sc-if>
+<button class="{{p.addCls}}" type="button" onClick="{{p.add}}" aria-label="Adicionar {{p.name}} à sacola"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{p.addIcon}}"></path></svg></button>
+</span>
+<span class="nm">{{p.name}}</span>
+<span class="pr">{{p.price}}</span>
+</div>
+</sc-for>
+</div>
+
+<div class="sec-h"><h3 class="serif">Looks da semana</h3><a href="https://www.instagram.com/@@IG@@/" target="_blank" rel="noopener">Instagram</a></div>
+<div class="looks">
+<div class="look"><img src="vitrines/_ilustracoes/macacao-serenity-rua.png" alt="Modelo com macacão azul na rua"><span>Macacão Serenity</span></div>
+<div class="look"><img src="vitrines/_ilustracoes/macaquinho-marinho-modelo.png" alt="Modelo com macaquinho marinho"><span>Macaquinho Contorno</span></div>
+</div>
+</div>
+
+<div class="{{toastCls}}" role="status" aria-live="polite">{{toastText}}</div>
+
+<nav class="tabbar" aria-label="Navegação do app">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="5">
+<button class="{{t.cls}}" type="button" onClick="{{t.pick}}" aria-current="{{t.current}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{t.icon}}"></path></svg>{{t.label}}</button>
+</sc-for>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"temaInicial":{"editor":"enum","options":["claro","escuro"],"default":"escuro","section":"Tema"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  componentWillUnmount() { clearTimeout(this.tt); }
+  renderVals() {
+    const s = this.state || {};
+    const theme = s.theme || (this.props.temaInicial === 'escuro' ? 'escuro' : 'claro');
+    const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    const bag = s.bag == null ? 2 : s.bag;
+    const chip = s.chip || 'novidades';
+    const added = s.added || {};
+    const ITEMS = {
+      novidades: [
+        { id: 'ser', name: 'Macacão longo Serenity', price: 219.9, img: 'vitrines/_ilustracoes/macacao-serenity-academia.png', alt: 'Macacão azul serenity' },
+        { id: 'rec', name: 'Conjunto Recorte chocolate', price: 189.9, img: 'vitrines/_ilustracoes/flat-recorte-chocolate.png', alt: 'Conjunto chocolate' },
+        { id: 'con', name: 'Macaquinho Contorno', price: 169.9, img: 'vitrines/_ilustracoes/macaquinho-preto-modelo.png', alt: 'Macaquinho preto' },
+        { id: 'gar', name: 'Garrafa térmica 750 ml', price: 79.9, tone: '#C9A98B', icon: 'M9.5 2.5h5v2.5l1.5 2.2v12.8a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 8 20V7.2l1.5-2.2zM8 10.5h8M8 16.5h8' }
+      ],
+      roupas: [
+        { id: 'cru', name: 'Conjunto Cruzado vinho', price: 189.9, img: 'vitrines/_ilustracoes/cruzado-vinho-modelo.png', alt: 'Conjunto vinho' },
+        { id: 'nad', name: 'Conjunto Nadador café', price: 179.9, img: 'vitrines/_ilustracoes/nadador-cafe-modelo.png', alt: 'Conjunto café' },
+        { id: 'cos', name: 'Macacão Costas Abertas', price: 229.9, img: 'vitrines/_ilustracoes/macacao-costas-preto-modelo.png', alt: 'Macacão preto de costas' },
+        { id: 'roy', name: 'Conjunto Recorte azul royal', price: 189.9, img: 'vitrines/_ilustracoes/flat-recorte-royal.png', alt: 'Conjunto azul royal' }
+      ],
+      acessorios: [
+        { id: 'gar', name: 'Garrafa térmica 750 ml', price: 79.9, tone: '#C9A98B', icon: 'M9.5 2.5h5v2.5l1.5 2.2v12.8a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 8 20V7.2l1.5-2.2zM8 10.5h8M8 16.5h8' },
+        { id: 'fai', name: 'Faixa de cabelo canelada', price: 24.9, tone: '#C48C9E', icon: 'M12 6.5c5 0 9 2.5 9 5.5s-4 5.5-9 5.5-9-2.5-9-5.5 4-5.5 9-5.5zM3.6 13.8c1.6 1.5 4.8 2.4 8.4 2.4s6.8-.9 8.4-2.4' },
+        { id: 'bol', name: 'Bolsa de treino', price: 149.9, tone: '#8E7F86', icon: 'M3 10.5A2.5 2.5 0 0 1 5.5 8h13a2.5 2.5 0 0 1 2.5 2.5V19H3zM8.5 8V6a1.5 1.5 0 0 1 1.5-1.5h4A1.5 1.5 0 0 1 15.5 6v2M3 13.5h18' },
+        { id: 'mei', name: 'Meias cano médio, 3 pares', price: 39.9, tone: '#B9C3CF', icon: 'M9 2.5h6v9.5l3.6 3.8a3 3 0 0 1-2.2 5.2h-5.9A4.5 4.5 0 0 1 6 16.5c0-1.6.8-2.8 3-4.5zM9 5.5h6' }
+      ],
+      kits: [
+        { id: 'kt1', name: 'Kit Treino Completo', price: 265.23, img: 'vitrines/_ilustracoes/flat-recorte-chocolate.png', alt: 'Kit com conjunto chocolate' },
+        { id: 'kt2', name: 'Kit Pós-treino', price: 364.23, img: 'vitrines/_ilustracoes/macacao-serenity-rua.png', alt: 'Kit com macacão azul' },
+        { id: 'kt3', name: 'Dupla Canelada', price: 360.81, img: 'vitrines/_ilustracoes/flat-recorte-marinho.png', alt: 'Dupla de conjuntos' }
+      ]
+    };
+    const CHIPS = [['novidades', 'Novidades'], ['roupas', 'Roupas'], ['acessorios', 'Acessórios'], ['kits', 'Kits']];
+    const TABS = [
+      ['inicio', 'Início', 'M4 10l8-6 8 6v10H4zM10 20v-6h4v6'],
+      ['busca', 'Mostruário', 'M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z'],
+      ['fav', 'Favoritos', 'M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z'],
+      ['pedidos', 'Pedidos', 'M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6'],
+      ['conta', 'Conta', 'M12 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM5 20c1.2-3.6 4-5.5 7-5.5s5.8 1.9 7 5.5']
+    ];
+    const tab = s.tab || 'inicio';
+    return {
+      theme: theme,
+      themeLabel: theme === 'escuro' ? 'Usar tema claro' : 'Usar tema escuro',
+      toggleTheme: () => this.setState({ theme: theme === 'escuro' ? 'claro' : 'escuro' }),
+      bag: bag,
+      chips: CHIPS.map((c) => ({ label: c[1], on: c[0] === chip, cls: c[0] === chip ? 'chip on' : 'chip', pick: () => this.setState({ chip: c[0] }) })),
+      railTitle: CHIPS.filter((c) => c[0] === chip)[0][1],
+      rail: ITEMS[chip].map((p) => ({
+        name: p.name, price: brl(p.price), isImg: !!p.img, isArt: !p.img, img: p.img || '', alt: p.alt || '', tone: p.tone || '#D9E3DB', icon: p.icon || '',
+        addCls: added[p.id] ? 'add done' : 'add', addIcon: added[p.id] ? 'M5 12.5l4.5 4.5L19 7.5' : 'M12 5v14M5 12h14',
+        add: () => {
+          const a = Object.assign({}, added); a[p.id] = true;
+          const nb = bag + 1;
+          const msg = nb >= 3 ? 'Na sacola. Você ganhou 10% de desconto.' : (nb === 2 ? 'Na sacola. 5% de desconto aplicado; mais 1 peça e vira 10%.' : 'Na sacola. Mais 1 peça e você ganha 5%.');
+          clearTimeout(this.tt);
+          this.setState({ added: a, bag: nb, toast: msg });
+          this.tt = setTimeout(() => this.setState({ toast: '' }), 2600);
+        }
+      })),
+      toastCls: s.toast ? 'toast on' : 'toast',
+      toastText: s.toast || '',
+      tabs: TABS.map((t) => ({ label: t[1], icon: t[2], cls: t[0] === tab ? 'tab on' : 'tab', current: t[0] === tab ? 'page' : 'false', pick: () => this.setState({ tab: t[0] }) }))
+    };
+  }
+}
+</script>
+</body>
+</html>
