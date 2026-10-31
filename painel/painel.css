@@ -207,6 +207,7 @@ body.mg{background:var(--fundo);color:var(--tinta);font-family:var(--f-texto);fo
 /* login */
 .mg-login{min-height:100vh;display:grid;place-items:center;padding:20px}
 body.mg.sem-trilho{padding-left:0}
+body.mg.sem-trilho .mg-trilho{display:none}
 .mg-login .mg-card{width:min(420px,100%);padding:30px}
 .mg-login h1{font-family:var(--f-titulo);margin:12px 0 4px;font-size:26px}
 
