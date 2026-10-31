@@ -219,3 +219,20 @@ body.mg.sem-trilho .mg-trilho{display:none}
   .mg-hbar .trilho i{animation:none}
   @keyframes mg-fade{from{opacity:0}to{opacity:1}}
 }
+
+/* domínios & chaves */
+.mg-dom-atalhos{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.mg a.mg-dom-atalho{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:16px;background:var(--card2);color:var(--tinta);text-decoration:none;border:1px solid transparent;transition:border-color .2s var(--ease)}
+.mg a.mg-dom-atalho:hover{border-color:var(--navy)}
+.mg-dom-atalho svg.mg-ic{width:20px;height:20px;margin-top:2px;color:var(--navy)}
+.mg-dom-atalho b{display:block;font-weight:800}
+.mg-dom-atalho small{display:block;font-size:12.5px;color:var(--suave);line-height:1.35}
+.mg-dom-lista{width:100%;resize:vertical;font:500 13px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--tinta);background:var(--card2);border:1px solid var(--linha);border-radius:14px;padding:10px 12px}
+.mg-dom-passos{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.mg-dom-passo{display:inline-flex;align-items:center;gap:6px;border:1px dashed var(--linha);background:transparent;border-radius:999px;padding:4px 10px;font-size:12.5px;font-weight:700;color:var(--suave);cursor:pointer;white-space:nowrap}
+.mg-dom-passo:hover{border-color:var(--navy);color:var(--tinta)}
+.mg-dom-passo.ok{border-style:solid;border-color:transparent;background:var(--ok-bg);color:var(--ok)}
+.mg-dom-tab td{vertical-align:top}
+.mg-dom-auto .mg-chip{margin-bottom:2px}
+.mg-dom-ol{margin:0;padding-left:20px;line-height:1.7}
+.mg-dom-ol li{margin-bottom:6px}
