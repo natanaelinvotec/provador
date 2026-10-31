@@ -16,6 +16,11 @@ window.PROVADOR_CONFIG = {
   },
   // true depois de publicar a pasta functions/ (exige o plano Blaze). Com false, o painel calcula o resumo no navegador.
   funcoes: false,
+  // aba Domínios & chaves do painel: ID da "Browser key (auto created by Firebase)" (é o identificador, não a chave),
+  // o site do Hosting onde ficam as lojas e os IPs que o Firebase mandar colocar no DNS (vazio: aceita os IPs do Firebase)
+  chaveNavegadorId: 'd4d45f74-f06c-472e-a7d4-bd3529478147',
+  siteLojas: '',
+  ipsHosting: [],
   // endereços onde a própria plataforma roda; qualquer outro domínio abre a loja dona do domínio
   hostsDaPlataforma: ['localhost', '127.0.0.1', 'natanaelinvotec.github.io', 'provador-6416d.web.app', 'provador-6416d.firebaseapp.com'],
   whatsappComercial: '',
