@@ -306,21 +306,28 @@
       '<div class="mg-login"><form class="mg-card mg-entra" id="mg-form-login" novalidate>' +
       '<span class="mg-marca" style="margin:0">' + esc((P.cfg.nome || 'P').slice(0, 1)) + '</span>' +
       '<h1>Painel master</h1><p class="mg-sub">Entrada só para o dono da plataforma.</p>' +
-      (msg ? '<p class="mg-chip cr" role="alert" style="margin:12px 0 0">' + esc(msg) + '</p>' : '') +
+      (msg ? '<p class="mg-chip cr" role="alert" style="margin:12px 0 0;display:block;white-space:normal;line-height:1.45;padding:8px 12px;border-radius:12px;word-break:break-all">' + esc(msg) + '</p>' : '') +
       '<div class="mg-form" style="grid-template-columns:1fr;margin-top:18px">' +
       '<label class="mg-campo">E-mail<input type="email" name="email" autocomplete="username" required></label>' +
       '<label class="mg-campo">Senha<input type="password" name="senha" autocomplete="current-password"' + (demo ? '' : ' required') + '></label></div>' +
       (demo ? '<p class="mg-sub" style="margin-top:12px">Modo demonstração: qualquer e-mail entra. Com o Firebase ligado, só quem tem o papel "plataforma".</p>' : '') +
-      '<div class="rodape" style="display:flex;justify-content:flex-end;margin-top:18px"><button class="mg-btn pri" type="submit">Entrar</button></div></form></div>';
+      '<div class="rodape" style="display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:18px">' + (demo ? '' : '<button class="mg-btn" type="button" id="mg-google">Entrar com Google</button>') + '<button class="mg-btn pri" type="submit">Entrar</button></div></form></div>';
     document.getElementById('mg-form-login').addEventListener('submit', function (e) {
       e.preventDefault();
       var f = e.target, email = f.email.value.trim(), senha = f.senha.value;
       if (!demo && (!email || !senha)) return telaLogin('Informe e-mail e senha.');
-      P.entrar(email, senha).then(function (s) {
-        if (!s || (s.papeis || []).indexOf('plataforma') < 0) { P.sair(); return telaLogin('Esta conta não tem acesso ao mega painel.'); }
-        iniciar(s);
-      }).catch(function () { telaLogin('E-mail ou senha incorretos.'); });
+      P.entrar(email, senha).then(conferirPapel).catch(function () { telaLogin('E-mail ou senha incorretos.'); });
     });
+    var g = document.getElementById('mg-google');
+    if (g) g.addEventListener('click', function () {
+      P.entrarGoogle().then(conferirPapel).catch(function () { telaLogin('O login com Google não terminou. Tente de novo.'); });
+    });
+  }
+  function conferirPapel(s) {
+    if (s && (s.papeis || []).indexOf('plataforma') >= 0) return iniciar(s);
+    var uid = s && s.uid;
+    P.sair();
+    telaLogin(uid ? 'Esta conta entrou, mas ainda não tem o papel "plataforma". Crie no Firestore o documento usuarios/' + uid + ' com papeis = ["plataforma"].' : 'Esta conta não tem acesso ao painel.');
   }
 
   function iniciar(sessao) {
