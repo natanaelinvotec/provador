@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>@@MARCA@@ — Mostruário</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="assets/css/fontes.css">
+<style>
+body{margin:0}
+*,*::before,*::after{box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+a:hover{color:inherit}
+.ais{--bg:#FFF8F2;--surface:#FFFFFF;--ink:#1E140C;--muted:#6B5A4C;--line:#F1E1D2;--wine:#B8470A;--on-wine:#FFFFFF;--gold:#0F6B66;--tag:#FFFFFF;--shade:rgba(30,20,12,.06);--ease:cubic-bezier(.22,.61,.36,1);--ease-out:cubic-bezier(.16,1,.3,1);font-family:'Inter',system-ui,sans-serif;font-weight:300;font-size:16px;line-height:1.6;color:var(--ink);background:var(--bg);transition:background-color .6s var(--ease),color .6s var(--ease);min-height:100vh;overflow-x:clip}
+.ais[data-theme="escuro"]{--bg:#140D08;--surface:#1F150E;--ink:#FBF2EA;--muted:#BCA796;--line:#3A2A1E;--wine:#FF8A3D;--on-wine:#140D08;--gold:#3CC4B9;--tag:#1F150E;--shade:rgba(255,255,255,.06)}
+.serif{font-family:'Heros Cn', 'Heros', sans-serif;font-weight:700;letter-spacing:-.01em}
+.wrap{max-width:1360px;margin:0 auto;padding:0 clamp(16px,4vw,56px)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.icon-btn{position:relative;display:inline-grid;place-items:center;width:44px;height:44px;border:0;border-radius:50%;background:transparent;color:var(--ink);cursor:pointer;transition:background-color .3s var(--ease)}
+.icon-btn:hover{background:var(--shade)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:1.5px solid var(--wine);outline-offset:3px}
+.count{position:absolute;top:5px;right:3px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--wine);color:var(--on-wine);font-size:10.5px;font-weight:400;line-height:17px;text-align:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 26px;border-radius:999px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);font:inherit;font-weight:400;font-size:14.5px;letter-spacing:.03em;cursor:pointer;transition:background-color .35s var(--ease),color .35s var(--ease),border-color .35s var(--ease),transform .35s var(--ease)}
+.btn:hover{background:var(--wine);border-color:var(--wine);color:var(--on-wine)}
+.btn:active{transform:scale(.97)}
+.hdr{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);transition:background-color .6s var(--ease)}
+.hdr-in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:84px}
+.nav{display:flex;align-items:center;gap:28px;font-size:14.5px}
+.nav > a,.mega-trigger{position:relative;display:inline-flex;align-items:center;gap:8px;padding:30px 0}
+.nav > a::after,.mega-trigger::after{content:"";position:absolute;left:0;right:0;bottom:24px;height:1px;background:var(--wine);transform:scaleX(0);transform-origin:right;transition:transform .45s var(--ease-out)}
+.nav > a:hover::after,.mega-item:hover .mega-trigger::after,.mega-item:focus-within .mega-trigger::after{transform:scaleX(1);transform-origin:left}
+.new{padding:1px 8px;border-radius:999px;background:var(--wine);color:var(--on-wine);font-size:11px;line-height:18px}
+.mega-panel{position:absolute;left:0;right:0;top:100%;z-index:40;background:var(--bg);border-bottom:1px solid var(--line);box-shadow:0 40px 60px -50px rgba(0,0,0,.45);opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .3s var(--ease),transform .5s var(--ease-out),visibility 0s .3s}
+.mega-item:hover .mega-panel,.mega-item:focus-within .mega-panel{opacity:1;visibility:visible;transform:none;transition:opacity .3s var(--ease),transform .5s var(--ease-out)}
+.mega-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.3fr) minmax(0,1.3fr);gap:32px;padding-top:32px;padding-bottom:36px}
+.mega-col{display:flex;flex-direction:column;gap:6px}
+.mega-h{margin:0 0 6px;font-size:24px;line-height:1.1}
+.mega-col a{padding:3px 0;color:var(--muted);transition:color .3s var(--ease)}
+.mega-col a:hover{color:var(--wine)}
+.mega-col .soon{color:var(--muted);opacity:.7}
+.mega-feat{display:flex;flex-direction:column;gap:10px}
+.mega-feat .pic{display:block;aspect-ratio:4/3;overflow:hidden;background:var(--surface)}
+.mega-feat img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;transition:transform 1.2s var(--ease-out)}
+.mega-feat:hover img{transform:scale(1.05)}
+.mega-feat span.t{font-size:20px}
+.tools{display:flex;justify-content:flex-end;align-items:center;gap:2px}
+.logo{display:inline-flex;flex-direction:column;align-items:center;line-height:1}
+.logo-ais{font-weight:300;font-size:38px;letter-spacing:.05em;color:var(--wine)}
+.logo-sub{display:inline-flex;align-items:center;gap:3px;margin-top:3px;font-size:9.5px;font-weight:400;letter-spacing:.3em;color:var(--gold)}
+.bfly{width:24px;height:17px;fill:none;stroke:var(--gold);stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round}
+.theme-ic{position:relative;width:20px;height:20px}
+.theme-ic .ic{position:absolute;inset:0;transition:transform .7s var(--ease-out),opacity .45s var(--ease)}
+.ais .moon{opacity:0;transform:rotate(-90deg) scale(.5)}
+.ais[data-theme="escuro"] .sun{opacity:0;transform:rotate(90deg) scale(.5)}
+.ais[data-theme="escuro"] .moon{opacity:1;transform:none}
+.toast{position:absolute;right:clamp(16px,4vw,56px);top:calc(100% + 14px);display:flex;align-items:center;gap:12px;max-width:min(440px,calc(100% - 32px));padding:14px 18px;background:var(--ink);color:var(--bg);border-radius:14px;font-size:14px;box-shadow:0 24px 50px -20px rgba(0,0,0,.4);opacity:0;transform:translateY(-10px);pointer-events:none;transition:opacity .45s var(--ease),transform .6s var(--ease-out)}
+.toast.on{opacity:1;transform:none;pointer-events:auto}
+.toast a{text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:32px 64px;align-items:end;padding:44px 0 36px}
+.crumbs{display:flex;gap:8px;margin-bottom:14px;font-size:13.5px;color:var(--muted)}
+.crumbs a:hover{color:var(--wine)}
+.intro h1{margin:0;font-size:clamp(52px,6vw,88px);line-height:.95}
+.intro p{margin:14px 0 0;max-width:42ch;color:var(--muted)}
+.tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--wine);border-radius:4px;padding:6px;background:var(--surface);transition:background-color .6s var(--ease)}
+.tier{display:flex;flex-direction:column;gap:2px;padding:16px 18px}
+.tier + .tier{border-left:1px solid var(--line)}
+.tier .n{font-size:13px;color:var(--muted)}
+.tier .d{font-family:'Heros Cn', 'Heros', sans-serif;font-size:34px;line-height:1.05}
+.tier .x{font-size:13.5px}
+.tier.hot .d{color:var(--wine)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 0 28px;border-bottom:1px solid var(--line)}
+.chip{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--ink);font:inherit;font-size:14px;cursor:pointer;transition:background-color .35s var(--ease),color .35s var(--ease),border-color .35s var(--ease)}
+.chip:hover{border-color:var(--ink)}
+.chip.on{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.chip .c{font-size:12px;opacity:.7}
+.chip:disabled{cursor:default;color:var(--muted);border-style:dashed}
+.chip:disabled:hover{border-color:var(--line)}
+.shop{display:flex;flex-wrap:wrap;gap:40px;padding:32px 0 120px}
+.filters{flex:1 1 240px;max-width:100%;display:flex;flex-direction:column;gap:30px}
+.results{flex:999 1 560px;min-width:0}
+.fgroup h2{margin:0 0 12px;font-size:22px;line-height:1.1}
+.fsw{display:flex;flex-wrap:wrap;gap:4px;margin-left:-4px}
+.fsw button{display:grid;place-items:center;width:40px;height:40px;padding:0;border:0;border-radius:50%;background:none;cursor:pointer;transition:box-shadow .3s var(--ease)}
+.fsw button i{width:24px;height:24px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+.fsw button.on{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.fsizes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.fsizes button{min-height:42px;border:1px solid var(--line);border-radius:10px;background:transparent;color:var(--ink);font:inherit;font-size:14px;cursor:pointer;transition:background-color .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease)}
+.fsizes button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.fradio{display:flex;flex-direction:column;gap:4px}
+.fradio button{display:flex;align-items:center;gap:12px;min-height:40px;padding:0;border:0;background:none;color:var(--ink);font:inherit;font-size:14.5px;text-align:left;cursor:pointer}
+.fradio .r{width:18px;height:18px;border-radius:50%;border:1px solid var(--muted);display:grid;place-items:center}
+.fradio button.on .r{border-color:var(--wine)}
+.fradio button.on .r::after{content:"";width:9px;height:9px;border-radius:50%;background:var(--wine)}
+.toggle-row{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14.5px}
+.switch{position:relative;width:46px;height:26px;padding:0;border:0;border-radius:999px;background:var(--line);cursor:pointer;transition:background-color .35s var(--ease);flex:none}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .45s var(--ease-out)}
+.switch.on{background:var(--wine)}
+.switch.on::after{transform:translateX(20px)}
+.clear{align-self:flex-start;border:0;background:none;padding:6px 0;color:var(--ink);font:inherit;font-size:14px;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.clear:hover{color:var(--wine)}
+.bar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:24px;font-size:14.5px}
+.bar-r{display:flex;align-items:center;gap:10px}
+.sel{min-height:44px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font:inherit;font-size:14px}
+.cols{display:inline-flex;padding:3px;border:1px solid var(--line);border-radius:999px}
+.cols button{display:grid;place-items:center;width:40px;height:36px;border:0;border-radius:999px;background:none;color:var(--muted);cursor:pointer}
+.cols button.on{background:var(--ink);color:var(--bg)}
+.grid{display:grid;gap:44px 22px}
+.grid.c3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid.c4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.card{position:relative;display:flex;flex-direction:column;gap:14px;animation:cardIn .8s var(--ease-out) both}
+.card:nth-child(4n+2){animation-delay:.06s}
+.card:nth-child(4n+3){animation-delay:.12s}
+.card:nth-child(4n+4){animation-delay:.18s}
+@keyframes cardIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.media{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--surface)}
+.media > a{position:absolute;inset:0;display:block}
+.media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 28%;transition:opacity .8s var(--ease),transform 1.4s var(--ease-out)}
+.media .b{opacity:0}
+.card:hover .media .a{transform:scale(1.045)}
+.card:hover .media .b{opacity:1}
+.media::after{content:"";position:absolute;inset:12px;border:1px solid rgba(255,255,255,.9);opacity:0;transform:scale(1.03);transition:opacity .5s var(--ease),transform .8s var(--ease-out);pointer-events:none}
+.card:hover .media::after{opacity:1;transform:none}
+.art{display:grid;place-items:center;transition:transform 1.2s var(--ease-out)}
+.art svg{width:42%;height:42%;fill:none;stroke:var(--ink);stroke-width:.7;stroke-linecap:round;stroke-linejoin:round;transition:transform 1.2s var(--ease-out)}
+.card:hover .art svg{transform:scale(1.06) rotate(-3deg)}
+.soon-note{position:absolute;left:16px;bottom:16px;padding:3px 10px;border-radius:999px;background:var(--tag);font-size:12px;color:var(--muted)}
+.kit-art{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:1fr;gap:3px;background:var(--line)}
+.kit-art .kp{position:relative;overflow:hidden;display:grid;place-items:center}
+.kit-art .kp:first-child{grid-row:span 2}
+.kit-art .kp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.kit-art .kp svg{width:52%;height:52%;fill:none;stroke:var(--ink);stroke-width:.8;stroke-linecap:round;stroke-linejoin:round}
+.kit-art.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.kit-art.two .kp:first-child{grid-row:auto}
+.media > a.art,.media > a.kit-art{display:grid}
+.badge{position:absolute;top:14px;left:14px;padding:4px 12px;border-radius:999px;background:var(--tag);color:var(--ink);font-size:12.5px;pointer-events:none}
+.badge.save{background:var(--wine);color:var(--on-wine)}
+.fav{position:absolute;top:8px;right:8px;background:color-mix(in srgb,var(--tag) 82%,transparent)}
+.fav.on .ic{fill:var(--wine);stroke:var(--wine);animation:pop .5s var(--ease-out)}
+@keyframes pop{40%{transform:scale(1.3)}}
+.quick{position:absolute;left:10px;right:10px;bottom:10px;min-height:46px;border:0;border-radius:999px;background:var(--tag);color:var(--ink);font:inherit;font-size:14px;font-weight:400;cursor:pointer;transform:translateY(calc(100% + 14px));transition:transform .6s var(--ease-out),background-color .3s var(--ease),color .3s var(--ease)}
+.card:hover .quick,.quick:focus-visible{transform:none}
+.quick:hover{background:var(--wine);color:var(--on-wine)}
+.info{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.info h3{margin:0;font-size:16px;font-weight:300;line-height:1.35}
+.info .cname{margin:2px 0 0;font-size:13px;color:var(--muted)}
+.prices{display:flex;flex-direction:column;align-items:flex-end;white-space:nowrap}
+.price{margin:0;font-size:15px;font-weight:400}
+.from{font-size:12.5px;color:var(--muted);text-decoration:line-through}
+.empty{padding:64px 0;text-align:center;color:var(--muted)}
+.empty h2{margin:0 0 8px;color:var(--ink);font-size:34px}
+.combo{position:sticky;bottom:16px;z-index:20;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;max-width:860px;margin:0 auto;padding:14px 16px 14px 24px;border-radius:999px;background:var(--ink);color:var(--bg);box-shadow:0 30px 60px -30px rgba(0,0,0,.55);animation:up .7s var(--ease-out) both}
+@keyframes up{from{opacity:0;transform:translateY(30px)}}
+.combo .steps{display:flex;gap:4px}
+.combo .steps i{width:30px;height:4px;border-radius:4px;background:color-mix(in srgb,var(--bg) 25%,transparent);transition:background-color .5s var(--ease)}
+.combo .steps i.on{background:var(--wine)}
+.combo .msg{flex:1;min-width:220px;font-size:14.5px}
+.combo a{display:inline-flex;align-items:center;min-height:42px;padding:0 20px;border-radius:999px;background:var(--bg);color:var(--ink);font-size:14px;font-weight:400;white-space:nowrap}
+.combo a:hover{background:var(--wine);color:var(--on-wine)}
+.foot{border-top:1px solid var(--line);background:var(--surface)}
+.foot-in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;padding:28px 0;font-size:13.5px;color:var(--muted)}
+@media (max-width:1100px){.grid.c4{grid-template-columns:repeat(3,minmax(0,1fr))}.mega-in{grid-template-columns:1fr 1fr}.mega-feat{display:none}}
+@media (max-width:980px){
+.nav{display:none}
+.hide-sm{display:none}
+.hdr-in{height:68px}
+.logo-ais{font-size:32px}
+.intro{grid-template-columns:1fr}
+.grid.c3,.grid.c4{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 12px}
+.quick{transform:none;min-height:42px;font-size:13px}
+.filters{flex-basis:100%;flex-direction:row;flex-wrap:wrap;gap:20px}
+.fgroup{flex:1 1 220px}
+.combo{border-radius:20px}
+}
+@media (max-width:560px){.tiers{grid-template-columns:1fr}.tier + .tier{border-left:0;border-top:1px solid var(--line)}.info{flex-direction:column}.prices{align-items:flex-start}}
+@media (prefers-reduced-motion:reduce){.ais *,.ais *::before,.ais *::after{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+</style>
+<style>
+.ais,.app{font-weight:400}
+.logo-ais{font-family:'Heros Cn', 'Heros', sans-serif !important;font-weight:700 !important;letter-spacing:-.005em;}
+.serif,.ais h1,.ais h2,.ais h3,.app h1,.app h2,.app h3{font-weight:700 !important;letter-spacing:-.005em !important;}
+.tier .d,.big,.kit-n,.tiers-inline .big,.promo .tiers b,.tot .t b,.b-row.tot .serif,.tg-row.tot .serif,.hello b,.k-value,.tag-name{font-weight:700 !important}
+.btn,.quick,.tab,.chip,.fbtn,.mini-btn{font-weight:500}
+.cat-label{flex-direction:column !important;align-items:flex-start !important;justify-content:flex-end !important;gap:10px !important}
+.slide-txt h1{font-size:clamp(40px,5vw,70px) !important;line-height:1.04 !important}
+.cat-name{font-size:clamp(26px,2.5vw,38px) !important}
+.bigline .marquee > span{font-weight:800 !important;-webkit-text-stroke:1.2px var(--muted) !important}
+.ais:not([data-theme="escuro"]) .topbar{background:#E8590C !important;color:#1E140C !important}
+.btn,.chip,.tab,.quick,.fbtn,.mini-btn,.badge,.pill,.sw,.icon-btn,.opt,.b-opt,.b-acc,.tile,.kit,.card,.media{border-radius:2px !important}
+</style>
+<style>
+.frame{background:var(--wine) !important}.frame-line{border-color:rgba(255,255,255,.55) !important}
+</style>
+</helmet>
+<div class="ais" data-theme="{{theme}}">
+<header class="hdr">
+<div class="wrap hdr-in">
+<nav class="nav" aria-label="Categorias">
+<div class="mega-item">
+<a class="mega-trigger" href="#mostruario" onClick="{{goRoupas}}">Roupas</a>
+<div class="mega-panel">
+<div class="wrap mega-in">
+<div class="mega-col"><p class="mega-h serif">Roupas</p><a href="#mostruario" onClick="{{goConjuntos}}">Conjuntos</a><a href="#mostruario" onClick="{{goMacacoes}}">Macacões</a><a href="#mostruario" onClick="{{goMacaquinhos}}">Macaquinhos</a><span class="soon">Leggings, em breve</span><span class="soon">Tops, em breve</span></div>
+<div class="mega-col"><p class="mega-h serif">Destaques</p><a href="#mostruario" onClick="{{goNovos}}">Novidades</a><a href="#mostruario" onClick="{{goKits}}">Kits e combinações</a><a href="#mostruario" onClick="{{goTodos}}">Todo o mostruário</a></div>
+<a class="mega-feat" href="Produto.dc.html"><span class="pic"><img src="vitrines/_ilustracoes/nadador-cafe-modelo.png" alt="Modelo com conjunto café de top nadador"></span><span class="t serif">Conjunto Nadador café</span></a>
+<a class="mega-feat" href="Produto.dc.html"><span class="pic"><img src="vitrines/_ilustracoes/macacao-serenity-rua.png" alt="Modelo com macacão longo azul na rua"></span><span class="t serif">Macacão longo Serenity</span></a>
+</div>
+</div>
+</div>
+<div class="mega-item">
+<a class="mega-trigger" href="#mostruario" onClick="{{goAcessorios}}">Acessórios <span class="new">novo</span></a>
+<div class="mega-panel">
+<div class="wrap mega-in">
+<div class="mega-col"><p class="mega-h serif">Acessórios</p><a href="#mostruario" onClick="{{goAcessorios}}">Garrafas</a><a href="#mostruario" onClick="{{goAcessorios}}">Bolsas</a><a href="#mostruario" onClick="{{goAcessorios}}">Meias</a><a href="#mostruario" onClick="{{goAcessorios}}">Cabelo</a><a href="#mostruario" onClick="{{goAcessorios}}">Toalhas</a></div>
+<div class="mega-col"><p class="mega-h serif">Monte o look</p><a href="#mostruario" onClick="{{goKits}}">Kit Treino Completo</a><a href="#mostruario" onClick="{{goKits}}">Kit Pós-treino</a><a href="#mostruario" onClick="{{goKits}}">Dupla Canelada</a></div>
+<div class="mega-col" style="grid-column: span 2; justify-content: center"><p class="mega-h serif">Leve mais, pague menos</p><span style="color: var(--muted); max-width: 40ch">Misture roupas e acessórios: 2 peças têm 5% de desconto e 3 ou mais, 10%. O desconto aparece sozinho na sacola.</span></div>
+</div>
+</div>
+</div>
+<a href="#mostruario" onClick="{{goKits}}">Kits</a>
+<a href="#mostruario" onClick="{{goNovos}}">Novidades</a>
+</nav>
+<a class="logo" href="Main.dc.html" aria-label="@@NOME@@, página inicial"><span class="logo-ais">@@MARCA@@</span><span class="logo-sub">MODA FITNESS <svg class="bfly" viewBox="0 0 40 28" aria-hidden="true"><path d="M23 2L11 16H19L17 27L29 12H21Z"></path></svg></span></a>
+<div class="tools">
+<button class="icon-btn hide-sm" type="button" aria-label="Buscar"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M20 20l-4.2-4.2"></path></svg></button>
+<button class="icon-btn" type="button" onClick="{{toggleTheme}}" aria-label="{{themeLabel}}"><span class="theme-ic"><svg class="ic sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"></path></svg><svg class="ic moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"></path></svg></span></button>
+<a class="icon-btn" href="Sacola.dc.html" aria-label="Sacola com {{bag}} itens"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"></path><path d="M9 8V6.5a3 3 0 0 1 6 0V8"></path></svg><span class="count">{{bag}}</span></a>
+</div>
+</div>
+<div class="{{toastCls}}" role="status" aria-live="polite"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span>{{toastText}}</span><a href="Sacola.dc.html">Ver sacola</a></div>
+</header>
+
+<main class="wrap" id="mostruario">
+<section class="intro">
+<div>
+<nav class="crumbs" aria-label="Você está em"><a href="Main.dc.html">Início</a><span aria-hidden="true">/</span><span>{{catTitle}}</span></nav>
+<h1 class="serif">{{catTitle}}</h1>
+<p>{{catText}}</p>
+</div>
+<div class="tiers" aria-label="Leve mais, pague menos">
+<div class="tier"><span class="n">1 peça</span><span class="d">Preço normal</span><span class="x">roupa ou acessório</span></div>
+<div class="tier hot"><span class="n">2 peças</span><span class="d">5% off</span><span class="x">em toda a sacola</span></div>
+<div class="tier hot"><span class="n">3 ou mais</span><span class="d">10% off</span><span class="x">em toda a sacola</span></div>
+</div>
+</section>
+
+<div class="chips" role="group" aria-label="Categorias">
+<sc-for list="{{cats}}" as="c" hint-placeholder-count="8">
+<button class="{{c.cls}}" type="button" onClick="{{c.pick}}" aria-pressed="{{c.on}}" disabled="{{c.empty}}">{{c.label}}<span class="c">{{c.count}}</span></button>
+</sc-for>
+</div>
+
+<div class="shop">
+<aside class="filters" aria-label="Filtros">
+<div class="fgroup">
+<h2 class="serif">Cor</h2>
+<div class="fsw" role="group" aria-label="Filtrar por cor">
+<sc-for list="{{colorFilters}}" as="c" hint-placeholder-count="10">
+<button class="{{c.cls}}" type="button" onClick="{{c.pick}}" aria-pressed="{{c.on}}" aria-label="{{c.name}}" title="{{c.name}}"><i style="background: {{c.hex}}"></i></button>
+</sc-for>
+</div>
+</div>
+<div class="fgroup">
+<h2 class="serif">Tamanho</h2>
+<div class="fsizes" role="group" aria-label="Filtrar por tamanho">
+<sc-for list="{{sizeFilters}}" as="z" hint-placeholder-count="4">
+<button class="{{z.cls}}" type="button" onClick="{{z.pick}}" aria-pressed="{{z.on}}">{{z.label}}</button>
+</sc-for>
+</div>
+</div>
+<div class="fgroup">
+<h2 class="serif">Preço</h2>
+<div class="fradio" role="radiogroup" aria-label="Faixa de preço">
+<sc-for list="{{priceFilters}}" as="p" hint-placeholder-count="4">
+<button class="{{p.cls}}" type="button" role="radio" aria-checked="{{p.on}}" onClick="{{p.pick}}"><span class="r" aria-hidden="true"></span>{{p.label}}</button>
+</sc-for>
+</div>
+</div>
+<div class="fgroup">
+<div class="toggle-row"><span id="nov-l">Só novidades</span><button class="{{newSwCls}}" type="button" role="switch" aria-checked="{{onlyNew}}" aria-labelledby="nov-l" onClick="{{toggleNew}}"></button></div>
+</div>
+<sc-if value="{{hasFilters}}" hint-placeholder-val="{{false}}"><button class="clear" type="button" onClick="{{clearFilters}}">Limpar filtros</button></sc-if>
+</aside>
+
+<section class="results" aria-label="Produtos">
+<div class="bar">
+<span>{{resultText}}</span>
+<div class="bar-r">
+<label class="sr" for="ord">Ordenar</label>
+<select id="ord" class="sel" value="{{sort}}" onChange="{{setSort}}"><option value="novos">Novidades primeiro</option><option value="vendidos">Mais vendidos</option><option value="menor">Menor preço</option><option value="maior">Maior preço</option></select>
+<div class="cols" role="group" aria-label="Colunas">
+<button class="{{c3Cls}}" type="button" onClick="{{setC3}}" aria-label="3 por linha" aria-pressed="{{isC3}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h4v14H4zM10 5h4v14h-4zM16 5h4v14h-4z"></path></svg></button>
+<button class="{{c4Cls}}" type="button" onClick="{{setC4}}" aria-label="4 por linha" aria-pressed="{{isC4}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h3v14H3zM8 5h3v14H8zM13 5h3v14h-3zM18 5h3v14h-3z"></path></svg></button>
+</div>
+</div>
+</div>
+
+<div class="{{gridCls}}">
+<sc-for list="{{items}}" as="p" hint-placeholder-count="12">
+<article class="card">
+<div class="media">
+<sc-if value="{{p.isPhoto}}" hint-placeholder-val="{{true}}">
+<a href="Produto.dc.html" aria-label="Ver {{p.name}} {{p.color}}"><img class="a" src="{{p.img}}" alt="{{p.alt}}" loading="lazy"><sc-if value="{{p.hasB}}" hint-placeholder-val="{{false}}"><img class="b" src="{{p.imgB}}" alt="" loading="lazy"></sc-if></a>
+</sc-if>
+<sc-if value="{{p.isArt}}" hint-placeholder-val="{{false}}">
+<a class="art" href="Produto.dc.html" aria-label="Ver {{p.name}}" style="background: color-mix(in srgb, {{p.tone}} 28%, var(--surface))"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{p.icon}}"></path></svg><span class="soon-note">Foto em breve</span></a>
+</sc-if>
+<sc-if value="{{p.isKit}}" hint-placeholder-val="{{false}}">
+<a class="{{p.kitCls}}" href="Produto.dc.html" aria-label="Ver {{p.name}}">
+<sc-for list="{{p.parts}}" as="k" hint-placeholder-count="3">
+<span class="kp" style="background: color-mix(in srgb, {{k.tone}} 28%, var(--surface))"><sc-if value="{{k.isImg}}" hint-placeholder-val="{{true}}"><img src="{{k.img}}" alt="" loading="lazy"></sc-if><sc-if value="{{k.isIcon}}" hint-placeholder-val="{{false}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{k.icon}}"></path></svg></sc-if></span>
+</sc-for>
+</a>
+</sc-if>
+<sc-if value="{{p.hasBadge}}" hint-placeholder-val="{{true}}"><span class="{{p.badgeCls}}">{{p.badge}}</span></sc-if>
+<button class="{{p.favCls}}" type="button" onClick="{{p.toggleFav}}" aria-label="{{p.favLabel}}" aria-pressed="{{p.fav}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg></button>
+<button class="quick" type="button" onClick="{{p.add}}">{{p.addLabel}}</button>
+</div>
+<div class="info">
+<div><h3><a href="Produto.dc.html">{{p.name}}</a></h3><p class="cname">{{p.sub}}</p></div>
+<div class="prices"><sc-if value="{{p.hasFrom}}" hint-placeholder-val="{{false}}"><span class="from">{{p.from}}</span></sc-if><p class="price">{{p.price}}</p></div>
+</div>
+</article>
+</sc-for>
+</div>
+
+<sc-if value="{{isEmpty}}" hint-placeholder-val="{{false}}">
+<div class="empty"><h2 class="serif">Nenhuma peça com esses filtros</h2><p>Tire um filtro ou veja todo o mostruário.</p><button class="btn" type="button" onClick="{{clearFilters}}">Limpar filtros</button></div>
+</sc-if>
+</section>
+</div>
+
+<div class="combo" role="status" aria-live="polite">
+<span class="steps" aria-hidden="true"><i class="{{st1}}"></i><i class="{{st2}}"></i><i class="{{st3}}"></i></span>
+<span class="msg">{{comboText}}</span>
+<a href="Sacola.dc.html">Ver sacola</a>
+</div>
+<div style="height: 48px"></div>
+</main>
+
+<footer class="foot">
+<div class="wrap foot-in"><span>© 2026 @@NOME@@, @@CIDADE@@</span><a href="https://www.instagram.com/@@IG@@/" target="_blank" rel="noopener">@@@IG@@</a></div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"temaInicial":{"editor":"enum","options":["claro","escuro"],"default":"escuro","section":"Tema"},"$preview":{"width":1440,"height":3000}}'>
+class Component extends DCLogic {
+  componentWillUnmount() { clearTimeout(this.tt); }
+  renderVals() {
+    const s = this.state || {};
+    const theme = s.theme || (this.props.temaInicial === 'escuro' ? 'escuro' : 'claro');
+    const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    const IMG = {
+      choc: 'vitrines/_ilustracoes/flat-recorte-chocolate.png', serenityGym: 'vitrines/_ilustracoes/macacao-serenity-academia.png',
+      nadPreto: 'vitrines/_ilustracoes/nadador-preto-modelo.png', marinho: 'vitrines/_ilustracoes/flat-recorte-marinho.png',
+      macPreto: 'vitrines/_ilustracoes/macaquinho-preto-modelo.png', royal: 'vitrines/_ilustracoes/flat-recorte-royal.png',
+      nude: 'vitrines/_ilustracoes/flat-recorte-nude.png', cruzVinho: 'vitrines/_ilustracoes/cruzado-vinho-modelo.png',
+      flatCruzVinho: 'vitrines/_ilustracoes/flat-cruzado-vinho.png', flatCruzPreto: 'vitrines/_ilustracoes/flat-cruzado-preto.png',
+      serenityRua: 'vitrines/_ilustracoes/macacao-serenity-rua.png', macMarinho: 'vitrines/_ilustracoes/macaquinho-marinho-modelo.png',
+      nadCafe: 'vitrines/_ilustracoes/nadador-cafe-modelo.png', costas: 'vitrines/_ilustracoes/macacao-costas-preto-modelo.png'
+    };
+    const ICON = {
+      garrafa: 'M9.5 2.5h5v2.5l1.5 2.2v12.8a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 8 20V7.2l1.5-2.2zM8 10.5h8M8 16.5h8',
+      bolsa: 'M3 10.5A2.5 2.5 0 0 1 5.5 8h13a2.5 2.5 0 0 1 2.5 2.5V19H3zM8.5 8V6a1.5 1.5 0 0 1 1.5-1.5h4A1.5 1.5 0 0 1 15.5 6v2M3 13.5h18M11 13.5v2h2v-2',
+      meia: 'M9 2.5h6v9.5l3.6 3.8a3 3 0 0 1-2.2 5.2h-5.9A4.5 4.5 0 0 1 6 16.5c0-1.6.8-2.8 3-4.5zM9 5.5h6',
+      faixa: 'M12 6.5c5 0 9 2.5 9 5.5s-4 5.5-9 5.5-9-2.5-9-5.5 4-5.5 9-5.5zM3.6 13.8c1.6 1.5 4.8 2.4 8.4 2.4s6.8-.9 8.4-2.4',
+      xuxinha: 'M12 4.5a7.5 7.5 0 1 1 0 15 7.5 7.5 0 0 1 0-15zM12 8.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7zM6 7l2.5 2.5M18 7l-2.5 2.5M6 17l2.5-2.5M18 17l-2.5-2.5',
+      toalha: 'M5 3.5h11a3 3 0 0 1 3 3v14H8a3 3 0 0 1-3-3zM5 17.5a3 3 0 0 1 3-3h11M9 3.5v11'
+    };
+    const TIER = (u) => (u >= 3 ? 10 : (u >= 2 ? 5 : 0));
+    const CLOTHES = [
+      { id: 'rec-cho', name: 'Conjunto canelado Recorte', color: 'Chocolate', hex: '#7A4634', cat: 'conjuntos', price: 189.9, img: IMG.choc, sizes: [4, 6, 5, 2], sold: 12, isNew: true, alt: 'Conjunto canelado chocolate sobre a mesa' },
+      { id: 'rec-mar', name: 'Conjunto canelado Recorte', color: 'Marinho', hex: '#2C3A6E', cat: 'conjuntos', price: 189.9, img: IMG.marinho, sizes: [3, 5, 4, 1], sold: 9, isNew: true, alt: 'Conjunto canelado marinho sobre a mesa' },
+      { id: 'rec-roy', name: 'Conjunto canelado Recorte', color: 'Azul royal', hex: '#2448C4', cat: 'conjuntos', price: 189.9, img: IMG.royal, sizes: [5, 7, 3, 2], sold: 8, isNew: true, alt: 'Conjunto canelado azul royal sobre a mesa' },
+      { id: 'rec-nud', name: 'Conjunto canelado Recorte', color: 'Nude', hex: '#D8C4B0', cat: 'conjuntos', price: 189.9, img: IMG.nude, sizes: [2, 2, 4, 1], sold: 5, isNew: true, alt: 'Conjunto canelado nude sobre a mesa' },
+      { id: 'cru-vin', name: 'Conjunto canelado Cruzado', color: 'Vinho', hex: '#5C1F31', cat: 'conjuntos', price: 189.9, img: IMG.cruzVinho, b: IMG.flatCruzVinho, sizes: [3, 4, 0, 1], sold: 10, alt: 'Modelo com conjunto vinho' },
+      { id: 'cru-pre', name: 'Conjunto canelado Cruzado', color: 'Preto', hex: '#1B1A20', cat: 'conjuntos', price: 189.9, img: IMG.flatCruzPreto, sizes: [6, 8, 5, 3], sold: 2, alt: 'Conjunto canelado preto sobre a mesa' },
+      { id: 'nad-pre', name: 'Conjunto Nadador', color: 'Preto', hex: '#151515', cat: 'conjuntos', price: 179.9, img: IMG.nadPreto, sizes: [7, 9, 6, 4], sold: 4, alt: 'Modelo com conjunto preto de top nadador' },
+      { id: 'nad-caf', name: 'Conjunto Nadador', color: 'Café', hex: '#4B3226', cat: 'conjuntos', price: 179.9, img: IMG.nadCafe, sizes: [4, 5, 3, 2], sold: 3, alt: 'Modelo com conjunto café de top nadador' },
+      { id: 'ser-azu', name: 'Macacão longo Serenity', color: 'Azul serenity', hex: '#86A9DD', cat: 'macacoes', price: 219.9, img: IMG.serenityGym, b: IMG.serenityRua, sizes: [5, 6, 4, 3], sold: 22, isNew: true, alt: 'Modelo com macacão longo azul na academia' },
+      { id: 'cos-pre', name: 'Macacão Costas Abertas', color: 'Preto', hex: '#141414', cat: 'macacoes', price: 229.9, img: IMG.costas, sizes: [3, 4, 2, 1], sold: 3, alt: 'Modelo de costas com macacão preto' },
+      { id: 'con-pre', name: 'Macaquinho Contorno', color: 'Preto', hex: '#161616', cat: 'macaquinhos', price: 169.9, img: IMG.macPreto, sizes: [6, 7, 5, 2], sold: 11, isNew: true, alt: 'Modelo com macaquinho preto' },
+      { id: 'con-mar', name: 'Macaquinho Contorno', color: 'Marinho', hex: '#22315F', cat: 'macaquinhos', price: 169.9, img: IMG.macMarinho, sizes: [1, 4, 3, 2], sold: 7, isNew: true, alt: 'Modelo com macaquinho marinho' }
+    ];
+    const ACCS = [
+      { id: 'garrafa', name: 'Garrafa térmica 750 ml', color: 'Preto', hex: '#151515', sub: 'Garrafas', price: 79.9, icon: ICON.garrafa, tone: '#C9A98B', sold: 6 },
+      { id: 'bolsa', name: 'Bolsa de treino', color: 'Preto', hex: '#151515', sub: 'Bolsas', price: 149.9, icon: ICON.bolsa, tone: '#8E7F86', sold: 3 },
+      { id: 'meias', name: 'Meias cano médio, 3 pares', color: 'Branco', hex: '#F2F0EE', sub: 'Meias', price: 39.9, icon: ICON.meia, tone: '#B9C3CF', sold: 5 },
+      { id: 'faixa', name: 'Faixa de cabelo canelada', color: 'Vinho', hex: '#5C1F31', sub: 'Cabelo', price: 24.9, icon: ICON.faixa, tone: '#C48C9E', sold: 4 },
+      { id: 'xuxinha', name: 'Xuxinhas caneladas, 3 un.', color: 'Nude', hex: '#D8C4B0', sub: 'Cabelo', price: 19.9, icon: ICON.xuxinha, tone: '#D9C2AE', sold: 2 },
+      { id: 'toalha', name: 'Toalha de treino', color: 'Grafite', hex: '#3A3538', sub: 'Toalhas', price: 34.9, icon: ICON.toalha, tone: '#A9A0A4', sold: 1 }
+    ];
+    const KITS = [
+      { id: 'kit-treino', name: 'Kit Treino Completo', sub: 'Conjunto Recorte, garrafa e faixa', units: 3, full: 189.9 + 79.9 + 24.9, parts: [{ img: IMG.choc }, { icon: ICON.garrafa, tone: '#C9A98B' }, { icon: ICON.faixa, tone: '#C48C9E' }], sold: 7 },
+      { id: 'kit-pos', name: 'Kit Pós-treino', sub: 'Macacão Serenity, bolsa e toalha', units: 3, full: 219.9 + 149.9 + 34.9, parts: [{ img: IMG.serenityRua }, { icon: ICON.bolsa, tone: '#8E7F86' }, { icon: ICON.toalha, tone: '#A9A0A4' }], sold: 4 },
+      { id: 'kit-dupla', name: 'Dupla Canelada', sub: '2 conjuntos Recorte, cores à escolha', units: 2, full: 189.9 * 2, parts: [{ img: IMG.marinho }, { img: IMG.nude }], sold: 5 }
+    ];
+    const SZ = ['P', 'M', 'G', 'GG'];
+    const cat = s.cat || 'todos';
+    const colorsSel = s.colors || {};
+    const sizesSel = s.sizes || {};
+    const priceSel = s.price || 'todos';
+    const onlyNew = !!s.onlyNew;
+    const sort = s.sort || 'novos';
+    const cols = s.cols || 4;
+    const favs = s.favs || {};
+    const bag = s.bag == null ? 2 : s.bag;
+
+    const all = []
+      .concat(CLOTHES.map((c) => Object.assign({ kind: 'roupa', group: c.cat }, c)))
+      .concat(ACCS.map((a) => Object.assign({ kind: 'acc', group: 'acessorios', isNew: true }, a)))
+      .concat(KITS.map((k) => Object.assign({ kind: 'kit', group: 'kits', price: Math.round(k.full * (100 - TIER(k.units))) / 100, color: '' }, k)));
+
+    const CATS = [
+      ['todos', 'Todo o mostruário'], ['conjuntos', 'Conjuntos'], ['macacoes', 'Macacões'], ['macaquinhos', 'Macaquinhos'],
+      ['leggings', 'Leggings'], ['tops', 'Tops'], ['acessorios', 'Acessórios'], ['kits', 'Kits']
+    ];
+    const TEXT = {
+      todos: ['Mostruário', 'Todas as peças, acessórios e kits da @@MARCA@@. Filtre por cor, tamanho e preço.'],
+      conjuntos: ['Conjuntos', 'Top e legging que já combinam, em tecido canelado ou liso.'],
+      macacoes: ['Macacões', 'Uma peça só, do treino ao dia a dia.'],
+      macaquinhos: ['Macaquinhos', 'Macaquinhos com bermuda, leves para treinos intensos.'],
+      acessorios: ['Acessórios', 'Garrafas, bolsas, meias e acessórios de cabelo para completar o look.'],
+      kits: ['Kits e combinações', 'Combinações prontas com o desconto de leve mais, pague menos já aplicado.'],
+      novos: ['Novidades', 'O que acabou de chegar na @@MARCA@@.']
+    };
+
+    const inPrice = (v) => priceSel === 'todos' || (priceSel === 'ate50' && v <= 50) || (priceSel === '50a150' && v > 50 && v <= 150) || (priceSel === 'acima150' && v > 150);
+    const anySize = Object.keys(sizesSel).some((k) => sizesSel[k]);
+    const anyColor = Object.keys(colorsSel).some((k) => colorsSel[k]);
+    let list = all.filter((p) => {
+      if (cat === 'novos') { if (!p.isNew) return false; }
+      else if (cat !== 'todos' && p.group !== cat) return false;
+      if (onlyNew && !p.isNew) return false;
+      if (anyColor && !colorsSel[p.color]) return false;
+      if (anySize) { if (!p.sizes) return false; if (!SZ.some((z, i) => sizesSel[z] && p.sizes[i] > 0)) return false; }
+      return inPrice(p.price);
+    });
+    if (sort === 'menor') list = list.slice().sort((a, b) => a.price - b.price);
+    if (sort === 'maior') list = list.slice().sort((a, b) => b.price - a.price);
+    if (sort === 'vendidos') list = list.slice().sort((a, b) => b.sold - a.sold);
+    if (sort === 'novos') list = list.slice().sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
+
+    const add = (label, units) => {
+      const nb = bag + units;
+      clearTimeout(this.tt);
+      this.setState({ bag: nb, toast: label + ' foi para a sacola' });
+      this.tt = setTimeout(() => this.setState({ toast: '' }), 2800);
+    };
+    const pct = TIER(bag);
+    const comboText = bag <= 0 ? 'Leve 2 peças e ganhe 5% de desconto. Com 3 ou mais, 10%.'
+      : (bag === 1 ? '1 peça na sacola. Adicione mais 1 e ganhe 5% de desconto.'
+      : (bag === 2 ? '2 peças na sacola: 5% de desconto aplicado. Mais 1 e o desconto vira 10%.'
+      : bag + ' peças na sacola: 10% de desconto aplicado em tudo.'));
+
+    const colorSet = [];
+    all.forEach((p) => { if (p.color && !colorSet.some((c) => c.name === p.color)) colorSet.push({ name: p.color, hex: p.hex }); });
+    const go = (c) => () => this.setState({ cat: c });
+
+    return {
+      theme: theme,
+      themeLabel: theme === 'escuro' ? 'Usar tema claro' : 'Usar tema escuro',
+      toggleTheme: () => this.setState({ theme: theme === 'escuro' ? 'claro' : 'escuro' }),
+      bag: bag,
+      toastCls: s.toast ? 'toast on' : 'toast',
+      toastText: s.toast || '',
+      goRoupas: go('todos'), goConjuntos: go('conjuntos'), goMacacoes: go('macacoes'), goMacaquinhos: go('macaquinhos'),
+      goAcessorios: go('acessorios'), goKits: go('kits'), goNovos: go('novos'), goTodos: go('todos'),
+      catTitle: TEXT[cat] ? TEXT[cat][0] : 'Mostruário',
+      catText: TEXT[cat] ? TEXT[cat][1] : '',
+      cats: CATS.map((c) => {
+        const n = c[0] === 'todos' ? all.length : all.filter((p) => p.group === c[0]).length;
+        return { label: n === 0 ? c[1] + ', em breve' : c[1], count: n === 0 ? '' : String(n), empty: n === 0, on: c[0] === cat, cls: c[0] === cat ? 'chip on' : 'chip', pick: () => this.setState({ cat: c[0] }) };
+      }),
+      colorFilters: colorSet.map((c) => ({ name: c.name, hex: c.hex, on: !!colorsSel[c.name], cls: colorsSel[c.name] ? 'on' : '', pick: () => { const m = Object.assign({}, colorsSel); m[c.name] = !m[c.name]; this.setState({ colors: m }); } })),
+      sizeFilters: SZ.map((z) => ({ label: z, on: !!sizesSel[z], cls: sizesSel[z] ? 'on' : '', pick: () => { const m = Object.assign({}, sizesSel); m[z] = !m[z]; this.setState({ sizes: m }); } })),
+      priceFilters: [['todos', 'Todos os preços'], ['ate50', 'Até R$ 50'], ['50a150', 'De R$ 50 a R$ 150'], ['acima150', 'Acima de R$ 150']].map((p) => ({ label: p[1], on: p[0] === priceSel, cls: p[0] === priceSel ? 'on' : '', pick: () => this.setState({ price: p[0] }) })),
+      onlyNew: onlyNew,
+      newSwCls: onlyNew ? 'switch on' : 'switch',
+      toggleNew: () => this.setState({ onlyNew: !onlyNew }),
+      hasFilters: anyColor || anySize || priceSel !== 'todos' || onlyNew,
+      clearFilters: () => this.setState({ colors: {}, sizes: {}, price: 'todos', onlyNew: false }),
+      resultText: list.length === 1 ? '1 item' : list.length + ' itens',
+      sort: sort,
+      setSort: (e) => this.setState({ sort: e.target.value }),
+      isC3: cols === 3, isC4: cols === 4,
+      c3Cls: cols === 3 ? 'on' : '', c4Cls: cols === 4 ? 'on' : '',
+      setC3: () => this.setState({ cols: 3 }), setC4: () => this.setState({ cols: 4 }),
+      gridCls: cols === 3 ? 'grid c3' : 'grid c4',
+      isEmpty: list.length === 0,
+      items: list.map((p) => {
+        const isFav = !!favs[p.id];
+        const disc = p.kind === 'kit' ? TIER(p.units) : 0;
+        return {
+          name: p.name, color: p.color || '',
+          sub: p.kind === 'roupa' ? p.color : (p.kind === 'acc' ? p.sub + ', ' + p.color.toLowerCase() : p.sub),
+          isPhoto: p.kind === 'roupa', isArt: p.kind === 'acc', isKit: p.kind === 'kit',
+          img: p.img || '', imgB: p.b || '', hasB: !!p.b, alt: p.alt || '',
+          icon: p.icon || '', tone: p.tone || '#F1E1D2',
+          kitCls: p.kind === 'kit' && p.parts.length === 2 ? 'kit-art two' : 'kit-art',
+          parts: (p.parts || []).map((k) => ({ isImg: !!k.img, isIcon: !!k.icon, img: k.img || '', icon: k.icon || '', tone: k.tone || '#F1E1D2' })),
+          hasBadge: p.kind === 'kit' || !!p.isNew,
+          badge: p.kind === 'kit' ? 'Economize ' + brl(p.full - p.price) : 'Novo',
+          badgeCls: p.kind === 'kit' ? 'badge save' : 'badge',
+          price: brl(p.price),
+          hasFrom: disc > 0, from: p.kind === 'kit' ? brl(p.full) : '',
+          fav: isFav, favCls: isFav ? 'icon-btn fav on' : 'icon-btn fav', favLabel: (isFav ? 'Remover dos favoritos: ' : 'Favoritar: ') + p.name,
+          toggleFav: () => { const f = Object.assign({}, favs); f[p.id] = !isFav; this.setState({ favs: f }); },
+          addLabel: p.kind === 'kit' ? 'Adicionar kit à sacola' : 'Adicionar à sacola',
+          add: () => add(p.name + (p.kind === 'roupa' ? ' ' + p.color.toLowerCase() : ''), p.kind === 'kit' ? p.units : 1)
+        };
+      }),
+      st1: bag >= 1 ? 'on' : '', st2: bag >= 2 ? 'on' : '', st3: bag >= 3 ? 'on' : '',
+      comboText: comboText,
+      tierPct: pct
+    };
+  }
+}
+</script>
+</body>
+</html>

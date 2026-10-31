@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>App @@MARCA@@ — Venda rápida</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="assets/css/fontes.css">
+<style>
+body{margin:0}
+*,*::before,*::after{box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+a:hover{color:inherit}
+.app{--bg:#FAF6F0;--surface:#FFFFFF;--ink:#2B1F16;--muted:#6C5E52;--line:#E9DFD2;--wine:#8A4F1D;--on-wine:#FFFFFF;--warn:#8A5A00;--ease:cubic-bezier(.22,.61,.36,1);--ease-out:cubic-bezier(.16,1,.3,1);position:relative;width:390px;height:844px;overflow:hidden;display:flex;flex-direction:column;font-family:'Inter',system-ui,sans-serif;font-weight:300;font-size:15px;line-height:1.45;color:var(--ink);background:var(--bg);transition:background-color .6s var(--ease),color .6s var(--ease)}
+.app[data-theme="escuro"]{--bg:#16110D;--surface:#201913;--ink:#F7F0E7;--muted:#B8AA9C;--line:#382C22;--wine:#E0A56A;--on-wine:#16110D;--warn:#E9C06A}
+.serif{font-family:'Bonum', Georgia, serif;font-weight:700}
+.ic{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+button:focus-visible,a:focus-visible{outline:1.5px solid var(--wine);outline-offset:2px}
+.top{display:flex;justify-content:space-between;align-items:center;padding:18px 18px 6px}
+.top h1{margin:0;font-size:32px;line-height:1}
+.top small{display:block;font-size:12.5px;color:var(--muted)}
+.ib{display:grid;place-items:center;width:44px;height:44px;border:0;border-radius:50%;background:var(--surface);color:var(--ink);cursor:pointer}
+.th{position:relative;width:21px;height:21px}
+.th .ic{position:absolute;inset:0;transition:transform .7s var(--ease-out),opacity .4s var(--ease)}
+.app .moon{opacity:0;transform:rotate(-90deg) scale(.5)}
+.app[data-theme="escuro"] .sun{opacity:0;transform:rotate(90deg) scale(.5)}
+.app[data-theme="escuro"] .moon{opacity:1;transform:none}
+.chan{display:flex;gap:6px;padding:8px 18px}
+.chan button{flex:1;min-height:38px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--ink);font:inherit;font-size:13px;cursor:pointer;transition:background-color .3s var(--ease),color .3s var(--ease)}
+.chan button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.search{display:flex;align-items:center;gap:10px;margin:6px 18px 10px;padding:0 6px 0 14px;min-height:46px;border-radius:999px;background:var(--surface);color:var(--muted);font-size:14px}
+.search span{flex:1}
+.scan{display:grid;place-items:center;width:36px;height:36px;border:0;border-radius:50%;background:var(--ink);color:var(--bg);cursor:pointer}
+.grid{flex:1;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;align-content:start;gap:8px;padding:0 18px 12px}
+.tile{position:relative;display:grid;grid-template-columns:44px minmax(0,1fr);align-items:center;gap:10px;padding:6px;min-height:56px;border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);font:inherit;font-size:13px;line-height:1.25;text-align:left;cursor:pointer;transition:border-color .3s var(--ease),transform .4s var(--ease-out)}
+.tile:active{transform:scale(.97)}
+.tile.on{border-color:var(--wine)}
+.tile .pic{width:44px;height:44px;border-radius:10px;overflow:hidden;display:grid;place-items:center}
+.tile img{width:100%;height:100%;object-fit:cover;object-position:50% 28%}
+.tile .pic svg{width:28px;height:28px;fill:none;stroke:var(--ink);stroke-width:1;stroke-linecap:round;stroke-linejoin:round}
+.tile b{display:block;font-weight:400}
+.sizes{grid-column:1 / -1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:10px;border-radius:14px;background:var(--surface);border:1px solid var(--wine);animation:pop .4s var(--ease-out) both}
+@keyframes pop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.sizes p{grid-column:1 / -1;margin:0 0 2px;font-size:13px;color:var(--muted)}
+.sizes button{display:flex;flex-direction:column;align-items:center;min-height:48px;padding:4px 0;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit;font-size:15px;cursor:pointer}
+.sizes button small{font-size:11px;color:var(--muted)}
+.sizes button:disabled{opacity:.4;cursor:not-allowed}
+.sheet{padding:14px 18px 22px;border-radius:24px 24px 0 0;background:var(--surface);box-shadow:0 -20px 40px -30px rgba(0,0,0,.4);transition:background-color .6s var(--ease)}
+.lines{display:flex;flex-direction:column;gap:6px;max-height:112px;overflow-y:auto;margin-bottom:10px}
+.ln{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;font-size:13.5px;animation:pop .35s var(--ease-out) both}
+.ln .rm{width:32px;height:32px;border:0;border-radius:50%;background:var(--bg);color:var(--muted);cursor:pointer}
+.empty{margin:0 0 10px;font-size:13.5px;color:var(--muted)}
+.tot{display:flex;flex-direction:column;gap:2px;padding-top:10px;border-top:1px solid var(--line);font-size:14px}
+.tot div{display:flex;justify-content:space-between}
+.tot .d{color:var(--wine)}
+.tot .t{align-items:baseline;font-size:15px}
+.tot .t b{font-family:'Bonum', Georgia, serif;font-weight:700;font-size:30px}
+.pay{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:10px 0}
+.pay button{min-height:40px;border:1px solid var(--line);border-radius:12px;background:transparent;color:var(--ink);font:inherit;font-size:13.5px;cursor:pointer}
+.pay button.on{border-color:var(--wine);color:var(--wine);box-shadow:inset 0 0 0 1px var(--wine)}
+.go{width:100%;min-height:52px;border:0;border-radius:999px;background:var(--ink);color:var(--bg);font:inherit;font-weight:400;font-size:15px;cursor:pointer;transition:background-color .35s var(--ease)}
+.go:hover{background:var(--wine);color:var(--on-wine)}
+.go:disabled{opacity:.4;cursor:not-allowed}
+.done{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:32px;background:var(--bg);text-align:center;animation:pop .5s var(--ease-out) both}
+.done h2{margin:0;font-size:40px;line-height:1}
+.done p{margin:0;color:var(--muted)}
+.check{width:72px;height:72px;fill:none;stroke:var(--wine);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.check circle{stroke-dasharray:220;stroke-dashoffset:220;animation:draw 1s .1s var(--ease-out) forwards}
+.check path{stroke-dasharray:40;stroke-dashoffset:40;animation:draw .5s .8s var(--ease-out) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.app *{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+</style>
+<style>
+.ais,.app{font-weight:400}
+.logo-ais{font-family:'Bonum', Georgia, serif !important;font-weight:700 !important;letter-spacing:-.02em;}
+.serif,.ais h1,.ais h2,.ais h3,.app h1,.app h2,.app h3{font-weight:700 !important;letter-spacing:-.02em !important;}
+.tier .d,.big,.kit-n,.tiers-inline .big,.promo .tiers b,.tot .t b,.b-row.tot .serif,.tg-row.tot .serif,.hello b,.k-value,.tag-name{font-weight:700 !important}
+.btn,.quick,.tab,.chip,.fbtn,.mini-btn{font-weight:500}
+.cat-label{flex-direction:column !important;align-items:flex-start !important;justify-content:flex-end !important;gap:10px !important}
+.slide-txt h1{font-size:clamp(40px,5vw,70px) !important;line-height:1.04 !important}
+.cat-name{font-size:clamp(26px,2.5vw,38px) !important}
+.bigline .marquee > span{font-weight:800 !important;-webkit-text-stroke:1.2px var(--muted) !important}
+</style>
+<style>
+.frame{background:color-mix(in srgb,var(--wine) 16%,var(--surface)) !important}
+</style>
+</helmet>
+<div class="app" data-theme="{{theme}}">
+<div class="top">
+<div><small>App da vendedora</small><h1 class="serif">Venda rápida</h1></div>
+<button class="ib" type="button" onClick="{{toggleTheme}}" aria-label="{{themeLabel}}"><span class="th"><svg class="ic sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"></path></svg><svg class="ic moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"></path></svg></span></button>
+</div>
+<div class="chan" role="radiogroup" aria-label="Canal da venda">
+<sc-for list="{{channels}}" as="c" hint-placeholder-count="3"><button class="{{c.cls}}" type="button" role="radio" aria-checked="{{c.on}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for>
+</div>
+<div class="search"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M20 20l-4.2-4.2"></path></svg><span>Buscar peça ou acessório</span><button class="scan" type="button" aria-label="Ler etiqueta com a câmera"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8V5h3M17 5h3v3M20 16v3h-3M7 19H4v-3M8 12h8"></path></svg></button></div>
+
+<div class="grid">
+<sc-for list="{{tiles}}" as="t" hint-placeholder-count="10">
+<button class="{{t.cls}}" type="button" onClick="{{t.pick}}" aria-expanded="{{t.open}}">
+<span class="pic" style="background: color-mix(in srgb, {{t.tone}} 30%, var(--surface))"><sc-if value="{{t.isImg}}" hint-placeholder-val="{{true}}"><img src="{{t.img}}" alt=""></sc-if><sc-if value="{{t.isArt}}" hint-placeholder-val="{{false}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{t.icon}}"></path></svg></sc-if></span>
+<span>{{t.name}}<b>{{t.price}}</b></span>
+</button>
+<sc-if value="{{t.open}}" hint-placeholder-val="{{false}}">
+<div class="sizes" role="group" aria-label="Tamanho de {{t.name}}">
+<p>Tamanho de {{t.name}}</p>
+<sc-for list="{{t.sizes}}" as="z" hint-placeholder-count="4"><button type="button" onClick="{{z.pick}}" disabled="{{z.out}}">{{z.name}}<small>{{z.stock}}</small></button></sc-for>
+</div>
+</sc-if>
+</sc-for>
+</div>
+
+<div class="sheet" aria-label="Venda atual">
+<sc-if value="{{isEmpty}}" hint-placeholder-val="{{false}}"><p class="empty">Toque nas peças para montar a venda.</p></sc-if>
+<div class="lines">
+<sc-for list="{{lines}}" as="l" hint-placeholder-count="2"><div class="ln"><span>{{l.name}}</span><span>{{l.price}}</span><button class="rm" type="button" onClick="{{l.remove}}" aria-label="Tirar {{l.name}}">×</button></div></sc-for>
+</div>
+<div class="tot">
+<div><span>{{countLabel}}</span><span>{{subtotal}}</span></div>
+<sc-if value="{{hasDisc}}" hint-placeholder-val="{{true}}"><div class="d"><span>Leve mais, {{pct}}%</span><span>− {{disc}}</span></div></sc-if>
+<div class="t"><span>Total</span><b>{{total}}</b></div>
+</div>
+<div class="pay" role="radiogroup" aria-label="Forma de pagamento">
+<sc-for list="{{pays}}" as="p" hint-placeholder-count="3"><button class="{{p.cls}}" type="button" role="radio" aria-checked="{{p.on}}" onClick="{{p.pick}}">{{p.label}}</button></sc-for>
+</div>
+<button class="go" type="button" onClick="{{finish}}" disabled="{{isEmpty}}">Registrar venda</button>
+</div>
+
+<sc-if value="{{done}}" hint-placeholder-val="{{false}}">
+<div class="done" role="dialog" aria-modal="true" aria-labelledby="dn-t">
+<svg class="check" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="34"></circle><path d="M26 41l9 9 19-20"></path></svg>
+<h2 id="dn-t" class="serif">Venda registrada</h2>
+<p>{{doneText}}</p>
+<button class="go" type="button" onClick="{{newSale}}">Nova venda</button>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"temaInicial":{"editor":"enum","options":["claro","escuro"],"default":"claro","section":"Tema"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const theme = s.theme || (this.props.temaInicial === 'escuro' ? 'escuro' : 'claro');
+    const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    const SZ = ['P', 'M', 'G', 'GG'];
+    const P = [
+      { id: 'rec-cho', name: 'Recorte chocolate', price: 189.9, img: 'vitrines/_ilustracoes/flat-recorte-chocolate.png', st: [4, 6, 5, 2] },
+      { id: 'rec-nud', name: 'Recorte nude', price: 189.9, img: 'vitrines/_ilustracoes/flat-recorte-nude.png', st: [2, 2, 4, 1] },
+      { id: 'cru-vin', name: 'Cruzado vinho', price: 189.9, img: 'vitrines/_ilustracoes/cruzado-vinho-modelo.png', st: [3, 4, 0, 1] },
+      { id: 'nad-pre', name: 'Nadador preto', price: 179.9, img: 'vitrines/_ilustracoes/nadador-preto-modelo.png', st: [7, 9, 6, 4] },
+      { id: 'ser', name: 'Macacão Serenity', price: 219.9, img: 'vitrines/_ilustracoes/macacao-serenity-academia.png', st: [5, 6, 4, 3] },
+      { id: 'con-pre', name: 'Macaquinho preto', price: 169.9, img: 'vitrines/_ilustracoes/macaquinho-preto-modelo.png', st: [6, 7, 5, 2] },
+      { id: 'gar', name: 'Garrafa térmica', price: 79.9, tone: '#C9A98B', icon: 'M9.5 2.5h5v2.5l1.5 2.2v12.8a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 8 20V7.2l1.5-2.2zM8 10.5h8M8 16.5h8' },
+      { id: 'fai', name: 'Faixa de cabelo', price: 24.9, tone: '#C48C9E', icon: 'M12 6.5c5 0 9 2.5 9 5.5s-4 5.5-9 5.5-9-2.5-9-5.5 4-5.5 9-5.5zM3.6 13.8c1.6 1.5 4.8 2.4 8.4 2.4s6.8-.9 8.4-2.4' },
+      { id: 'mei', name: 'Meias, 3 pares', price: 39.9, tone: '#B9C3CF', icon: 'M9 2.5h6v9.5l3.6 3.8a3 3 0 0 1-2.2 5.2h-5.9A4.5 4.5 0 0 1 6 16.5c0-1.6.8-2.8 3-4.5zM9 5.5h6' },
+      { id: 'xux', name: 'Xuxinhas, 3 un.', price: 19.9, tone: '#D9C2AE', icon: 'M12 4.5a7.5 7.5 0 1 1 0 15 7.5 7.5 0 0 1 0-15zM12 8.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7z' }
+    ];
+    const cart = s.cart || [];
+    const open = s.open || '';
+    const sold = s.sold || {};
+    const chan = s.chan || 'loja';
+    const pay = s.pay || 'pix';
+    const units = cart.length;
+    const pct = units >= 3 ? 10 : (units >= 2 ? 5 : 0);
+    const sub = cart.reduce((a, c) => a + c.price, 0);
+    const disc = Math.round(sub * pct) / 100;
+    const addLine = (line) => this.setState({ cart: cart.concat([Object.assign({ key: Date.now() + Math.random() }, line)]), open: '' });
+    return {
+      theme: theme,
+      themeLabel: theme === 'escuro' ? 'Usar tema claro' : 'Usar tema escuro',
+      toggleTheme: () => this.setState({ theme: theme === 'escuro' ? 'claro' : 'escuro' }),
+      channels: [['loja', 'Loja física'], ['insta', 'Instagram'], ['whats', 'WhatsApp']].map((c) => ({ label: c[1], on: c[0] === chan, cls: c[0] === chan ? 'on' : '', pick: () => this.setState({ chan: c[0] }) })),
+      tiles: P.map((p) => {
+        const isOpen = open === p.id;
+        return {
+          name: p.name, price: brl(p.price), isImg: !!p.img, isArt: !p.img, img: p.img || '', icon: p.icon || '', tone: p.tone || '#E9DFD2',
+          open: isOpen, cls: isOpen ? 'tile on' : 'tile',
+          pick: () => { if (p.st) this.setState({ open: isOpen ? '' : p.id }); else addLine({ name: p.name, price: p.price }); },
+          sizes: (p.st || []).map((q, i) => {
+            const left = q - (sold[p.id + i] || 0) - cart.filter((c) => c.ref === p.id + i).length;
+            return { name: SZ[i], stock: left <= 0 ? 'esgotado' : left + ' un.', out: left <= 0, pick: () => addLine({ name: p.name + ' ' + SZ[i], price: p.price, ref: p.id + i }) };
+          })
+        };
+      }),
+      isEmpty: units === 0,
+      lines: cart.map((c, i) => ({ name: c.name, price: brl(c.price), remove: () => this.setState({ cart: cart.filter((_, j) => j !== i) }) })),
+      countLabel: units === 1 ? '1 peça' : units + ' peças',
+      subtotal: brl(sub),
+      hasDisc: pct > 0,
+      pct: pct,
+      disc: brl(disc),
+      total: brl(sub - disc),
+      pays: [['pix', 'Pix'], ['cartao', 'Cartão'], ['dinheiro', 'Dinheiro']].map((p) => ({ label: p[1], on: p[0] === pay, cls: p[0] === pay ? 'on' : '', pick: () => this.setState({ pay: p[0] }) })),
+      finish: () => {
+        if (!units) return;
+        const sd = Object.assign({}, sold);
+        cart.forEach((c) => { if (c.ref) sd[c.ref] = (sd[c.ref] || 0) + 1; });
+        this.setState({ done: true, sold: sd, doneText: brl(sub - disc) + ' em ' + (units === 1 ? '1 peça' : units + ' peças') + '. O estoque e o financeiro do painel foram atualizados.' });
+      },
+      done: !!s.done,
+      doneText: s.doneText || '',
+      newSale: () => this.setState({ done: false, cart: [], open: '' })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,921 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>@@NOME@@ — Início</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="assets/css/fontes.css">
+<style>
+body{margin:0}
+*,*::before,*::after{box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+a:hover{color:inherit}
+.ais{--bg:#FBFAF7;--surface:#FFFFFF;--ink:#1C1A17;--muted:#66605A;--line:#E7E2D8;--wine:#6E5530;--on-wine:#FFFFFF;--gold:#1C1A17;--tag:#FFFFFF;--shade:rgba(28,26,23,.06);--ease:cubic-bezier(.22,.61,.36,1);--ease-out:cubic-bezier(.16,1,.3,1);font-family:'Adventor',system-ui,sans-serif;font-weight:300;font-size:16px;line-height:1.6;color:var(--ink);background:var(--bg);transition:background-color .6s var(--ease),color .6s var(--ease);min-height:100vh;overflow-x:clip}
+.ais[data-theme="escuro"]{--bg:#12110F;--surface:#1B1916;--ink:#F5F2EC;--muted:#ADA79E;--line:#302C27;--wine:#D9B98A;--on-wine:#12110F;--gold:#F5F2EC;--tag:#1B1916;--shade:rgba(255,255,255,.06)}
+.serif{font-family:'Pagella', Georgia, serif;font-weight:400;letter-spacing:-.01em}
+.wrap{max-width:1320px;margin:0 auto;padding:0 clamp(16px,4vw,56px)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.icon-btn{position:relative;display:inline-grid;place-items:center;width:44px;height:44px;border:0;border-radius:50%;background:transparent;color:var(--ink);cursor:pointer;transition:background-color .3s var(--ease)}
+.icon-btn:hover{background:var(--shade)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:1.5px solid var(--wine);outline-offset:3px}
+.count{position:absolute;top:5px;right:3px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--wine);color:var(--on-wine);font-size:10.5px;font-weight:400;line-height:17px;text-align:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 28px;border-radius:999px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);font:inherit;font-weight:400;font-size:14.5px;letter-spacing:.03em;cursor:pointer;transition:background-color .35s var(--ease),color .35s var(--ease),border-color .35s var(--ease),transform .35s var(--ease)}
+.btn:hover{background:var(--wine);border-color:var(--wine);color:var(--on-wine)}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.topbar{background:var(--wine);color:var(--on-wine);font-size:13px;letter-spacing:.03em;overflow:hidden;white-space:nowrap;transition:background-color .6s var(--ease)}
+.marquee{display:flex;width:max-content;animation:marq 40s linear infinite}
+.marquee > span{display:inline-flex;align-items:center;gap:22px;padding:9px 22px}
+.marquee .mini{width:18px;height:13px;fill:none;stroke:currentColor;stroke-width:1.1;stroke-linecap:round}
+@keyframes marq{to{transform:translateX(-50%)}}
+.hdr{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);transition:background-color .6s var(--ease),border-color .6s var(--ease)}
+.hdr-in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:84px}
+.nav{display:flex;align-items:center;gap:28px;font-size:14.5px}
+.nav > a,.mega-trigger{position:relative;display:inline-flex;align-items:center;gap:8px;padding:30px 0}
+.nav > a::after,.mega-trigger::after{content:"";position:absolute;left:0;right:0;bottom:24px;height:1px;background:var(--wine);transform:scaleX(0);transform-origin:right;transition:transform .45s var(--ease-out)}
+.nav > a:hover::after,.mega-item:hover .mega-trigger::after,.mega-item:focus-within .mega-trigger::after{transform:scaleX(1);transform-origin:left}
+.new{padding:1px 8px;border-radius:999px;background:var(--wine);color:var(--on-wine);font-size:11px;line-height:18px}
+.mega-panel{position:absolute;left:0;right:0;top:100%;z-index:40;background:var(--bg);border-bottom:1px solid var(--line);box-shadow:0 40px 60px -50px rgba(0,0,0,.45);opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .3s var(--ease),transform .5s var(--ease-out),visibility 0s .3s}
+.mega-item:hover .mega-panel,.mega-item:focus-within .mega-panel{opacity:1;visibility:visible;transform:none;transition:opacity .3s var(--ease),transform .5s var(--ease-out)}
+.mega-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.3fr) minmax(0,1.3fr);gap:32px;padding-top:32px;padding-bottom:36px}
+.mega-col{display:flex;flex-direction:column;gap:6px}
+.mega-h{margin:0 0 6px;font-size:24px;line-height:1.1}
+.mega-col a{padding:3px 0;color:var(--muted);transition:color .3s var(--ease)}
+.mega-col a:hover{color:var(--wine)}
+.mega-col .soon{color:var(--muted);opacity:.75}
+.mega-feat{display:flex;flex-direction:column;gap:10px}
+.mega-feat .pic{display:block;aspect-ratio:4/3;overflow:hidden;background:var(--surface)}
+.mega-feat img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;transition:transform 1.2s var(--ease-out)}
+.mega-feat:hover img{transform:scale(1.05)}
+.mega-feat .t{font-size:20px}
+.tools{display:flex;justify-content:flex-end;align-items:center;gap:2px}
+.burger{display:none}
+.logo{display:inline-flex;flex-direction:column;align-items:center;line-height:1}
+.logo-ais{font-family:'Adventor',sans-serif;font-weight:300;font-size:38px;letter-spacing:.05em;color:var(--wine);transition:color .6s var(--ease)}
+.logo-sub{display:inline-flex;align-items:center;gap:3px;margin-top:3px;font-size:9.5px;font-weight:400;letter-spacing:.3em;color:var(--gold)}
+.bfly{width:24px;height:17px;fill:none;stroke:var(--gold);stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round}
+.bfly path{stroke-dasharray:80;stroke-dashoffset:80;animation:draw 2.2s .35s var(--ease-out) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.theme-ic{position:relative;width:20px;height:20px}
+.theme-ic .ic{position:absolute;inset:0;transition:transform .7s var(--ease-out),opacity .45s var(--ease)}
+.ais .moon{opacity:0;transform:rotate(-90deg) scale(.5)}
+.ais[data-theme="escuro"] .sun{opacity:0;transform:rotate(90deg) scale(.5)}
+.ais[data-theme="escuro"] .moon{opacity:1;transform:none}
+.drawer{position:absolute;left:0;right:0;top:100%;background:var(--bg);border-bottom:1px solid var(--line);padding:12px clamp(16px,4vw,56px) 24px;display:flex;flex-direction:column;animation:drop .5s var(--ease-out) both}
+.drawer a{padding:14px 0;border-bottom:1px solid var(--line);font-size:18px}
+@keyframes drop{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+.toast{position:absolute;right:clamp(16px,4vw,56px);top:calc(100% + 14px);display:flex;align-items:center;gap:12px;max-width:min(420px,calc(100% - 32px));padding:14px 18px;background:var(--ink);color:var(--bg);border-radius:14px;font-size:14px;box-shadow:0 24px 50px -20px rgba(0,0,0,.4);opacity:0;transform:translateY(-10px) scale(.98);pointer-events:none;transition:opacity .45s var(--ease),transform .6s var(--ease-out)}
+.toast.on{opacity:1;transform:none;pointer-events:auto}
+.toast a{margin-left:6px;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.hero{padding:clamp(28px,5vw,64px) 0 clamp(64px,8vw,112px)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,5vw,80px);align-items:center}
+.hero-copy{display:grid}
+.slide-txt{grid-area:1/1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:24px;opacity:0;visibility:hidden;transition:opacity .5s var(--ease),visibility 0s .5s}
+.slide-txt.on{opacity:1;visibility:visible;transition:opacity .5s var(--ease)}
+.slide-txt h1{margin:0;font-size:clamp(46px,6.4vw,96px);line-height:.98}
+.slide-txt p{margin:0;max-width:34ch;font-size:17px;color:var(--muted)}
+.slide-txt.on h1{animation:rise 1.2s var(--ease-out) both}
+.slide-txt.on p{animation:rise 1.2s .12s var(--ease-out) both}
+.slide-txt.on .btn{animation:rise 1.2s .24s var(--ease-out) both}
+@keyframes rise{from{opacity:0;transform:translateY(30px);clip-path:inset(0 0 100% 0)}to{opacity:1;transform:none;clip-path:inset(-20% 0 -20% 0)}}
+.dots{display:flex;gap:18px;margin-top:48px}
+.dot{flex:1;min-width:0;max-width:160px;display:flex;flex-direction:column;gap:10px;padding:10px 0;border:0;background:none;color:var(--muted);font:inherit;font-size:13px;text-align:left;cursor:pointer;transition:color .4s var(--ease)}
+.dot .bar{position:relative;height:1px;background:var(--line);overflow:hidden}
+.dot .bar i{position:absolute;inset:0;background:var(--wine);transform:scaleX(0);transform-origin:left}
+.dot.on{color:var(--ink)}
+.dot.on .bar i{animation:prog 6.5s linear forwards}
+.hero.paused .dot.on .bar i{animation-play-state:paused}
+@keyframes prog{to{transform:scaleX(1)}}
+.hero-media{position:relative;width:100%;aspect-ratio:4/5;max-height:780px}
+.frame{position:absolute;inset:0;overflow:hidden;background:var(--surface)}
+.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;opacity:0;transform:scale(1.08);transition:opacity 1.3s var(--ease),transform 8s linear}
+.frame img.on{opacity:1;transform:scale(1)}
+.frame-line{position:absolute;inset:16px;border:1px solid rgba(255,255,255,.85);pointer-events:none;animation:frameIn 1.8s .5s var(--ease-out) both}
+@keyframes frameIn{from{clip-path:inset(0 100% 100% 0)}to{clip-path:inset(0 0 0 0)}}
+.hangtag{position:absolute;left:-40px;bottom:10%;width:clamp(150px,15vw,196px);display:grid;z-index:2}
+.tagcard{grid-area:1/1;position:relative;background:var(--tag);padding:12px;border-radius:3px;box-shadow:0 26px 50px -26px rgba(0,0,0,.5);transform-origin:50% -46px;transform:rotate(-6deg);opacity:0;visibility:hidden;transition:opacity .4s var(--ease),visibility 0s .4s,background-color .6s var(--ease)}
+.tagcard.on{opacity:1;visibility:visible;transition:opacity .4s var(--ease),background-color .6s var(--ease);animation:swing 2.6s var(--ease-out) both}
+.tagcard::before{content:"";position:absolute;left:50%;top:-46px;width:1px;height:58px;background:linear-gradient(var(--muted),var(--muted));opacity:.55}
+@keyframes swing{0%{transform:rotate(-18deg)}30%{transform:rotate(4deg)}55%{transform:rotate(-10deg)}78%{transform:rotate(-4deg)}100%{transform:rotate(-6deg)}}
+.tag-in{border:1px solid var(--wine);padding:20px 10px 16px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.hole{width:9px;height:9px;border-radius:50%;border:1px solid var(--line);background:var(--bg)}
+.tag-name{font-size:19px;line-height:1.15}
+.tag-price{font-size:14px;font-weight:400}
+.tag-link{font-size:12.5px;color:var(--wine);border-bottom:1px solid currentColor;padding-bottom:1px}
+.sec{padding:clamp(64px,8vw,120px) 0}
+.sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 40px;margin-bottom:clamp(28px,4vw,52px)}
+.sec-head h2{margin:0;font-size:clamp(38px,4.6vw,64px);line-height:1}
+.sec-head p{margin:0;max-width:44ch;color:var(--muted)}
+.cat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.cat.acc{background:color-mix(in srgb,#C9A98B 30%,var(--surface));color:var(--ink)}
+.cat.acc::before{display:none}
+.cat.acc::after{border-color:var(--wine)}
+.acc-art{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;place-items:center;padding:18% 12% 30%;gap:6%}
+.acc-art svg{width:70%;height:70%;fill:none;stroke:var(--ink);stroke-width:.7;stroke-linecap:round;stroke-linejoin:round;transition:transform 1.2s var(--ease-out)}
+.cat.acc:hover .acc-art svg:nth-child(odd){transform:translateY(-6px) rotate(-6deg)}
+.cat.acc:hover .acc-art svg:nth-child(even){transform:translateY(6px) rotate(6deg)}
+.acc-new{position:absolute;top:18px;left:18px;z-index:3}
+.cat.acc .cat-go{border-bottom-color:var(--ink)}
+.cat{position:relative;display:block;aspect-ratio:3/4;overflow:hidden;color:#FFFFFF;background:var(--surface)}
+.cat img{width:100%;height:100%;object-fit:cover;object-position:50% 25%;transition:transform 1.6s var(--ease-out)}
+.cat:hover img{transform:scale(1.06)}
+.cat::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(18,17,15,.6),rgba(18,17,15,0) 42%)}
+.cat::after{content:"";position:absolute;inset:14px;z-index:2;border:1px solid rgba(255,255,255,.85);opacity:0;transform:scale(1.03);transition:opacity .5s var(--ease),transform .8s var(--ease-out)}
+.cat:hover::after{opacity:1;transform:none}
+.cat-label{position:absolute;left:30px;right:30px;bottom:28px;z-index:3;display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.cat-name{font-size:clamp(28px,2.8vw,42px);line-height:1}
+.cat-go{font-size:13.5px;border-bottom:1px solid rgba(255,255,255,.75);padding-bottom:2px;white-space:nowrap}
+.tabs{display:flex;flex-wrap:wrap;gap:8px}
+.tab{min-height:44px;padding:0 20px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit;font-size:14px;cursor:pointer;transition:background-color .35s var(--ease),color .35s var(--ease),border-color .35s var(--ease)}
+.tab:hover{border-color:var(--ink)}
+.tab.on{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:48px 22px}
+.card{position:relative;display:flex;flex-direction:column;gap:16px;animation:cardIn .9s var(--ease-out) both}
+.card:nth-child(2){animation-delay:.08s}
+.card:nth-child(3){animation-delay:.16s}
+.card:nth-child(4){animation-delay:.24s}
+.card:nth-child(5){animation-delay:.32s}
+.card:nth-child(6){animation-delay:.4s}
+@keyframes cardIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.media{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--surface)}
+.media > a{position:absolute;inset:0;display:block}
+.media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 28%;transition:opacity .8s var(--ease),transform 1.4s var(--ease-out)}
+.media .b{opacity:0}
+.card:hover .media .a{transform:scale(1.045)}
+.card:hover .media .b{opacity:1}
+.media::after{content:"";position:absolute;inset:12px;border:1px solid rgba(255,255,255,.9);opacity:0;transform:scale(1.03);transition:opacity .5s var(--ease),transform .8s var(--ease-out);pointer-events:none}
+.card:hover .media::after{opacity:1;transform:none}
+.badge{position:absolute;top:16px;left:16px;padding:4px 12px;border-radius:999px;background:var(--tag);color:var(--ink);font-size:12.5px;pointer-events:none;transition:background-color .6s var(--ease)}
+.fav{position:absolute;top:8px;right:8px;background:color-mix(in srgb,var(--tag) 82%,transparent)}
+.fav.on .ic{fill:var(--wine);stroke:var(--wine);animation:pop .5s var(--ease-out)}
+@keyframes pop{40%{transform:scale(1.3)}}
+.quick{position:absolute;left:12px;right:12px;bottom:12px;min-height:48px;border:0;border-radius:999px;background:var(--tag);color:var(--ink);font:inherit;font-size:14px;font-weight:400;cursor:pointer;transform:translateY(calc(100% + 16px));transition:transform .6s var(--ease-out),background-color .3s var(--ease),color .3s var(--ease)}
+.card:hover .quick,.quick:focus-visible{transform:none}
+.quick:hover{background:var(--wine);color:var(--on-wine)}
+.info{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.info h3{margin:0;font-size:17px;font-weight:300;line-height:1.35}
+.info .cname{margin:2px 0 0;font-size:13.5px;color:var(--muted)}
+.price{margin:0;font-size:15.5px;font-weight:400;white-space:nowrap}
+.sws{display:flex;gap:4px;margin:-6px 0 0 -6px}
+.sw{display:grid;place-items:center;width:36px;height:36px;padding:0;border:0;border-radius:50%;background:none;cursor:pointer}
+.sw i{width:20px;height:20px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12);transition:transform .35s var(--ease-out)}
+.sw.on{box-shadow:inset 0 0 0 1px var(--ink)}
+.sw:hover i{transform:scale(1.12)}
+.art{display:grid;place-items:center}
+.art svg{width:42%;height:42%;fill:none;stroke:var(--ink);stroke-width:.7;stroke-linecap:round;stroke-linejoin:round;transition:transform 1.2s var(--ease-out)}
+.card:hover .art svg{transform:scale(1.06) rotate(-3deg)}
+.soon-note{position:absolute;left:16px;bottom:16px;padding:3px 10px;border-radius:999px;background:var(--tag);font-size:12px;color:var(--muted)}
+.kit-art{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:1fr;gap:3px;background:var(--line)}
+.kit-art .kp{position:relative;overflow:hidden;display:grid;place-items:center}
+.kit-art .kp:first-child{grid-row:span 2}
+.kit-art .kp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.kit-art .kp svg{width:52%;height:52%;fill:none;stroke:var(--ink);stroke-width:.8;stroke-linecap:round;stroke-linejoin:round}
+.kit-art.two .kp:first-child{grid-row:auto}
+.media > a.art,.media > a.kit-art{display:grid}
+.badge.save{background:var(--wine);color:var(--on-wine)}
+.prices{display:flex;flex-direction:column;align-items:flex-end;white-space:nowrap}
+.from{font-size:12.5px;color:var(--muted);text-decoration:line-through}
+.more{display:flex;justify-content:center;margin-top:52px}
+.combo-sec{border-top:1px solid var(--line)}
+.combo-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(32px,6vw,88px);align-items:start}
+.combo-copy{display:flex;flex-direction:column;gap:22px}
+.combo-copy h2{margin:0;font-size:clamp(40px,5vw,72px);line-height:1}
+.combo-copy > p{margin:0;max-width:40ch;color:var(--muted)}
+.tiers-inline{display:flex;gap:40px}
+.tiers-inline div{display:flex;flex-direction:column}
+.tiers-inline .big{font-size:clamp(56px,6vw,88px);line-height:.9;color:var(--wine)}
+.tiers-inline span:last-child{font-size:14px;color:var(--muted)}
+.kits-row{display:grid;gap:10px;margin-top:8px}
+.kit-mini{display:grid;grid-template-columns:72px minmax(0,1fr) auto;align-items:center;gap:16px;width:100%;padding:10px 18px 10px 10px;border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--ink);font:inherit;text-align:left;cursor:pointer;transition:border-color .35s var(--ease),transform .5s var(--ease-out),background-color .6s var(--ease)}
+.kit-mini:hover{border-color:var(--wine);transform:translateX(4px)}
+.kit-thumb{display:block;width:72px;height:72px;border-radius:10px;overflow:hidden}
+.kit-thumb img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.kit-txt{display:flex;flex-direction:column;line-height:1.3;min-width:0}
+.kit-n{font-size:21px}
+.kit-d{font-size:13px;color:var(--muted)}
+.kit-p{font-size:14px;font-weight:400;margin-top:2px}
+.kit-p s{font-weight:300;color:var(--muted)}
+.kit-add{font-size:13.5px;color:var(--wine);border-bottom:1px solid currentColor}
+.builder{display:flex;flex-direction:column;gap:16px;padding:clamp(22px,3vw,36px);background:var(--surface);border:1px solid var(--line);border-radius:24px;transition:background-color .6s var(--ease)}
+.builder h3{margin:0;font-size:34px;line-height:1}
+.b-step{margin:6px 0 0;font-size:14px;color:var(--muted)}
+.b-opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.b-opt{position:relative;display:flex;flex-direction:column;gap:6px;padding:8px 8px 12px;border:1px solid var(--line);border-radius:14px;background:transparent;color:var(--ink);font:inherit;text-align:left;cursor:pointer;transition:border-color .35s var(--ease),transform .5s var(--ease-out)}
+.b-opt img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 28%;border-radius:8px}
+.b-opt:hover{transform:translateY(-3px)}
+.b-opt.on{border-color:var(--wine);box-shadow:inset 0 0 0 1px var(--wine)}
+.b-name{font-size:14px;line-height:1.3}
+.b-price{font-size:13.5px;font-weight:400}
+.b-accs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.b-acc{position:relative;display:grid;grid-template-columns:48px minmax(0,1fr);grid-template-rows:auto auto;column-gap:12px;align-items:center;padding:8px 40px 8px 8px;border:1px solid var(--line);border-radius:14px;background:transparent;color:var(--ink);font:inherit;text-align:left;cursor:pointer;transition:border-color .35s var(--ease),background-color .35s var(--ease)}
+.b-acc .b-ic{grid-row:span 2;display:grid;place-items:center;width:48px;height:48px;border-radius:10px}
+.b-acc .b-ic svg{width:30px;height:30px;fill:none;stroke:var(--ink);stroke-width:1;stroke-linecap:round;stroke-linejoin:round}
+.b-check{position:absolute;right:12px;top:50%;display:grid;place-items:center;width:22px;height:22px;margin-top:-11px;border-radius:50%;border:1px solid var(--line);color:transparent;transition:background-color .35s var(--ease),border-color .35s var(--ease),color .35s var(--ease)}
+.b-check .ic{width:14px;height:14px;stroke-width:2}
+.b-acc.on{border-color:var(--wine)}
+.b-acc.on .b-check{background:var(--wine);border-color:var(--wine);color:var(--on-wine)}
+.b-acc.on .b-check .ic{animation:pop .45s var(--ease-out)}
+.b-sum{display:flex;flex-direction:column;gap:8px;margin-top:6px;padding-top:16px;border-top:1px solid var(--line)}
+.b-row{display:flex;justify-content:space-between;gap:12px;font-size:15px}
+.b-row.disc{color:var(--wine)}
+.b-row.tot{align-items:baseline;font-size:16px}
+.b-row.tot .serif{font-size:34px;line-height:1}
+.b-hint{margin:0 0 6px;font-size:13.5px;color:var(--muted)}
+.edit{background:var(--surface);transition:background-color .6s var(--ease);overflow:hidden}
+.edit-grid{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,6fr);gap:clamp(32px,6vw,96px);align-items:center}
+.edit-copy{display:flex;flex-direction:column;align-items:flex-start;gap:24px}
+.edit-copy h2{margin:0;font-size:clamp(40px,5vw,72px);line-height:1}
+.edit-copy p{margin:0;max-width:38ch;color:var(--muted)}
+.tones{display:flex;flex-wrap:wrap;gap:8px}
+.tone{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 16px 0 10px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit;font-size:14px;cursor:pointer;transition:border-color .35s var(--ease),background-color .35s var(--ease)}
+.tone i{width:18px;height:18px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.tone.on{border-color:var(--ink);background:var(--bg)}
+.fan{position:relative;height:clamp(420px,46vw,620px)}
+.ftag{--x:0px;--y:0px;--r:0deg;position:absolute;top:8%;width:44%;display:flex;flex-direction:column;gap:10px;padding:10px 10px 14px;background:var(--bg);border-radius:3px;box-shadow:0 30px 60px -34px rgba(0,0,0,.55);transform:translate(var(--x),var(--y)) rotate(var(--r));transition:transform .9s var(--ease-out),box-shadow .6s var(--ease),background-color .6s var(--ease);cursor:pointer}
+.ftag:nth-child(1){left:0;--r:-9deg;--y:30px}
+.ftag:nth-child(2){left:18%;--r:-3deg;--y:-6px}
+.ftag:nth-child(3){left:36%;--r:4deg;--y:12px}
+.ftag:nth-child(4){left:55%;--r:10deg;--y:44px}
+.ftag:hover{--y:-10px}
+.ftag.on{--r:0deg;--y:-34px;z-index:5;box-shadow:0 44px 80px -36px rgba(0,0,0,.6)}
+.ftag-in{border:1px solid var(--wine);padding:8px}
+.ftag img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover}
+.ftag-label{font-size:20px;text-align:center}
+.perks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.perk{display:flex;flex-direction:column;gap:10px;padding:36px 28px}
+.perk + .perk{border-left:1px solid var(--line)}
+.perk .ic{width:26px;height:26px;color:var(--wine);stroke-width:1.2}
+.perk h3{margin:0;font-size:22px;line-height:1.15}
+.perk p{margin:0;font-size:14.5px;color:var(--muted)}
+.bigline{padding:clamp(40px,6vw,80px) 0;overflow:hidden;white-space:nowrap}
+.bigline .marquee{animation-duration:60s}
+.bigline .marquee > span{gap:48px;padding:0 24px;font-family:'Pagella', Georgia, serif;font-weight:400;font-size:clamp(64px,9vw,148px);line-height:1;color:transparent;-webkit-text-stroke:1px var(--muted)}
+.bigline .bfly{width:64px;height:46px;stroke-width:1}
+.bigline .bfly path{animation:none;stroke-dashoffset:0}
+.ig-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:32px}
+.ig-head a.handle{font-size:clamp(32px,3.6vw,52px);line-height:1}
+.ig-head a.handle:hover{color:var(--wine)}
+.ig-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.ig{position:relative;display:block;aspect-ratio:1/1;overflow:hidden;background:var(--surface)}
+.ig img{width:100%;height:100%;object-fit:cover;object-position:50% 25%;transition:transform 1.4s var(--ease-out)}
+.ig .veil{position:absolute;inset:0;display:grid;place-items:center;background:rgba(110,85,48,.55);color:#FFFFFF;opacity:0;transition:opacity .45s var(--ease)}
+.ig .veil .ic{width:30px;height:30px}
+.ig:hover img{transform:scale(1.07)}
+.ig:hover .veil{opacity:1}
+.news{border-top:1px solid var(--line)}
+.news-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px 64px;align-items:center;padding:clamp(56px,7vw,96px) 0}
+.news h2{margin:0 0 10px;font-size:clamp(38px,4.4vw,60px);line-height:1}
+.news p{margin:0;color:var(--muted)}
+.news-form{display:flex;gap:10px;flex-wrap:wrap}
+.news-form input{flex:1 1 240px;min-height:52px;padding:0 22px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font:inherit;font-size:15px;transition:border-color .3s var(--ease),background-color .6s var(--ease)}
+.news-form input::placeholder{color:var(--muted)}
+.news-form input:focus{border-color:var(--ink);outline:none}
+.ok{display:flex;align-items:center;gap:12px;font-size:17px;color:var(--ink);animation:rise .9s var(--ease-out) both}
+.ok .ic{color:var(--wine);width:24px;height:24px}
+.foot{background:var(--surface);border-top:1px solid var(--line);font-size:14.5px;transition:background-color .6s var(--ease)}
+.foot-grid{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:40px;padding:72px 0 48px}
+.foot h4{margin:0 0 16px;font-size:20px;font-weight:300}
+.foot ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.foot li a{color:var(--muted);transition:color .3s var(--ease)}
+.foot li a:hover{color:var(--wine)}
+.foot .about{margin:18px 0 0;max-width:30ch;color:var(--muted)}
+.foot-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding:22px 0 28px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.pay{display:flex;gap:8px}
+.pay span{padding:3px 10px;border:1px solid var(--line);border-radius:6px}
+@supports (animation-timeline: view()){
+.ftag{animation:tagDrop linear both;animation-timeline:view();animation-range:entry 0% cover 32%}
+.ig{animation:igIn linear both;animation-timeline:view();animation-range:entry 0% cover 25%}
+@keyframes tagDrop{from{opacity:0;translate:0 -90px}to{opacity:1;translate:0 0}}
+@keyframes igIn{from{opacity:.2;scale:.94}to{opacity:1;scale:1}}
+}
+@media (max-width:980px){
+.nav{display:none}
+.burger{display:inline-grid}
+.hdr-in{height:68px}
+.hide-sm{display:none}
+.logo-ais{font-size:32px}
+.hero-grid{grid-template-columns:1fr}
+.hero-media{order:-1;max-height:none;width:calc(100% - 24px);margin-left:24px}
+.hangtag{left:-24px;bottom:6%;width:150px}
+.cat-grid{grid-template-columns:1fr 1fr;gap:12px}
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 14px}
+.combo-grid{grid-template-columns:1fr}
+.kits-row{grid-template-columns:1fr}
+.quick{transform:none;min-height:44px;font-size:13px}
+.edit-grid{grid-template-columns:1fr}
+.perks{grid-template-columns:1fr 1fr}
+.perk:nth-child(3){border-left:0}
+.perk:nth-child(n+3){border-top:1px solid var(--line)}
+.ig-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.news-in{grid-template-columns:1fr}
+.foot-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:560px){
+.info{flex-direction:column;gap:2px}
+.cat-label{left:18px;right:18px;bottom:18px}
+.cat-go{display:none}
+.b-accs{grid-template-columns:1fr}
+.tiers-inline{gap:24px}
+.perks{grid-template-columns:1fr}
+.perk + .perk{border-left:0;border-top:1px solid var(--line)}
+.foot-grid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+.ais *,.ais *::before,.ais *::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+.marquee{animation:none}
+}
+</style>
+<style>
+.ais,.app{font-weight:400}
+.logo-ais{font-family:'Pagella', Georgia, serif !important;font-weight:500 !important;letter-spacing:0;font-style:italic;}
+.serif,.ais h1,.ais h2,.ais h3,.app h1,.app h2,.app h3{font-weight:400 !important;letter-spacing:0 !important;font-style:italic;}
+.tier .d,.big,.kit-n,.tiers-inline .big,.promo .tiers b,.tot .t b,.b-row.tot .serif,.tg-row.tot .serif,.hello b,.k-value,.tag-name{font-weight:400 !important}
+.btn,.quick,.tab,.chip,.fbtn,.mini-btn{font-weight:500}
+.cat-label{flex-direction:column !important;align-items:flex-start !important;justify-content:flex-end !important;gap:10px !important}
+.btn,.chip,.tab,.quick,.fbtn,.mini-btn,.badge,.pill,.sw,.icon-btn,.opt,.b-opt,.b-acc,.tile,.kit,.card,.media{border-radius:2px !important}
+</style>
+</helmet>
+<div class="ais" data-theme="{{theme}}" id="top">
+
+<div class="topbar" role="region" aria-label="Avisos da loja">
+<div class="marquee">
+<span>Novos conjuntos canelados na loja <svg class="mini" viewBox="0 0 40 28" aria-hidden="true"><path d="M20 13.2a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6z"></path></svg></span>
+<span>Moda fitness feminina em @@CIDADE@@ <svg class="mini" viewBox="0 0 40 28" aria-hidden="true"><path d="M20 13.2a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6z"></path></svg></span>
+<span>Atendimento pelo Instagram @@@IG@@ <svg class="mini" viewBox="0 0 40 28" aria-hidden="true"><path d="M20 13.2a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6z"></path></svg></span>
+<span>Novos conjuntos canelados na loja <svg class="mini" viewBox="0 0 40 28" aria-hidden="true"><path d="M20 13.2a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6z"></path></svg></span>
+<span>Moda fitness feminina em @@CIDADE@@ <svg class="mini" viewBox="0 0 40 28" aria-hidden="true"><path d="M20 13.2a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6z"></path></svg></span>
+<span>Atendimento pelo Instagram @@@IG@@ <svg class="mini" viewBox="0 0 40 28" aria-hidden="true"><path d="M20 13.2a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6z"></path></svg></span>
+</div>
+</div>
+
+<header class="hdr">
+<div class="wrap hdr-in">
+<div style="display: flex; align-items: center; gap: 8px">
+<button class="icon-btn burger" type="button" onClick="{{toggleMenu}}" aria-label="{{menuLabel}}" aria-expanded="{{menuOpen}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"></path></svg></button>
+<nav class="nav" aria-label="Categorias">
+<div class="mega-item">
+<a class="mega-trigger" href="Colecao.dc.html">Roupas</a>
+<div class="mega-panel">
+<div class="wrap mega-in">
+<div class="mega-col"><p class="mega-h serif">Roupas</p><a href="Colecao.dc.html">Conjuntos</a><a href="Colecao.dc.html">Macacões</a><a href="Colecao.dc.html">Macaquinhos</a><span class="soon">Leggings, em breve</span><span class="soon">Tops, em breve</span></div>
+<div class="mega-col"><p class="mega-h serif">Destaques</p><a href="#colecao" onClick="{{showTodos}}">Novidades</a><a href="#combos">Leve mais, pague menos</a><a href="#tons">Coleção canelada</a><a href="Colecao.dc.html">Todo o mostruário</a></div>
+<a class="mega-feat" href="Produto.dc.html"><span class="pic"><img src="vitrines/_ilustracoes/nadador-cafe-modelo.png" alt="Modelo com conjunto café de top nadador"></span><span class="t serif">Conjunto Nadador café</span></a>
+<a class="mega-feat" href="Produto.dc.html"><span class="pic"><img src="vitrines/_ilustracoes/macacao-serenity-rua.png" alt="Modelo com macacão longo azul na rua"></span><span class="t serif">Macacão longo Serenity</span></a>
+</div>
+</div>
+</div>
+<div class="mega-item">
+<a class="mega-trigger" href="#colecao" onClick="{{showAcessorios}}">Acessórios <span class="new">novo</span></a>
+<div class="mega-panel">
+<div class="wrap mega-in">
+<div class="mega-col"><p class="mega-h serif">Acessórios</p><a href="Colecao.dc.html">Garrafas</a><a href="Colecao.dc.html">Bolsas</a><a href="Colecao.dc.html">Meias</a><a href="Colecao.dc.html">Cabelo</a><a href="Colecao.dc.html">Toalhas</a></div>
+<div class="mega-col"><p class="mega-h serif">Kits prontos</p><a href="#combos">Kit Treino Completo</a><a href="#combos">Kit Pós-treino</a><a href="#combos">Dupla Canelada</a></div>
+<div class="mega-col" style="grid-column: span 2; justify-content: center"><p class="mega-h serif">Leve mais, pague menos</p><span style="color: var(--muted); max-width: 40ch">Misture roupas e acessórios: 2 peças têm 5% de desconto e 3 ou mais, 10%. O desconto aparece sozinho na sacola.</span></div>
+</div>
+</div>
+</div>
+<a href="#colecao" onClick="{{showKits}}">Kits</a>
+<a href="Colecao.dc.html">Mostruário</a>
+</nav>
+</div>
+<a class="logo" href="#top" aria-label="@@NOME@@, página inicial">
+<span class="logo-ais">@@MARCA@@</span>
+<span class="logo-sub">MODA FITNESS <svg class="bfly" viewBox="0 0 40 28" aria-hidden="true"><path d="M20 13.2a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6z"></path></svg></span>
+</a>
+<div class="tools">
+<button class="icon-btn hide-sm" type="button" aria-label="Buscar"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M20 20l-4.2-4.2"></path></svg></button>
+<button class="icon-btn" type="button" onClick="{{toggleTheme}}" aria-label="{{themeLabel}}"><span class="theme-ic"><svg class="ic sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"></path></svg><svg class="ic moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"></path></svg></span></button>
+<a class="icon-btn hide-sm" href="#colecao" aria-label="Favoritos"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg><sc-if value="{{hasFavs}}" hint-placeholder-val="{{false}}"><span class="count">{{favCount}}</span></sc-if></a>
+<a class="icon-btn hide-sm" href="AppCliente.dc.html" aria-label="Minha conta"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"></circle><path d="M5 20c1.2-3.6 4-5.5 7-5.5s5.8 1.9 7 5.5"></path></svg></a>
+<a class="icon-btn" href="Sacola.dc.html" aria-label="Sacola com {{bag}} itens"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"></path><path d="M9 8V6.5a3 3 0 0 1 6 0V8"></path></svg><span class="count">{{bag}}</span></a>
+</div>
+<div class="{{toastCls}}" role="status" aria-live="polite"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span>{{toastText}}</span><a href="Sacola.dc.html">Ver sacola</a></div>
+</div>
+<sc-if value="{{menuOpen}}" hint-placeholder-val="{{false}}">
+<nav class="drawer" aria-label="Menu">
+<a href="Colecao.dc.html">Roupas</a>
+<a href="#colecao" onClick="{{menuAcessorios}}">Acessórios</a>
+<a href="#combos" onClick="{{toggleMenu}}">Kits e combinações</a>
+<a href="Colecao.dc.html">Todo o mostruário</a>
+<a href="#tons" onClick="{{toggleMenu}}">Coleção canelada</a>
+<a href="AppCliente.dc.html">Minha conta</a>
+</nav>
+</sc-if>
+</header>
+
+<main>
+<section class="{{heroCls}}" onMouseEnter="{{pause}}" onMouseLeave="{{resume}}" aria-roledescription="carrossel" aria-label="Destaques">
+<div class="wrap hero-grid">
+<div>
+<div class="hero-copy">
+<sc-for list="{{slides}}" as="sl" hint-placeholder-count="3">
+<div class="{{sl.txtCls}}" aria-hidden="{{sl.hidden}}">
+<h1 class="serif">{{sl.title}}</h1>
+<p>{{sl.text}}</p>
+<a class="btn" href="Produto.dc.html">{{sl.cta}}</a>
+</div>
+</sc-for>
+</div>
+<div class="dots" role="group" aria-label="Escolher destaque">
+<sc-for list="{{slides}}" as="sl" hint-placeholder-count="3">
+<button class="{{sl.dotCls}}" type="button" onClick="{{sl.pick}}" aria-pressed="{{sl.current}}"><span class="bar"><i></i></span>{{sl.label}}</button>
+</sc-for>
+</div>
+</div>
+<div class="hero-media">
+<div class="frame">
+<sc-for list="{{slides}}" as="sl" hint-placeholder-count="3">
+<img class="{{sl.imgCls}}" src="{{sl.img}}" alt="{{sl.alt}}">
+</sc-for>
+<span class="frame-line" aria-hidden="true"></span>
+</div>
+<div class="hangtag">
+<sc-for list="{{slides}}" as="sl" hint-placeholder-count="3">
+<div class="{{sl.tagCls}}" aria-hidden="{{sl.hidden}}">
+<div class="tag-in">
+<span class="hole" aria-hidden="true"></span>
+<span class="logo" aria-hidden="true"><span class="logo-ais" style="font-size: 26px">@@MARCA@@</span><span class="logo-sub" style="font-size: 7px">@@MARCA_SUB@@</span></span>
+<span class="tag-name serif">{{sl.label}}</span>
+<span class="tag-price">{{sl.price}}</span>
+<a class="tag-link" href="Produto.dc.html">Ver peça</a>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+</section>
+
+<section class="sec" style="padding-top: 0" aria-labelledby="cats-t">
+<div class="wrap">
+<div class="sec-head">
+<h2 id="cats-t" class="serif">Escolha pelo modelo</h2>
+<p>Conjuntos, macacões e macaquinhos que combinam entre si, do treino ao dia a dia.</p>
+</div>
+<div class="cat-grid">
+<a class="cat" href="#colecao" onClick="{{showConjuntos}}"><img src="vitrines/_ilustracoes/nadador-cafe-modelo.png" alt="Modelo com conjunto café de top nadador e legging"><span class="cat-label"><span class="cat-name serif">Conjuntos</span><span class="cat-go">Ver conjuntos</span></span></a>
+<a class="cat" href="#colecao" onClick="{{showMacacoes}}"><img src="vitrines/_ilustracoes/macacao-serenity-rua.png" alt="Modelo atravessa a rua com macacão longo azul"><span class="cat-label"><span class="cat-name serif">Macacões</span><span class="cat-go">Ver macacões</span></span></a>
+<a class="cat" href="#colecao" onClick="{{showMacaquinhos}}"><img src="vitrines/_ilustracoes/macaquinho-marinho-modelo.png" alt="Modelo alongando com macaquinho marinho"><span class="cat-label"><span class="cat-name serif">Macaquinhos</span><span class="cat-go">Ver macaquinhos</span></span></a>
+<a class="cat acc" href="#colecao" onClick="{{showAcessorios}}">
+<span class="acc-art" aria-hidden="true">
+<svg viewBox="0 0 24 24"><path d="M9.5 2.5h5v2.5l1.5 2.2v12.8a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 8 20V7.2l1.5-2.2zM8 10.5h8M8 16.5h8"></path></svg>
+<svg viewBox="0 0 24 24"><path d="M12 6.5c5 0 9 2.5 9 5.5s-4 5.5-9 5.5-9-2.5-9-5.5 4-5.5 9-5.5zM3.6 13.8c1.6 1.5 4.8 2.4 8.4 2.4s6.8-.9 8.4-2.4"></path></svg>
+<svg viewBox="0 0 24 24"><path d="M3 10.5A2.5 2.5 0 0 1 5.5 8h13a2.5 2.5 0 0 1 2.5 2.5V19H3zM8.5 8V6a1.5 1.5 0 0 1 1.5-1.5h4A1.5 1.5 0 0 1 15.5 6v2M3 13.5h18M11 13.5v2h2v-2"></path></svg>
+<svg viewBox="0 0 24 24"><path d="M9 2.5h6v9.5l3.6 3.8a3 3 0 0 1-2.2 5.2h-5.9A4.5 4.5 0 0 1 6 16.5c0-1.6.8-2.8 3-4.5zM9 5.5h6"></path></svg>
+</span>
+<span class="new acc-new">novo</span>
+<span class="cat-label"><span class="cat-name serif">Acessórios</span><span class="cat-go">Ver acessórios</span></span>
+</a>
+</div>
+</div>
+</section>
+
+<section class="sec" id="colecao" style="padding-top: 0" aria-labelledby="col-t">
+<div class="wrap">
+<div class="sec-head">
+<h2 id="col-t" class="serif">Chegou na @@MARCA@@</h2>
+<div class="tabs" role="group" aria-label="Filtrar coleção">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+<button class="{{t.cls}}" type="button" onClick="{{t.pick}}" aria-pressed="{{t.selected}}">{{t.label}}</button>
+</sc-for>
+</div>
+</div>
+<div class="grid">
+<sc-for list="{{cards}}" as="p" hint-placeholder-count="6">
+<article class="card">
+<div class="media">
+<sc-if value="{{p.isPhoto}}" hint-placeholder-val="{{true}}">
+<a href="Produto.dc.html" aria-label="Ver {{p.name}}">
+<img class="a" src="{{p.img}}" alt="{{p.alt}}" loading="lazy">
+<sc-if value="{{p.hasB}}" hint-placeholder-val="{{false}}"><img class="b" src="{{p.imgB}}" alt="" loading="lazy"></sc-if>
+</a>
+</sc-if>
+<sc-if value="{{p.isArt}}" hint-placeholder-val="{{false}}">
+<a class="art" href="Colecao.dc.html" aria-label="Ver {{p.name}}" style="background: color-mix(in srgb, {{p.tone}} 28%, var(--surface))"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{p.icon}}"></path></svg><span class="soon-note">Foto em breve</span></a>
+</sc-if>
+<sc-if value="{{p.isKit}}" hint-placeholder-val="{{false}}">
+<a class="{{p.kitCls}}" href="#combos" aria-label="Ver {{p.name}}">
+<sc-for list="{{p.parts}}" as="k" hint-placeholder-count="3"><span class="kp" style="background: color-mix(in srgb, {{k.tone}} 28%, var(--surface))"><sc-if value="{{k.isImg}}" hint-placeholder-val="{{true}}"><img src="{{k.img}}" alt="" loading="lazy"></sc-if><sc-if value="{{k.isIcon}}" hint-placeholder-val="{{false}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{k.icon}}"></path></svg></sc-if></span></sc-for>
+</a>
+</sc-if>
+<sc-if value="{{p.hasBadge}}" hint-placeholder-val="{{true}}"><span class="{{p.badgeCls}}">{{p.badge}}</span></sc-if>
+<button class="{{p.favCls}}" type="button" onClick="{{p.toggleFav}}" aria-label="{{p.favLabel}}" aria-pressed="{{p.fav}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg></button>
+<button class="quick" type="button" onClick="{{p.add}}">{{p.addLabel}}</button>
+</div>
+<div class="info">
+<div>
+<h3><a href="Produto.dc.html">{{p.name}}</a></h3>
+<p class="cname">{{p.colorName}}</p>
+</div>
+<div class="prices"><sc-if value="{{p.hasFrom}}" hint-placeholder-val="{{false}}"><span class="from">{{p.from}}</span></sc-if><p class="price">{{p.price}}</p></div>
+</div>
+<sc-if value="{{p.multi}}" hint-placeholder-val="{{true}}">
+<div class="sws" role="group" aria-label="Cores de {{p.name}}">
+<sc-for list="{{p.colors}}" as="c" hint-placeholder-count="2">
+<button class="{{c.cls}}" type="button" onClick="{{c.pick}}" aria-label="{{c.label}}" aria-pressed="{{c.pressed}}"><i style="background: {{c.hex}}"></i></button>
+</sc-for>
+</div>
+</sc-if>
+</article>
+</sc-for>
+</div>
+<div class="more"><a class="btn ghost" href="Colecao.dc.html">Ver todo o mostruário, {{totalItems}} itens</a></div>
+</div>
+</section>
+
+<section class="sec combo-sec" id="combos" aria-labelledby="combo-t">
+<div class="wrap combo-grid">
+<div class="combo-copy">
+<h2 id="combo-t" class="serif">Leve mais, pague menos</h2>
+<p>Monte sua combinação com roupa e acessórios. O desconto entra sozinho na sacola: 2 peças têm 5% e 3 ou mais, 10%.</p>
+<div class="tiers-inline">
+<div><span class="big serif">5%</span><span>com 2 peças</span></div>
+<div><span class="big serif">10%</span><span>com 3 ou mais</span></div>
+</div>
+<div class="kits-row">
+<sc-for list="{{kits}}" as="k" hint-placeholder-count="3">
+<button class="kit-mini" type="button" onClick="{{k.add}}">
+<span class="kit-thumb" style="background: color-mix(in srgb, {{k.tone}} 28%, var(--surface))"><img src="{{k.img}}" alt=""></span>
+<span class="kit-txt"><span class="serif kit-n">{{k.name}}</span><span class="kit-d">{{k.sub}}</span><span class="kit-p"><s>{{k.from}}</s> {{k.price}}</span></span>
+<span class="kit-add">Adicionar</span>
+</button>
+</sc-for>
+</div>
+</div>
+
+<div class="builder" aria-labelledby="bld-t">
+<h3 id="bld-t" class="serif">Monte a sua</h3>
+<p class="b-step">1. Escolha a peça principal</p>
+<div class="b-opts" role="radiogroup" aria-label="Peça principal">
+<sc-for list="{{comboBases}}" as="b" hint-placeholder-count="3">
+<button class="{{b.cls}}" type="button" role="radio" aria-checked="{{b.on}}" onClick="{{b.pick}}"><img src="{{b.img}}" alt=""><span class="b-name">{{b.name}}</span><span class="b-price">{{b.price}}</span></button>
+</sc-for>
+</div>
+<p class="b-step">2. Complete com acessórios</p>
+<div class="b-accs" role="group" aria-label="Acessórios">
+<sc-for list="{{comboAccs}}" as="a" hint-placeholder-count="4">
+<button class="{{a.cls}}" type="button" aria-pressed="{{a.on}}" onClick="{{a.toggle}}"><span class="b-ic" style="background: color-mix(in srgb, {{a.tone}} 30%, var(--surface))"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{a.icon}}"></path></svg></span><span class="b-name">{{a.name}}</span><span class="b-price">{{a.price}}</span><span class="b-check" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span></button>
+</sc-for>
+</div>
+<div class="b-sum">
+<div class="b-row"><span>{{comboCount}}</span><span>{{comboFull}}</span></div>
+<div class="b-row disc"><span>Desconto leve mais, {{comboPct}}%</span><span>− {{comboDisc}}</span></div>
+<div class="b-row tot"><span>Total</span><span class="serif">{{comboTotal}}</span></div>
+<p class="b-hint" role="status" aria-live="polite">{{comboHint}}</p>
+<button class="btn" type="button" onClick="{{addCombo}}">Adicionar combinação à sacola</button>
+</div>
+</div>
+</div>
+</section>
+
+<section class="sec edit" id="tons" aria-labelledby="tons-t">
+<div class="wrap edit-grid">
+<div class="edit-copy">
+<h2 id="tons-t" class="serif">Um modelo, quatro tons</h2>
+<p>O conjunto canelado Recorte tem top de alça larga e legging com recorte na perna. Escolha o seu tom ou monte a coleção inteira.</p>
+<div class="tones" role="group" aria-label="Tons do conjunto Recorte">
+<sc-for list="{{tones}}" as="t" hint-placeholder-count="4">
+<button class="{{t.chipCls}}" type="button" onClick="{{t.pick}}" aria-pressed="{{t.pressed}}"><i style="background: {{t.hex}}"></i>{{t.name}}</button>
+</sc-for>
+</div>
+<a class="btn" href="Produto.dc.html">Ver o conjunto {{toneName}}</a>
+</div>
+<div class="fan">
+<sc-for list="{{tones}}" as="t" hint-placeholder-count="4">
+<a class="{{t.cardCls}}" href="Produto.dc.html" onMouseEnter="{{t.pick}}" aria-label="Conjunto Recorte {{t.name}}">
+<span class="ftag-in"><img src="{{t.img}}" alt="Conjunto canelado {{t.name}} sobre a mesa" loading="lazy"></span>
+<span class="ftag-label serif">{{t.name}}</span>
+</a>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section class="sec" aria-label="Por que @@MARCA@@">
+<div class="wrap">
+<div class="perks">
+<div class="perk"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4v16M9 4v16M13 4v16M17 4v16"></path></svg><h3 class="serif">Canelado macio</h3><p>Tecido com textura canelada que acompanha o corpo em cada exercício.</p></div>
+<div class="perk"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8c5 2 11 2 16 0M5 8l2 12h10l2-12"></path></svg><h3 class="serif">Cós alto</h3><p>Firme na cintura, para treinar sem precisar ajustar a peça.</p></div>
+<div class="perk"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17c3-6 6-9 8-9s5 3 8 9"></path><circle cx="12" cy="5" r="1.6"></circle></svg><h3 class="serif">Do treino à rua</h3><p>Cores que conversam entre si e com o seu dia a dia.</p></div>
+<div class="perk"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 18l1.2-3.6A7 7 0 1 1 9.4 17.5z"></path></svg><h3 class="serif">Atendimento de perto</h3><p>Dúvida de tamanho? Fale com a gente pelo Instagram.</p></div>
+</div>
+</div>
+</section>
+
+<div class="bigline" aria-hidden="true">
+<div class="marquee">
+<span>@@NOME@@ <svg class="bfly" viewBox="0 0 40 28"><path d="M20 13.2a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6z"></path></svg> @@CIDADE_CURTA@@ <svg class="bfly" viewBox="0 0 40 28"><path d="M20 13.2a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6z"></path></svg></span>
+<span>@@NOME@@ <svg class="bfly" viewBox="0 0 40 28"><path d="M20 13.2a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6z"></path></svg> @@CIDADE_CURTA@@ <svg class="bfly" viewBox="0 0 40 28"><path d="M20 13.2a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6z"></path></svg></span>
+</div>
+</div>
+
+<section class="sec" style="padding-top: 0" aria-labelledby="ig-t">
+<div class="wrap">
+<div class="ig-head">
+<h2 id="ig-t" class="sr">Instagram</h2>
+<a class="handle serif" href="https://www.instagram.com/@@IG@@/" target="_blank" rel="noopener">@@@IG@@</a>
+<p style="margin: 0; color: var(--muted)">Looks, provador e reposições acontecem primeiro no Instagram.</p>
+</div>
+<div class="ig-grid">
+<sc-for list="{{ig}}" as="g" hint-placeholder-count="6">
+<a class="ig" href="https://www.instagram.com/@@IG@@/" target="_blank" rel="noopener" aria-label="Abrir o Instagram da @@MARCA@@"><img src="{{g.img}}" alt="" loading="lazy"><span class="veil"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.2" cy="6.8" r=".8"></circle></svg></span></a>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section class="news" aria-labelledby="news-t">
+<div class="wrap news-in">
+<div>
+<h2 id="news-t" class="serif">Lista VIP @@MARCA@@</h2>
+<p>Receba os lançamentos e as reposições por e-mail.</p>
+</div>
+<sc-if value="{{notSubscribed}}" hint-placeholder-val="{{true}}">
+<form class="news-form" onSubmit="{{subscribe}}">
+<label for="nl-email" class="sr">Seu e-mail</label>
+<input id="nl-email" type="email" required="" placeholder="Seu e-mail" autocomplete="email" value="{{email}}" onChange="{{typeEmail}}">
+<button class="btn" type="submit">Quero receber</button>
+</form>
+</sc-if>
+<sc-if value="{{subscribed}}" hint-placeholder-val="{{false}}">
+<p class="ok" role="status"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Pronto, você está na lista. O próximo lançamento chega no seu e-mail.</p>
+</sc-if>
+</div>
+</section>
+</main>
+
+<footer class="foot">
+<div class="wrap">
+<div class="foot-grid">
+<div>
+<a class="logo" href="#top" aria-label="@@NOME@@, voltar ao topo" style="align-items: flex-start"><span class="logo-ais">@@MARCA@@</span><span class="logo-sub">MODA FITNESS <svg class="bfly" viewBox="0 0 40 28" aria-hidden="true"><path d="M20 13.2a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6z"></path></svg></span></a>
+<p class="about">Moda fitness feminina feita para treinar e para viver. @@CIDADE@@.</p>
+</div>
+<div>
+<h4 class="serif">Loja</h4>
+<ul><li><a href="#colecao">Novidades</a></li><li><a href="#colecao">Conjuntos</a></li><li><a href="#colecao">Macacões</a></li><li><a href="#colecao">Macaquinhos</a></li></ul>
+</div>
+<div>
+<h4 class="serif">Ajuda</h4>
+<ul><li><a href="Produto.dc.html">Guia de medidas</a></li><li><a href="#top">Trocas e devoluções</a></li><li><a href="#top">Envio</a></li><li><a href="Sacola.dc.html">Minha sacola</a></li></ul>
+</div>
+<div>
+<h4 class="serif">Contato</h4>
+<ul><li><a href="https://www.instagram.com/@@IG@@/" target="_blank" rel="noopener">Instagram @@@IG@@</a></li><li><a href="#top">WhatsApp @@WHATS@@</a></li><li><a href="#top">@@CIDADE@@</a></li><li><a href="Painel.dc.html">Painel da loja</a></li></ul>
+</div>
+</div>
+<div class="foot-bottom">
+<span>© 2026 @@NOME@@</span>
+<span class="pay" aria-label="Formas de pagamento"><span>Pix</span><span>Cartão</span><span>Boleto</span></span>
+</div>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"temaInicial":{"editor":"enum","options":["claro","escuro"],"default":"claro","section":"Tema"},"$preview":{"width":1440,"height":5400}}'>
+class Component extends DCLogic {
+  componentDidMount() { this.startTimer(); }
+  componentWillUnmount() { clearInterval(this.timer); clearTimeout(this.toastTimer); }
+  startTimer() {
+    clearInterval(this.timer);
+    this.timer = setInterval(() => {
+      const s = this.state || {};
+      if (s.paused) return;
+      this.setState({ slide: ((s.slide || 0) + 1) % 3 });
+    }, 6500);
+  }
+  addToBag(label, units) {
+    const s = this.state || {};
+    const bag = s.bag == null ? 2 : s.bag;
+    clearTimeout(this.toastTimer);
+    this.setState({ bag: bag + (units || 1), toast: label + ' foi para a sacola' });
+    this.toastTimer = setTimeout(() => this.setState({ toast: '' }), 2800);
+  }
+  renderVals() {
+    const s = this.state || {};
+    const IMG = {
+      choc: 'vitrines/_ilustracoes/flat-recorte-chocolate.png',
+      serenityGym: 'vitrines/_ilustracoes/macacao-serenity-academia.png',
+      nadPreto: 'vitrines/_ilustracoes/nadador-preto-modelo.png',
+      marinho: 'vitrines/_ilustracoes/flat-recorte-marinho.png',
+      macPreto: 'vitrines/_ilustracoes/macaquinho-preto-modelo.png',
+      royal: 'vitrines/_ilustracoes/flat-recorte-royal.png',
+      nude: 'vitrines/_ilustracoes/flat-recorte-nude.png',
+      cruzVinho: 'vitrines/_ilustracoes/cruzado-vinho-modelo.png',
+      flatCruzVinho: 'vitrines/_ilustracoes/flat-cruzado-vinho.png',
+      flatCruzPreto: 'vitrines/_ilustracoes/flat-cruzado-preto.png',
+      serenityRua: 'vitrines/_ilustracoes/macacao-serenity-rua.png',
+      macMarinho: 'vitrines/_ilustracoes/macaquinho-marinho-modelo.png',
+      nadCafe: 'vitrines/_ilustracoes/nadador-cafe-modelo.png',
+      costas: 'vitrines/_ilustracoes/macacao-costas-preto-modelo.png'
+    };
+    const theme = s.theme || (this.props.temaInicial === 'escuro' ? 'escuro' : 'claro');
+    const slide = s.slide || 0;
+    const favs = s.favs || {};
+    const variant = s.variant || {};
+    const tab = s.tab || 'todos';
+    const bag = s.bag == null ? 2 : s.bag;
+    const tone = s.tone == null ? 0 : s.tone;
+
+    const SLIDES = [
+      { img: IMG.serenityGym, alt: 'Modelo com macacão longo azul serenity na academia', title: 'Feita para acompanhar cada movimento', text: 'Macacão longo Serenity, em malha seamless azul. Do treino ao café depois dele.', cta: 'Ver macacões', label: 'Macacão Serenity', price: 'R$ 219,90' },
+      { img: IMG.nadPreto, alt: 'Modelo sentada com conjunto preto de top nadador e legging', title: 'O básico que vai com todo treino', text: 'Conjunto Nadador com cós alto e top de costas nadador, em preto e café.', cta: 'Ver conjuntos', label: 'Conjunto Nadador', price: 'R$ 179,90' },
+      { img: IMG.cruzVinho, alt: 'Modelo com conjunto vinho de top e legging', title: 'Coleção cápsula, peça a peça', text: 'Conjunto canelado de costas cruzadas, em vinho e preto.', cta: 'Ver o conjunto', label: 'Conjunto Cruzado', price: 'R$ 189,90' }
+    ];
+
+    SLIDES.push.apply(SLIDES, SLIDES.splice(0, 2));
+    SLIDES[0] = Object.assign({}, SLIDES[0], { title: 'Coleção cápsula, peça por peça' });
+    const PRODUCTS = [
+      { id: 'serenity', name: 'Macacão longo Serenity', cat: 'macacoes', price: 'R$ 219,90', isNew: true, colors: [
+        { name: 'Azul serenity', hex: '#86A9DD', a: IMG.serenityGym, b: IMG.serenityRua, alt: 'Modelo com macacão longo azul serenity na academia' } ] },
+      { id: 'recorte', name: 'Conjunto canelado Recorte', cat: 'conjuntos', price: 'R$ 189,90', isNew: true, colors: [
+        { name: 'Chocolate', hex: '#7A4634', a: IMG.choc, alt: 'Conjunto canelado chocolate, top e legging com recorte, sobre a mesa' },
+        { name: 'Marinho', hex: '#2C3A6E', a: IMG.marinho, alt: 'Conjunto canelado marinho, top e legging com recorte, sobre a mesa' },
+        { name: 'Azul royal', hex: '#2448C4', a: IMG.royal, alt: 'Conjunto canelado azul royal, top e legging com recorte, sobre a mesa' },
+        { name: 'Nude', hex: '#D8C4B0', a: IMG.nude, alt: 'Conjunto canelado nude, top e legging com recorte, sobre a mesa' } ] },
+      { id: 'contorno', name: 'Macaquinho Contorno', cat: 'macaquinhos', price: 'R$ 169,90', isNew: true, colors: [
+        { name: 'Preto', hex: '#161616', a: IMG.macPreto, alt: 'Modelo com macaquinho preto com debrum branco' },
+        { name: 'Marinho', hex: '#22315F', a: IMG.macMarinho, alt: 'Modelo alongando com macaquinho marinho com debrum branco' } ] },
+      { id: 'cruzado', name: 'Conjunto canelado Cruzado', cat: 'conjuntos', price: 'R$ 189,90', colors: [
+        { name: 'Vinho', hex: '#5C1F31', a: IMG.cruzVinho, b: IMG.flatCruzVinho, alt: 'Modelo com conjunto vinho de top e legging' },
+        { name: 'Preto', hex: '#1B1A20', a: IMG.flatCruzPreto, alt: 'Conjunto canelado preto com top de costas cruzadas sobre a mesa' } ] },
+      { id: 'nadador', name: 'Conjunto Nadador', cat: 'conjuntos', price: 'R$ 179,90', colors: [
+        { name: 'Preto', hex: '#151515', a: IMG.nadPreto, alt: 'Modelo sentada com conjunto preto de top nadador e legging' },
+        { name: 'Café', hex: '#4B3226', a: IMG.nadCafe, alt: 'Modelo sentada com conjunto café de top nadador e legging' } ] },
+      { id: 'costas', name: 'Macacão Costas Abertas', cat: 'macacoes', price: 'R$ 229,90', colors: [
+        { name: 'Preto', hex: '#141414', a: IMG.costas, alt: 'Modelo de costas com macacão longo preto de costas abertas' } ] }
+    ];
+
+    const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    const TIER = (u) => (u >= 3 ? 10 : (u >= 2 ? 5 : 0));
+    const ICON = {
+      garrafa: 'M9.5 2.5h5v2.5l1.5 2.2v12.8a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 8 20V7.2l1.5-2.2zM8 10.5h8M8 16.5h8',
+      bolsa: 'M3 10.5A2.5 2.5 0 0 1 5.5 8h13a2.5 2.5 0 0 1 2.5 2.5V19H3zM8.5 8V6a1.5 1.5 0 0 1 1.5-1.5h4A1.5 1.5 0 0 1 15.5 6v2M3 13.5h18M11 13.5v2h2v-2',
+      meia: 'M9 2.5h6v9.5l3.6 3.8a3 3 0 0 1-2.2 5.2h-5.9A4.5 4.5 0 0 1 6 16.5c0-1.6.8-2.8 3-4.5zM9 5.5h6',
+      faixa: 'M12 6.5c5 0 9 2.5 9 5.5s-4 5.5-9 5.5-9-2.5-9-5.5 4-5.5 9-5.5zM3.6 13.8c1.6 1.5 4.8 2.4 8.4 2.4s6.8-.9 8.4-2.4',
+      xuxinha: 'M12 4.5a7.5 7.5 0 1 1 0 15 7.5 7.5 0 0 1 0-15zM12 8.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7zM6 7l2.5 2.5M18 7l-2.5 2.5M6 17l2.5-2.5M18 17l-2.5-2.5',
+      toalha: 'M5 3.5h11a3 3 0 0 1 3 3v14H8a3 3 0 0 1-3-3zM5 17.5a3 3 0 0 1 3-3h11M9 3.5v11'
+    };
+    const ACCS = [
+      { id: 'garrafa', name: 'Garrafa térmica 750 ml', sub: 'Garrafas, preto', price: 79.9, icon: ICON.garrafa, tone: '#C9A98B' },
+      { id: 'faixa', name: 'Faixa de cabelo canelada', sub: 'Cabelo, vinho', price: 24.9, icon: ICON.faixa, tone: '#C48C9E' },
+      { id: 'bolsa', name: 'Bolsa de treino', sub: 'Bolsas, preto', price: 149.9, icon: ICON.bolsa, tone: '#8E7F86' },
+      { id: 'meias', name: 'Meias cano médio, 3 pares', sub: 'Meias, branco', price: 39.9, icon: ICON.meia, tone: '#B9C3CF' },
+      { id: 'xuxinha', name: 'Xuxinhas caneladas, 3 un.', sub: 'Cabelo, nude', price: 19.9, icon: ICON.xuxinha, tone: '#D9C2AE' },
+      { id: 'toalha', name: 'Toalha de treino', sub: 'Toalhas, grafite', price: 34.9, icon: ICON.toalha, tone: '#A9A0A4' }
+    ];
+    const KITS = [
+      { id: 'kit-treino', name: 'Kit Treino Completo', sub: 'Conjunto Recorte, garrafa e faixa', units: 3, full: 189.9 + 79.9 + 24.9, img: IMG.choc, parts: [{ img: IMG.choc }, { icon: ICON.garrafa, tone: '#C9A98B' }, { icon: ICON.faixa, tone: '#C48C9E' }] },
+      { id: 'kit-pos', name: 'Kit Pós-treino', sub: 'Macacão Serenity, bolsa e toalha', units: 3, full: 219.9 + 149.9 + 34.9, img: IMG.serenityRua, parts: [{ img: IMG.serenityRua }, { icon: ICON.bolsa, tone: '#8E7F86' }, { icon: ICON.toalha, tone: '#A9A0A4' }] },
+      { id: 'kit-dupla', name: 'Dupla Canelada', sub: '2 conjuntos Recorte, cores à escolha', units: 2, full: 189.9 * 2, img: IMG.marinho, parts: [{ img: IMG.marinho }, { img: IMG.nude }] }
+    ];
+    const kitPrice = (k) => Math.round(k.full * (100 - TIER(k.units))) / 100;
+    const favCard = (id, name) => {
+      const isFav = !!favs[id];
+      return { fav: isFav, favCls: isFav ? 'icon-btn fav on' : 'icon-btn fav', favLabel: (isFav ? 'Remover dos favoritos: ' : 'Favoritar: ') + name,
+        toggleFav: () => { const f = Object.assign({}, favs); f[id] = !isFav; this.setState({ favs: f }); } };
+    };
+    const accCard = (a) => Object.assign({
+      name: a.name, colorName: a.sub, price: brl(a.price), hasFrom: false, from: '',
+      isPhoto: false, isArt: true, isKit: false, icon: a.icon, tone: a.tone, img: '', imgB: '', hasB: false, alt: '', kitCls: 'kit-art', parts: [],
+      hasBadge: true, badge: 'Novo', badgeCls: 'badge', multi: false, colors: [],
+      addLabel: 'Adicionar à sacola', add: () => this.addToBag(a.name, 1)
+    }, favCard(a.id, a.name));
+    const kitCard = (k) => Object.assign({
+      name: k.name, colorName: k.sub, price: brl(kitPrice(k)), hasFrom: true, from: brl(k.full),
+      isPhoto: false, isArt: false, isKit: true, icon: '', tone: '#E7E2D8', img: '', imgB: '', hasB: false, alt: '',
+      kitCls: k.parts.length === 2 ? 'kit-art two' : 'kit-art',
+      parts: k.parts.map((x) => ({ isImg: !!x.img, isIcon: !!x.icon, img: x.img || '', icon: x.icon || '', tone: x.tone || '#E7E2D8' })),
+      hasBadge: true, badge: 'Economize ' + brl(k.full - kitPrice(k)), badgeCls: 'badge save', multi: false, colors: [],
+      addLabel: 'Adicionar kit à sacola', add: () => this.addToBag(k.name, k.units)
+    }, favCard(k.id, k.name));
+
+    const toCard = (p) => {
+      const vi = variant[p.id] || 0;
+      const c = p.colors[vi] || p.colors[0];
+      const isFav = !!favs[p.id];
+      return {
+        isPhoto: true, isArt: false, isKit: false, icon: '', tone: '', kitCls: 'kit-art', parts: [],
+        hasBadge: !!p.isNew, badge: 'Novo', badgeCls: 'badge', hasFrom: false, from: '', addLabel: 'Adicionar à sacola',
+        name: p.name, price: p.price, isNew: !!p.isNew,
+        img: c.a, imgB: c.b || '', hasB: !!c.b, alt: c.alt, colorName: p.colors.length > 1 ? c.name + ', ' + p.colors.length + ' cores' : c.name,
+        multi: p.colors.length > 1,
+        fav: isFav, favCls: isFav ? 'icon-btn fav on' : 'icon-btn fav', favLabel: (isFav ? 'Remover dos favoritos: ' : 'Favoritar: ') + p.name,
+        toggleFav: () => { const f = Object.assign({}, favs); f[p.id] = !isFav; this.setState({ favs: f }); },
+        add: () => this.addToBag(p.name + ' ' + c.name.toLowerCase()),
+        colors: p.colors.map((cc, i) => ({
+          hex: cc.hex, label: 'Cor ' + cc.name, pressed: i === vi, cls: i === vi ? 'sw on' : 'sw',
+          pick: () => { const v = Object.assign({}, variant); v[p.id] = i; this.setState({ variant: v }); }
+        }))
+      };
+    };
+
+    const TABS = [
+      { id: 'todos', label: 'Destaques' }, { id: 'conjuntos', label: 'Conjuntos' },
+      { id: 'macacoes', label: 'Macacões' }, { id: 'macaquinhos', label: 'Macaquinhos' },
+      { id: 'acessorios', label: 'Acessórios' }, { id: 'kits', label: 'Kits' }
+    ];
+    const byId = (id) => PRODUCTS.filter((p) => p.id === id)[0];
+    const accById = (id) => ACCS.filter((a) => a.id === id)[0];
+    const kitById = (id) => KITS.filter((k) => k.id === id)[0];
+    const HIGHLIGHTS = [
+      ['p', 'serenity'], ['p', 'recorte'], ['a', 'garrafa'], ['p', 'contorno'],
+      ['k', 'kit-treino'], ['p', 'cruzado'], ['a', 'faixa'], ['p', 'nadador'],
+      ['p', 'costas'], ['a', 'bolsa'], ['k', 'kit-pos'], ['a', 'meias']
+    ];
+    let cardsList;
+    if (tab === 'todos') cardsList = HIGHLIGHTS.map((h) => (h[0] === 'p' ? toCard(byId(h[1])) : (h[0] === 'a' ? accCard(accById(h[1])) : kitCard(kitById(h[1])))));
+    else if (tab === 'acessorios') cardsList = ACCS.map(accCard);
+    else if (tab === 'kits') cardsList = KITS.map(kitCard);
+    else cardsList = PRODUCTS.filter((p) => p.cat === tab).map(toCard);
+
+    const BASES = [
+      { name: 'Conjunto Recorte', price: 189.9, img: IMG.choc },
+      { name: 'Macacão Serenity', price: 219.9, img: IMG.serenityGym },
+      { name: 'Macaquinho Contorno', price: 169.9, img: IMG.macPreto }
+    ];
+    const COMBO_ACCS = [ACCS[0], ACCS[1], ACCS[3], ACCS[2]];
+    const cb = s.cb || 0;
+    const ca = s.ca || { garrafa: true };
+    const chosen = COMBO_ACCS.filter((a) => ca[a.id]);
+    const cCount = 1 + chosen.length;
+    const cFull = BASES[cb].price + chosen.reduce((t, a) => t + a.price, 0);
+    const cPct = TIER(cCount);
+    const cDisc = Math.round(cFull * cPct) / 100;
+    const TONES = [
+      { name: 'Chocolate', hex: '#7A4634', img: IMG.choc },
+      { name: 'Marinho', hex: '#2C3A6E', img: IMG.marinho },
+      { name: 'Azul royal', hex: '#2448C4', img: IMG.royal },
+      { name: 'Nude', hex: '#D8C4B0', img: IMG.nude }
+    ];
+    const favCount = Object.keys(favs).filter((k) => favs[k]).length;
+
+    return {
+      theme: theme,
+      themeLabel: theme === 'escuro' ? 'Usar tema claro' : 'Usar tema escuro',
+      toggleTheme: () => this.setState({ theme: theme === 'escuro' ? 'claro' : 'escuro' }),
+      menuOpen: !!s.menu,
+      menuLabel: s.menu ? 'Fechar menu' : 'Abrir menu',
+      toggleMenu: () => this.setState({ menu: !s.menu }),
+      bag: bag,
+      favCount: favCount,
+      hasFavs: favCount > 0,
+      toastCls: s.toast ? 'toast on' : 'toast',
+      toastText: s.toast || '',
+      heroCls: s.paused ? 'hero paused' : 'hero',
+      pause: () => this.setState({ paused: true }),
+      resume: () => this.setState({ paused: false }),
+      slides: SLIDES.map((sl, i) => Object.assign({}, sl, {
+        txtCls: i === slide ? 'slide-txt on' : 'slide-txt',
+        imgCls: i === slide ? 'on' : '',
+        tagCls: i === slide ? 'tagcard on' : 'tagcard',
+        dotCls: i === slide ? 'dot on' : 'dot',
+        current: i === slide,
+        hidden: i !== slide,
+        pick: () => { this.setState({ slide: i }); this.startTimer(); }
+      })),
+      showConjuntos: () => this.setState({ tab: 'conjuntos' }),
+      showMacacoes: () => this.setState({ tab: 'macacoes' }),
+      showMacaquinhos: () => this.setState({ tab: 'macaquinhos' }),
+      showAcessorios: () => this.setState({ tab: 'acessorios' }),
+      showKits: () => this.setState({ tab: 'kits' }),
+      showTodos: () => this.setState({ tab: 'todos' }),
+      menuAcessorios: () => this.setState({ tab: 'acessorios', menu: false }),
+      tabs: TABS.map((t) => ({ label: t.label, selected: t.id === tab, cls: t.id === tab ? 'tab on' : 'tab', pick: () => this.setState({ tab: t.id }) })),
+      cards: cardsList,
+      totalItems: 21,
+      kits: KITS.map((k) => ({ name: k.name, sub: k.sub, img: k.img, tone: '#E7E2D8', from: brl(k.full), price: brl(kitPrice(k)), add: () => this.addToBag(k.name, k.units) })),
+      comboBases: BASES.map((b, i) => ({ name: b.name, img: b.img, price: brl(b.price), on: i === cb, cls: i === cb ? 'b-opt on' : 'b-opt', pick: () => this.setState({ cb: i }) })),
+      comboAccs: COMBO_ACCS.map((a) => ({ name: a.name, icon: a.icon, tone: a.tone, price: brl(a.price), on: !!ca[a.id], cls: ca[a.id] ? 'b-acc on' : 'b-acc', toggle: () => { const m = Object.assign({}, ca); m[a.id] = !m[a.id]; this.setState({ ca: m }); } })),
+      comboCount: cCount === 1 ? '1 peça' : cCount + ' peças',
+      comboFull: brl(cFull),
+      comboPct: cPct,
+      comboDisc: brl(cDisc),
+      comboTotal: brl(cFull - cDisc),
+      comboHint: cCount === 1 ? 'Escolha 1 acessório e ganhe 5% de desconto.' : (cCount === 2 ? 'Mais 1 item e o desconto sobe para 10%.' : 'Desconto máximo aplicado: 10% em toda a combinação.'),
+      addCombo: () => this.addToBag('Sua combinação com ' + cCount + ' peças', cCount),
+      tones: TONES.map((t, i) => Object.assign({}, t, {
+        chipCls: i === tone ? 'tone on' : 'tone',
+        cardCls: i === tone ? 'ftag on' : 'ftag',
+        pressed: i === tone,
+        pick: () => this.setState({ tone: i })
+      })),
+      toneName: TONES[tone].name.toLowerCase(),
+      ig: [IMG.serenityRua, IMG.nadCafe, IMG.macMarinho, IMG.flatCruzVinho, IMG.costas, IMG.royal].map((img) => ({ img: img })),
+      email: s.email || '',
+      typeEmail: (e) => this.setState({ email: e.target.value }),
+      subscribe: (e) => { if (e && e.preventDefault) e.preventDefault(); this.setState({ subscribed: true }); },
+      subscribed: !!s.subscribed,
+      notSubscribed: !s.subscribed
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>@@MARCA@@ — Sacola e pagamento</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="assets/css/fontes.css">
+<style>
+body{margin:0}
+*,*::before,*::after{box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+a:hover{color:inherit}
+.ais{--bg:#F3F6FB;--surface:#FFFFFF;--ink:#0E1B2E;--muted:#55627A;--line:#DCE3EF;--wine:#1D4ED8;--on-wine:#FFFFFF;--gold:#B45309;--tag:#FFFFFF;--shade:rgba(14,27,46,.06);--ease:cubic-bezier(.22,.61,.36,1);--ease-out:cubic-bezier(.16,1,.3,1);font-family:'Heros',system-ui,sans-serif;font-weight:300;font-size:16px;line-height:1.6;color:var(--ink);background:var(--bg);transition:background-color .6s var(--ease),color .6s var(--ease);min-height:100vh;overflow-x:clip}
+.ais[data-theme="escuro"]{--bg:#0B1220;--surface:#121B2D;--ink:#EEF3FB;--muted:#9AA8C0;--line:#26324A;--wine:#7AA2FF;--on-wine:#0B1220;--gold:#F5A524;--tag:#121B2D;--shade:rgba(255,255,255,.06)}
+.serif{font-family:'Heros Cn', 'Heros', sans-serif;font-weight:700;letter-spacing:-.01em}
+.wrap{max-width:1320px;margin:0 auto;padding:0 clamp(16px,4vw,56px)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.icon-btn{position:relative;display:inline-grid;place-items:center;width:44px;height:44px;border:0;border-radius:50%;background:transparent;color:var(--ink);cursor:pointer;transition:background-color .3s var(--ease)}
+.icon-btn:hover{background:var(--shade)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:1.5px solid var(--wine);outline-offset:3px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 28px;border-radius:999px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);font:inherit;font-weight:400;font-size:15px;letter-spacing:.03em;cursor:pointer;transition:background-color .35s var(--ease),color .35s var(--ease),border-color .35s var(--ease),transform .35s var(--ease)}
+.btn:hover{background:var(--wine);border-color:var(--wine);color:var(--on-wine)}
+.btn:active{transform:scale(.98)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.hdr{border-bottom:1px solid var(--line)}
+.hdr-in{display:flex;justify-content:space-between;align-items:center;height:84px}
+.back{display:inline-flex;align-items:center;gap:8px;font-size:14.5px}
+.back:hover{color:var(--wine)}
+.logo{display:inline-flex;flex-direction:column;align-items:center;line-height:1}
+.logo-ais{font-weight:300;font-size:34px;letter-spacing:.05em;color:var(--wine)}
+.logo-sub{margin-top:3px;font-size:8.5px;font-weight:400;letter-spacing:.3em;color:var(--gold)}
+.theme-ic{position:relative;width:20px;height:20px}
+.theme-ic .ic{position:absolute;inset:0;transition:transform .7s var(--ease-out),opacity .45s var(--ease)}
+.ais .moon{opacity:0;transform:rotate(-90deg) scale(.5)}
+.ais[data-theme="escuro"] .sun{opacity:0;transform:rotate(90deg) scale(.5)}
+.ais[data-theme="escuro"] .moon{opacity:1;transform:none}
+.page{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(28px,5vw,72px);align-items:start;padding:48px 0 96px}
+.page h1{margin:0 0 8px;font-size:clamp(42px,4.6vw,64px);line-height:1}
+.sub{margin:0 0 28px;color:var(--muted)}
+.items{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.item{display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:22px;padding:24px 0;border-bottom:1px solid var(--line);align-items:center;animation:in .7s var(--ease-out) both}
+@keyframes in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.item img{width:120px;aspect-ratio:3/4;object-fit:cover;object-position:50% 30%;background:var(--surface)}
+.item h2{margin:0;font-size:24px;line-height:1.15}
+.item .meta{margin:4px 0 14px;font-size:14px;color:var(--muted)}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px}
+.qty button{width:42px;height:42px;border:0;background:none;color:var(--ink);font:inherit;font-size:18px;cursor:pointer;border-radius:999px}
+.qty button:hover{background:var(--shade)}
+.qty output{min-width:26px;text-align:center}
+.item-side{display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.item-price{font-size:17px;font-weight:400}
+.remove{border:0;background:none;padding:8px 0;color:var(--muted);font:inherit;font-size:13.5px;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.remove:hover{color:var(--wine)}
+.undo{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px;padding:14px 18px;border-radius:14px;background:var(--ink);color:var(--bg);font-size:14px;animation:in .5s var(--ease-out) both}
+.undo button{border:0;background:none;color:inherit;font:inherit;text-decoration:underline;text-underline-offset:4px;cursor:pointer;min-height:36px}
+.empty{padding:48px 0;color:var(--muted)}
+.summary{position:sticky;top:24px;display:flex;flex-direction:column;gap:22px;padding:32px;background:var(--surface);border-radius:20px;transition:background-color .6s var(--ease)}
+.summary h2{margin:0;font-size:32px;line-height:1}
+.field{display:flex;flex-direction:column;gap:8px;font-size:14px}
+.inrow{display:flex;gap:8px}
+.inrow input{flex:1;min-width:0;min-height:50px;padding:0 18px;border:1px solid var(--line);border-radius:999px;background:var(--bg);color:var(--ink);font:inherit;font-size:15px}
+.inrow input:focus{outline:none;border-color:var(--ink)}
+.inrow .btn{min-height:50px;padding:0 20px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;align-items:center;gap:14px;width:100%;min-height:58px;padding:10px 16px;border:1px solid var(--line);border-radius:14px;background:transparent;color:var(--ink);font:inherit;text-align:left;cursor:pointer;transition:border-color .3s var(--ease),background-color .3s var(--ease)}
+.opt:hover{border-color:var(--muted)}
+.opt.on{border-color:var(--ink);background:var(--bg)}
+.radio{width:18px;height:18px;border-radius:50%;border:1px solid var(--muted);display:grid;place-items:center;flex:none}
+.opt.on .radio{border-color:var(--wine)}
+.opt.on .radio::after{content:"";width:9px;height:9px;border-radius:50%;background:var(--wine);animation:dot .35s var(--ease-out)}
+@keyframes dot{from{transform:scale(0)}}
+.opt .t{flex:1}
+.opt .v{font-size:14px;color:var(--muted)}
+.paybox{padding:18px;border:1px dashed var(--line);border-radius:14px;font-size:14px;color:var(--muted);animation:in .5s var(--ease-out) both}
+.qr{display:grid;place-items:center;width:132px;height:132px;margin:0 auto 12px;border:1px solid var(--line);border-radius:10px;background:repeating-linear-gradient(0deg,transparent 0 10px,var(--line) 10px 11px),repeating-linear-gradient(90deg,transparent 0 10px,var(--line) 10px 11px)}
+.qr span{padding:4px 8px;background:var(--surface);border-radius:6px;font-size:12px;color:var(--muted)}
+.lines{display:flex;flex-direction:column;gap:8px;padding-top:18px;border-top:1px solid var(--line);font-size:15px}
+.lines div{display:flex;justify-content:space-between;gap:12px}
+.lines .muted{color:var(--muted)}
+.total{font-size:20px;font-weight:400;padding-top:10px;border-top:1px solid var(--line)}
+.lines .disc{color:var(--wine);animation:in .5s var(--ease-out) both}
+.item-art{display:grid;place-items:center;width:120px;aspect-ratio:3/4}
+.item-art svg{width:50%;height:50%;fill:none;stroke:var(--ink);stroke-width:.8;stroke-linecap:round;stroke-linejoin:round}
+.leve{display:flex;flex-direction:column;gap:10px;padding:18px;border:1px solid var(--wine);border-radius:16px}
+.leve-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.leve-top .serif{font-size:22px;line-height:1.1}
+.leve-pct{font-size:15px;font-weight:400;color:var(--wine)}
+.leve-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+.leve-steps i{height:4px;border-radius:4px;background:var(--line);transition:background-color .6s var(--ease)}
+.leve-steps i.on{background:var(--wine)}
+.leve p{margin:0;font-size:14px;color:var(--muted)}
+.upsell{margin-top:40px}
+.upsell h2{margin:0;font-size:34px;line-height:1.1}
+.upsell > p{margin:6px 0 18px;color:var(--muted)}
+.up-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.up{display:grid;grid-template-columns:56px minmax(0,1fr) auto;align-items:center;gap:12px;padding:8px 12px 8px 8px;border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--ink);font:inherit;font-size:14px;text-align:left;cursor:pointer;animation:in .6s var(--ease-out) both;transition:border-color .35s var(--ease),transform .5s var(--ease-out)}
+.up:hover{border-color:var(--wine);transform:translateY(-3px)}
+.up-art{display:grid;place-items:center;width:56px;height:56px;border-radius:12px}
+.up-art svg{width:34px;height:34px;fill:none;stroke:var(--ink);stroke-width:1;stroke-linecap:round;stroke-linejoin:round}
+.up-txt{display:flex;flex-direction:column;line-height:1.3;min-width:0}
+.up-p{font-weight:400}
+.up-add{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--ink);color:var(--bg);transition:background-color .35s var(--ease),transform .5s var(--ease-out)}
+.up-add .ic{width:16px;height:16px}
+.up:hover .up-add{background:var(--wine);transform:rotate(90deg)}
+.note{margin:0;font-size:13px;color:var(--muted);text-align:center}
+.done{position:fixed;inset:0;z-index:40;display:grid;place-items:center;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);animation:fade .5s var(--ease) both}
+@keyframes fade{from{opacity:0}}
+.done-card{display:flex;flex-direction:column;align-items:center;gap:16px;max-width:440px;margin:16px;padding:48px 40px;background:var(--surface);border-radius:24px;text-align:center;box-shadow:0 40px 80px -40px rgba(0,0,0,.45);animation:in .7s .1s var(--ease-out) both}
+.done-card h2{margin:0;font-size:44px;line-height:1}
+.done-card p{margin:0;color:var(--muted)}
+.check{width:76px;height:76px;fill:none;stroke:var(--wine);stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.check circle{stroke-dasharray:220;stroke-dashoffset:220;animation:drawc 1s .2s var(--ease-out) forwards}
+.check path{stroke-dasharray:40;stroke-dashoffset:40;animation:drawc .6s .9s var(--ease-out) forwards}
+@keyframes drawc{to{stroke-dashoffset:0}}
+@media (max-width:980px){
+.page{grid-template-columns:1fr}
+.summary{position:static}
+.item{grid-template-columns:88px minmax(0,1fr)}
+.item img,.item-art{width:88px}
+.up-grid{grid-template-columns:1fr}
+.item-side{grid-column:2;flex-direction:row;justify-content:space-between;align-items:center}
+}
+@media (prefers-reduced-motion:reduce){
+.ais *,.ais *::before,.ais *::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
+</style>
+<style>
+.ais,.app{font-weight:400}
+.logo-ais{font-family:'Heros Cn', 'Heros', sans-serif !important;font-weight:700 !important;letter-spacing:-.005em;}
+.serif,.ais h1,.ais h2,.ais h3,.app h1,.app h2,.app h3{font-weight:700 !important;letter-spacing:-.005em !important;}
+.tier .d,.big,.kit-n,.tiers-inline .big,.promo .tiers b,.tot .t b,.b-row.tot .serif,.tg-row.tot .serif,.hello b,.k-value,.tag-name{font-weight:700 !important}
+.btn,.quick,.tab,.chip,.fbtn,.mini-btn{font-weight:500}
+.cat-label{flex-direction:column !important;align-items:flex-start !important;justify-content:flex-end !important;gap:10px !important}
+.slide-txt h1{font-size:clamp(40px,5vw,70px) !important;line-height:1.04 !important}
+.cat-name{font-size:clamp(26px,2.5vw,38px) !important}
+.bigline .marquee > span{font-weight:800 !important;-webkit-text-stroke:1.2px var(--muted) !important}
+.ais:not([data-theme="escuro"]) .topbar{background:#1D4ED8 !important;color:#FFFFFF !important}
+.btn,.chip,.tab,.quick,.fbtn,.mini-btn,.badge,.pill,.sw,.icon-btn,.opt,.b-opt,.b-acc,.tile,.kit,.card,.media{border-radius:2px !important}
+</style>
+<style>
+.frame{background:var(--wine) !important}.frame-line{border-color:rgba(255,255,255,.55) !important}
+</style>
+</helmet>
+<div class="ais" data-theme="{{theme}}">
+<header class="hdr">
+<div class="wrap hdr-in">
+<a class="back" href="Main.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>Continuar comprando</a>
+<a class="logo" href="Main.dc.html" aria-label="@@NOME@@, página inicial"><span class="logo-ais">@@MARCA@@</span><span class="logo-sub">@@MARCA_SUB@@</span></a>
+<button class="icon-btn" type="button" onClick="{{toggleTheme}}" aria-label="{{themeLabel}}"><span class="theme-ic"><svg class="ic sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"></path></svg><svg class="ic moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"></path></svg></span></button>
+</div>
+</header>
+
+<main class="wrap page">
+<section aria-labelledby="bag-t">
+<h1 id="bag-t" class="serif">Sua sacola</h1>
+<p class="sub">{{countText}}</p>
+<div class="items">
+<sc-for list="{{items}}" as="it" hint-placeholder-count="2">
+<article class="item">
+<sc-if value="{{it.isImg}}" hint-placeholder-val="{{true}}"><img src="{{it.img}}" alt="{{it.alt}}"></sc-if>
+<sc-if value="{{it.isArt}}" hint-placeholder-val="{{false}}"><span class="item-art" style="background: color-mix(in srgb, {{it.tone}} 30%, var(--surface))"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{it.icon}}"></path></svg></span></sc-if>
+<div>
+<h2 class="serif">{{it.name}}</h2>
+<p class="meta">{{it.meta}}</p>
+<div class="qty" role="group" aria-label="Quantidade de {{it.name}}">
+<button type="button" onClick="{{it.dec}}" aria-label="Diminuir">−</button>
+<output aria-live="polite">{{it.qty}}</output>
+<button type="button" onClick="{{it.inc}}" aria-label="Aumentar">+</button>
+</div>
+</div>
+<div class="item-side">
+<span class="item-price">{{it.total}}</span>
+<button class="remove" type="button" onClick="{{it.remove}}">Remover</button>
+</div>
+</article>
+</sc-for>
+</div>
+<sc-if value="{{isEmpty}}" hint-placeholder-val="{{false}}"><p class="empty">Sua sacola está vazia. <a href="Main.dc.html" style="text-decoration: underline; text-underline-offset: 4px">Ver a coleção</a></p></sc-if>
+<sc-if value="{{hasUndo}}" hint-placeholder-val="{{false}}"><div class="undo" role="status"><span>{{undoText}}</span><button type="button" onClick="{{undo}}">Desfazer</button></div></sc-if>
+<sc-if value="{{hasUpsell}}" hint-placeholder-val="{{true}}">
+<div class="upsell">
+<h2 class="serif">Complete o look</h2>
+<p>{{upsellText}}</p>
+<div class="up-grid">
+<sc-for list="{{upsell}}" as="u" hint-placeholder-count="3">
+<button class="up" type="button" onClick="{{u.add}}">
+<span class="up-art" style="background: color-mix(in srgb, {{u.tone}} 30%, var(--surface))"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{u.icon}}"></path></svg></span>
+<span class="up-txt"><span>{{u.name}}</span><span class="up-p">{{u.price}}</span></span>
+<span class="up-add" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg></span>
+</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+</section>
+
+<aside class="summary" aria-labelledby="sum-t">
+<h2 id="sum-t" class="serif">Resumo do pedido</h2>
+
+<div class="field">
+<label for="cep">Entrega</label>
+<div class="inrow"><input id="cep" inputmode="numeric" placeholder="Seu CEP" value="{{cep}}" onChange="{{typeCep}}"><button class="btn ghost" type="button" onClick="{{calc}}">Calcular</button></div>
+</div>
+<div class="opts" role="radiogroup" aria-label="Forma de entrega">
+<sc-for list="{{ship}}" as="o" hint-placeholder-count="2">
+<button class="{{o.cls}}" type="button" role="radio" aria-checked="{{o.on}}" onClick="{{o.pick}}"><span class="radio" aria-hidden="true"></span><span class="t">{{o.label}}</span><span class="v">{{o.value}}</span></button>
+</sc-for>
+</div>
+
+<div class="field">
+<span>Pagamento</span>
+<div class="opts" role="radiogroup" aria-label="Forma de pagamento">
+<sc-for list="{{pay}}" as="o" hint-placeholder-count="3">
+<button class="{{o.cls}}" type="button" role="radio" aria-checked="{{o.on}}" onClick="{{o.pick}}"><span class="radio" aria-hidden="true"></span><span class="t">{{o.label}}</span><span class="v">{{o.value}}</span></button>
+</sc-for>
+</div>
+</div>
+<sc-if value="{{isPix}}" hint-placeholder-val="{{true}}"><div class="paybox"><div class="qr"><span>QR Code Pix</span></div>O QR Code e o código copia e cola serão gerados pela API do banco quando a integração estiver ativa.</div></sc-if>
+<sc-if value="{{isCard}}" hint-placeholder-val="{{false}}"><div class="paybox">Os dados do cartão serão digitados em um campo seguro do banco ou do gateway escolhido, sem passar pelo servidor da loja.</div></sc-if>
+
+<div class="leve" role="status" aria-live="polite">
+<div class="leve-top"><span class="serif">Leve mais, pague menos</span><span class="leve-pct">{{tierLabel}}</span></div>
+<div class="leve-steps" aria-hidden="true"><i class="{{s1}}"></i><i class="{{s2}}"></i><i class="{{s3}}"></i></div>
+<p>{{tierText}}</p>
+</div>
+<div class="lines">
+<div><span class="muted">Subtotal</span><span>{{subtotal}}</span></div>
+<sc-if value="{{hasDiscount}}" hint-placeholder-val="{{true}}"><div class="disc"><span>Desconto leve mais, {{pct}}%</span><span>− {{discount}}</span></div></sc-if>
+<div><span class="muted">Entrega</span><span>{{shipValue}}</span></div>
+<div class="total"><span>Total</span><span>{{total}}</span></div>
+</div>
+<button class="btn" type="button" onClick="{{finish}}" disabled="{{isEmpty}}">Finalizar pedido</button>
+<p class="note">Pagamento de demonstração. A cobrança real entra com a API do banco.</p>
+</aside>
+</main>
+
+<sc-if value="{{finished}}" hint-placeholder-val="{{false}}">
+<div class="done" role="dialog" aria-modal="true" aria-labelledby="done-t">
+<div class="done-card">
+<svg class="check" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="34"></circle><path d="M26 41l9 9 19-20"></path></svg>
+<h2 id="done-t" class="serif">Pedido recebido</h2>
+<p>A confirmação chega no seu e-mail e no WhatsApp assim que o pagamento for aprovado.</p>
+<a class="btn" href="Main.dc.html">Voltar à loja</a>
+<button class="remove" type="button" onClick="{{closeDone}}">Fechar</button>
+</div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"temaInicial":{"editor":"enum","options":["claro","escuro"],"default":"claro","section":"Tema"},"$preview":{"width":1440,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const theme = s.theme || (this.props.temaInicial === 'escuro' ? 'escuro' : 'claro');
+    const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    const BASE = [
+      { id: 'recorte', name: 'Conjunto canelado Recorte', meta: 'Chocolate, tamanho M', unit: 189.9, img: 'vitrines/_ilustracoes/flat-recorte-chocolate.png', alt: 'Conjunto canelado chocolate sobre a mesa' },
+      { id: 'contorno', name: 'Macaquinho Contorno', meta: 'Preto, tamanho P', unit: 169.9, img: 'vitrines/_ilustracoes/macaquinho-preto-modelo.png', alt: 'Modelo com macaquinho preto com debrum branco' }
+    ];
+    const ACCS = [
+      { id: 'garrafa', name: 'Garrafa térmica 750 ml', meta: 'Preto, tamanho único', unit: 79.9, tone: '#C9A98B', icon: 'M9.5 2.5h5v2.5l1.5 2.2v12.8a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 8 20V7.2l1.5-2.2zM8 10.5h8M8 16.5h8' },
+      { id: 'faixa', name: 'Faixa de cabelo canelada', meta: 'Vinho, tamanho único', unit: 24.9, tone: '#C48C9E', icon: 'M12 6.5c5 0 9 2.5 9 5.5s-4 5.5-9 5.5-9-2.5-9-5.5 4-5.5 9-5.5zM3.6 13.8c1.6 1.5 4.8 2.4 8.4 2.4s6.8-.9 8.4-2.4' },
+      { id: 'meias', name: 'Meias cano médio, 3 pares', meta: 'Branco, tamanho único', unit: 39.9, tone: '#B9C3CF', icon: 'M9 2.5h6v9.5l3.6 3.8a3 3 0 0 1-2.2 5.2h-5.9A4.5 4.5 0 0 1 6 16.5c0-1.6.8-2.8 3-4.5zM9 5.5h6' }
+    ];
+    const extra = s.extra || {};
+    const qty = s.qty || { recorte: 1, contorno: 1, garrafa: 1, faixa: 1, meias: 1 };
+    const removed = s.removed || {};
+    const ALL = BASE.concat(ACCS.filter((a) => extra[a.id]));
+    const list = ALL.filter((b) => !removed[b.id]);
+    const TIER = (u) => (u >= 3 ? 10 : (u >= 2 ? 5 : 0));
+    const setQty = (id, n) => { const q = Object.assign({}, qty); q[id] = Math.max(1, Math.min(10, n)); this.setState({ qty: q }); };
+    const subtotal = list.reduce((acc, b) => acc + b.unit * (qty[b.id] || 1), 0);
+    const units = list.reduce((acc, b) => acc + (qty[b.id] || 1), 0);
+    const shipSel = s.ship || 'retirada';
+    const paySel = s.pay || 'pix';
+    const SHIP = [
+      { id: 'retirada', label: 'Retirar na loja, @@CIDADE_CURTA@@', value: 'Grátis' },
+      { id: 'entrega', label: 'Receber em casa', value: s.calculated ? 'R$ [frete]' : 'Informe o CEP' }
+    ];
+    const PAY = [
+      { id: 'pix', label: 'Pix', value: 'aprovação na hora' },
+      { id: 'cartao', label: 'Cartão de crédito', value: 'até [x] vezes' },
+      { id: 'boleto', label: 'Boleto', value: 'até 3 dias úteis' }
+    ];
+    return {
+      theme: theme,
+      themeLabel: theme === 'escuro' ? 'Usar tema claro' : 'Usar tema escuro',
+      toggleTheme: () => this.setState({ theme: theme === 'escuro' ? 'claro' : 'escuro' }),
+      countText: units === 0 ? 'Nenhuma peça por enquanto.' : (units === 1 ? '1 peça separada para você.' : units + ' peças separadas para você.'),
+      pct: TIER(units),
+      hasDiscount: TIER(units) > 0,
+      discount: brl(Math.round(subtotal * TIER(units)) / 100),
+      tierLabel: TIER(units) > 0 ? TIER(units) + '% aplicado' : 'sem desconto ainda',
+      tierText: units >= 3 ? 'Desconto máximo: 10% em toda a sacola.' : (units === 2 ? 'Mais 1 peça e o desconto sobe de 5% para 10%.' : (units === 1 ? 'Mais 1 peça e você ganha 5% de desconto.' : 'Com 2 peças, 5% de desconto. Com 3 ou mais, 10%.')),
+      s1: units >= 1 ? 'on' : '', s2: units >= 2 ? 'on' : '', s3: units >= 3 ? 'on' : '',
+      hasUpsell: ACCS.some((a) => !extra[a.id] || removed[a.id]),
+      upsellText: units >= 3 ? 'Seu desconto de 10% também vale para os acessórios.' : 'Um acessório já conta como peça para o desconto.',
+      upsell: ACCS.filter((a) => !extra[a.id] || removed[a.id]).map((a) => ({
+        name: a.name, tone: a.tone, icon: a.icon, price: brl(a.unit),
+        add: () => { const x = Object.assign({}, extra); x[a.id] = true; const r = Object.assign({}, removed); delete r[a.id]; this.setState({ extra: x, removed: r }); }
+      })),
+      items: list.map((b) => ({
+        isImg: !!b.img, isArt: !b.img, tone: b.tone || '#DCE3EF', icon: b.icon || '',
+        name: b.name, meta: b.meta, img: b.img || '', alt: b.alt || '', qty: qty[b.id] || 1,
+        total: brl(b.unit * (qty[b.id] || 1)),
+        dec: () => setQty(b.id, (qty[b.id] || 1) - 1),
+        inc: () => setQty(b.id, (qty[b.id] || 1) + 1),
+        remove: () => { const r = Object.assign({}, removed); r[b.id] = true; this.setState({ removed: r, undoId: b.id, undoText: b.name + ' saiu da sacola.' }); }
+      })),
+      isEmpty: list.length === 0,
+      hasUndo: !!s.undoId,
+      undoText: s.undoText || '',
+      undo: () => { const r = Object.assign({}, removed); delete r[s.undoId]; this.setState({ removed: r, undoId: null }); },
+      cep: s.cep || '',
+      typeCep: (e) => this.setState({ cep: e.target.value }),
+      calc: () => this.setState({ calculated: true, ship: 'entrega' }),
+      ship: SHIP.map((o) => ({ label: o.label, value: o.value, on: o.id === shipSel, cls: o.id === shipSel ? 'opt on' : 'opt', pick: () => this.setState({ ship: o.id }) })),
+      pay: PAY.map((o) => ({ label: o.label, value: o.value, on: o.id === paySel, cls: o.id === paySel ? 'opt on' : 'opt', pick: () => this.setState({ pay: o.id }) })),
+      isPix: paySel === 'pix',
+      isCard: paySel === 'cartao',
+      subtotal: brl(subtotal),
+      shipValue: shipSel === 'retirada' ? 'Grátis' : 'R$ [frete]',
+      total: shipSel === 'retirada' ? brl(subtotal - Math.round(subtotal * TIER(units)) / 100) : brl(subtotal - Math.round(subtotal * TIER(units)) / 100) + ' + frete',
+      finished: !!s.finished,
+      finish: () => { if (list.length) this.setState({ finished: true }); },
+      closeDone: () => this.setState({ finished: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

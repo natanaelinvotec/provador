@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>@@MARCA@@ — Conjunto canelado Recorte</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="assets/css/fontes.css">
+<style>
+body{margin:0}
+*,*::before,*::after{box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+a:hover{color:inherit}
+.ais{--bg:#FFF7F4;--surface:#FFFFFF;--ink:#2D1426;--muted:#6E5267;--line:#F1DED8;--wine:#8E2C5A;--on-wine:#FFFFFF;--gold:#B23B2A;--tag:#FFFFFF;--shade:rgba(45,20,38,.06);--danger:#A3262A;--ease:cubic-bezier(.22,.61,.36,1);--ease-out:cubic-bezier(.16,1,.3,1);font-family:'Inter',system-ui,sans-serif;font-weight:300;font-size:16px;line-height:1.6;color:var(--ink);background:var(--bg);transition:background-color .6s var(--ease),color .6s var(--ease);min-height:100vh;overflow-x:clip}
+.ais[data-theme="escuro"]{--bg:#170C14;--surface:#22121E;--ink:#FBF0F2;--muted:#C4A6B8;--line:#3D2337;--wine:#F08DB8;--on-wine:#170C14;--gold:#FF8A73;--tag:#22121E;--shade:rgba(255,255,255,.06);--danger:#F08A8C}
+.serif{font-family:'Poppins', sans-serif;font-weight:700;letter-spacing:-.01em}
+.wrap{max-width:1320px;margin:0 auto;padding:0 clamp(16px,4vw,56px)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.icon-btn{position:relative;display:inline-grid;place-items:center;width:44px;height:44px;border:0;border-radius:50%;background:transparent;color:var(--ink);cursor:pointer;transition:background-color .3s var(--ease)}
+.icon-btn:hover{background:var(--shade)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:1.5px solid var(--wine);outline-offset:3px}
+.count{position:absolute;top:5px;right:3px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--wine);color:var(--on-wine);font-size:10.5px;font-weight:400;line-height:17px;text-align:center}
+.count.bump{animation:bump .6s var(--ease-out)}
+@keyframes bump{40%{transform:scale(1.45)}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 28px;border-radius:999px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);font:inherit;font-weight:400;font-size:15px;letter-spacing:.03em;cursor:pointer;transition:background-color .35s var(--ease),color .35s var(--ease),border-color .35s var(--ease),transform .35s var(--ease)}
+.btn:hover{background:var(--wine);border-color:var(--wine);color:var(--on-wine)}
+.btn:active{transform:scale(.98)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.btn.done{background:var(--wine);border-color:var(--wine);color:var(--on-wine)}
+.btn.done .ic{animation:pop .5s var(--ease-out)}
+@keyframes pop{0%{transform:scale(.3);opacity:0}60%{transform:scale(1.2);opacity:1}100%{transform:none}}
+.hdr{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);transition:background-color .6s var(--ease)}
+.hdr-in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:84px}
+.nav{display:flex;gap:30px;font-size:14.5px}
+.nav a{position:relative;padding:6px 0}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--wine);transform:scaleX(0);transform-origin:right;transition:transform .45s var(--ease-out)}
+.nav a:hover::after{transform:scaleX(1);transform-origin:left}
+.tools{display:flex;justify-content:flex-end;align-items:center;gap:2px}
+.logo{display:inline-flex;flex-direction:column;align-items:center;line-height:1}
+.logo-ais{font-weight:300;font-size:38px;letter-spacing:.05em;color:var(--wine)}
+.logo-sub{display:inline-flex;align-items:center;gap:3px;margin-top:3px;font-size:9.5px;font-weight:400;letter-spacing:.3em;color:var(--gold)}
+.bfly{width:24px;height:17px;fill:none;stroke:var(--gold);stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round}
+.theme-ic{position:relative;width:20px;height:20px}
+.theme-ic .ic{position:absolute;inset:0;transition:transform .7s var(--ease-out),opacity .45s var(--ease)}
+.ais .moon{opacity:0;transform:rotate(-90deg) scale(.5)}
+.ais[data-theme="escuro"] .sun{opacity:0;transform:rotate(90deg) scale(.5)}
+.ais[data-theme="escuro"] .moon{opacity:1;transform:none}
+.crumbs{display:flex;flex-wrap:wrap;gap:8px;padding:28px 0 22px;font-size:13.5px;color:var(--muted)}
+.crumbs a:hover{color:var(--wine)}
+.pdp{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(28px,5vw,80px);align-items:start;padding-bottom:clamp(64px,8vw,120px)}
+.gallery{display:grid;grid-template-columns:88px minmax(0,1fr);gap:16px;align-items:start}
+.thumbs{display:flex;flex-direction:column;gap:10px}
+.thumb{position:relative;display:block;width:88px;aspect-ratio:3/4;padding:0;border:1px solid transparent;background:var(--surface);overflow:hidden;cursor:pointer;transition:border-color .35s var(--ease)}
+.thumb img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease-out)}
+.thumb.on{border-color:var(--wine)}
+.thumb:hover img{transform:scale(1.06)}
+.stage{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--surface);cursor:zoom-in}
+.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease-out),opacity .6s var(--ease)}
+.stage.zoom img{transition:transform .25s var(--ease-out)}
+.stage-line{position:absolute;inset:16px;border:1px solid rgba(255,255,255,.85);pointer-events:none}
+.stage-cap{position:absolute;left:28px;bottom:26px;padding:6px 14px;border-radius:999px;background:var(--tag);color:var(--ink);font-size:13px;transition:background-color .6s var(--ease)}
+.swap{animation:swapIn .8s var(--ease-out) both}
+@keyframes swapIn{from{opacity:0;transform:scale(1.04)}to{opacity:1}}
+.buy{position:sticky;top:110px;display:flex;flex-direction:column;gap:26px}
+.buy h1{margin:0;font-size:clamp(40px,4.2vw,60px);line-height:1}
+.price-row{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.price{font-size:24px;font-weight:300}
+.pix{font-size:14px;color:var(--muted)}
+.lead{margin:0;color:var(--muted);max-width:44ch}
+.opt-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px;font-size:14.5px}
+.opt-head strong{font-weight:400}
+.linkish{border:0;background:none;padding:6px 0;color:var(--ink);font:inherit;font-size:13.5px;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.linkish:hover{color:var(--wine)}
+.sws{display:flex;flex-wrap:wrap;gap:6px;margin-left:-4px}
+.sw{display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;border-radius:50%;background:none;cursor:pointer;box-shadow:inset 0 0 0 1px transparent;transition:box-shadow .35s var(--ease)}
+.sw i{width:28px;height:28px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14);transition:transform .35s var(--ease-out)}
+.sw:hover i{transform:scale(1.1)}
+.sw.on{box-shadow:inset 0 0 0 1px var(--ink)}
+.sizes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.size{min-height:50px;border:1px solid var(--line);border-radius:12px;background:transparent;color:var(--ink);font:inherit;font-size:15px;cursor:pointer;transition:border-color .3s var(--ease),background-color .3s var(--ease),color .3s var(--ease)}
+.size:hover{border-color:var(--ink)}
+.size.on{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.size.out{color:var(--muted);text-decoration:line-through;cursor:not-allowed}
+.err{margin:10px 0 0;font-size:14px;color:var(--danger);animation:shake .45s var(--ease)}
+@keyframes shake{20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+.guide{margin-top:14px;border:1px solid var(--line);border-radius:14px;overflow:hidden;animation:open .55s var(--ease-out) both}
+@keyframes open{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.guide table{width:100%;border-collapse:collapse;font-size:14px}
+.guide th,.guide td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line)}
+.guide th{font-weight:400;background:var(--surface)}
+.guide tr:last-child td{border-bottom:0}
+.actions{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px}
+.qty{display:flex;align-items:center;border:1px solid var(--line);border-radius:999px;min-height:54px}
+.qty button{width:46px;height:52px;border:0;background:none;color:var(--ink);font:inherit;font-size:20px;cursor:pointer;border-radius:999px}
+.qty button:hover{background:var(--shade)}
+.qty output{min-width:28px;text-align:center;font-size:16px}
+.wa{grid-column:1 / -1}
+.acc{border-top:1px solid var(--line)}
+.acc-item{border-bottom:1px solid var(--line)}
+.acc-btn{display:flex;justify-content:space-between;align-items:center;width:100%;min-height:58px;padding:0;border:0;background:none;color:var(--ink);font:inherit;font-size:16px;text-align:left;cursor:pointer}
+.acc-btn .ic{transition:transform .5s var(--ease-out)}
+.acc-btn.open .ic{transform:rotate(45deg)}
+.acc-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s var(--ease-out)}
+.acc-body.open{grid-template-rows:1fr}
+.acc-body > div{overflow:hidden}
+.acc-body p{margin:0 0 20px;color:var(--muted);max-width:52ch}
+.tier-note{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;padding:8px 16px 8px 12px;border:1px solid var(--wine);border-radius:999px;color:var(--wine);font-size:14px;transition:background-color .35s var(--ease),color .35s var(--ease)}
+.tier-note:hover{background:var(--wine);color:var(--on-wine)}
+.together{padding:clamp(56px,7vw,96px) 0;border-top:1px solid var(--line)}
+.tg-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px 40px;margin-bottom:32px}
+.tg-head h2{margin:0;font-size:clamp(36px,4vw,56px);line-height:1}
+.tg-head p{margin:0;max-width:46ch;color:var(--muted)}
+.tg-grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:28px;align-items:stretch}
+.tg-items{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px}
+.tg-item{position:relative;display:flex;flex-direction:column;gap:8px;padding:0;border:0;background:none;color:var(--ink);font:inherit;text-align:left;cursor:pointer}
+.tg-item.main{cursor:default}
+.tg-item + .tg-item::before{content:"+";position:absolute;left:-22px;top:38%;width:16px;text-align:center;font-family:'Poppins', sans-serif;font-size:30px;color:var(--muted)}
+.tg-pic{position:relative;display:block;aspect-ratio:4/5;overflow:hidden;border-radius:10px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);transition:box-shadow .35s var(--ease),opacity .35s var(--ease)}
+.tg-pic img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.tg-pic.art{display:grid;place-items:center}
+.tg-pic.art svg{width:46%;height:46%;fill:none;stroke:var(--ink);stroke-width:.8;stroke-linecap:round;stroke-linejoin:round}
+.tg-item.off .tg-pic{opacity:.45}
+.tg-item.on .tg-pic,.tg-item.main .tg-pic{box-shadow:inset 0 0 0 1.5px var(--wine)}
+.tg-name{font-size:14.5px;line-height:1.3}
+.tg-price{font-size:14px;font-weight:400}
+.tg-check{position:absolute;top:10px;right:10px;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--surface);border:1px solid var(--line);color:transparent;transition:background-color .35s var(--ease),color .35s var(--ease),border-color .35s var(--ease)}
+.tg-check .ic{width:15px;height:15px;stroke-width:2}
+.tg-item.on .tg-check{background:var(--wine);border-color:var(--wine);color:var(--on-wine)}
+.tg-item.on .tg-check .ic{animation:pop .45s var(--ease-out)}
+.tg-sum{display:flex;flex-direction:column;justify-content:flex-end;gap:10px;padding:28px;border-radius:20px;background:var(--surface);transition:background-color .6s var(--ease)}
+.tg-row{display:flex;justify-content:space-between;gap:12px;font-size:15px}
+.tg-row.disc{color:var(--wine)}
+.tg-row.tot{align-items:baseline;padding-top:10px;border-top:1px solid var(--line)}
+.tg-row.tot .serif{font-size:36px;line-height:1}
+.tg-hint{margin:0 0 6px;font-size:13.5px;color:var(--muted)}
+.rel{padding:clamp(56px,7vw,96px) 0;border-top:1px solid var(--line)}
+.rel h2{margin:0 0 36px;font-size:clamp(36px,4vw,56px);line-height:1}
+.rel-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.rcard{display:flex;flex-direction:column;gap:14px}
+.rcard .media{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--surface)}
+.rcard img{width:100%;height:100%;object-fit:cover;object-position:50% 28%;transition:transform 1.4s var(--ease-out)}
+.rcard:hover img{transform:scale(1.045)}
+.rcard .row{display:flex;justify-content:space-between;gap:12px}
+.rcard h3{margin:0;font-size:17px;font-weight:300}
+.rcard p{margin:0;font-weight:400}
+.foot{border-top:1px solid var(--line);background:var(--surface);transition:background-color .6s var(--ease)}
+.foot-in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;padding:28px 0;font-size:13.5px;color:var(--muted)}
+@media (max-width:980px){
+.nav{display:none}
+.hide-sm{display:none}
+.hdr-in{height:68px}
+.logo-ais{font-size:32px}
+.pdp{grid-template-columns:1fr}
+.gallery{grid-template-columns:1fr}
+.thumbs{flex-direction:row;order:2;overflow-x:auto}
+.thumb{width:72px;flex:none}
+.buy{position:static}
+.rel-grid{grid-template-columns:1fr 1fr}
+.tg-grid{grid-template-columns:1fr}
+.tg-items{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.tg-item + .tg-item::before{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+.ais *,.ais *::before,.ais *::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
+</style>
+<style>
+.ais,.app{font-weight:400}
+.logo-ais{font-family:'Poppins', sans-serif !important;font-weight:700 !important;letter-spacing:-.025em;}
+.serif,.ais h1,.ais h2,.ais h3,.app h1,.app h2,.app h3{font-weight:700 !important;letter-spacing:-.025em !important;}
+.tier .d,.big,.kit-n,.tiers-inline .big,.promo .tiers b,.tot .t b,.b-row.tot .serif,.tg-row.tot .serif,.hello b,.k-value,.tag-name{font-weight:700 !important}
+.btn,.quick,.tab,.chip,.fbtn,.mini-btn{font-weight:500}
+.cat-label{flex-direction:column !important;align-items:flex-start !important;justify-content:flex-end !important;gap:10px !important}
+.slide-txt h1{font-size:clamp(40px,5vw,70px) !important;line-height:1.04 !important}
+.cat-name{font-size:clamp(26px,2.5vw,38px) !important}
+.bigline .marquee > span{font-weight:800 !important;-webkit-text-stroke:1.2px var(--muted) !important}
+</style>
+<style>
+.frame{background:var(--wine) !important}.frame-line{border-color:rgba(255,255,255,.55) !important}
+</style>
+</helmet>
+<div class="ais" data-theme="{{theme}}">
+<header class="hdr">
+<div class="wrap hdr-in">
+<nav class="nav" aria-label="Categorias">
+<a href="Main.dc.html">Novidades</a>
+<a href="Main.dc.html">Conjuntos</a>
+<a href="Main.dc.html">Macacões</a>
+<a href="Main.dc.html">Macaquinhos</a>
+</nav>
+<a class="logo" href="Main.dc.html" aria-label="@@NOME@@, página inicial"><span class="logo-ais">@@MARCA@@</span><span class="logo-sub">MODA FITNESS <svg class="bfly" viewBox="0 0 40 28" aria-hidden="true"><path d="M20 3C21 10 23 12 30 14 23 16 21 18 20 25 19 18 17 16 10 14 17 12 19 10 20 3Z"></path></svg></span></a>
+<div class="tools">
+<button class="icon-btn hide-sm" type="button" aria-label="Buscar"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M20 20l-4.2-4.2"></path></svg></button>
+<button class="icon-btn" type="button" onClick="{{toggleTheme}}" aria-label="{{themeLabel}}"><span class="theme-ic"><svg class="ic sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"></path></svg><svg class="ic moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"></path></svg></span></button>
+<a class="icon-btn" href="Sacola.dc.html" aria-label="Sacola com {{bag}} itens"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"></path><path d="M9 8V6.5a3 3 0 0 1 6 0V8"></path></svg><span class="{{countCls}}">{{bag}}</span></a>
+</div>
+</div>
+</header>
+
+<main class="wrap">
+<nav class="crumbs" aria-label="Você está em"><a href="Main.dc.html">Início</a><span aria-hidden="true">/</span><a href="Main.dc.html">Conjuntos</a><span aria-hidden="true">/</span><span>Conjunto canelado Recorte</span></nav>
+
+<div class="pdp">
+<div class="gallery">
+<div class="thumbs" role="group" aria-label="Fotos do produto">
+<sc-for list="{{shots}}" as="g" hint-placeholder-count="4">
+<button class="{{g.cls}}" type="button" onClick="{{g.pick}}" aria-label="{{g.label}}" aria-pressed="{{g.on}}"><img src="{{g.img}}" alt="" style="object-position: {{g.pos}}; transform: scale({{g.thumbZoom}})"></button>
+</sc-for>
+</div>
+<div class="{{stageCls}}" onMouseMove="{{moveZoom}}" onMouseEnter="{{enterZoom}}" onMouseLeave="{{leaveZoom}}">
+<img class="swap" key="{{stageKey}}" src="{{stageImg}}" alt="{{stageAlt}}" style="object-position: {{stagePos}}; transform-origin: {{origin}}; transform: scale({{stageZoom}})">
+<span class="stage-line" aria-hidden="true"></span>
+<span class="stage-cap">{{stageLabel}}</span>
+</div>
+</div>
+
+<div class="buy">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<h1 class="serif">Conjunto canelado Recorte</h1>
+<div class="price-row"><span class="price">R$ 189,90</span><span class="pix">ou R$ [valor] no Pix</span></div>
+<a class="tier-note" href="#tg-t"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12l9-9h8v8l-9 9zM15.5 8.5h.01"></path></svg>Leve 2 peças e ganhe 5%. Com 3 ou mais, 10%.</a>
+<p class="lead">Top de alça larga com faixa inferior e legging de cós alto com recorte diagonal na perna. Tecido canelado com brilho suave.</p>
+</div>
+
+<div>
+<div class="opt-head"><span>Cor: <strong>{{colorName}}</strong></span></div>
+<div class="sws" role="group" aria-label="Escolher cor">
+<sc-for list="{{colors}}" as="c" hint-placeholder-count="4">
+<button class="{{c.cls}}" type="button" onClick="{{c.pick}}" aria-label="{{c.name}}" aria-pressed="{{c.on}}"><i style="background: {{c.hex}}"></i></button>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div class="opt-head"><span>Tamanho: <strong>{{sizeName}}</strong></span><button class="linkish" type="button" onClick="{{toggleGuide}}" aria-expanded="{{guideOpen}}">Guia de medidas</button></div>
+<div class="sizes" role="group" aria-label="Escolher tamanho">
+<sc-for list="{{sizes}}" as="z" hint-placeholder-count="4">
+<button class="{{z.cls}}" type="button" onClick="{{z.pick}}" aria-pressed="{{z.on}}" disabled="{{z.out}}" aria-label="{{z.label}}">{{z.name}}</button>
+</sc-for>
+</div>
+<sc-if value="{{showErr}}" hint-placeholder-val="{{false}}"><p class="err" role="alert">Escolha um tamanho para continuar.</p></sc-if>
+<sc-if value="{{guideOpen}}" hint-placeholder-val="{{false}}">
+<div class="guide">
+<table>
+<thead><tr><th scope="col">Tamanho</th><th scope="col">Busto</th><th scope="col">Cintura</th><th scope="col">Quadril</th></tr></thead>
+<tbody>
+<tr><td>P</td><td>[cm]</td><td>[cm]</td><td>[cm]</td></tr>
+<tr><td>M</td><td>[cm]</td><td>[cm]</td><td>[cm]</td></tr>
+<tr><td>G</td><td>[cm]</td><td>[cm]</td><td>[cm]</td></tr>
+<tr><td>GG</td><td>[cm]</td><td>[cm]</td><td>[cm]</td></tr>
+</tbody>
+</table>
+</div>
+</sc-if>
+</div>
+
+<div class="actions">
+<div class="qty" role="group" aria-label="Quantidade">
+<button type="button" onClick="{{dec}}" aria-label="Diminuir quantidade">−</button>
+<output aria-live="polite">{{qty}}</output>
+<button type="button" onClick="{{inc}}" aria-label="Aumentar quantidade">+</button>
+</div>
+<button class="{{addCls}}" type="button" onClick="{{add}}">
+<sc-if value="{{added}}" hint-placeholder-val="{{false}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></sc-if>{{addLabel}}</button>
+<a class="btn ghost wa" href="https://www.instagram.com/@@IG@@/" target="_blank" rel="noopener">Tirar dúvida com a @@MARCA@@</a>
+</div>
+
+<div class="acc">
+<sc-for list="{{acc}}" as="a" hint-placeholder-count="3">
+<div class="acc-item">
+<button class="{{a.btnCls}}" type="button" onClick="{{a.toggle}}" aria-expanded="{{a.open}}">{{a.title}}<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></button>
+<div class="{{a.bodyCls}}"><div><p>{{a.text}}</p></div></div>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+
+<section class="together" aria-labelledby="tg-t">
+<div class="tg-head">
+<h2 id="tg-t" class="serif">Compre junto e pague menos</h2>
+<p>Marque o que quer levar com o conjunto. Com 2 peças o desconto é de 5% e com 3 ou mais, 10%, em tudo.</p>
+</div>
+<div class="tg-grid">
+<div class="tg-items">
+<div class="tg-item main">
+<span class="tg-pic"><img src="{{stageImg}}" alt=""></span>
+<span class="tg-name">Este conjunto, {{colorLower}}</span>
+<span class="tg-price">R$ 189,90</span>
+</div>
+<sc-for list="{{tgOpts}}" as="o" hint-placeholder-count="3">
+<button class="{{o.cls}}" type="button" aria-pressed="{{o.on}}" onClick="{{o.toggle}}">
+<sc-if value="{{o.isImg}}" hint-placeholder-val="{{false}}"><span class="tg-pic"><img src="{{o.img}}" alt=""></span></sc-if>
+<sc-if value="{{o.isArt}}" hint-placeholder-val="{{true}}"><span class="tg-pic art" style="background: color-mix(in srgb, {{o.tone}} 30%, var(--surface))"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{o.icon}}"></path></svg></span></sc-if>
+<span class="tg-name">{{o.name}}</span>
+<span class="tg-price">{{o.price}}</span>
+<span class="tg-check" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+</button>
+</sc-for>
+</div>
+<div class="tg-sum">
+<div class="tg-row"><span>{{tgCount}}</span><span>{{tgFull}}</span></div>
+<div class="tg-row disc"><span>Desconto leve mais, {{tgPct}}%</span><span>− {{tgDisc}}</span></div>
+<div class="tg-row tot"><span>Total</span><span class="serif">{{tgTotal}}</span></div>
+<p class="tg-hint" role="status" aria-live="polite">{{tgHint}}</p>
+<button class="btn" type="button" onClick="{{tgAdd}}">{{tgBtn}}</button>
+</div>
+</div>
+</section>
+
+<section class="rel" aria-labelledby="rel-t">
+<h2 id="rel-t" class="serif">Combina com</h2>
+<div class="rel-grid">
+<a class="rcard" href="Main.dc.html"><span class="media"><img src="vitrines/_ilustracoes/cruzado-vinho-modelo.png" alt="Modelo com conjunto vinho de top e legging" loading="lazy"></span><span class="row"><h3>Conjunto canelado Cruzado</h3><p>R$ 189,90</p></span></a>
+<a class="rcard" href="Main.dc.html"><span class="media"><img src="vitrines/_ilustracoes/nadador-cafe-modelo.png" alt="Modelo com conjunto café de top nadador" loading="lazy"></span><span class="row"><h3>Conjunto Nadador</h3><p>R$ 179,90</p></span></a>
+<a class="rcard" href="Main.dc.html"><span class="media"><img src="vitrines/_ilustracoes/macacao-serenity-academia.png" alt="Modelo com macacão longo azul serenity" loading="lazy"></span><span class="row"><h3>Macacão longo Serenity</h3><p>R$ 219,90</p></span></a>
+</div>
+</section>
+</main>
+
+<footer class="foot">
+<div class="wrap foot-in"><span>© 2026 @@NOME@@, @@CIDADE@@</span><a href="https://www.instagram.com/@@IG@@/" target="_blank" rel="noopener">@@@IG@@</a></div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"temaInicial":{"editor":"enum","options":["claro","escuro"],"default":"claro","section":"Tema"},"$preview":{"width":1440,"height":2000}}'>
+class Component extends DCLogic {
+  componentWillUnmount() { clearTimeout(this.addTimer); }
+  renderVals() {
+    const s = this.state || {};
+    const theme = s.theme || (this.props.temaInicial === 'escuro' ? 'escuro' : 'claro');
+    const COLORS = [
+      { name: 'Chocolate', hex: '#7A4634', img: 'vitrines/_ilustracoes/flat-recorte-chocolate.png' },
+      { name: 'Marinho', hex: '#2C3A6E', img: 'vitrines/_ilustracoes/flat-recorte-marinho.png' },
+      { name: 'Azul royal', hex: '#2448C4', img: 'vitrines/_ilustracoes/flat-recorte-royal.png' },
+      { name: 'Nude', hex: '#D8C4B0', img: 'vitrines/_ilustracoes/flat-recorte-nude.png' }
+    ];
+    const SHOTS = [
+      { label: 'Conjunto completo', pos: '50% 50%', zoom: 1 },
+      { label: 'Detalhe do top', pos: '22% 18%', zoom: 1.9 },
+      { label: 'Recorte da perna', pos: '55% 78%', zoom: 1.9 },
+      { label: 'Cós alto', pos: '78% 28%', zoom: 1.9 }
+    ];
+    const SIZES = [
+      { name: 'P', out: false }, { name: 'M', out: false }, { name: 'G', out: false }, { name: 'GG', out: true }
+    ];
+    const ci = s.color || 0;
+    const shot = s.shot || 0;
+    const color = COLORS[ci];
+    const sh = SHOTS[shot];
+    const size = s.size == null ? -1 : s.size;
+    const qty = s.qty || 1;
+    const bag = s.bag == null ? 2 : s.bag;
+    const zoomOn = !!s.zoom;
+    const openAcc = s.acc == null ? 0 : s.acc;
+    const ACC = [
+      { title: 'Descrição', text: 'Conjunto de top e legging em tecido canelado. O top tem alça larga e faixa inferior que firma sem apertar; a legging tem cós alto e recorte diagonal na perna, que alonga a silhueta.' },
+      { title: 'Tecido e cuidados', text: 'Composição: [composição do tecido]. Lave à mão ou em ciclo delicado, com água fria, e seque à sombra.' },
+      { title: 'Trocas e envio', text: 'Trocas em até [prazo] dias após o recebimento. Envio para [regiões] e retirada em @@CIDADE@@.' }
+    ];
+    const brl = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    const TIER = (u) => (u >= 3 ? 10 : (u >= 2 ? 5 : 0));
+    const TG = [
+      { id: 'garrafa', name: 'Garrafa térmica 750 ml', price: 79.9, icon: 'M9.5 2.5h5v2.5l1.5 2.2v12.8a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 8 20V7.2l1.5-2.2zM8 10.5h8M8 16.5h8', tone: '#C9A98B' },
+      { id: 'faixa', name: 'Faixa de cabelo canelada', price: 24.9, icon: 'M12 6.5c5 0 9 2.5 9 5.5s-4 5.5-9 5.5-9-2.5-9-5.5 4-5.5 9-5.5zM3.6 13.8c1.6 1.5 4.8 2.4 8.4 2.4s6.8-.9 8.4-2.4', tone: '#C48C9E' },
+      { id: 'contorno', name: 'Macaquinho Contorno preto', price: 169.9, img: 'vitrines/_ilustracoes/macaquinho-preto-modelo.png' }
+    ];
+    const tg = s.tg || { garrafa: true };
+    const tgSel = TG.filter((o) => tg[o.id]);
+    const tgCount = 1 + tgSel.length;
+    const tgFull = 189.9 + tgSel.reduce((t, o) => t + o.price, 0);
+    const tgPct = TIER(tgCount);
+    const tgDisc = Math.round(tgFull * tgPct) / 100;
+    return {
+      colorLower: color.name.toLowerCase(),
+      tgOpts: TG.map((o) => ({ name: o.name, price: brl(o.price), isImg: !!o.img, isArt: !o.img, img: o.img || '', icon: o.icon || '', tone: o.tone || '#F1DED8', on: !!tg[o.id], cls: tg[o.id] ? 'tg-item on' : 'tg-item off', toggle: () => { const m = Object.assign({}, tg); m[o.id] = !m[o.id]; this.setState({ tg: m }); } })),
+      tgCount: tgCount === 1 ? '1 peça' : tgCount + ' peças',
+      tgFull: brl(tgFull),
+      tgPct: tgPct,
+      tgDisc: brl(tgDisc),
+      tgTotal: brl(tgFull - tgDisc),
+      tgHint: s.tgErr && size < 0 ? 'Escolha o tamanho do conjunto, no alto da página, antes de adicionar.' : tgCount === 1 ? 'Marque mais 1 item e ganhe 5% de desconto.' : (tgCount === 2 ? 'Marque mais 1 item e o desconto sobe para 10%.' : 'Você está com o desconto máximo: 10% em tudo.'),
+      tgBtn: 'Adicionar ' + (tgCount === 1 ? '1 peça' : tgCount + ' peças') + ' à sacola',
+      tgAdd: () => {
+        if (size < 0) { this.setState({ err: true, tgErr: true }); return; }
+        clearTimeout(this.addTimer);
+        this.setState({ added: true, bag: bag + tgCount, bump: true });
+        this.addTimer = setTimeout(() => this.setState({ added: false, bump: false }), 2200);
+      },
+      theme: theme,
+      themeLabel: theme === 'escuro' ? 'Usar tema claro' : 'Usar tema escuro',
+      toggleTheme: () => this.setState({ theme: theme === 'escuro' ? 'claro' : 'escuro' }),
+      bag: bag,
+      countCls: s.bump ? 'count bump' : 'count',
+      colorName: color.name,
+      colors: COLORS.map((c, i) => ({ name: c.name, hex: c.hex, on: i === ci, cls: i === ci ? 'sw on' : 'sw', pick: () => this.setState({ color: i }) })),
+      shots: SHOTS.map((g, i) => ({ label: g.label, img: color.img, pos: g.pos, thumbZoom: g.zoom, on: i === shot, cls: i === shot ? 'thumb on' : 'thumb', pick: () => this.setState({ shot: i }) })),
+      stageImg: color.img,
+      stageKey: ci + '-' + shot,
+      stageAlt: 'Conjunto canelado Recorte ' + color.name.toLowerCase() + ', ' + sh.label.toLowerCase(),
+      stageLabel: sh.label,
+      stagePos: sh.pos,
+      stageZoom: zoomOn ? sh.zoom * 1.6 : sh.zoom,
+      origin: s.origin || '50% 50%',
+      stageCls: zoomOn ? 'stage zoom' : 'stage',
+      enterZoom: () => this.setState({ zoom: true }),
+      leaveZoom: () => this.setState({ zoom: false, origin: '50% 50%' }),
+      moveZoom: (e) => {
+        const r = e.currentTarget.getBoundingClientRect();
+        const x = Math.round(((e.clientX - r.left) / r.width) * 100);
+        const y = Math.round(((e.clientY - r.top) / r.height) * 100);
+        this.setState({ origin: x + '% ' + y + '%' });
+      },
+      sizeName: size >= 0 ? SIZES[size].name : 'escolha',
+      sizes: SIZES.map((z, i) => ({ name: z.name, out: z.out, on: i === size, label: z.out ? z.name + ', esgotado' : 'Tamanho ' + z.name, cls: z.out ? 'size out' : (i === size ? 'size on' : 'size'), pick: () => { if (!z.out) this.setState({ size: i, err: false }); } })),
+      showErr: !!s.err,
+      guideOpen: !!s.guide,
+      toggleGuide: () => this.setState({ guide: !s.guide }),
+      qty: qty,
+      dec: () => this.setState({ qty: Math.max(1, qty - 1) }),
+      inc: () => this.setState({ qty: Math.min(10, qty + 1) }),
+      added: !!s.added,
+      addCls: s.added ? 'btn done' : 'btn',
+      addLabel: s.added ? 'Na sacola' : 'Adicionar à sacola',
+      add: () => {
+        if (size < 0) { this.setState({ err: false }); setTimeout(() => this.setState({ err: true }), 10); return; }
+        clearTimeout(this.addTimer);
+        this.setState({ added: true, bag: bag + qty, bump: true });
+        this.addTimer = setTimeout(() => this.setState({ added: false, bump: false }), 2200);
+      },
+      acc: ACC.map((a, i) => ({ title: a.title, text: a.text, open: i === openAcc, btnCls: i === openAcc ? 'acc-btn open' : 'acc-btn', bodyCls: i === openAcc ? 'acc-body open' : 'acc-body', toggle: () => this.setState({ acc: i === openAcc ? -1 : i }) }))
+    };
+  }
+}
+</script>
+</body>
+</html>
