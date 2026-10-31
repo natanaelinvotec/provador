@@ -274,10 +274,11 @@
           var off = f.A.onAuthStateChanged(f.auth, function (u) {
             off();
             if (!u) return ok(null);
-            f.F.getDoc(f.F.doc(f.db, 'usuarios', u.uid)).then(function (s) {
-              var papeis = s.exists() ? (s.data().papeis || []) : [];
-              ok({ email: u.email, uid: u.uid, papeis: papeis });
-            }).catch(function () { ok({ email: u.email, uid: u.uid, papeis: [] }); });
+            // papel pelo UID ou pelo e-mail verificado (as regras aceitam os dois)
+            var ler = function (k) { return f.F.getDoc(f.F.doc(f.db, 'usuarios', k)).then(function (d) { return d.exists() ? (d.data().papeis || []) : []; }).catch(function () { return []; }); };
+            Promise.all([ler(u.uid), u.email && u.emailVerified ? ler(u.email) : Promise.resolve([])]).then(function (r) {
+              ok({ email: u.email, uid: u.uid, papeis: r[0].concat(r[1]) });
+            });
           });
         });
       });
