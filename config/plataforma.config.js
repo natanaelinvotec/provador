@@ -7,7 +7,7 @@
 window.PROVADOR_CONFIG = {
   nome: 'Provador',
   firebase: {
-    apiKey: 'COLE_AQUI_A_API_KEY',
+    apiKey: 'AIzaSyBRIE6DLJABGrL-ksnguRpl979yVvSgJsA',
     authDomain: 'provador-6416d.firebaseapp.com',
     projectId: 'provador-6416d',
     storageBucket: 'provador-6416d.firebasestorage.app',
