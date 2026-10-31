@@ -7,16 +7,25 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     function logado() { return request.auth != null; }
-    function plataforma() {
-      return logado()
-        && exists(/databases/$(database)/documents/usuarios/$(request.auth.uid))
+    // papel pelo UID ou pelo e-mail verificado (o dono pode ser liberado antes do primeiro login)
+    function emailVerificado() {
+      return 'email' in request.auth.token && request.auth.token.email_verified == true;
+    }
+    function papelPorUid() {
+      return exists(/databases/$(database)/documents/usuarios/$(request.auth.uid))
         && 'plataforma' in get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.papeis;
     }
+    function papelPorEmail() {
+      return emailVerificado()
+        && exists(/databases/$(database)/documents/usuarios/$(request.auth.token.email))
+        && 'plataforma' in get(/databases/$(database)/documents/usuarios/$(request.auth.token.email)).data.papeis;
+    }
+    function plataforma() { return logado() && (papelPorUid() || papelPorEmail()); }
     function texto(v, min, max) { return v is string && v.size() >= min && v.size() <= max; }
 
     // papéis: só leitura do próprio documento; quem dá papel é o console/Admin SDK
     match /usuarios/{uid} {
-      allow get: if logado() && request.auth.uid == uid;
+      allow get: if logado() && (request.auth.uid == uid || (emailVerificado() && request.auth.token.email == uid));
       allow list, write: if false;
     }
 
