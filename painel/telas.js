@@ -18,6 +18,8 @@
   function vazio(titulo, texto, botao) { return '<div class="mg-vazio"><b>' + esc(titulo) + '</b>' + esc(texto) + (botao ? '<div style="margin-top:12px">' + botao + '</div>' : '') + '</div>'; }
   function lista(obj) { return Object.keys(obj || {}).map(function (k) { return obj[k]; }); }
   function linkLoja(l) { return new URL('../vitrine.html?l=' + encodeURIComponent(l.slug), location.href).href; }
+  // dias de calendário de hoje até a data AAAA-MM-DD (0 = hoje, negativo = já passou)
+  function diasAte(dia) { var h = new Date(); h.setHours(0, 0, 0, 0); return Math.round((new Date(+dia.slice(0, 4), +dia.slice(5, 7) - 1, +dia.slice(8, 10)) - h) / 864e5); }
   function linhaResumo(d, id) { var r = null; (d.resumo ? d.resumo.lojas : []).forEach(function (x) { if (x.id === id) r = x; }); return r; }
   function nomePlano(d, id) { return (d.precos.planos[id] || {}).nome || id; }
   function contasDoMes(d, mes) {
@@ -73,6 +75,11 @@
       if (l.cobranca.situacao === 'critica' || l.cobranca.situacao === 'atrasada')
         itens.push({ p: l.cobranca.situacao === 'critica' ? 0 : 1, ic: 'alerta', t: l.nome + ' está com a mensalidade atrasada', s: l.cobranca.atrasoDias + ' dias, desde ' + u.nomeMes(l.cobranca.desde), b: '<a class="mg-btn mini" href="#inad">Ver</a>' });
     });
+    lista(d.lojas).forEach(function (l) {
+      if (l.status !== 'teste' || !l.trialAte) return;
+      var dt = diasAte(String(l.trialAte).slice(0, 10));
+      if (dt <= 3) itens.push({ p: dt < 0 ? 1 : 2, ic: 'relogio', t: dt > 1 ? 'Teste grátis da ' + l.nome + ' termina em ' + dt + ' dias' : dt === 1 ? 'Teste grátis da ' + l.nome + ' acaba amanhã' : dt === 0 ? 'Último dia do teste grátis da ' + l.nome : 'Teste grátis da ' + l.nome + ' terminou', s: 'Plano ' + nomePlano(d, l.plano) + (l.dono && l.dono.celular ? ', ' + l.dono.celular : ''), b: l.dono && l.dono.celular ? '<a class="mg-btn mini" href="' + esc(u.waLink(l.dono.celular, 'Oi! Aqui é do Provador. Seu teste grátis da ' + l.nome + ' está acabando. Quer que eu ative o plano?')) + '" target="_blank" rel="noopener">Chamar</a>' : '<a class="mg-btn mini" href="#lojas/teste">Ver</a>' });
+    });
     lista(d.contasPagar).forEach(function (c) {
       var s = C.situacaoConta(c), lim = (d.config && d.config.avisos && d.config.avisos.contasDias) || 5;
       if (s.situacao === 'vencida') itens.push({ p: 0, ic: 'calendario', t: c.nome + ' venceu há ' + s.dias + ' dia' + (s.dias === 1 ? '' : 's'), s: brl(c.valor), b: '<a class="mg-btn mini" href="#contas">Pagar</a>' });
@@ -106,8 +113,8 @@
   };
 
   /* =================== Lojas =================== */
-  var ABAS = [['fila', 'Na fila'], ['ativas', 'Ativas'], ['pausadas', 'Pausadas'], ['incompleto', 'Cadastro incompleto'], ['todas', 'Todas']];
-  function abaDe(l) { return l.status === 'fila' ? 'fila' : l.status === 'ativa' ? 'ativas' : l.status === 'pausada' ? 'pausadas' : l.status === 'rascunho' ? 'incompleto' : 'outras'; }
+  var ABAS = [['fila', 'Na fila'], ['teste', 'Em teste grátis'], ['ativas', 'Ativas'], ['pausadas', 'Pausadas'], ['incompleto', 'Cadastro incompleto'], ['todas', 'Todas']];
+  function abaDe(l) { return l.status === 'fila' ? 'fila' : l.status === 'teste' ? 'teste' : l.status === 'ativa' ? 'ativas' : l.status === 'pausada' ? 'pausadas' : l.status === 'rascunho' ? 'incompleto' : 'outras'; }
   T.lojas = function (d, st) {
     var sub = (location.hash.split('/')[1] || st.lojasAba || 'ativas');
     if (!ABAS.some(function (a) { return a[0] === sub; })) sub = 'ativas';
@@ -126,6 +133,7 @@
     var corpo;
     if (!filtradas.length) {
       if (busca) corpo = '<div class="mg-card">' + vazio('Nenhuma loja com "' + st.busca + '".', 'Confira a grafia ou busque pela cidade.', '<button class="mg-btn mini" type="button" data-acao="limpar-busca">Limpar busca</button>') + '</div>';
+      else if (sub === 'teste') corpo = '<div class="mg-card">' + vazio('Ninguém testando agora.', 'Quem monta a loja sozinha pelo site aparece aqui durante os 15 dias grátis.') + '</div>';
       else if (sub === 'fila') corpo = '<div class="mg-card">' + vazio('Ninguém esperando ativação.', 'Lojas novas aparecem aqui sozinhas quando alguém pede pelo site, ou quando você cadastra.', '<button class="mg-btn mini" type="button" data-acao="loja-nova">Cadastrar loja</button>') + '</div>';
       else corpo = '<div class="mg-card">' + vazio('Nada nesta aba.', 'Troque de aba ou cadastre uma loja nova.') + '</div>';
     } else corpo = '<div class="mg-grade" style="gap:14px">' + filtradas.map(function (l) { return cartaoLoja(d, st, l); }).join('') + '</div>';
@@ -150,12 +158,24 @@
         '<div>Rende no mês<b>' + (r ? brl(r.total) : '—') + '</b></div>' +
         '<div>Implantação<b>' + (l.implantacao && l.implantacao.valor ? brl0(l.implantacao.valor) + (l.implantacao.pago ? ' paga' : ' a receber') : '—') + '</b></div></div>';
     }
+    if (l.status === 'teste') {
+      var ate = String(l.trialAte || '').slice(0, 10), dias = ate ? diasAte(ate) : -1;
+      dinheiro = '<div class="mg-dinheiro">' +
+        '<div>Teste grátis<b>' + (dias > 1 ? 'faltam ' + dias + ' dias' : dias === 1 ? 'acaba amanhã' : dias === 0 ? 'último dia' : 'terminou') + '</b></div>' +
+        '<div>Até<b>' + esc(ate ? u.diaBR(ate) : '—') + '</b></div>' +
+        '<div>Plano escolhido<b>' + esc(nomePlano(d, l.plano)) + '</b></div>' +
+        '<div>Montou sozinha<b>' + (l.origem === 'montador' ? 'sim' : 'não') + '</b></div>' +
+        '<div>Domínio pedido<b>' + esc(l.dominioPedido || '—') + '</b></div></div>';
+    }
     var b = [];
+    if (l.status === 'teste') b.push('<button class="mg-btn mini pri" type="button" data-acao="loja-ativar" data-id="' + esc(l.id) + '">' + ic('play') + 'Assinou: ativar</button>');
     if (l.status === 'fila' || l.status === 'rascunho') b.push('<button class="mg-btn mini pri" type="button" data-acao="loja-ativar" data-id="' + esc(l.id) + '">' + ic('play') + 'Ativar</button>');
-    b.push('<button class="mg-btn mini" type="button" data-acao="loja-gerar" data-id="' + esc(l.id) + '">' + ic('vitrine') + (l.siteGeradoEm || l.status === 'ativa' ? 'Trocar vitrine' : 'Gerar site') + '</button>');
-    if (l.status === 'ativa') {
+    b.push('<button class="mg-btn mini" type="button" data-acao="loja-gerar" data-id="' + esc(l.id) + '">' + ic('vitrine') + (l.siteGeradoEm || l.status === 'ativa' || l.status === 'teste' ? 'Trocar vitrine' : 'Gerar site') + '</button>');
+    if (l.status === 'ativa' || l.status === 'teste') {
       b.push('<a class="mg-btn mini" href="' + esc(linkLoja(l)) + '" target="_blank" rel="noopener">' + ic('abrir') + 'Abrir loja</a>');
       b.push('<button class="mg-btn mini" type="button" data-acao="loja-copiar" data-id="' + esc(l.id) + '">' + ic('copiar') + 'Copiar link</button>');
+    }
+    if (l.status === 'ativa') {
       b.push('<button class="mg-btn mini" type="button" data-acao="loja-pagamento" data-id="' + esc(l.id) + '">' + ic('check') + 'Registrar pagamento</button>');
       b.push('<button class="mg-btn mini" type="button" data-acao="' + (l.cobranca && l.cobranca.isento ? 'loja-cobrar' : 'loja-isentar') + '" data-id="' + esc(l.id) + '">' + (l.cobranca && l.cobranca.isento ? 'Voltar a cobrar' : 'Isentar') + '</button>');
       if (l.implantacao && l.implantacao.valor && !l.implantacao.pago) b.push('<button class="mg-btn mini" type="button" data-acao="loja-implantacao" data-id="' + esc(l.id) + '">Implantação paga</button>');
