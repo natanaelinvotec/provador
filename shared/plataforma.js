@@ -22,7 +22,8 @@
   var KEY = 'provador:demo:v1';
   var SESSAO = 'provador:sessao';
   var FB_VER = '10.12.2';
-  var modo = CFG.firebase ? 'firebase' : 'demo';
+  // sem Firebase, ou com a apiKey ainda por colar, roda em modo demonstração
+  var modo = CFG.firebase && CFG.firebase.apiKey && !/^COLE/.test(CFG.firebase.apiKey) ? 'firebase' : 'demo';
 
   /* ---------- utilidades ---------- */
   function slugify(s) {
