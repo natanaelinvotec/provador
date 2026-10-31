@@ -1,0 +1,94 @@
+rules_version = '2';
+// Regras do Provador.
+// Princípio: o dono da plataforma (papel "plataforma") lê e escreve o que é dele;
+// o público só LÊ um documento por vez do que a vitrine precisa para abrir (nada financeiro);
+// o público só CRIA pedido de loja, com campos e tamanhos conferidos aqui.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function logado() { return request.auth != null; }
+    function plataforma() {
+      return logado()
+        && exists(/databases/$(database)/documents/usuarios/$(request.auth.uid))
+        && 'plataforma' in get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.papeis;
+    }
+    function texto(v, min, max) { return v is string && v.size() >= min && v.size() <= max; }
+
+    // papéis: só leitura do próprio documento; quem dá papel é o console/Admin SDK
+    match /usuarios/{uid} {
+      allow get: if logado() && request.auth.uid == uid;
+      allow list, write: if false;
+    }
+
+    // cadastro completo das lojas: dinheiro, dono, cobrança — só a plataforma
+    match /lojas/{id} {
+      allow read, write: if plataforma();
+    }
+
+    // o mínimo para a vitrine abrir pelo link ou pelo domínio (um por vez; sem listar)
+    match /lojasPublicas/{slug} {
+      allow get: if true;
+      allow list: if false;
+      allow write: if plataforma()
+        && request.resource.data.keys().hasOnly(['slug', 'vitrine', 'status', 'dominio', 'marca'])
+        && request.resource.data.slug == slug;
+    }
+    match /dominios/{host} {
+      allow get: if true;
+      allow list: if false;
+      allow write: if plataforma() && request.resource.data.keys().hasOnly(['slug']);
+    }
+    match /site/planos {
+      allow get: if true;
+      allow write: if plataforma();
+    }
+
+    // pedidos de loja do site de vendas
+    match /leads/{id} {
+      allow create: if request.resource.data.keys().hasOnly(['nome', 'loja', 'instagram', 'whatsapp', 'vitrine', 'plano', 'mensagem', 'status', 'criadoEm'])
+        && texto(request.resource.data.nome, 2, 80)
+        && texto(request.resource.data.loja, 2, 80)
+        && texto(request.resource.data.instagram, 0, 40)
+        && request.resource.data.whatsapp is string && request.resource.data.whatsapp.matches('^[0-9]{10,13}$')
+        && texto(request.resource.data.vitrine, 0, 40)
+        && request.resource.data.plano in ['vitrine', 'loja', 'completo']
+        && texto(request.resource.data.mensagem, 0, 500)
+        && request.resource.data.status == 'novo'
+        && request.resource.data.criadoEm == request.time;
+      allow read, delete: if plataforma();
+      allow update: if plataforma() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'nota']);
+    }
+
+    // dinheiro da plataforma
+    match /contasPagar/{id} { allow read, write: if plataforma(); }
+    match /financeiroPlataforma/{doc} {
+      allow read: if plataforma();
+      // resumo e histórico são do servidor; o painel só grava a tabela de preços
+      allow write: if plataforma() && doc == 'precos';
+    }
+
+    // números agregados que alimentam o resumo (escritos pelo servidor)
+    match /vendasMes/{id} { allow read: if plataforma(); allow write: if false; }
+    match /usoIA/{dia} { allow read: if plataforma(); allow write: if false; }
+
+    // "Atualizar números": o painel cria o pedido; a função responde
+    match /comandos/{id} {
+      allow create: if plataforma()
+        && request.resource.data.keys().hasOnly(['tipo', 'porUid', 'status', 'criadoEm'])
+        && request.resource.data.tipo == 'resumoPlataforma'
+        && request.resource.data.porUid == request.auth.uid
+        && request.resource.data.status == 'pendente';
+      allow get: if plataforma() && resource.data.porUid == request.auth.uid;
+      allow list, update, delete: if false;
+    }
+
+    // trilha de auditoria: só acrescenta, ninguém edita nem apaga
+    match /auditoria/{id} {
+      allow read: if plataforma();
+      allow create: if plataforma() && request.resource.data.keys().hasOnly(['quando', 'quem', 'oque', 'colecao', 'alvo']);
+      allow update, delete: if false;
+    }
+
+    match /{caminho=**} { allow read, write: if false; }
+  }
+}

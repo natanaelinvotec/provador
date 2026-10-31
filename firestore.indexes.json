@@ -1,0 +1,10 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "auditoria",
+      "queryScope": "COLLECTION",
+      "fields": [ { "fieldPath": "colecao", "order": "ASCENDING" }, { "fieldPath": "quando", "order": "DESCENDING" } ]
+    }
+  ],
+  "fieldOverrides": []
+}
