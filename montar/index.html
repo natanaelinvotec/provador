@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Monte sua loja · Provador</title>
+  <meta name="description" content="Monte sua loja de roupas em minutos: escolha a vitrine, suba suas fotos e publique com 15 dias grátis.">
+  <meta name="theme-color" content="#0A1630">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap">
+  <link rel="stylesheet" href="../assets/css/fontes.css">
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <link rel="stylesheet" href="montar.css">
+</head>
+<body class="pv mt">
+  <header class="mt-topo">
+    <a class="pv-marca" href="../" aria-label="Provador, início"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 6c1.9 0 3.3 1.4 3.3 3.2 0 1.3-.8 2.4-2 2.9l-1.3.6v1.6l9.6 6.6c1 .7.5 2.3-.7 2.3H7.1c-1.2 0-1.7-1.6-.7-2.3l9.6-6.6"/></svg><span>provador</span></a>
+    <div class="mt-status" id="mt-status" hidden></div>
+    <button class="mt-entrar" type="button" id="mt-entrar">Já tenho loja</button>
+    <button class="pv-btn pv-btn-linha pv-mini mt-ver-previa" type="button" id="mt-ver-previa">Ver prévia</button>
+    <button class="pv-btn pv-btn-linha pv-mini" type="button" id="mt-sair" hidden>Sair</button>
+  </header>
+  <div class="mt-grade">
+    <section class="mt-painel" aria-label="Montar a loja">
+      <ol class="mt-passos" id="mt-passos" role="tablist"></ol>
+      <div class="mt-corpo" id="mt-corpo"></div>
+      <div class="mt-nav" id="mt-nav"></div>
+    </section>
+    <section class="mt-previa" id="mt-previa" aria-label="Prévia da loja">
+      <div class="mt-previa-barra">
+        <div class="mt-previa-abas" role="group" aria-label="Página da prévia">
+          <button type="button" data-pag="inicio" aria-pressed="true">Início</button>
+          <button type="button" data-pag="colecao" aria-pressed="false">Coleção</button>
+          <button type="button" data-pag="produto" aria-pressed="false">Produto</button>
+          <button type="button" data-pag="sacola" aria-pressed="false">Sacola</button>
+        </div>
+        <span class="mt-previa-end" id="mt-previa-end">prévia</span>
+        <button class="mt-fechar-previa" type="button" id="mt-fechar-previa" aria-label="Fechar prévia">×</button>
+      </div>
+      <div class="mt-previa-vidro"><iframe id="mt-iframe" title="Prévia da sua loja"></iframe></div>
+    </section>
+  </div>
+  <div class="mt-toast" id="mt-toast" role="status" aria-live="polite"></div>
+
+  <script src="../config/plataforma.config.js"></script>
+  <script src="../shared/calc.js"></script>
+  <script src="../shared/seed.js"></script>
+  <script src="../shared/plataforma.js"></script>
+  <script src="../shared/catalogo.js"></script>
+  <script src="../shared/rascunho.js"></script>
+  <script src="fotos.js"></script>
+  <script src="montar.js"></script>
+</body>
+</html>
