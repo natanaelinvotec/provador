@@ -39,7 +39,7 @@
     copiar: 'M8 8h12v12H8zM4 16V4h12', abrir: 'M14 4h6v6M20 4l-9 9M18 14v6H4V6h6', check: 'M5 12.5l4.5 4.5L19 7.5', relogio: 'M12 7v5l3 2M12 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18z',
     x: 'M6 6l12 12M18 6L6 18', baixar: 'M12 4v11M7 10l5 5 5-5M5 20h14', conversa: 'M4 20l1.5-4A8 8 0 1 1 8 19z', lapis: 'M4 20h4L19 9l-4-4L4 16zM14 6l4 4',
     lixo: 'M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13', funil: 'M4 5h16l-6 8v6l-4 2v-8z', vitrine: 'M3 5h18v14H3zM3 9h18M8 9v10',
-    globo: 'M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18', pulso: 'M3 12h4l2-5 4 10 2-5h6',
+    globo: 'M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18', chave: 'M8 4a4 4 0 1 1 0 8a4 4 0 1 1 0-8zM11 11l9 9M16 16l2-2M18.5 18.5l2-2', cadeado: 'M6 11h12v9H6zM8 11V8a4 4 0 0 1 8 0v3', banco: 'M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zM4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3', pulso: 'M3 12h4l2-5 4 10 2-5h6',
     lista: 'M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01', nota: 'M6 3h9l3 3v15H6zM9 9h6M9 13h6M9 17h4', repasse: 'M4 8h13l-3-3M20 16H7l3 3',
     imposto: 'M6 18L18 6M7 6.5a1.5 1.5 0 1 0 .01 0M17 16a1.5 1.5 0 1 0 .01 0', alvo: 'M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18zM12 8a4 4 0 1 0 0 8a4 4 0 1 0 0-8z',
     contrato: 'M7 3h7l4 4v14H7zM10 12h6M10 16h6M10 8h2', suporte: 'M4 13v-1a8 8 0 0 1 16 0v1M4 13h3v5H4zM17 13h3v5h-3z',
@@ -203,12 +203,12 @@
   var TITULOS = {
     inicio: 'Visão geral', lojas: 'Lojas', receita: 'Receita & split', contas: 'Contas a pagar', inad: 'Inadimplência', ia: 'Custos de IA',
     mais: 'Mais ferramentas', config: 'Configurações', planos: 'Planos & preços', saude: 'Saúde do sistema', auditoria: 'Auditoria',
-    leads: 'Pedidos de loja', vitrines: 'Vitrines', dominios: 'Domínios'
+    leads: 'Pedidos de loja', vitrines: 'Vitrines', dominios: 'Domínios & chaves'
   };
-  var DO_MAIS = { planos: 1, saude: 1, auditoria: 1, leads: 1, vitrines: 1, dominios: 1, config: 0 };
+  var DO_MAIS = { planos: 1, saude: 1, auditoria: 1, leads: 1, vitrines: 1, config: 0 };
   var TRILHO = [
     { r: 'inicio', ic: 'casa' }, { r: 'lojas', ic: 'loja' }, { r: 'receita', ic: 'moedas' },
-    { r: 'contas', ic: 'calendario', pc: true }, { r: 'inad', ic: 'alerta', pc: true }, { r: 'ia', ic: 'chip', pc: true }, { r: 'mais', ic: 'grade' }
+    { r: 'contas', ic: 'calendario', pc: true }, { r: 'inad', ic: 'alerta', pc: true }, { r: 'ia', ic: 'chip', pc: true }, { r: 'dominios', ic: 'globo' }, { r: 'mais', ic: 'grade' }
   ];
 
   function rotaAtual() {
@@ -229,6 +229,9 @@
     var atras = d.resumo ? d.resumo.totais.lojasAtrasadas : 0;
     if (atras) c.inad = { n: atras, urg: true };
     if (leadsNovos) c.mais = { n: leadsNovos, urg: false };
+    // lojas com domínio cadastrado e passo manual pendente (chave ou Hosting)
+    var domPend = 0; Object.keys(d.lojas).forEach(function (k) { var l = d.lojas[k], p = l.dominioPassos || {}; if (l.dominio && (!p.chave || !p.hosting)) domPend++; });
+    if (domPend) c.dominios = { n: domPend, urg: false };
     return c;
   }
   function desenharTrilho() {
