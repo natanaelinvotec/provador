@@ -37,7 +37,7 @@
   function ehHostDaPlataforma(host) {
     host = String(host || '').toLowerCase();
     if (!host || host === 'localhost' || /^\d+\.\d+\.\d+\.\d+$/.test(host)) return true;
-    return (CFG.hostsDaPlataforma || []).indexOf(host) >= 0 || /\.web\.app$|\.firebaseapp\.com$/.test(host);
+    return (CFG.hostsDaPlataforma || []).indexOf(host) >= 0 || /\.web\.app$|\.firebaseapp\.com$|\.github\.io$/.test(host);
   }
 
   /** Dados que viram as marcas @@...@@ da vitrine. */
@@ -148,6 +148,7 @@
       try { sessionStorage.setItem(SESSAO, JSON.stringify(s)); } catch (e) { /* sem sessão persistente */ }
       return Promise.resolve(s);
     },
+    entrarGoogle: function () { return API_DEMO.entrar('dono@demo'); },
     sair: function () { try { sessionStorage.removeItem(SESSAO); } catch (e) { /* nada */ } return Promise.resolve(); },
     carregarPainel: function () {
       var d = demo.ler();
@@ -283,6 +284,9 @@
     entrar: function (email, senha) {
       return firebase().then(function (f) { return f.A.signInWithEmailAndPassword(f.auth, email, senha); }).then(API_FB.sessao);
     },
+    entrarGoogle: function () {
+      return firebase().then(function (f) { return f.A.signInWithPopup(f.auth, new f.A.GoogleAuthProvider()); }).then(API_FB.sessao);
+    },
     sair: function () { return firebase().then(function (f) { return f.A.signOut(f.auth); }); },
     carregarPainel: function () {
       return firebase().then(function (f) {
@@ -292,20 +296,34 @@
           F.getDocs(F.query(F.collection(db, 'leads'), F.orderBy('criadoEm', 'desc'), F.limit(200))),
           F.getDoc(F.doc(db, 'financeiroPlataforma', 'precos')), F.getDoc(F.doc(db, 'financeiroPlataforma', 'resumo')),
           F.getDoc(F.doc(db, 'financeiroPlataforma', 'historico')),
-          F.getDocs(F.query(F.collection(db, 'auditoria'), F.where('colecao', 'in', ['lojas', 'leads', 'pedidosIA', 'contasPagar', 'financeiroPlataforma']), F.orderBy('quando', 'desc'), F.limit(50)))
+          F.getDocs(F.query(F.collection(db, 'auditoria'), F.where('colecao', 'in', ['lojas', 'leads', 'pedidosIA', 'contasPagar', 'financeiroPlataforma']), F.orderBy('quando', 'desc'), F.limit(50))),
+          F.getDocs(F.query(F.collection(db, 'vendasMes'), F.where('mes', '==', C.util.mes(new Date())))),
+          F.getDocs(F.query(F.collection(db, 'usoIA'), F.where('mes', '==', C.util.mes(new Date()))))
         ]).then(function (r) {
           var aud = []; r[6].forEach(function (d) { aud.push(d.data()); });
           var leads = docs(r[2]);
           Object.keys(leads).forEach(function (k) { var c = leads[k].criadoEm; if (c && c.toDate) leads[k].criadoEm = c.toDate().toISOString(); });
+          var lojas = docs(r[0]), precos = C.lerPrecos(r[3].exists() ? r[3].data() : {});
+          var historico = r[5].exists() ? (r[5].data().meses || {}) : {};
+          var resumo = r[4].exists() ? r[4].data() : null;
+          // sem Cloud Functions (plano gratuito), o resumo é calculado aqui mesmo, com os mesmos dados que o servidor usaria
+          if (CFG.funcoes === false || !resumo) {
+            var vendas = {}, iaDia = {};
+            r[7].forEach(function (d) { var v = d.data(); if (v.lojaId) (vendas[v.lojaId] = vendas[v.lojaId] || {})[v.mes] = v; });
+            r[8].forEach(function (d) { var v = d.data(); if (v.dia) iaDia[v.dia] = v.lojas || {}; });
+            resumo = C.calcularResumo({ precos: precos, lojas: lojas, vendas: vendas, iaDia: iaDia });
+            historico = Object.assign({}, historico);
+            historico[resumo.mes] = C.linhaHistorico(resumo);
+          }
           return {
-            exemplo: false, lojas: docs(r[0]), contasPagar: docs(r[1]), leads: leads,
-            precos: C.lerPrecos(r[3].exists() ? r[3].data() : {}), resumo: r[4].exists() ? r[4].data() : null,
-            historico: r[5].exists() ? (r[5].data().meses || {}) : {}, auditoria: aud, config: {}
+            exemplo: false, lojas: lojas, contasPagar: docs(r[1]), leads: leads,
+            precos: precos, resumo: resumo, historico: historico, auditoria: aud, config: {}
           };
         });
       });
     },
     recalcular: function () {
+      if (CFG.funcoes === false) return API_FB.carregarPainel();
       return firebase().then(function (f) {
         var F = f.F;
         return F.addDoc(F.collection(f.db, 'comandos'), { tipo: 'resumoPlataforma', porUid: f.auth.currentUser.uid, status: 'pendente', criadoEm: F.serverTimestamp() })
