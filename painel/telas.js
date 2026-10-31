@@ -228,6 +228,8 @@
       dono: { nome: v('donoNome'), celular: v('donoCelular').replace(/\D/g, ''), email: v('donoEmail') },
       implantacao: { valor: impl, pago: antes && antes.implantacao ? !!antes.implantacao.pago : false }
     };
+    // domínio novo recomeça a lista de passos (chave e Hosting precisam ser feitos para ele)
+    loja.dominioPassos = antes && antes.dominio && dom && antes.dominio.replace(/^www\./, '') === dom.replace(/^www\./, '') ? (antes.dominioPassos || {}) : {};
     if (!antes) { loja.status = 'fila'; loja.cobranca = {}; loja.checklist = { logo: false, fotos: false, produtos: false, pagamento: false, dominio: !!dom }; }
     else loja.checklist = Object.assign({}, antes.checklist, { dominio: !!dom });
     P.salvarLoja(loja).then(function (l) {
@@ -507,7 +509,7 @@
     ['Lojas', [
       ['leads', 'funil', 'Pedidos de loja', 'Quem pediu uma loja pelo site de vendas'],
       ['vitrines', 'vitrine', 'Vitrines', 'Os modelos disponíveis e quantas lojas usam cada um'],
-      ['dominios', 'globo', 'Domínios', 'Domínio próprio de cada loja e passo a passo do DNS'],
+      ['dominios', 'globo', 'Domínios & chaves', 'Domínio de cada loja, chave do navegador e DNS conferido'],
       [null, 'contrato', 'Contratos', 'Contrato de prestação de serviço assinado online'],
       [null, 'suporte', 'Suporte', 'Chamados das lojas com prazo de resposta'],
       [null, 'megafone', 'Comunicados', 'Avisos para o painel de todas as lojas'],
@@ -642,18 +644,148 @@
   D.vitrines = function (main, st) { if (!st.catalogo) catalogo(st).then(function () { PN.render(); }); };
 
   /* =================== Domínios =================== */
-  T.dominios = function (d) {
-    var com = lista(d.lojas).filter(function (l) { return l.dominio; });
-    var tab = com.length ? '<div class="mg-tabela-wrap"><table class="mg-tabela"><thead><tr><th>Loja</th><th>Domínio</th><th>Situação</th><th></th></tr></thead><tbody>' + com.map(function (l) {
-      return '<tr><td><b>' + esc(l.nome) + '</b></td><td>' + esc(l.dominio) + '</td><td>' + u.chipSituacao(l.status) + '</td><td><div class="mg-botoes"><a class="mg-btn mini" href="https://' + esc(l.dominio) + '" target="_blank" rel="noopener">' + ic('abrir') + 'Abrir</a><button class="mg-btn mini" type="button" data-acao="loja-editar" data-id="' + esc(l.id) + '">Editar</button></div></td></tr>';
-    }).join('') + '</tbody></table></div>' : vazio('Nenhuma loja com domínio próprio', 'Cadastre o domínio em Lojas › Editar dados.');
-    var passos = '<ol style="margin:0;padding-left:20px;line-height:1.8">' +
-      '<li>No painel, em <b>Lojas › Editar dados</b>, preencha o domínio da loja (ex.: aismodafitness.com.br). A plataforma passa a abrir a loja certa quando alguém entrar por ele.</li>' +
-      '<li>No <b>Console do Firebase › Hosting</b>, clique em <b>Adicionar domínio personalizado</b> e digite o domínio. Repita para a versão com www.</li>' +
-      '<li>O Firebase mostra os registros de DNS (um TXT para confirmar que o domínio é dela e os registros A). No <b>Registro.br</b> (ou onde o domínio foi comprado), entre em <b>DNS › Editar zona</b> e crie exatamente esses registros.</li>' +
-      '<li>Espere a propagação (de minutos a algumas horas). O Firebase emite o certificado HTTPS sozinho e a situação muda para "Conectado".</li>' +
-      '<li>Abra o domínio e confira se a vitrine certa aparece. Se aparecer "Loja não encontrada", confira se o domínio no cadastro está igual, sem https e sem barra.</li></ol>';
-    return card('Domínios das lojas', '', tab) + '<div style="margin-top:18px">' + card('Como apontar o domínio de uma loja', 'Feito uma vez por loja. A senha do Registro.br fica com a dona do domínio; peça para ela fazer o passo 3 junto com você.', passos) + '</div>';
+  /* =================== Domínios & chaves =================== */
+  // Cada loja com domínio próprio precisa de 3 coisas fora do painel: o endereço liberado na chave do
+  // navegador (Google Cloud), o domínio adicionado no Hosting e o DNS apontando. Esta tela junta os atalhos,
+  // a lista pronta para colar na chave e confere sozinha o DNS e se o domínio já responde com HTTPS.
+  var PASSOS_DOM = [['chave', 'Liberado na chave'], ['hosting', 'Adicionado no Hosting']];
+  function semWww(h) { return String(h || '').toLowerCase().replace(/^www\./, ''); }
+  function enderecosChave(d) {
+    var itens = [], fb = P.cfg.firebase || {};
+    var add = function (h, origem) { h = String(h || '').toLowerCase(); if (h && !itens.some(function (x) { return x.h === h; })) itens.push({ h: h, origem: origem }); };
+    (P.cfg.hostsDaPlataforma || []).forEach(function (h) { if (h !== 'localhost' && !/^\d+\.\d+\.\d+\.\d+$/.test(h)) add(h, 'Plataforma'); });
+    if (fb.authDomain) add(fb.authDomain, 'Janela de login do Google');
+    lista(d.lojas).filter(function (l) { return l.dominio; }).sort(function (a, b) { return a.nome < b.nome ? -1 : 1; }).forEach(function (l) {
+      add(semWww(l.dominio), l.nome); add('www.' + semWww(l.dominio), l.nome);
+    });
+    return itens;
+  }
+  function linksCloud() {
+    var fb = P.cfg.firebase || {}, pid = fb.projectId, chave = P.cfg.chaveNavegadorId, site = P.cfg.siteLojas;
+    if (!pid) return null;
+    var fbc = 'https://console.firebase.google.com/project/' + encodeURIComponent(pid);
+    return [
+      ['chave', 'Chave do navegador', 'Restrições: sites e APIs', chave ? 'https://console.cloud.google.com/apis/credentials/key/' + encodeURIComponent(chave) + '?project=' + encodeURIComponent(pid) : 'https://console.cloud.google.com/apis/credentials?project=' + encodeURIComponent(pid)],
+      ['globo', 'Hosting das lojas', 'Adicionar domínio personalizado', fbc + '/hosting/sites' + (site ? '/' + encodeURIComponent(site) : '')],
+      ['cadeado', 'Domínios do login', 'Só se a loja tiver login de cliente', fbc + '/authentication/settings'],
+      ['banco', 'Registros de domínio', 'Coleção dominios no Firestore', fbc + '/firestore/databases/-default-/data/~2Fdominios'],
+      ['abrir', 'Registro.br', 'DNS do domínio da cliente', 'https://registro.br/painel/']
+    ];
+  }
+  function lojasComDominio(d) { return lista(d.lojas).filter(function (l) { return l.dominio; }).sort(function (a, b) { return a.nome < b.nome ? -1 : 1; }); }
+  function passosFeitos(l) { var p = l.dominioPassos || {}; return PASSOS_DOM.filter(function (x) { return p[x[0]]; }).length; }
+  T.dominios = function (d, st) {
+    var links = linksCloud(), ends = enderecosChave(d), com = lojasComDominio(d);
+    var atalhos = links ? '<div class="mg-dom-atalhos">' + links.map(function (k) {
+      return '<a class="mg-dom-atalho" href="' + esc(k[3]) + '" target="_blank" rel="noopener">' + ic(k[0]) + '<span><b>' + esc(k[1]) + '</b><small>' + esc(k[2]) + '</small></span></a>';
+    }).join('') + '</div>' : vazio('Firebase ainda não configurado', 'Os atalhos aparecem quando o config tiver o projeto do Firebase.');
+    var listaTxt = ends.map(function (x) { return 'https://' + x.h + '/*'; }).join('\n');
+    var chaveCard = '<p class="mg-sub" style="margin:0 0 10px">No Google Cloud, abra a chave e em <b>Restrições de aplicativo › Sites</b> adicione cada linha abaixo como um item. Depois clique em Salvar no Google (leva até 5 minutos para valer).</p>' +
+      '<textarea class="mg-dom-lista" id="mg-dom-lista" readonly rows="' + Math.min(12, Math.max(4, ends.length)) + '" aria-label="Endereços para liberar na chave">' + esc(listaTxt) + '</textarea>' +
+      '<div class="mg-botoes" style="margin-top:12px"><button class="mg-btn pri" type="button" data-acao="dom-copiar-lista">' + ic('copiar') + 'Copiar os ' + ends.length + ' endereços</button>' +
+      (links ? '<a class="mg-btn" href="' + esc(links[0][3]) + '" target="_blank" rel="noopener">' + ic('abrir') + 'Abrir a chave</a>' : '') + '</div>' +
+      '<p class="mg-sub" style="margin:12px 0 0">Em <b>Restrições de API</b>, deixe só Identity Toolkit API, Token Service API e Cloud Firestore API.</p>';
+    var linhas = com.map(function (l) {
+      var p = l.dominioPassos || {}, h = semWww(l.dominio), feitos = passosFeitos(l);
+      var botoesPasso = PASSOS_DOM.map(function (x) {
+        var ok = !!p[x[0]];
+        return '<button class="mg-dom-passo' + (ok ? ' ok' : '') + '" type="button" data-acao="dom-passo" data-id="' + esc(l.id) + '" data-passo="' + x[0] + '" aria-pressed="' + ok + '" title="' + (ok ? 'Feito em ' + esc(u.diaBR(p[x[0]])) + '. Clique para desmarcar.' : 'Marcar como feito') + '">' + ic(ok ? 'check' : 'relogio') + esc(x[1]) + '</button>';
+      }).join('');
+      return '<tr data-dom="' + esc(h) + '"><td><b>' + esc(l.nome) + '</b><br>' + (l.status === 'ativa' ? '' : u.chipSituacao(l.status)) + '</td>' +
+        '<td><a href="https://' + esc(h) + '/?diag=1" target="_blank" rel="noopener">' + esc(h) + '</a></td>' +
+        '<td><div class="mg-dom-passos">' + botoesPasso + '</div></td>' +
+        '<td class="mg-dom-auto" data-check="dns"><span class="mg-sub">conferindo…</span></td>' +
+        '<td class="mg-dom-auto" data-check="https"><span class="mg-sub">conferindo…</span></td>' +
+        '<td><div class="mg-botoes"><button class="mg-btn mini" type="button" data-acao="dom-copiar" data-id="' + esc(l.id) + '" title="Copiar os 2 endereços desta loja">' + ic('copiar') + '</button>' +
+        '<button class="mg-btn mini" type="button" data-acao="dom-verificar" data-dom="' + esc(h) + '">Verificar</button>' +
+        '<button class="mg-btn mini" type="button" data-acao="loja-editar" data-id="' + esc(l.id) + '" aria-label="Editar ' + esc(l.nome) + '">' + ic('lapis') + '</button></div>' +
+        '<span class="mg-sub">' + feitos + ' de ' + PASSOS_DOM.length + ' marcados</span></td></tr>';
+    }).join('');
+    var tabela = com.length ? '<div class="mg-tabela-wrap"><table class="mg-tabela mg-dom-tab"><thead><tr><th>Loja</th><th>Domínio</th><th>Feito por você</th><th>DNS</th><th>Site no ar</th><th></th></tr></thead><tbody>' + linhas + '</tbody></table></div>' +
+      '<div class="mg-botoes" style="margin-top:12px"><button class="mg-btn" type="button" data-acao="dom-verificar">Verificar todas de novo</button></div>'
+      : vazio('Nenhuma loja com domínio ainda', 'Cadastre o domínio em Lojas › Editar dados. Ela aparece aqui com o passo a passo.');
+    var sem = lista(d.lojas).filter(function (l) { return !l.dominio && (l.status === 'ativa' || l.status === 'fila'); });
+    var semCard = sem.length ? '<div style="margin-top:18px">' + card('Lojas sem domínio', 'Abrem pelo link da plataforma até o domínio ser cadastrado.', '<ul class="mg-lista">' + sem.map(function (l) {
+      return '<li><span class="tx"><b>' + esc(l.nome) + '</b><span>' + esc(linkLoja(l)) + '</span></span><button class="mg-btn mini" type="button" data-acao="loja-editar" data-id="' + esc(l.id) + '">Cadastrar domínio</button></li>';
+    }).join('') + '</ul>') + '</div>' : '';
+    var passos = '<ol class="mg-dom-ol">' +
+      '<li><b>Cadastro.</b> Em Lojas › Editar dados, preencha o domínio (ex.: aismodafitness.com.br), sem https e sem barra.</li>' +
+      '<li><b>Chave do navegador.</b> Copie a lista acima e acrescente os 2 endereços novos na chave (Sites). Marque "Liberado na chave".</li>' +
+      '<li><b>Hosting.</b> No Hosting das lojas, clique em Adicionar domínio personalizado, digite o domínio e depois a versão com www (redirecionando para o principal). Marque "Adicionado no Hosting".</li>' +
+      '<li><b>DNS.</b> No Registro.br da cliente, em DNS › Editar zona, crie os registros que o Firebase mostrar (TXT de verificação e A). Apague registros A antigos do mesmo nome.</li>' +
+      '<li><b>Conferir.</b> Volte aqui e clique em Verificar. Quando DNS e "Site no ar" ficarem verdes, abra o domínio: o link já vem com ?diag=1, que mostra o motivo se algo faltar.</li></ol>';
+    return '<div class="mg-grade mg-g2">' + card('Atalhos do Google Cloud e Firebase', 'Abrem no projeto certo, em outra aba.', atalhos) +
+      card('Endereços para a chave do navegador', ends.length + ' endereços: plataforma, login e ' + com.length + (com.length === 1 ? ' loja' : ' lojas') + '.', chaveCard) + '</div>' +
+      '<div style="margin-top:18px">' + card('Domínios das lojas', 'DNS e "Site no ar" são conferidos sozinhos. Os outros dois você marca quando fizer.', tabela) + '</div>' + semCard +
+      '<div style="margin-top:18px">' + card('Para cada cliente nova', 'Uns 10 minutos por loja, mais o tempo do DNS propagar.', passos) + '</div>';
+  };
+
+  // conferências automáticas: DNS pelo dns.google e HTTPS por uma imagem do próprio site
+  var CACHE_DOM = {};
+  function conferirDns(h) {
+    return fetch('https://dns.google/resolve?name=' + encodeURIComponent(h) + '&type=A', { cache: 'no-store' })
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        var ips = (j.Answer || []).filter(function (a) { return a.type === 1; }).map(function (a) { return a.data; });
+        var esperados = P.cfg.ipsHosting || [];
+        if (!ips.length) return { ok: false, txt: j.Status === 3 ? 'domínio não existe' : 'sem registro A' };
+        var bate = esperados.length ? ips.some(function (ip) { return esperados.indexOf(ip) >= 0; }) : ips.some(function (ip) { return /^199\.36\.15[89]\./.test(ip); });
+        return { ok: bate, txt: (bate ? 'aponta para o Firebase' : 'aponta para outro servidor') + ' (' + ips.join(', ') + ')' };
+      }).catch(function () { return { ok: null, txt: 'não deu para consultar agora' }; });
+  }
+  function conferirHttps(h) {
+    return new Promise(function (ok) {
+      var img = new Image(), fim = false, t = setTimeout(function () { if (!fim) { fim = true; ok({ ok: false, txt: 'ainda não responde' }); } }, 9000);
+      img.onload = function () { if (!fim) { fim = true; clearTimeout(t); ok({ ok: true, txt: 'no ar com HTTPS' }); } };
+      img.onerror = function () { if (!fim) { fim = true; clearTimeout(t); ok({ ok: false, txt: 'ainda não responde' }); } };
+      img.src = 'https://' + h + '/assets/img/icone-192.png?v=' + Date.now();
+    });
+  }
+  function pintar(main, h, tipo, r) {
+    Array.prototype.forEach.call(main.querySelectorAll('tr[data-dom="' + h + '"] [data-check="' + tipo + '"]'), function (td) {
+      var cls = r.ok === true ? 'ok' : r.ok === false ? 'at' : '';
+      td.innerHTML = '<span class="mg-chip ' + cls + '">' + ic(r.ok === true ? 'check' : r.ok === false ? 'relogio' : 'alerta') + esc(r.ok === true ? 'Ok' : r.ok === false ? 'Pendente' : '?') + '</span><br><span class="mg-sub">' + esc(r.txt) + '</span>';
+    });
+  }
+  function verificar(main, hosts, forcar) {
+    hosts.forEach(function (h) {
+      var c = CACHE_DOM[h];
+      if (c && !forcar && Date.now() - c.quando < 5 * 60 * 1000) { pintar(main, h, 'dns', c.dns); pintar(main, h, 'https', c.https); return; }
+      Promise.all([conferirDns(h), conferirHttps(h)]).then(function (r) {
+        CACHE_DOM[h] = { quando: Date.now(), dns: r[0], https: r[1] };
+        pintar(main, h, 'dns', r[0]); pintar(main, h, 'https', r[1]);
+      });
+    });
+  }
+  D.dominios = function (main, st) {
+    verificar(main, lojasComDominio(st.dados).map(function (l) { return semWww(l.dominio); }), false);
+  };
+  A['dom-verificar'] = function (el, st) {
+    var main = document.getElementById('mg-main');
+    var hosts = el.dataset.dom ? [el.dataset.dom] : lojasComDominio(st.dados).map(function (l) { return semWww(l.dominio); });
+    hosts.forEach(function (h) { pintar(main, h, 'dns', { ok: null, txt: 'conferindo…' }); pintar(main, h, 'https', { ok: null, txt: 'conferindo…' }); });
+    verificar(main, hosts, true);
+  };
+  function copiar(texto, msg) {
+    (navigator.clipboard ? navigator.clipboard.writeText(texto) : Promise.reject()).then(function () { PN.aviso(msg); })
+      .catch(function () { window.prompt('Copie:', texto); });
+  }
+  A['dom-copiar-lista'] = function () { var t = document.getElementById('mg-dom-lista'); copiar(t ? t.value : '', 'Endereços copiados. Cole na chave, um por item.'); };
+  A['dom-copiar'] = function (el, st) {
+    var l = st.dados.lojas[el.dataset.id], h = semWww(l.dominio);
+    copiar('https://' + h + '/*\nhttps://www.' + h + '/*', 'Endereços de ' + l.nome + ' copiados');
+  };
+  A['dom-passo'] = function (el, st) {
+    var l = st.dados.lojas[el.dataset.id], feito = el.getAttribute('aria-pressed') !== 'true';
+    el.disabled = true;
+    P.acaoLoja(l.id, 'dominioPasso', { passo: el.dataset.passo, feito: feito })
+      .then(function () { PN.aviso(feito ? 'Marcado como feito' : 'Desmarcado'); return PN.recarregar(); })
+      .then(function () {
+        // devolve o foco ao mesmo botão depois de redesenhar (quem usa teclado não perde o lugar)
+        var b = document.querySelector('[data-acao="dom-passo"][data-id="' + CSS.escape(l.id) + '"][data-passo="' + CSS.escape(el.dataset.passo) + '"]');
+        if (b) b.focus();
+      })
+      .catch(function (e) { el.disabled = false; PN.aviso((e && e.message) || 'Não foi possível salvar.'); });
   };
 
   /* =================== Saúde do sistema =================== */
