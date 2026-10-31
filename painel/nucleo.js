@@ -51,7 +51,7 @@
 
   /* ---------- situação com ícone + texto (cor nunca sozinha) ---------- */
   var CHIP_COB = {
-    'em-dia': ['ok', 'check', 'Em dia'], teste: ['info', 'relogio', 'Em teste'], isenta: ['info', 'check', 'Isenta'],
+    'em-dia': ['ok', 'check', 'Em dia'], teste: ['info', 'relogio', 'Teste grátis'], isenta: ['info', 'check', 'Isenta'],
     atrasada: ['at', 'relogio', 'Atrasada'], critica: ['cr', 'alerta', 'Crítica'], pausada: ['', 'pausa', 'Pausada'],
     fila: ['info', 'relogio', 'Na fila'], rascunho: ['', 'lapis', 'Cadastro incompleto'], cancelada: ['', 'x', 'Cancelada'], ativa: ['ok', 'check', 'Ativa']
   };
