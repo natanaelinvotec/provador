@@ -6,6 +6,8 @@
  *   domínio próprio (ex.: aismodafitness.com.br) -> procura a loja pelo domínio
  *
  * As telas são os arquivos .dc.html da vitrine; as marcas @@...@@ viram os dados da loja.
+ * Pré-builds (vitrines/_modelos/modelos.json): o slug da vitrine é prefixo do modelo + cor
+ * (ex.: arena-pink-pulse). Sem prefixo é o modelo 1, Clássico (pastas vitrines/<cor>).
  */
 (function () {
   'use strict';
@@ -37,6 +39,28 @@
     return o;
   }
 
+  var MODELOS = null;
+  async function modelos() {
+    if (MODELOS) return MODELOS;
+    try { var r = await fetch('vitrines/_modelos/modelos.json', { cache: 'no-cache' }); MODELOS = r.ok ? (await r.json()).modelos || [] : []; } catch (e) { MODELOS = []; }
+    return MODELOS;
+  }
+  // "arena-pink-pulse" -> modelo Arena + cor pink-pulse; sem prefixo conhecido -> modelo 1 (Clássico)
+  function separar(slug, lista) {
+    var m = (lista || []).filter(function (x) { return x.prefixo && slug.indexOf(x.prefixo) === 0 && slug.length > x.prefixo.length; })
+      .sort(function (a, b) { return b.prefixo.length - a.prefixo.length; })[0];
+    return m ? { modelo: m, cor: slug.slice(m.prefixo.length) } : { modelo: null, cor: slug };
+  }
+  function carregarScript(src) {
+    return new Promise(function (ok, erro) {
+      if (document.querySelector('script[data-modelo="' + src + '"]')) return ok();
+      var s = document.createElement('script');
+      s.src = src; s.setAttribute('data-modelo', src);
+      s.onload = ok; s.onerror = function () { erro(new Error('Não deu para carregar o modelo desta vitrine.')); };
+      document.head.appendChild(s);
+    });
+  }
+
   function linkFor(base, page) {
     var q = new URLSearchParams();
     if (base.l) q.set('l', base.l); else if (base.v) q.set('v', base.v);
@@ -47,10 +71,11 @@
   }
 
   function rewriteLinks(src, base) {
-    // "Produto.dc.html?item={{p.id}}" leva o id do produto junto (o {{...}} é preenchido na hora de desenhar)
-    return src.replace(/href="([A-Za-z]+)\.dc\.html(?:\?item=(\{\{[a-zA-Z.]+\}\}))?"/g, function (all, f, item) {
+    // "Produto.dc.html?item={{p.id}}" leva o id do produto junto (o {{...}} é preenchido na hora de desenhar);
+    // "Colecao.dc.html?cat=tops" abre a coleção numa categoria; "Main.dc.html#sobre" mantém a âncora
+    return src.replace(/href="([A-Za-z]+)\.dc\.html(?:\?(item|cat)=(\{\{[a-zA-Z.]+\}\}|[a-z0-9-]+))?(#[a-z0-9-]+)?"/g, function (all, f, k, val, hash) {
       var page = FILE_TO_PAGE[f];
-      return page ? 'href="' + htmlEsc(linkFor(base, page)) + (item ? '&amp;item=' + item : '') + '"' : all;
+      return page ? 'href="' + htmlEsc(linkFor(base, page)) + (k ? '&amp;' + k + '=' + val : '') + (hash || '') + '"' : all;
     });
   }
 
@@ -124,13 +149,13 @@
       if (rz && rz.loja) {
         var vit = SLUG.test(String(rz.vitrine || '')) ? rz.vitrine : (p.v || 'vinho-delicado');
         var itR = rz.itens && rz.itens.length ? await emBlob(rz.itens) : await itensDemo(vit);
-        return { vitrine: vit, marca: plat.marcaDaLoja(rz.loja), base: { v: vit, rascunho: true }, itens: itR };
+        return { vitrine: vit, marca: plat.marcaDaLoja(rz.loja), base: { v: vit, rascunho: true }, itens: itR, demo: !(rz.itens && rz.itens.length) };
       }
     }
     // 3) demonstração de uma vitrine do catálogo
     var slug = p.v || 'ais';
     if (!SLUG.test(slug)) throw new Error('Endereço de vitrine inválido.');
-    return { vitrine: slug, marca: null, base: { v: slug }, itens: await itensDemo(slug) };
+    return { vitrine: slug, marca: null, base: { v: slug }, itens: await itensDemo(slug), demo: true };
   }
 
   async function start() {
@@ -141,13 +166,31 @@
       // numa loja de verdade, as telas de gestão de demonstração não ficam abertas ao público
       if (r.loja && SO_DEMO.indexOf(page) >= 0) page = 'inicio';
       if (p.tema === 'escuro' || p.tema === 'claro') r.base.tema = p.tema;
-      var res = await fetch('vitrines/' + r.vitrine + '/' + PAGES[page] + '.dc.html', { cache: 'no-cache' });
+      // modelo (pré-build) e cor; uma tela que o modelo não tem sai do modelo 1 na mesma cor
+      var sep = separar(r.vitrine, await modelos()), m = sep.modelo, arquivo = PAGES[page], pasta = 'vitrines/' + sep.cor, porProps = false;
+      if (m) {
+        if (!m.cores || !m.cores[sep.cor]) throw new Error('Esta vitrine não existe.');
+        if ((m.paginas || []).indexOf(arquivo) >= 0) {
+          pasta = m.pasta; porProps = m.dados === 'props';
+          if (m.script) await carregarScript(m.script);
+        }
+      }
+      var res = await fetch(pasta + '/' + arquivo + '.dc.html', { cache: 'no-cache' });
       if (!res.ok) throw new Error('Esta vitrine não tem a página pedida.');
       var src = await res.text();
       src = applyTokens(src, r.marca);
-      if (r.itens && r.itens.length && window.Catalogo) src = window.Catalogo.aplicar(src, PAGES[page], r.itens, { item: p.item });
+      if (!porProps && r.itens && r.itens.length && window.Catalogo) src = window.Catalogo.aplicar(src, arquivo, r.itens, { item: p.item });
       src = rewriteLinks(src, r.base);
       var props = {};
+      if (porProps) {
+        // modelos novos recebem os dados prontos, sem trocar texto no arquivo
+        props.cor = Object.assign({ slug: sep.cor }, m.cores[sep.cor]);
+        props.itens = r.itens || [];
+        props.demo = !!r.demo;
+        props.item = p.item || ''; props.cat = p.cat || ''; props.busca = String(p.q || '').slice(0, 60);
+        props.chave = r.loja ? 'l:' + r.base.l : (r.base.rascunho ? 'rascunho' : 'v:' + r.vitrine);
+        props.links = { inicio: linkFor(r.base, 'inicio'), colecao: linkFor(r.base, 'colecao'), produto: linkFor(r.base, 'produto'), sacola: linkFor(r.base, 'sacola') };
+      }
       if (r.base.tema) props.temaInicial = r.base.tema;
       if (p.tela) props.telaInicial = p.tela;
       DCRuntime.mount(src, document.getElementById('app'), { props: props, key: 'vitrine' });
@@ -157,6 +200,6 @@
     }
   }
 
-  window.VitrineLoader = { applyTokens: applyTokens, rewriteLinks: rewriteLinks, linkFor: linkFor };
+  window.VitrineLoader = { applyTokens: applyTokens, rewriteLinks: rewriteLinks, linkFor: linkFor, separar: separar };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
