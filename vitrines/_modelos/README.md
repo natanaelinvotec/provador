@@ -61,17 +61,30 @@ Regras que valem para todo modelo:
 2. **Identidade própria.** Escolher nome, 1 a 3 fontes OFL e uma forma marcante que não exista nos modelos anteriores. Montar as 15 cores do modelo (mesmos nomes e slugs do catálogo).
 3. **Fotos.** Reaproveitar o catálogo de demonstração (`vitrines/_fotos/c*, m*, q*, l*, t*, a*`). Buscar fotos livres novas só para ambiente (destaque, banner, sobre, looks, Instagram). Subir para `vitrines/_fotos/` e anotar os créditos.
 4. **Mockup** no canvas de design (Início, Coleção, Produto, celular e quadro das 15 cores) e aprovação do dono antes de programar.
-5. **Programar** em `vitrines/_modelos/<modelo>/`: CSS comum, kit JS (catálogo, sacola, WhatsApp) e as 4 telas, seguindo o contrato acima. Registrar o modelo em `modelos.json` com `numero` seguinte e `prefixo` `<modelo>-`.
+5. **Programar** em `vitrines/_modelos/<modelo>/`: CSS comum, kit JS (catálogo, sacola, WhatsApp) e as 4 telas, seguindo o contrato acima. O jeito mais curto é copiar a Arena:
+   - `tools/prebuild/fontes/arena/` → `tools/prebuild/fontes/<modelo>/` (telas `*.src.html` + `partes.py` com topo, rodapé e cartão comuns). Editar as fontes e rodar `python3 tools/prebuild/fontes/<modelo>/partes.py`, que gera os `.dc.html` em `vitrines/_modelos/<modelo>/`.
+   - `arena.css` e `arena.js` → `<modelo>.css` e `<modelo>.js` (o kit fica em `window.<Modelo>Kit`). A raiz de cada tela leva a classe `<modelo>` e as cores em variáveis CSS (`--bg`, `--surface`, `--line`, `--accent`, `--on-accent`, `--accent2`).
+   - Registrar o modelo em `modelos.json` com `numero` seguinte e `prefixo` `<modelo>-`. O site de vendas, o montador e o painel leem dali; não precisam mudar.
 6. **Conferir** antes de publicar:
    ```
    python3 -m http.server 8800
    node tools/prebuild/conferir.js http://127.0.0.1:8800 <modelo> --todas-as-cores --larguras 1440
    node tools/prebuild/conferir.js http://127.0.0.1:8800 <modelo>-grafite-lima --larguras 1440,1100,390
    node tools/prebuild/conferir.js http://127.0.0.1:8800 grafite-lima --larguras 1440
+   node tools/prebuild/integracao.js http://127.0.0.1:8800 <modelo>
    ```
-   O último confere que o modelo 1 continua igual. Testar também o montador e o site de vendas com o modelo novo.
-7. **Publicar** no GitHub e conferir no ar (`vitrine.html?v=<modelo>-grafite-lima`).
-8. **Registrar** a linha do modelo na tabela do topo deste arquivo.
+   O terceiro confere que o modelo 1 continua igual. O `integracao.js` confere o modelo no site de vendas, no montador (bolinhas de cor da prévia), numa loja de verdade até o pedido no WhatsApp e no painel.
+7. **Publicar** no GitHub. Com `git push` disponível, é o normal. Sem ele (sessão em nuvem), `tools/prebuild/publicar_pelo_navegador.py` gera os trechos para a página de upload e para o editor do GitHub, com conferência de hash. Nunca publicar `config/plataforma.config.js` (a chave é colada pelo dono). Conferir no ar (`vitrine.html?v=<modelo>-grafite-lima`) com o subcomando `conferir`.
+8. **Registrar** a linha do modelo na tabela do topo deste arquivo e no documento do projeto.
+
+## Ferramentas (`tools/prebuild/`)
+
+| Arquivo | Para quê |
+|---------|----------|
+| `conferir.js` | Telas da vitrine em várias larguras e cores: erro de JS, arquivo que não carregou, foto quebrada, rolagem para o lado e compra até a sacola. |
+| `integracao.js` | O modelo no site de vendas, no montador, numa loja de verdade (pedido no WhatsApp) e no painel, em modo demonstração. |
+| `fontes/<modelo>/` | Fontes das telas (`*.src.html`) e `partes.py`, que monta os `.dc.html` com as partes comuns. |
+| `publicar_pelo_navegador.py` | Publicar pelo navegador quando não há `git push`: `novos`, `patch`, `inteiro`, `mensagem` e `conferir`. |
 
 ## Créditos das fotos de ambiente da Arena
 
