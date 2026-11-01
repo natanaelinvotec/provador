@@ -6,7 +6,8 @@ Cada trecho confere o conteúdo pelo hash djb2 antes de salvar, então nada sobe
 
 Rodar na raiz do repositório (ou de qualquer lugar: o script acha a raiz sozinho).
 
-  1) Arquivos NOVOS de uma mesma pasta (página de upload do GitHub):
+  1) Arquivos NOVOS de uma mesma pasta (página de upload do GitHub). Fotos e fontes (.jpg, .png, .webp, .woff2)
+     vão em base64 e viram bytes de novo no navegador:
        python3 tools/prebuild/publicar_pelo_navegador.py novos --saida /tmp/up --msg "Mensagem do commit" pasta/a.css pasta/b.js
      Abrir  https://github.com/<dono>/<repo>/upload/main/<pasta>
      Rodar no console da página, em ordem: /tmp/up_0.js, /tmp/up_1.js, ... e por último /tmp/up_fim.js
@@ -33,6 +34,7 @@ Rodar na raiz do repositório (ou de qualquer lugar: o script acha a raiz sozinh
 Nunca publicar config/plataforma.config.js por aqui: a chave dele é colada pelo dono no próprio GitHub.
 """
 import argparse
+import base64
 import json
 import os
 import pathlib
@@ -42,6 +44,7 @@ import difflib
 
 RAIZ = pathlib.Path(__file__).resolve().parents[2]
 PROIBIDOS = {'config/plataforma.config.js'}
+BINARIOS = {'.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp', '.woff2': 'font/woff2'}
 DJB2_JS = "const dj=s=>{let h=5381;for(const ch of s){h=((h*33)^ch.codePointAt(0))>>>0;}return h};"
 
 
@@ -55,10 +58,13 @@ def djb2(s):
 def ler(rel):
     if rel in PROIBIDOS:
         sys.exit('Não publique ' + rel + ' por aqui.')
+    if pathlib.PurePosixPath(rel).suffix.lower() in BINARIOS:
+        return base64.b64encode((RAIZ / rel).read_bytes()).decode('ascii')
     return (RAIZ / rel).read_text(encoding='utf-8')
 
 
 def novos(a):
+    a.arquivos = [os.path.normpath(f).replace(os.sep, '/') for f in a.arquivos]
     pastas = {str(pathlib.PurePosixPath(f).parent) for f in a.arquivos}
     if len(pastas) > 1:
         sys.exit('Os arquivos precisam estar na mesma pasta (uma página de upload por pasta): ' + ', '.join(sorted(pastas)))
@@ -78,11 +84,13 @@ def novos(a):
         ) + "Object.keys(__F).map(k=>k+':'+__F[k].length).join(' ')"
         pathlib.Path('%s_%d.js' % (a.saida, k)).write_text(js, encoding='utf-8')
     esperado = {os.path.basename(f): djb2(ler(f)) for f in a.arquivos}
+    binarios = {os.path.basename(f): BINARIOS[pathlib.PurePosixPath(f).suffix.lower()] for f in a.arquivos if pathlib.PurePosixPath(f).suffix.lower() in BINARIOS}
     tipos = "k.endsWith('.css')?'text/css':k.endsWith('.js')?'text/javascript':k.endsWith('.json')?'application/json':k.endsWith('.md')?'text/markdown':k.endsWith('.py')?'text/x-python':'text/html'"
     fim = (
         "const MSG=" + json.dumps(a.msg, ensure_ascii=False) + ";const E=" + json.dumps(esperado) + ";" + DJB2_JS +
         "const ruim=Object.keys(E).filter(k=>!__F[k]||dj(__F[k])!==E[k]);if(ruim.length)throw new Error('conteudo diferente: '+ruim.join(','));"
-        "const dt=new DataTransfer();for(const k of Object.keys(E)){const tipo=" + tipos + ";dt.items.add(new File([__F[k]],k,{type:tipo}));}"
+        "const B=" + json.dumps(binarios) + ";const dt=new DataTransfer();for(const k of Object.keys(E)){const tipo=B[k]||(" + tipos + ");"
+        "const corpo=B[k]?Uint8Array.from(atob(__F[k]),c=>c.charCodeAt(0)):__F[k];dt.items.add(new File([corpo],k,{type:tipo}));}"
         "const inp=document.querySelector('input[type=file]');inp.files=dt.files;inp.dispatchEvent(new Event('change',{bubbles:true}));"
         "await new Promise(r=>setTimeout(r,4000));"
         "const m=document.querySelector('input[name=\"message\"]');const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;"
