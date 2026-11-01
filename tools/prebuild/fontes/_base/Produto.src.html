@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Produto · @@NOME@@</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<!-- estilos: o carregador põe base.css e a folha do modelo (modelos.json "estilos") -->
+</helmet>
+<div class="{{modeloCls}}" style="{{vars}}" data-tela="produto" data-topo="{{lay.topo}}" data-aviso="{{lay.aviso}}" data-cartao="{{lay.cartao}}" data-rodape="{{lay.rodape}}" data-titulos="{{lay.titulos}}" data-galeria="{{lay.galeria}}">
+
+<!--TOPO-->
+
+<main class="wrap" id="topo">
+<sc-if value="{{semProduto}}" hint-placeholder-val="{{false}}">
+<div class="sec"><p class="vazio">A loja está arrumando a vitrine. Volte daqui a pouco para ver as peças.</p></div>
+</sc-if>
+
+<sc-if value="{{temProduto}}" hint-placeholder-val="{{true}}">
+<ol class="trilha"><li><a href="Main.dc.html">Início</a></li><li><a href="Colecao.dc.html?cat={{g.cat}}">{{g.catNome}}</a></li><li>{{g.nome}}</li></ol>
+
+<div class="prod">
+<div class="galeria" aria-label="Fotos do produto">
+<div class="miniaturas">
+<sc-for list="{{fotos}}" as="f" hint-placeholder-count="3">
+<button class="{{f.cls}}" type="button" aria-label="Ver foto: {{f.nome}}" aria-pressed="{{f.on}}" onClick="{{f.pick}}"><img src="{{f.src}}" alt="" style="transform-origin: {{f.orig}}; transform: scale({{f.z}})"></button>
+</sc-for>
+</div>
+<div class="foto">
+<img src="{{atual.src}}" alt="{{fotoAlt}}" style="transform-origin: {{atual.orig}}; transform: scale({{atual.z}})">
+<sc-if value="{{g.novo}}" hint-placeholder-val="{{false}}"><span class="selo">Novo</span></sc-if>
+<div class="foto-pe">
+<span>{{atual.nome}} · {{fotoNum}}</span>
+<div class="setas">
+<button class="seta" type="button" aria-label="Foto anterior" onClick="{{antes}}"><!--IC_ESQ--></button>
+<button class="seta" type="button" aria-label="Próxima foto" onClick="{{depois}}"><!--IC_DIR--></button>
+</div>
+</div>
+</div>
+<div class="grade-fotos">
+<sc-for list="{{fotos}}" as="f" hint-placeholder-count="3"><figure><img src="{{f.src}}" alt="{{g.nome}}, {{f.nome}}" loading="lazy" style="transform-origin: {{f.orig}}; transform: scale({{f.z}})"></figure></sc-for>
+</div>
+</div>
+
+<div class="info">
+<div class="info-cab">
+<span class="info-cat">{{g.catNome}}</span>
+<h1 class="disp">{{g.nome}}</h1>
+<p class="ref">{{refTxt}}</p>
+</div>
+
+<div class="precos">
+<div class="preco-g"><b>{{preco}}</b><span class="pix"><strong>{{pix}}</strong> no Pix</span></div>
+<p class="parcela">Pague no Pix, no cartão ou combine pelo WhatsApp.</p>
+</div>
+
+<div>
+<p class="rotulo">Cor: <span>{{corNome}}</span></p>
+<div class="cores-g" role="group" aria-label="Cor">
+<sc-for list="{{cores}}" as="c" hint-placeholder-count="2">
+<button class="{{c.cls}}" type="button" aria-pressed="{{c.on}}" onClick="{{c.pick}}"><i style="background-color: {{c.hex}}" aria-hidden="true"></i>{{c.nome}}</button>
+</sc-for>
+</div>
+</div>
+
+<div>
+<p class="rotulo">Tamanho: <span>{{tamNome}}</span><sc-if value="{{temMedidas}}" hint-placeholder-val="{{true}}"><a href="#detalhes" onClick="{{verMedidas}}">Tabela de medidas</a></sc-if></p>
+<div class="tams" role="group" aria-label="Tamanho">
+<sc-for list="{{tams}}" as="t" hint-placeholder-count="4">
+<button class="{{t.cls}}" type="button" aria-pressed="{{t.on}}" aria-disabled="{{t.fora}}" title="{{t.dica}}" onClick="{{t.pick}}">{{t.nome}}</button>
+</sc-for>
+</div>
+<p class="estoque"><i aria-hidden="true"></i>{{estoque}}</p>
+</div>
+
+<div class="compra">
+<div class="qtd" role="group" aria-label="Quantidade">
+<button type="button" aria-label="Diminuir" onClick="{{menos}}">−</button>
+<output aria-live="polite">{{qtd}}</output>
+<button type="button" aria-label="Aumentar" onClick="{{maisUm}}">+</button>
+</div>
+<button class="btn" type="button" onClick="{{adicionar}}"><!--IC_SACOLA-->Adicionar à sacola</button>
+<button class="{{favCls}}" type="button" aria-label="Favoritar" aria-pressed="{{fav}}" onClick="{{favoritar}}"><!--IC_CORACAO--></button>
+</div>
+
+<sc-if value="{{adicionado}}" hint-placeholder-val="{{false}}">
+<p class="ok" role="status"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>{{msgSacola}}<a href="Sacola.dc.html">Ver sacola</a></p>
+</sc-if>
+
+<sc-if value="{{temZapPeca}}" hint-placeholder-val="{{false}}">
+<a class="zap" href="{{zapPeca}}" target="_blank" rel="noopener"><!--IC_WHATS-->Tirar dúvida pelo WhatsApp</a>
+</sc-if>
+
+<ul class="garantias">
+<li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M18 3v4h-4M6 21v-4h4"></path></svg><span><b>Troca fácil</b>Em até 7 dias após receber</span></li>
+<li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"></path></svg><span><b>Entrega no Brasil</b>Frete combinado no pedido</span></li>
+<li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10.5h14v10H5zM8 10.5V7.5a4 4 0 0 1 8 0v3"></path></svg><span><b>Pagamento seguro</b>Pix, cartão ou boleto</span></li>
+</ul>
+</div>
+</div>
+
+<section class="abas-prod" id="detalhes" aria-label="Detalhes do produto">
+<div class="abas-nav" role="tablist">
+<sc-for list="{{abas}}" as="a" hint-placeholder-count="3">
+<button class="{{a.cls}}" type="button" role="tab" aria-selected="{{a.on}}" onClick="{{a.pick}}">{{a.nome}}</button>
+</sc-for>
+</div>
+<sc-if value="{{abaDesc}}" hint-placeholder-val="{{true}}">
+<div class="aba-corpo" role="tabpanel">
+<div><h3>{{g.nome}}</h3><p>{{descricao}}</p></div>
+<ul class="marcas"><sc-for list="{{pontos}}" as="pt" hint-placeholder-count="3"><li>{{pt}}</li></sc-for></ul>
+</div>
+</sc-if>
+<sc-if value="{{abaMedidas}}" hint-placeholder-val="{{false}}">
+<div class="aba-corpo" role="tabpanel">
+<div>
+<h3>Medidas do corpo, em centímetros</h3>
+<table class="tabela">
+<thead><tr><th scope="col">Tamanho</th><th scope="col">Busto</th><th scope="col">Cintura</th><th scope="col">Quadril</th></tr></thead>
+<tbody><sc-for list="{{medidas}}" as="m" hint-placeholder-count="4"><tr class="{{m.cls}}"><td>{{m.t}}</td><td>{{m.b}}</td><td>{{m.c}}</td><td>{{m.q}}</td></tr></sc-for></tbody>
+</table>
+</div>
+<div><h3>Como escolher</h3><p>Meça a parte mais larga do busto e do quadril e a parte mais fina da cintura. Se ficar entre dois tamanhos, escolha o maior para mais conforto ou o menor para mais compressão.</p><p>Ficou em dúvida? Mande suas medidas para a loja pelo WhatsApp.</p></div>
+</div>
+</sc-if>
+<sc-if value="{{abaTrocas}}" hint-placeholder-val="{{false}}">
+<div class="aba-corpo" role="tabpanel">
+<div><h3>Troca e devolução</h3><p>Você tem 7 dias depois de receber para trocar ou devolver. A peça precisa estar sem uso e com a etiqueta.</p><p>Chame a loja no WhatsApp para combinar a troca.</p></div>
+<ul class="marcas"><li>Troca de tamanho ou de cor</li><li>Devolução com reembolso no mesmo meio de pagamento</li><li>Vale-compras, se preferir</li></ul>
+</div>
+</sc-if>
+</section>
+
+<sc-if value="{{temExtras}}" hint-placeholder-val="{{true}}">
+<section class="sec" aria-labelledby="extras-t">
+<div class="sec-h"><div><h2 id="extras-t" class="disp">Complete o look</h2></div></div>
+<div class="extras">
+<sc-for list="{{extras}}" as="e" hint-placeholder-count="4">
+<div class="extra">
+<img src="{{e.img}}" alt="{{e.nome}}" loading="lazy">
+<div><b>{{e.nome}}</b><span>{{e.preco}}</span></div>
+<button class="{{e.cls}}" type="button" aria-label="{{e.rotulo}}" aria-pressed="{{e.on}}" onClick="{{e.pick}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{e.icone}}"></path></svg></button>
+</div>
+</sc-for>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{temRel}}" hint-placeholder-val="{{true}}">
+<section class="sec" aria-labelledby="mais-t">
+<div class="sec-h"><div><h2 id="mais-t" class="disp">Você também pode gostar</h2></div><a class="mais" href="Colecao.dc.html">Ver coleção <!--IC_SETA--></a></div>
+<div class="grade rel">
+<sc-for list="{{relacionados}}" as="p" hint-placeholder-count="4">
+<!--CARD-->
+</sc-for>
+</div>
+</section>
+</sc-if>
+</sc-if>
+</main>
+
+<!--RODAPE-->
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"itens":{"editor":null},"cor":{"editor":null},"links":{"editor":null},"modelo":{"editor":null}}'>
+class Component extends DCLogic {
+  renderVals() { return window.PrebuildKit.telaProduto(this, { nome: '@@NOME@@', whats: '@@WHATS@@', ig: '@@IG@@' }); }
+}
+</script>
+</body>
+</html>

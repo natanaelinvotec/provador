@@ -10,6 +10,9 @@ Rodar na raiz do repositório (ou de qualquer lugar: o script acha a raiz sozinh
      vão em base64 e viram bytes de novo no navegador:
        python3 tools/prebuild/publicar_pelo_navegador.py novos --saida /tmp/up --msg "Mensagem do commit" pasta/a.css pasta/b.js
      Abrir  https://github.com/<dono>/<repo>/upload/main/<pasta>
+     Com --raiz <pasta> os arquivos podem estar em subpastas dela: o nome vai com o caminho (ex.: aura/aura.css)
+     e o GitHub cria as subpastas no mesmo commit. Abrir então .../upload/main/<pasta da raiz>
+     (--raiz . sobe a partir da raiz do repositório: .../upload/main). Arquivo que já existe é substituído.
      Rodar no console da página, em ordem: /tmp/up_0.js, /tmp/up_1.js, ... e por último /tmp/up_fim.js
      (os pedaços têm até 19 KB para caber numa chamada; o _fim confere os hashes, põe os arquivos e a mensagem).
      Depois clicar de verdade em "Commit changes" (clique de script não vale para o GitHub).
@@ -65,17 +68,25 @@ def ler(rel):
 
 def novos(a):
     a.arquivos = [os.path.normpath(f).replace(os.sep, '/') for f in a.arquivos]
-    pastas = {str(pathlib.PurePosixPath(f).parent) for f in a.arquivos}
-    if len(pastas) > 1:
-        sys.exit('Os arquivos precisam estar na mesma pasta (uma página de upload por pasta): ' + ', '.join(sorted(pastas)))
+    raiz = '' if a.raiz in (None, '.', '/') else a.raiz.strip('/') + '/'  # --raiz . = raiz do repositório
+    if a.raiz is not None:
+        fora = [f for f in a.arquivos if not f.startswith(raiz)]
+        if fora:
+            sys.exit('Arquivos fora de --raiz: ' + ', '.join(fora))
+    else:
+        pastas = {str(pathlib.PurePosixPath(f).parent) for f in a.arquivos}
+        if len(pastas) > 1:
+            sys.exit('Os arquivos precisam estar na mesma pasta (ou use --raiz): ' + ', '.join(sorted(pastas)))
+    nomear = (lambda f: f[len(raiz):]) if a.raiz is not None else os.path.basename
     partes, atual, tam = [], [], 0
-    for f in a.arquivos:
-        t, nome = ler(f), os.path.basename(f)
-        for i in range(0, len(t), a.limite):
-            pedaco = t[i:i + a.limite]
-            if tam + len(pedaco) > a.limite and atual:
-                partes.append(atual); atual, tam = [], 0
-            atual.append((nome, pedaco)); tam += len(pedaco)
+    for f in a.arquivos:  # enche cada pedaço até o limite, emendando o fim de um arquivo no começo do outro
+        t, nome, i = ler(f), nomear(f), 0
+        while i < len(t):
+            cabe = a.limite - tam
+            if cabe < 500 and atual:
+                partes.append(atual); atual, tam, cabe = [], 0, a.limite
+            pedaco = t[i:i + cabe]
+            atual.append((nome, pedaco)); tam += len(pedaco); i += len(pedaco)
     if atual:
         partes.append(atual)
     for k, p in enumerate(partes):
@@ -83,8 +94,8 @@ def novos(a):
             "__F[%s]=(__F[%s]||'')+%s;" % (json.dumps(n), json.dumps(n), json.dumps(c, ensure_ascii=False)) for n, c in p
         ) + "Object.keys(__F).map(k=>k+':'+__F[k].length).join(' ')"
         pathlib.Path('%s_%d.js' % (a.saida, k)).write_text(js, encoding='utf-8')
-    esperado = {os.path.basename(f): djb2(ler(f)) for f in a.arquivos}
-    binarios = {os.path.basename(f): BINARIOS[pathlib.PurePosixPath(f).suffix.lower()] for f in a.arquivos if pathlib.PurePosixPath(f).suffix.lower() in BINARIOS}
+    esperado = {nomear(f): djb2(ler(f)) for f in a.arquivos}
+    binarios = {nomear(f): BINARIOS[pathlib.PurePosixPath(f).suffix.lower()] for f in a.arquivos if pathlib.PurePosixPath(f).suffix.lower() in BINARIOS}
     tipos = "k.endsWith('.css')?'text/css':k.endsWith('.js')?'text/javascript':k.endsWith('.json')?'application/json':k.endsWith('.md')?'text/markdown':k.endsWith('.py')?'text/x-python':'text/html'"
     fim = (
         "const MSG=" + json.dumps(a.msg, ensure_ascii=False) + ";const E=" + json.dumps(esperado) + ";" + DJB2_JS +
@@ -161,7 +172,7 @@ def conferir(a):
 def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     s = p.add_subparsers(dest='cmd', required=True)
-    n = s.add_parser('novos'); n.add_argument('--saida', required=True); n.add_argument('--msg', required=True)
+    n = s.add_parser('novos'); n.add_argument('--saida', required=True); n.add_argument('--msg', required=True); n.add_argument('--raiz')
     n.add_argument('--limite', type=int, default=19000); n.add_argument('arquivos', nargs='+'); n.set_defaults(f=novos)
     pt = s.add_parser('patch'); pt.add_argument('arquivo'); pt.add_argument('--base', default='HEAD'); pt.set_defaults(f=patch)
     i = s.add_parser('inteiro'); i.add_argument('arquivo'); i.set_defaults(f=inteiro)

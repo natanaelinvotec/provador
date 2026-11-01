@@ -51,6 +51,16 @@
       .sort(function (a, b) { return b.prefixo.length - a.prefixo.length; })[0];
     return m ? { modelo: m, cor: slug.slice(m.prefixo.length) } : { modelo: null, cor: slug };
   }
+  // folhas de estilo do modelo (motor comum + a do modelo); espera carregar para a tela não piscar sem estilo
+  function carregarCss(href) {
+    return new Promise(function (ok) {
+      if (document.querySelector('link[data-modelo="' + href + '"]')) return ok();
+      var l = document.createElement('link');
+      l.rel = 'stylesheet'; l.href = href; l.setAttribute('data-modelo', href);
+      l.onload = ok; l.onerror = ok; setTimeout(ok, 4000);
+      document.head.appendChild(l);
+    });
+  }
   function carregarScript(src) {
     return new Promise(function (ok, erro) {
       if (document.querySelector('script[data-modelo="' + src + '"]')) return ok();
@@ -72,8 +82,8 @@
 
   function rewriteLinks(src, base) {
     // "Produto.dc.html?item={{p.id}}" leva o id do produto junto (o {{...}} é preenchido na hora de desenhar);
-    // "Colecao.dc.html?cat=tops" abre a coleção numa categoria; "Main.dc.html#sobre" mantém a âncora
-    return src.replace(/href="([A-Za-z]+)\.dc\.html(?:\?(item|cat)=(\{\{[a-zA-Z.]+\}\}|[a-z0-9-]+))?(#[a-z0-9-]+)?"/g, function (all, f, k, val, hash) {
+    // "Colecao.dc.html?cat=tops" abre a coleção numa categoria, "?tam=M" num tamanho; "Main.dc.html#sobre" mantém a âncora
+    return src.replace(/href="([A-Za-z]+)\.dc\.html(?:\?(item|cat|tam)=(\{\{[a-zA-Z.]+\}\}|[A-Za-z0-9-]+))?(#[a-z0-9-]+)?"/g, function (all, f, k, val, hash) {
       var page = FILE_TO_PAGE[f];
       return page ? 'href="' + htmlEsc(linkFor(base, page)) + (k ? '&amp;' + k + '=' + val : '') + (hash || '') + '"' : all;
     });
@@ -173,6 +183,7 @@
         if ((m.paginas || []).indexOf(arquivo) >= 0) {
           pasta = m.pasta; porProps = m.dados === 'props';
           if (m.script) await carregarScript(m.script);
+          if (m.estilos && m.estilos.length) await Promise.all(m.estilos.map(carregarCss));
         }
       }
       var res = await fetch(pasta + '/' + arquivo + '.dc.html', { cache: 'no-cache' });
@@ -188,6 +199,9 @@
         props.itens = r.itens || [];
         props.demo = !!r.demo;
         props.item = p.item || ''; props.cat = p.cat || ''; props.busca = String(p.q || '').slice(0, 60);
+        props.tam = /^(P|M|G|GG|U)$/.test(p.tam || '') ? p.tam : '';
+        // modelos do motor comum (_base) recebem o desenho do modelo: variantes, textos e fotos de ambiente
+        props.modelo = { slug: m.slug, nome: m.nome, numero: m.numero, layout: m.layout || {}, textos: m.textos || {}, fotos: m.fotos || {} };
         props.chave = r.loja ? 'l:' + r.base.l : (r.base.rascunho ? 'rascunho' : 'v:' + r.vitrine);
         props.links = { inicio: linkFor(r.base, 'inicio'), colecao: linkFor(r.base, 'colecao'), produto: linkFor(r.base, 'produto'), sacola: linkFor(r.base, 'sacola') };
       }

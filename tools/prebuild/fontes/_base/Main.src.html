@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>@@NOME@@</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<!-- estilos: o carregador põe base.css e a folha do modelo (modelos.json "estilos") -->
+</helmet>
+<div class="{{modeloCls}}" style="{{vars}}" data-tela="inicio" data-topo="{{lay.topo}}" data-aviso="{{lay.aviso}}" data-cartao="{{lay.cartao}}" data-rodape="{{lay.rodape}}" data-titulos="{{lay.titulos}}" data-sobreposto="{{lay.sobreposto}}">
+
+<!--TOPO-->
+
+<main id="topo">
+<sc-if value="{{vazio}}" hint-placeholder-val="{{false}}">
+<section class="sec"><div class="wrap"><p class="vazio">A loja está arrumando a vitrine. Volte daqui a pouco para ver as peças.</p></div></section>
+</sc-if>
+
+<sc-for list="{{secoes}}" as="s" hint-placeholder-count="6">
+
+<sc-if value="{{s.hero}}" hint-placeholder-val="{{true}}">
+<section class="{{s.cls}}" aria-label="Destaques">
+<div class="hero-midia"><img src="{{s.slide.img}}" alt="{{s.slide.alt}}"></div>
+<div class="wrap hero-in">
+<div class="hero-txt">
+<p class="kick">{{s.slide.kicker}}</p>
+<h1 class="disp">{{s.slide.titulo}}</h1>
+<p class="hero-p">{{s.slide.texto}}</p>
+<div class="hero-btns">
+<sc-if value="{{s.slide.temId}}" hint-placeholder-val="{{false}}"><a class="btn" href="Produto.dc.html?item={{s.slide.id}}">{{s.slide.botao}} <!--IC_SETA--></a></sc-if>
+<sc-if value="{{s.slide.semId}}" hint-placeholder-val="{{true}}"><a class="btn" href="Colecao.dc.html?cat={{s.slide.cat}}">{{s.slide.botao}} <!--IC_SETA--></a></sc-if>
+</div>
+</div>
+<sc-if value="{{s.temLista}}" hint-placeholder-val="{{true}}">
+<aside class="hero-lista" aria-label="Categorias">
+<p class="hero-lista-t">Peças da loja</p>
+<sc-for list="{{s.lista}}" as="c" hint-placeholder-count="3"><a href="Colecao.dc.html?cat={{c.id}}"><img src="{{c.img}}" alt="" loading="lazy"><span><b>{{c.nome}}</b><small>{{c.qtd}}</small></span></a></sc-for>
+</aside>
+</sc-if>
+</div>
+<sc-if value="{{s.varios}}" hint-placeholder-val="{{true}}">
+<div class="hero-nav wrap">
+<button class="seta" type="button" aria-label="Destaque anterior" onClick="{{s.anterior}}"><!--IC_ESQ--></button>
+<span class="hero-num"><b>{{s.slide.num}}</b> / {{s.total}}</span>
+<div class="pontos">
+<sc-for list="{{s.pontos}}" as="d" hint-placeholder-count="3"><button class="{{d.cls}}" type="button" aria-label="{{d.rotulo}}" aria-pressed="{{d.on}}" onClick="{{d.ir}}"><img src="{{d.img}}" alt="" loading="lazy"></button></sc-for>
+</div>
+<button class="seta" type="button" aria-label="Próximo destaque" onClick="{{s.proximo}}"><!--IC_DIR--></button>
+</div>
+</sc-if>
+</section>
+</sc-if>
+
+<sc-if value="{{s.beneficios}}" hint-placeholder-val="{{false}}">
+<section class="{{s.cls}}" aria-label="Vantagens da loja">
+<div class="wrap"><ul class="bens">
+<sc-for list="{{s.itens}}" as="b" hint-placeholder-count="4"><li class="bem"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{b.icone}}"></path></svg><div><b>{{b.titulo}}</b><span>{{b.texto}}</span></div></li></sc-for>
+</ul></div>
+</section>
+</sc-if>
+
+<sc-if value="{{s.categorias}}" hint-placeholder-val="{{false}}">
+<section class="{{s.cls}}" data-trilho>
+<div class="wrap">
+<sc-if value="{{s.temTitulo}}" hint-placeholder-val="{{true}}"><div class="sec-h"><div><h2 class="disp">{{s.titulo}}</h2><sc-if value="{{s.temSub}}" hint-placeholder-val="{{false}}"><p>{{s.subtitulo}}</p></sc-if></div><a class="mais" href="Colecao.dc.html">Ver tudo <!--IC_SETA--></a></div></sc-if>
+<div class="cats trilho">
+<sc-for list="{{s.itens}}" as="c" hint-placeholder-count="6">
+<a class="cat" href="Colecao.dc.html?cat={{c.id}}"><span class="cat-foto"><img src="{{c.img}}" alt="" loading="lazy"></span><span class="cat-txt"><small class="cat-num">{{c.num}}</small><b>{{c.nome}}</b><small class="cat-qtd">{{c.qtd}}</small><span class="cat-btn">{{c.botao}}</span><span class="cat-ir" aria-hidden="true"><!--IC_SETA--></span></span></a>
+</sc-for>
+</div>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{s.vitrine}}" hint-placeholder-val="{{false}}">
+<section class="{{s.cls}}" data-trilho>
+<div class="wrap">
+<div class="vit">
+<div class="vit-foto"><img src="{{s.foto}}" alt="" loading="lazy"><div class="vit-foto-txt"><b class="disp">{{s.fotoTitulo}}</b><span>{{s.fotoTexto}}</span></div></div>
+<div class="vit-corpo">
+<div class="sec-h">
+<div><h2 class="disp">{{s.titulo}}</h2><sc-if value="{{s.temSub}}" hint-placeholder-val="{{false}}"><p>{{s.subtitulo}}</p></sc-if></div>
+<div class="sec-h-dir">
+<a class="mais" href="Colecao.dc.html?cat={{s.cat}}">{{s.verTodos}} <!--IC_SETA--></a>
+<div class="setas"><button class="seta" type="button" aria-label="Voltar" onClick="{{s.esq}}"><!--IC_ESQ--></button><button class="seta" type="button" aria-label="Avançar" onClick="{{s.dir}}"><!--IC_DIR--></button></div>
+</div>
+</div>
+<sc-if value="{{s.temAbas}}" hint-placeholder-val="{{true}}">
+<div class="abas" role="group" aria-label="Filtrar peças">
+<sc-for list="{{s.abas}}" as="a" hint-placeholder-count="4"><button class="{{a.cls}}" type="button" aria-pressed="{{a.on}}" onClick="{{a.pick}}">{{a.nome}}</button></sc-for>
+</div>
+</sc-if>
+<div class="grade trilho">
+<sc-for list="{{s.produtos}}" as="p" hint-placeholder-count="8">
+<!--CARD-->
+</sc-for>
+</div>
+<a class="btn btn-ln ver-mais" href="Colecao.dc.html?cat={{s.cat}}">{{s.verTodos}}</a>
+</div>
+</div>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{s.banner}}" hint-placeholder-val="{{false}}">
+<section class="{{s.cls}}">
+<div class="banner">
+<img class="banner-img" src="{{s.foto}}" alt="" loading="lazy">
+<div class="wrap banner-in">
+<div class="banner-txt">
+<sc-if value="{{s.temKicker}}" hint-placeholder-val="{{true}}"><p class="kick">{{s.kicker}}</p></sc-if>
+<h2 class="disp">{{s.titulo}}</h2>
+<sc-if value="{{s.temTexto}}" hint-placeholder-val="{{true}}"><p>{{s.texto}}</p></sc-if>
+<sc-if value="{{s.temCores}}" hint-placeholder-val="{{false}}"><div class="banner-cores" aria-label="Cores da coleção"><sc-for list="{{s.cores}}" as="k" hint-placeholder-count="4"><span title="{{k.nome}}" style="background: {{k.hex}}"></span></sc-for></div></sc-if>
+<a class="btn" href="Colecao.dc.html?cat={{s.cat}}">{{s.botao}}</a>
+</div>
+</div>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{s.duplo}}" hint-placeholder-val="{{false}}">
+<section class="{{s.cls}}">
+<div class="wrap">
+<sc-if value="{{s.temTitulo}}" hint-placeholder-val="{{false}}"><div class="sec-h"><div><h2 class="disp">{{s.titulo}}</h2></div></div></sc-if>
+<div class="duplo">
+<sc-for list="{{s.itens}}" as="d" hint-placeholder-count="2">
+<a class="duplo-i" href="Colecao.dc.html?cat={{d.cat}}"><img src="{{d.img}}" alt="" loading="lazy"><span class="duplo-txt"><sc-if value="{{d.temKicker}}" hint-placeholder-val="{{true}}"><small>{{d.kicker}}</small></sc-if><b class="disp">{{d.titulo}}</b><span class="btn btn-ln">{{d.botao}}</span></span></a>
+</sc-for>
+</div>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{s.usos}}" hint-placeholder-val="{{false}}">
+<section class="{{s.cls}}">
+<div class="wrap">
+<sc-if value="{{s.temTitulo}}" hint-placeholder-val="{{false}}"><div class="sec-h"><div><h2 class="disp">{{s.titulo}}</h2></div></div></sc-if>
+<div class="usos">
+<sc-for list="{{s.itens}}" as="u" hint-placeholder-count="4"><a class="uso" href="Colecao.dc.html?cat={{u.cat}}"><img src="{{u.img}}" alt="" loading="lazy"><b>{{u.nome}}</b></a></sc-for>
+</div>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{s.sobre}}" hint-placeholder-val="{{false}}">
+<section class="{{s.cls}}" id="sobre">
+<div class="wrap sobre">
+<figure class="sobre-foto"><img src="{{s.foto}}" alt="Mulher treinando com roupa esportiva" loading="lazy"></figure>
+<div class="sobre-txt">
+<p class="kick">{{s.kicker}}</p>
+<h2 class="disp">{{s.tituloSobre}}</h2>
+<p>{{s.texto}}</p>
+<sc-if value="{{s.temItens}}" hint-placeholder-val="{{true}}"><ul class="checks"><sc-for list="{{s.itens}}" as="x" hint-placeholder-count="3"><li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"></path></svg>{{x}}</li></sc-for></ul></sc-if>
+<a class="btn" href="Colecao.dc.html">{{s.botao}}</a>
+</div>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{s.looks}}" hint-placeholder-val="{{false}}">
+<section class="{{s.cls}}" data-trilho>
+<div class="wrap">
+<div class="sec-h"><div><h2 class="disp">{{s.titulo}}</h2><sc-if value="{{s.temSub}}" hint-placeholder-val="{{false}}"><p>{{s.subtitulo}}</p></sc-if></div><div class="setas"><button class="seta" type="button" aria-label="Voltar" onClick="{{s.esq}}"><!--IC_ESQ--></button><button class="seta" type="button" aria-label="Avançar" onClick="{{s.dir}}"><!--IC_DIR--></button></div></div>
+<div class="looks trilho">
+<sc-for list="{{s.itens}}" as="l" hint-placeholder-count="3">
+<a class="look" href="Produto.dc.html?item={{l.id}}"><span class="look-foto"><img src="{{l.img}}" alt="{{l.alt}}" loading="lazy"></span><span class="look-peca"><img src="{{l.mini}}" alt="" loading="lazy"><span><b>{{l.nome}}</b><small>{{l.preco}}</small><sc-if value="{{l.temExtra}}" hint-placeholder-val="{{false}}"><small class="look-extra">Combina com: {{l.extra}}</small></sc-if></span></span></a>
+</sc-for>
+</div>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{s.tamanhos}}" hint-placeholder-val="{{false}}">
+<section class="{{s.cls}}">
+<div class="wrap">
+<div class="sec-h centro"><div><h2 class="disp">{{s.titulo}}</h2><sc-if value="{{s.temSub}}" hint-placeholder-val="{{true}}"><p>{{s.subtitulo}}</p></sc-if></div></div>
+<div class="tams-atalho">
+<sc-for list="{{s.itens}}" as="t" hint-placeholder-count="4"><a href="Colecao.dc.html?tam={{t.t}}"><b>{{t.t}}</b><small>{{t.qtd}}</small></a></sc-for>
+</div>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{s.passos}}" hint-placeholder-val="{{false}}">
+<section class="{{s.cls}}">
+<div class="wrap">
+<div class="sec-h"><div><h2 class="disp">{{s.titulo}}</h2></div></div>
+<ol class="passos">
+<sc-for list="{{s.itens}}" as="x" hint-placeholder-count="3"><li class="passo"><span class="passo-n">{{x.n}}</span><h3>{{x.titulo}}</h3><p>{{x.texto}}</p></li></sc-for>
+</ol>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{s.instagram}}" hint-placeholder-val="{{false}}">
+<section class="{{s.cls}}">
+<div class="wrap">
+<div class="sec-h"><div><h2 class="disp">{{s.titulo}}</h2><sc-if value="{{s.temSub}}" hint-placeholder-val="{{false}}"><p>{{s.subtitulo}}</p></sc-if></div><sc-if value="{{temIg}}" hint-placeholder-val="{{false}}"><a class="mais" href="{{igLink}}" target="_blank" rel="noopener">{{igTxt}} <!--IC_SETA--></a></sc-if></div>
+<div class="ig">
+<sc-for list="{{s.itens}}" as="g" hint-placeholder-count="6"><a href="{{g.link}}" aria-label="{{g.rotulo}}"><img src="{{g.img}}" alt="" loading="lazy"></a></sc-for>
+</div>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{s.contato}}" hint-placeholder-val="{{false}}">
+<section class="{{s.cls}}">
+<div class="contato">
+<img class="contato-img" src="{{s.foto}}" alt="" loading="lazy">
+<div class="wrap contato-in">
+<div class="contato-txt">
+<h2 class="disp">{{s.titulo}}</h2>
+<p>{{s.texto}}</p>
+<div class="contato-btns">
+<sc-if value="{{temZap}}" hint-placeholder-val="{{false}}"><a class="btn" href="{{zap}}" target="_blank" rel="noopener"><!--IC_WHATS-->Chamar no WhatsApp</a></sc-if>
+<sc-if value="{{temIg}}" hint-placeholder-val="{{false}}"><a class="btn btn-ln" href="{{igLink}}" target="_blank" rel="noopener">Seguir no Instagram</a></sc-if>
+<sc-if value="{{s.semContato}}" hint-placeholder-val="{{true}}"><a class="btn" href="Colecao.dc.html">Ver a coleção</a></sc-if>
+</div>
+</div>
+</div>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{s.faq}}" hint-placeholder-val="{{false}}">
+<section class="{{s.cls}}">
+<div class="wrap faq-w">
+<div class="sec-h"><div><h2 class="disp">{{s.titulo}}</h2></div></div>
+<div class="faq">
+<sc-for list="{{s.itens}}" as="f" hint-placeholder-count="4">
+<div class="{{f.cls}}"><button type="button" aria-expanded="{{f.on}}" onClick="{{f.pick}}"><span>{{f.p}}</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></button><sc-if value="{{f.on}}" hint-placeholder-val="{{false}}"><p>{{f.r}}</p></sc-if></div>
+</sc-for>
+</div>
+</div>
+</section>
+</sc-if>
+
+</sc-for>
+</main>
+
+<!--RODAPE-->
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"itens":{"editor":null},"cor":{"editor":null},"links":{"editor":null},"modelo":{"editor":null}}'>
+class Component extends DCLogic {
+  componentDidMount() { window.PrebuildKit.girar(this); }
+  componentWillUnmount() { clearInterval(this.__giro); }
+  renderVals() { return window.PrebuildKit.telaInicio(this, { nome: '@@NOME@@', whats: '@@WHATS@@', ig: '@@IG@@' }); }
+}
+</script>
+</body>
+</html>

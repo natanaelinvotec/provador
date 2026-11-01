@@ -7,6 +7,19 @@ A loja guarda as duas escolhas num campo só, `vitrine`: prefixo do modelo + cor
 |----|--------|---------|----------------------|---------------------|------------|
 | 1 | Clássico | (nenhum) | `pink-pulse` | `vitrines/<cor>/` (geradas por `tools/gerar_vitrines.py`) | Mockup aprovado da Ais Moda Fitness |
 | 2 | Arena | `arena-` | `arena-pink-pulse` | `vitrines/_modelos/arena/` | Estrutura do tema Fitfinity (Shopify), sem fotos nem textos de lá |
+| 3 | Pulso | `pulso-` | `pulso-pink-pulse` | motor comum `vitrines/_modelos/_base/` + `pulso/pulso.css` | Estrutura estudada na CajuBrasil, sem fotos nem textos de lá |
+| 4 | Aura | `aura-` | `aura-pink-pulse` | motor comum `vitrines/_modelos/_base/` + `aura/aura.css` | Estrutura estudada na Massam, sem fotos nem textos de lá |
+| 5 | Impacto | `impacto-` | `impacto-pink-pulse` | motor comum `vitrines/_modelos/_base/` + `impacto/impacto.css` | Estrutura estudada na DLK, sem fotos nem textos de lá |
+| 6 | Cetim | `cetim-` | `cetim-pink-pulse` | motor comum `vitrines/_modelos/_base/` + `cetim/cetim.css` | Estrutura estudada na Fitmoda, sem fotos nem textos de lá |
+| 7 | Trilha | `trilha-` | `trilha-pink-pulse` | motor comum `vitrines/_modelos/_base/` + `trilha/trilha.css` | Estrutura estudada na Bro Fitwear, sem fotos nem textos de lá |
+| 8 | Vibe | `vibe-` | `vibe-pink-pulse` | motor comum `vitrines/_modelos/_base/` + `vibe/vibe.css` | Estrutura estudada na Manalinda, sem fotos nem textos de lá |
+| 9 | Leve | `leve-` | `leve-pink-pulse` | motor comum `vitrines/_modelos/_base/` + `leve/leve.css` | Estrutura estudada na Arm Fitness, sem fotos nem textos de lá |
+| 10 | Nobre | `nobre-` | `nobre-pink-pulse` | motor comum `vitrines/_modelos/_base/` + `nobre/nobre.css` | Estrutura estudada na Be Rich Moda Fitness, sem fotos nem textos de lá |
+| 11 | Ritmo | `ritmo-` | `ritmo-pink-pulse` | motor comum `vitrines/_modelos/_base/` + `ritmo/ritmo.css` | Estrutura estudada na Track&Field, sem fotos nem textos de lá |
+| 12 | Contraste | `contraste-` | `contraste-pink-pulse` | motor comum `vitrines/_modelos/_base/` + `contraste/contraste.css` | Estrutura estudada na Divina Fitness (Atara), sem fotos nem textos de lá |
+| 13 | Studio | `studio-` | `studio-pink-pulse` | motor comum `vitrines/_modelos/_base/` + `studio/studio.css` | Estrutura estudada na LIVE!, sem fotos nem textos de lá |
+| 14 | Bloco | `bloco-` | `bloco-pink-pulse` | motor comum `vitrines/_modelos/_base/` + `bloco/bloco.css` | Estrutura estudada na Lupo, sem fotos nem textos de lá |
+| 15 | Foco | `foco-` | `foco-pink-pulse` | motor comum `vitrines/_modelos/_base/` + `foco/foco.css` | Estrutura estudada na Body For Sure, sem fotos nem textos de lá |
 
 As cores são as 15 do `vitrines/catalogo.json`, com os mesmos slugs. Cada modelo novo traz a sua versão das 15 cores em `modelos.json`.
 Como o slug continua no formato antigo, nada muda no Firestore nem nas regras.
@@ -55,6 +68,46 @@ Regras que valem para todo modelo:
 5. Até o gateway de pagamento chegar, a sacola fecha o pedido pelo WhatsApp da loja.
 6. Funciona em 1440 px e em 390 px, sem rolagem para o lado, nas 15 cores (2 delas claras).
 
+## Motor comum (modelos 3 a 15)
+
+Os modelos 3 em diante não têm telas próprias: usam as mesmas 4 telas e o mesmo kit, e cada um muda só **layout, textos, fotos, cores e uma folha de estilo**.
+
+| Peça | Onde | O que faz |
+|------|------|-----------|
+| Telas | `tools/prebuild/fontes/_base/*.src.html` + `partes.py` → `vitrines/_modelos/_base/*.dc.html` | Início, Coleção, Produto e Sacola com topo, rodapé e cartão comuns. Gerados pelo `partes.py` (o workflow roda). |
+| Kit | `vitrines/_modelos/_base/kit.js` (`window.PrebuildKit`) | Catálogo, sacola, favoritos, WhatsApp e a montagem das seções da página inicial a partir do `layout` do modelo. |
+| Desenho comum | `vitrines/_modelos/_base/base.css` | Todas as variantes (`data-topo`, `data-cartao`, `v-banner`, `v-tela`...). Tokens (`--f-display`, `--h-tam`, `--r-btn`...) que a folha do modelo muda. |
+| Cara do modelo | `vitrines/_modelos/<modelo>/<modelo>.css` | Fontes (`@font-face` em `assets/fonts/<modelo>/`), tokens e os detalhes que fazem o modelo parecer o site estudado. |
+| Registro | `tools/prebuild/modelos_motor.py` → `modelos.json` | Nome, número, layout, textos, fotos e as 15 cores (geradas por `tools/prebuild/paleta.py`). O workflow roda. |
+| Fotos e fontes | `tools/prebuild/ativos.json` + `baixar_ativos.py` | Lista de fotos livres (Unsplash) e fontes (Google Fonts, OFL). O workflow baixa para `vitrines/_fotos/amb-*.jpg` e `assets/fonts/<modelo>/`. Créditos em `vitrines/_fotos/CREDITOS-AMBIENTE.md`. |
+
+O carregador (`vitrine-loader.js`) põe `estilos` na página em ordem (`base.css` e depois a folha do modelo) e entrega `props.modelo = { slug, nome, numero, layout, textos, fotos }`.
+
+### Layout de um modelo (`modelos_motor.py`)
+
+Raiz: `topo` (`classico`, `central`, `busca`, `minimo`), `sobreposto` (cabeçalho por cima da foto), `aviso` (`faixa`, `setas`, `lista`, `corrida`), `cartao` (`simples`, `botao`, `contorno`, `pilula`, `centro`, `tamanhos`), `rodape` (`claro`, `escuro`, `cor`), `titulos` (`esquerda`, `centro`), `faixa`, `filtros`, `galeria`, `colunas`.
+
+Seções de `inicio` (cada uma com `variante`, `titulo`, `subtitulo`, `classe`, `fundo`):
+
+| tipo | variantes |
+|------|-----------|
+| `hero` | `banner`, `tela`, `dividido`, `recorte`, `lista`; `nav`: `barras`, `miniaturas`, `setas`; classe `direita` |
+| `beneficios` | `faixa`, `cartao`, `escura`, `destaque`, `centro` |
+| `categorias` | `retratos`, `blocos`, `cartoes`, `sobre`, `faixa`, `circulos`, `mosaico`, `destaques`, `procura`; classe `colado`; `fotos: 'ambiente'` usa `fotos.usos` na demonstração |
+| `vitrine` | `grade`, `carrossel`, `dividida`; `filtro` (`novos`, `todos`, `roupas`, `cat:x`, `cats:a,b`), `abas`, `etiqueta`, `n` |
+| `banner` | `padrao`, `centro`, `cor`, `faixa`; `cores: True` mostra as amostras; classe `cinza` deixa a foto P&B |
+| `duplo`, `usos`, `sobre` (`editorial`, `invertido`), `looks`, `tamanhos`, `passos`, `instagram`, `contato`, `faq` | |
+
+Textos: sem promessa que a loja não cumpre (nada de "mais vendidos", avaliação ou desconto inventado). O Pix com 5% é o do kit.
+
+### Modelo novo pelo motor (o caminho curto)
+
+1. Estudar o site de referência (estrutura, tipografia, raios, botões, celular).
+2. Escolher fontes OFL e fotos livres; pôr em `tools/prebuild/ativos.json` (o workflow baixa). Evitar foto com logo de marca ou marca d'água.
+3. Escrever a entrada em `tools/prebuild/modelos_motor.py` (layout, textos, fotos, `fundo`/`suave`/`accent2`) e a folha `vitrines/_modelos/<modelo>/<modelo>.css`.
+4. Rodar `python3 tools/prebuild/modelos_motor.py` e conferir (passo 6 abaixo). Variante nova que outros modelos podem usar vai no `base.css`, não na folha do modelo.
+5. Publicar as folhas primeiro e o `modelos_motor.py` por último (ou tudo no mesmo commit): o workflow gera `modelos.json` e as telas.
+
 ## Passo a passo para clonar o próximo site
 
 1. **Estudo.** Abrir o site de referência no navegador (se tiver senha, o dono destranca). Anotar de Início, Coleção e Produto: ordem das seções, componentes (slider, abas, filtros, galeria, sacola), tipografia, raios, formato dos botões, cores e o que o tema faz no celular. Guardar só as anotações.
@@ -84,7 +137,9 @@ Regras que valem para todo modelo:
 | `conferir.js` | Telas da vitrine em várias larguras e cores: erro de JS, arquivo que não carregou, foto quebrada, rolagem para o lado e compra até a sacola. |
 | `integracao.js` | O modelo no site de vendas, no montador, numa loja de verdade (pedido no WhatsApp) e no painel, em modo demonstração. |
 | `fontes/<modelo>/` | Fontes das telas (`*.src.html`) e `partes.py`, que monta os `.dc.html` com as partes comuns. |
-| `publicar_pelo_navegador.py` | Publicar pelo navegador quando não há `git push`: `novos`, `patch`, `inteiro`, `mensagem` e `conferir`. |
+| `publicar_pelo_navegador.py` | Publicar pelo navegador quando não há `git push`: `novos` (com `--raiz` sobe subpastas no mesmo commit), `patch`, `inteiro`, `mensagem` e `conferir`. |
+| `modelos_motor.py`, `paleta.py` | Registro dos modelos do motor comum e as 15 cores de cada um. |
+| `ativos.json`, `baixar_ativos.py` | Fotos e fontes livres que o workflow baixa. |
 
 ## Créditos das fotos de ambiente da Arena
 

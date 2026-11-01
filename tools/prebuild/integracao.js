@@ -82,7 +82,7 @@ const alvo = process.argv[3] || 'arena';
     if (!src.includes('v=' + c2)) falha('montador ' + w, 'a prévia não trocou para ' + c2);
     const fr = pg.frame({ url: /vitrine\.html/ });
     // a raiz de cada modelo tem a classe com o slug do modelo (ex.: .arena) e as cores em variáveis CSS
-    const acc = fr ? await fr.evaluate((cls) => { const el = document.querySelector('.' + cls) || document.body; return getComputedStyle(el).getPropertyValue('--accent').trim(); }, m.slug) : '';
+    const acc = fr ? await fr.evaluate((cls) => { const el = document.querySelector('.' + cls) || document.querySelector('.pb-' + cls) || document.body; /* Arena usa .arena; o motor comum usa .pb-<modelo> */ return getComputedStyle(el).getPropertyValue('--accent').trim(); }, m.slug) : '';
     const esperado = (m.cores[c2.slice(m.prefixo.length)] || {}).accent || '';
     if (esperado && acc.toLowerCase() !== esperado.toLowerCase()) falha('montador ' + w, 'cor de destaque no iframe ' + acc + ' (esperava ' + esperado + ')');
     const sw = await pg.evaluate(() => document.documentElement.scrollWidth);
