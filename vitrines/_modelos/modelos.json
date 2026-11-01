@@ -186,6 +186,4761 @@
      "accent2": "#D2477F"
     }
    }
+  },
+  {
+   "slug": "pulso",
+   "numero": 3,
+   "nome": "Pulso",
+   "prefixo": "pulso-",
+   "dados": "props",
+   "pasta": "vitrines/_modelos/_base",
+   "script": "vitrines/_modelos/_base/kit.js",
+   "estilos": [
+    "vitrines/_modelos/_base/base.css",
+    "vitrines/_modelos/pulso/pulso.css"
+   ],
+   "paginas": [
+    "Main",
+    "Colecao",
+    "Produto",
+    "Sacola"
+   ],
+   "descricao": "Clara e direta: banner largo, vantagens em faixa e cartões com botão de comprar.",
+   "origem": "Estrutura estudada na CajuBrasil (loja de moda fitness de alta performance); fotos, textos, fontes e cores próprios",
+   "foto": "vitrines/_fotos/amb-academia-06.jpg",
+   "fontes": [
+    "Outfit"
+   ],
+   "layout": {
+    "topo": "classico",
+    "aviso": "setas",
+    "cartao": "botao",
+    "rodape": "claro",
+    "titulos": "centro",
+    "faixa": "simples",
+    "filtros": "lateral",
+    "galeria": "lado",
+    "colunas": 4,
+    "inicio": [
+     {
+      "tipo": "hero",
+      "variante": "banner",
+      "nav": "barras"
+     },
+     {
+      "tipo": "beneficios",
+      "variante": "faixa",
+      "classe": "tom"
+     },
+     {
+      "tipo": "vitrine",
+      "variante": "carrossel",
+      "titulo": "Novidades",
+      "filtro": "novos",
+      "n": 8
+     },
+     {
+      "tipo": "categorias",
+      "variante": "blocos",
+      "titulo": "Escolha por categoria",
+      "n": 3
+     },
+     {
+      "tipo": "vitrine",
+      "variante": "carrossel",
+      "titulo": "Macacões e macaquinhos",
+      "filtro": "cats:macacoes,macaquinhos",
+      "n": 8
+     },
+     {
+      "tipo": "looks",
+      "titulo": "Monte seu look",
+      "subtitulo": "Combinações prontas com as peças da loja."
+     },
+     {
+      "tipo": "instagram",
+      "titulo": "Quem treina com a gente"
+     }
+    ]
+   },
+   "textos": {
+    "avisos": [
+     "Entrega para todo o Brasil, frete combinado no WhatsApp",
+     "5% de desconto no Pix",
+     "Troca fácil em até 7 dias"
+    ],
+    "hero": [
+     {
+      "kicker": "Linha compressão",
+      "titulo": "Segura no treino.\nLeve no corpo.",
+      "texto": "Leggings e tops que firmam sem apertar, do aquecimento ao último set.",
+      "botao": "Conhecer a linha",
+      "link": "cat:leggings"
+     },
+     {
+      "kicker": "Novidades da semana",
+      "titulo": "Cores novas\npara treinar",
+      "texto": "Conjuntos em tons que aparecem no espelho da academia.",
+      "botao": "Ver novidades",
+      "link": "cat:conjuntos"
+     },
+     {
+      "kicker": "Do treino para a rua",
+      "titulo": "Conforto que\nvai junto",
+      "texto": "Macacões e tops para treinar e seguir o dia sem trocar de roupa.",
+      "botao": "Ver macacões",
+      "link": "cat:macacoes"
+     }
+    ]
+   },
+   "fotos": {
+    "hero": [
+     "amb-academia-06",
+     "amb-academia-01",
+     "amb-academia-07"
+    ],
+    "looks": [
+     "amb-estilo-01",
+     "amb-corrida-14",
+     "amb-academia-09"
+    ],
+    "ig": [
+     "amb-corrida-01",
+     "amb-corrida-06",
+     "amb-estudio-01",
+     "amb-pilates-10",
+     "amb-estilo-03",
+     "amb-yoga-06"
+    ],
+    "colecao": "amb-academia-04",
+    "sobre": "amb-academia-07",
+    "banner": "amb-corrida-12"
+   },
+   "cores": {
+    "grafite-lima": {
+     "nome": "Grafite Lima",
+     "modo": "claro",
+     "bg": "#FEFFFC",
+     "surface": "#F5F6F1",
+     "line": "#E3E4DF",
+     "accent": "#23282F",
+     "onAccent": "#D4FF2A",
+     "accent2": "#5C7A00",
+     "deep": "#23282F",
+     "onDeep": "#D4FF2A",
+     "soft": "#FCFFF2",
+     "ink": "#1F211B",
+     "muted": "#646A66"
+    },
+    "laranja-energia": {
+     "nome": "Laranja Energia",
+     "modo": "claro",
+     "bg": "#FFFDFC",
+     "surface": "#F6F3F1",
+     "line": "#E4E0DE",
+     "accent": "#C54F00",
+     "onAccent": "#FFFFFF",
+     "accent2": "#009991",
+     "deep": "#C54F00",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF7F2",
+     "ink": "#201C1A",
+     "muted": "#666365"
+    },
+    "pink-pulse": {
+     "nome": "Pink Pulse",
+     "modo": "claro",
+     "bg": "#FFFCFD",
+     "surface": "#F6F2F4",
+     "line": "#E4DFE1",
+     "accent": "#DA1C7F",
+     "onAccent": "#FFFFFF",
+     "accent2": "#9476E4",
+     "deep": "#DA1C7F",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF3F9",
+     "ink": "#20191F",
+     "muted": "#66606B"
+    },
+    "azul-atleta": {
+     "nome": "Azul Atleta",
+     "modo": "claro",
+     "bg": "#FCFDFF",
+     "surface": "#F2F3F6",
+     "line": "#DFE1E4",
+     "accent": "#3671DB",
+     "onAccent": "#FFFFFF",
+     "accent2": "#CE7411",
+     "deep": "#3671DB",
+     "onDeep": "#FFFFFF",
+     "soft": "#F4F8FF",
+     "ink": "#191D23",
+     "muted": "#5D6470"
+    },
+    "rubi-dourado": {
+     "nome": "Rubi Dourado",
+     "modo": "claro",
+     "bg": "#FFFCFC",
+     "surface": "#F6F2F1",
+     "line": "#E4DFDF",
+     "accent": "#DE2922",
+     "onAccent": "#FFFFFF",
+     "accent2": "#AE822C",
+     "deep": "#DE2922",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF4F3",
+     "ink": "#201A1B",
+     "muted": "#666167"
+    },
+    "verde-mata": {
+     "nome": "Verde Mata",
+     "modo": "claro",
+     "bg": "#FCFFFD",
+     "surface": "#F1F6F4",
+     "line": "#DFE3E1",
+     "accent": "#008541",
+     "onAccent": "#FFFFFF",
+     "accent2": "#AA8403",
+     "deep": "#008541",
+     "onDeep": "#FFFFFF",
+     "soft": "#F2FEF8",
+     "ink": "#18201F",
+     "muted": "#5C696B"
+    },
+    "vinho-delicado": {
+     "nome": "Vinho Delicado",
+     "modo": "claro",
+     "bg": "#FFFDFD",
+     "surface": "#F6F3F4",
+     "line": "#E4E0E1",
+     "accent": "#8E2A4E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A88548",
+     "deep": "#8E2A4E",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF6F9",
+     "ink": "#201B1F",
+     "muted": "#66626B"
+    },
+    "lavanda-suave": {
+     "nome": "Lavanda Suave",
+     "modo": "claro",
+     "bg": "#FEFEFF",
+     "surface": "#F5F4F6",
+     "line": "#E2E1E4",
+     "accent": "#7C67B6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#C16E99",
+     "deep": "#7C67B6",
+     "onDeep": "#FFFFFF",
+     "soft": "#FBF9FF",
+     "ink": "#1D1E23",
+     "muted": "#636570"
+    },
+    "ameixa-coral": {
+     "nome": "Ameixa e Coral",
+     "modo": "claro",
+     "bg": "#FFFDFD",
+     "surface": "#F6F3F2",
+     "line": "#E4E1E0",
+     "accent": "#C25035",
+     "onAccent": "#FFFFFF",
+     "accent2": "#D55FA1",
+     "deep": "#C25035",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF7F5",
+     "ink": "#201C1D",
+     "muted": "#666368"
+    },
+    "marinho-classico": {
+     "nome": "Marinho Clássico",
+     "modo": "claro",
+     "bg": "#FDFEFF",
+     "surface": "#F3F4F6",
+     "line": "#E0E2E4",
+     "accent": "#1E3A6E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A48442",
+     "deep": "#1E3A6E",
+     "onDeep": "#FFFFFF",
+     "soft": "#F6FAFF",
+     "ink": "#1B1E23",
+     "muted": "#5F6670"
+    },
+    "caramelo": {
+     "nome": "Caramelo",
+     "modo": "claro",
+     "bg": "#FFFEFC",
+     "surface": "#F6F4F2",
+     "line": "#E4E2DF",
+     "accent": "#A86300",
+     "onAccent": "#FFFFFF",
+     "accent2": "#3F7A33",
+     "deep": "#A86300",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFFAF4",
+     "ink": "#201E1C",
+     "muted": "#666667"
+    },
+    "editorial-bronze": {
+     "nome": "Editorial Bronze",
+     "modo": "claro",
+     "bg": "#FFFEFD",
+     "surface": "#F5F4F3",
+     "line": "#E3E2E0",
+     "accent": "#936B2D",
+     "onAccent": "#FFFFFF",
+     "accent2": "#2B2620",
+     "deep": "#936B2D",
+     "onDeep": "#FFFFFF",
+     "soft": "#FDFAF6",
+     "ink": "#1F1E1D",
+     "muted": "#656669"
+    },
+    "preto-puro": {
+     "nome": "Preto Puro",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E4E4E4",
+     "accent": "#111111",
+     "onAccent": "#FFFFFF",
+     "accent2": "#6B6B6B",
+     "deep": "#111111",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFFFFF",
+     "ink": "#202123",
+     "muted": "#666A70"
+    },
+    "areia-oliva": {
+     "nome": "Areia e Oliva",
+     "modo": "claro",
+     "bg": "#F1EEE5",
+     "surface": "#FFFFFF",
+     "line": "#DDD8CA",
+     "accent": "#4F6B1C",
+     "onAccent": "#FFFFFF",
+     "accent2": "#9A6B2F",
+     "deep": "#2D3A1A",
+     "onDeep": "#FFFFFF",
+     "soft": "#E7E6D9",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    },
+    "ceu-pastel": {
+     "nome": "Céu Pastel",
+     "modo": "claro",
+     "bg": "#F2F7FD",
+     "surface": "#FFFFFF",
+     "line": "#D8E3F0",
+     "accent": "#1F6FD6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#D2477F",
+     "deep": "#243752",
+     "onDeep": "#FFFFFF",
+     "soft": "#E5EFFB",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    }
+   }
+  },
+  {
+   "slug": "aura",
+   "numero": 4,
+   "nome": "Aura",
+   "prefixo": "aura-",
+   "dados": "props",
+   "pasta": "vitrines/_modelos/_base",
+   "script": "vitrines/_modelos/_base/kit.js",
+   "estilos": [
+    "vitrines/_modelos/_base/base.css",
+    "vitrines/_modelos/aura/aura.css"
+   ],
+   "paginas": [
+    "Main",
+    "Colecao",
+    "Produto",
+    "Sacola"
+   ],
+   "descricao": "Leve e arredondada: logo no centro, menu em pílulas, categorias em cartões bege e cartões com borda.",
+   "origem": "Estrutura estudada na Massam (moda fitness feminina); fotos, textos, fontes e cores próprios",
+   "foto": "vitrines/_fotos/amb-yoga-02.jpg",
+   "fontes": [
+    "Italiana",
+    "Nunito"
+   ],
+   "layout": {
+    "topo": "central",
+    "aviso": "faixa",
+    "cartao": "pilula",
+    "rodape": "claro",
+    "titulos": "esquerda",
+    "faixa": "simples",
+    "filtros": "lateral",
+    "galeria": "grade",
+    "colunas": 4,
+    "inicio": [
+     {
+      "tipo": "hero",
+      "variante": "lista"
+     },
+     {
+      "tipo": "beneficios",
+      "variante": "cartao"
+     },
+     {
+      "tipo": "categorias",
+      "variante": "cartoes",
+      "titulo": "Escolha a sua",
+      "subtitulo": "As peças da loja separadas por tipo.",
+      "n": 3
+     },
+     {
+      "tipo": "vitrine",
+      "variante": "grade",
+      "titulo": "Lançamentos",
+      "subtitulo": "Movimento, conforto e cor para o seu treino.",
+      "filtro": "novos",
+      "n": 8,
+      "verTodos": "Ver todos os lançamentos"
+     },
+     {
+      "tipo": "banner",
+      "variante": "centro",
+      "titulo": "Treino com calma",
+      "kicker": "Pilates e yoga",
+      "texto": "Peças macias para alongar, respirar e seguir o dia.",
+      "botao": "Ver conjuntos",
+      "link": "cat:conjuntos"
+     },
+     {
+      "tipo": "vitrine",
+      "variante": "carrossel",
+      "titulo": "Conjuntos",
+      "subtitulo": "Top e legging que já combinam.",
+      "filtro": "cat:conjuntos",
+      "n": 8
+     },
+     {
+      "tipo": "instagram",
+      "titulo": "No nosso Instagram"
+     }
+    ]
+   },
+   "textos": {
+    "avisos": [
+     "Entrega para todo o Brasil · 5% de desconto no Pix · Troca em até 7 dias"
+    ],
+    "hero": [
+     {
+      "kicker": "Novo drop",
+      "titulo": "Novo\nmovimento",
+      "texto": "Conjuntos e leggings em tons suaves para treinar com leveza.",
+      "botao": "Ver a coleção",
+      "link": "cat:conjuntos"
+     },
+     {
+      "kicker": "Pilates e yoga",
+      "titulo": "Respira\ne alonga",
+      "texto": "Peças que acompanham o corpo em cada postura.",
+      "botao": "Ver leggings",
+      "link": "cat:leggings"
+     },
+     {
+      "kicker": "Do estúdio para a rua",
+      "titulo": "Leve o dia\ninteiro",
+      "texto": "Tops e macacões confortáveis do primeiro ao último compromisso.",
+      "botao": "Ver macacões",
+      "link": "cat:macacoes"
+     }
+    ]
+   },
+   "fotos": {
+    "hero": [
+     "amb-yoga-02",
+     "amb-pilates-06",
+     "amb-estilo-06"
+    ],
+    "banner": "amb-yoga-09",
+    "colecao": "amb-pilates-05",
+    "sobre": "amb-yoga-07",
+    "looks": [
+     "amb-pilates-04",
+     "amb-yoga-12",
+     "amb-yoga-09"
+    ],
+    "ig": [
+     "amb-yoga-05",
+     "amb-pilates-01",
+     "amb-yoga-10",
+     "amb-pilates-03",
+     "amb-yoga-12",
+     "amb-pilates-04"
+    ]
+   },
+   "cores": {
+    "grafite-lima": {
+     "nome": "Grafite Lima",
+     "modo": "claro",
+     "bg": "#FFFFFD",
+     "surface": "#F5F6F3",
+     "line": "#E3E3E0",
+     "accent": "#23282F",
+     "onAccent": "#D4FF2A",
+     "accent2": "#5C7A00",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EAE4DC",
+     "ink": "#1F211B",
+     "muted": "#646A66"
+    },
+    "laranja-energia": {
+     "nome": "Laranja Energia",
+     "modo": "claro",
+     "bg": "#FFFEFD",
+     "surface": "#F6F4F3",
+     "line": "#E3E1E0",
+     "accent": "#C54F00",
+     "onAccent": "#FFFFFF",
+     "accent2": "#009991",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EFE6DA",
+     "ink": "#201C1A",
+     "muted": "#666365"
+    },
+    "pink-pulse": {
+     "nome": "Pink Pulse",
+     "modo": "claro",
+     "bg": "#FFFDFE",
+     "surface": "#F6F3F5",
+     "line": "#E3E0E2",
+     "accent": "#DA1C7F",
+     "onAccent": "#FFFFFF",
+     "accent2": "#9476E4",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#F0E4DF",
+     "ink": "#20191F",
+     "muted": "#66606B"
+    },
+    "azul-atleta": {
+     "nome": "Azul Atleta",
+     "modo": "claro",
+     "bg": "#FDFEFF",
+     "surface": "#F3F4F6",
+     "line": "#E1E2E3",
+     "accent": "#3671DB",
+     "onAccent": "#FFFFFF",
+     "accent2": "#CE7411",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EAE7E2",
+     "ink": "#191D23",
+     "muted": "#5D6470"
+    },
+    "rubi-dourado": {
+     "nome": "Rubi Dourado",
+     "modo": "claro",
+     "bg": "#FFFDFD",
+     "surface": "#F6F3F3",
+     "line": "#E3E0E0",
+     "accent": "#DE2922",
+     "onAccent": "#FFFFFF",
+     "accent2": "#AE822C",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#F0E4DB",
+     "ink": "#201A1B",
+     "muted": "#666167"
+    },
+    "verde-mata": {
+     "nome": "Verde Mata",
+     "modo": "claro",
+     "bg": "#FDFFFE",
+     "surface": "#F3F6F4",
+     "line": "#E0E3E2",
+     "accent": "#008541",
+     "onAccent": "#FFFFFF",
+     "accent2": "#AA8403",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#E9E7DC",
+     "ink": "#18201F",
+     "muted": "#5C696B"
+    },
+    "vinho-delicado": {
+     "nome": "Vinho Delicado",
+     "modo": "claro",
+     "bg": "#FFFEFE",
+     "surface": "#F6F4F4",
+     "line": "#E3E1E2",
+     "accent": "#8E2A4E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A88548",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EEE4DD",
+     "ink": "#201B1F",
+     "muted": "#66626B"
+    },
+    "lavanda-suave": {
+     "nome": "Lavanda Suave",
+     "modo": "claro",
+     "bg": "#FEFEFF",
+     "surface": "#F5F5F6",
+     "line": "#E2E2E3",
+     "accent": "#7C67B6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#C16E99",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EDE6E0",
+     "ink": "#1D1E23",
+     "muted": "#636570"
+    },
+    "ameixa-coral": {
+     "nome": "Ameixa e Coral",
+     "modo": "claro",
+     "bg": "#FFFEFD",
+     "surface": "#F6F4F4",
+     "line": "#E3E1E1",
+     "accent": "#C25035",
+     "onAccent": "#FFFFFF",
+     "accent2": "#D55FA1",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EFE6DC",
+     "ink": "#201C1D",
+     "muted": "#666368"
+    },
+    "marinho-classico": {
+     "nome": "Marinho Clássico",
+     "modo": "claro",
+     "bg": "#FEFEFF",
+     "surface": "#F4F5F6",
+     "line": "#E1E2E3",
+     "accent": "#1E3A6E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A48442",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EAE5DE",
+     "ink": "#1B1E23",
+     "muted": "#5F6670"
+    },
+    "caramelo": {
+     "nome": "Caramelo",
+     "modo": "claro",
+     "bg": "#FFFEFD",
+     "surface": "#F6F5F3",
+     "line": "#E3E2E0",
+     "accent": "#A86300",
+     "onAccent": "#FFFFFF",
+     "accent2": "#3F7A33",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EEE6DA",
+     "ink": "#201E1C",
+     "muted": "#666667"
+    },
+    "editorial-bronze": {
+     "nome": "Editorial Bronze",
+     "modo": "claro",
+     "bg": "#FFFEFE",
+     "surface": "#F6F5F4",
+     "line": "#E3E2E1",
+     "accent": "#936B2D",
+     "onAccent": "#FFFFFF",
+     "accent2": "#2B2620",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EEE7DC",
+     "ink": "#1F1E1D",
+     "muted": "#656669"
+    },
+    "preto-puro": {
+     "nome": "Preto Puro",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#111111",
+     "onAccent": "#FFFFFF",
+     "accent2": "#6B6B6B",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#E9E3DB",
+     "ink": "#202123",
+     "muted": "#666A70"
+    },
+    "areia-oliva": {
+     "nome": "Areia e Oliva",
+     "modo": "claro",
+     "bg": "#F1EEE5",
+     "surface": "#FFFFFF",
+     "line": "#DDD8CA",
+     "accent": "#4F6B1C",
+     "onAccent": "#FFFFFF",
+     "accent2": "#9A6B2F",
+     "deep": "#2D3A1A",
+     "onDeep": "#FFFFFF",
+     "soft": "#EBE7DB",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    },
+    "ceu-pastel": {
+     "nome": "Céu Pastel",
+     "modo": "claro",
+     "bg": "#F2F7FD",
+     "surface": "#FFFFFF",
+     "line": "#D8E3F0",
+     "accent": "#1F6FD6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#D2477F",
+     "deep": "#243752",
+     "onDeep": "#FFFFFF",
+     "soft": "#EAE7E2",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    }
+   }
+  },
+  {
+   "slug": "impacto",
+   "numero": 5,
+   "nome": "Impacto",
+   "prefixo": "impacto-",
+   "dados": "props",
+   "pasta": "vitrines/_modelos/_base",
+   "script": "vitrines/_modelos/_base/kit.js",
+   "estilos": [
+    "vitrines/_modelos/_base/base.css",
+    "vitrines/_modelos/impacto/impacto.css"
+   ],
+   "paginas": [
+    "Main",
+    "Colecao",
+    "Produto",
+    "Sacola"
+   ],
+   "descricao": "Preto e branco de campanha: foto P&B em tela cheia, letras enormes, atalho por tamanho e cartões com tamanhos.",
+   "origem": "Estrutura estudada na DLK (moda fitness e praia); fotos, textos, fontes e cores próprios",
+   "foto": "vitrines/_fotos/amb-pb-04.jpg",
+   "fontes": [
+    "Archivo"
+   ],
+   "layout": {
+    "topo": "classico",
+    "aviso": "faixa",
+    "cartao": "tamanhos",
+    "rodape": "escuro",
+    "titulos": "esquerda",
+    "faixa": "cor",
+    "filtros": "gaveta",
+    "galeria": "baixo",
+    "colunas": 4,
+    "inicio": [
+     {
+      "tipo": "hero",
+      "variante": "tela"
+     },
+     {
+      "tipo": "beneficios",
+      "variante": "escura"
+     },
+     {
+      "tipo": "tamanhos",
+      "titulo": "Encontre seu tamanho",
+      "subtitulo": "Toque no tamanho e veja só as peças que servem em você."
+     },
+     {
+      "tipo": "vitrine",
+      "variante": "carrossel",
+      "titulo": "Novidades",
+      "filtro": "novos",
+      "n": 8,
+      "fundo": "soft"
+     },
+     {
+      "tipo": "categorias",
+      "variante": "retratos",
+      "titulo": "Compre por categoria",
+      "n": 6
+     },
+     {
+      "tipo": "looks",
+      "titulo": "Vista o treino",
+      "subtitulo": "A peça que aparece na foto, pronta para a sacola."
+     },
+     {
+      "tipo": "duplo",
+      "variante": "padrao",
+      "titulo": "Coleções",
+      "itens": [
+       {
+        "kicker": "Para treinar pesado",
+        "titulo": "Leggings",
+        "botao": "Ver mais",
+        "link": "cat:leggings"
+       },
+       {
+        "kicker": "Pronto para combinar",
+        "titulo": "Conjuntos",
+        "botao": "Ver mais",
+        "link": "cat:conjuntos"
+       }
+      ]
+     }
+    ]
+   },
+   "textos": {
+    "avisos": [
+     "Frete para todo o Brasil",
+     "5% off no Pix",
+     "Troca em até 7 dias"
+    ],
+    "hero": [
+     {
+      "kicker": "Coleção nova",
+      "titulo": "TREINO\nSEM PAUSA",
+      "texto": "Peças firmes para quem não para no meio da série.",
+      "botao": "Ver a coleção",
+      "link": "cat:conjuntos"
+     },
+     {
+      "kicker": "Leggings",
+      "titulo": "FORÇA\nNO DETALHE",
+      "texto": "Leggings que acompanham o agachamento do começo ao fim.",
+      "botao": "Ver leggings",
+      "link": "cat:leggings"
+     },
+     {
+      "kicker": "Tops",
+      "titulo": "SEGURA\nO RITMO",
+      "texto": "Tops para treino de impacto, do pulo à corrida.",
+      "botao": "Ver tops",
+      "link": "cat:tops"
+     }
+    ]
+   },
+   "fotos": {
+    "hero": [
+     "amb-pb-04",
+     "amb-academia-08",
+     "amb-academia-10"
+    ],
+    "duplo": [
+     "amb-academia-07",
+     "amb-academia-06"
+    ],
+    "looks": [
+     "amb-academia-04",
+     "amb-academia-09",
+     "amb-corrida-14"
+    ],
+    "colecao": "amb-pb-02",
+    "banner": "amb-pb-03",
+    "sobre": "amb-pb-06",
+    "ig": [
+     "amb-academia-03",
+     "amb-pb-06",
+     "amb-pb-08",
+     "amb-academia-13",
+     "amb-pb-07",
+     "amb-corrida-05"
+    ]
+   },
+   "cores": {
+    "grafite-lima": {
+     "nome": "Grafite Lima",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F3F3F3",
+     "line": "#E3E3E3",
+     "accent": "#23282F",
+     "onAccent": "#D4FF2A",
+     "accent2": "#5C7A00",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EBEBEB",
+     "ink": "#1F211B",
+     "muted": "#646A66"
+    },
+    "laranja-energia": {
+     "nome": "Laranja Energia",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F3F3F3",
+     "line": "#E3E3E3",
+     "accent": "#C54F00",
+     "onAccent": "#FFFFFF",
+     "accent2": "#009991",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#F0ECEA",
+     "ink": "#201C1A",
+     "muted": "#666365"
+    },
+    "pink-pulse": {
+     "nome": "Pink Pulse",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F3F3F3",
+     "line": "#E3E3E3",
+     "accent": "#DA1C7F",
+     "onAccent": "#FFFFFF",
+     "accent2": "#9476E4",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#F1EBEE",
+     "ink": "#20191F",
+     "muted": "#66606B"
+    },
+    "azul-atleta": {
+     "nome": "Azul Atleta",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F3F3F3",
+     "line": "#E3E3E3",
+     "accent": "#3671DB",
+     "onAccent": "#FFFFFF",
+     "accent2": "#CE7411",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EBEDF1",
+     "ink": "#191D23",
+     "muted": "#5D6470"
+    },
+    "rubi-dourado": {
+     "nome": "Rubi Dourado",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F3F3F3",
+     "line": "#E3E3E3",
+     "accent": "#DE2922",
+     "onAccent": "#FFFFFF",
+     "accent2": "#AE822C",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#F1EBEB",
+     "ink": "#201A1B",
+     "muted": "#666167"
+    },
+    "verde-mata": {
+     "nome": "Verde Mata",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F3F3F3",
+     "line": "#E3E3E3",
+     "accent": "#008541",
+     "onAccent": "#FFFFFF",
+     "accent2": "#AA8403",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EAEEEC",
+     "ink": "#18201F",
+     "muted": "#5C696B"
+    },
+    "vinho-delicado": {
+     "nome": "Vinho Delicado",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F3F3F3",
+     "line": "#E3E3E3",
+     "accent": "#8E2A4E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A88548",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EEEBEC",
+     "ink": "#201B1F",
+     "muted": "#66626B"
+    },
+    "lavanda-suave": {
+     "nome": "Lavanda Suave",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F3F3F3",
+     "line": "#E3E3E3",
+     "accent": "#7C67B6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#C16E99",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EEEDF0",
+     "ink": "#1D1E23",
+     "muted": "#636570"
+    },
+    "ameixa-coral": {
+     "nome": "Ameixa e Coral",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F3F3F3",
+     "line": "#E3E3E3",
+     "accent": "#C25035",
+     "onAccent": "#FFFFFF",
+     "accent2": "#D55FA1",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#F0ECEB",
+     "ink": "#201C1D",
+     "muted": "#666368"
+    },
+    "marinho-classico": {
+     "nome": "Marinho Clássico",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F3F3F3",
+     "line": "#E3E3E3",
+     "accent": "#1E3A6E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A48442",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EBECED",
+     "ink": "#1B1E23",
+     "muted": "#5F6670"
+    },
+    "caramelo": {
+     "nome": "Caramelo",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F3F3F3",
+     "line": "#E3E3E3",
+     "accent": "#A86300",
+     "onAccent": "#FFFFFF",
+     "accent2": "#3F7A33",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EFEDEA",
+     "ink": "#201E1C",
+     "muted": "#666667"
+    },
+    "editorial-bronze": {
+     "nome": "Editorial Bronze",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F3F3F3",
+     "line": "#E3E3E3",
+     "accent": "#936B2D",
+     "onAccent": "#FFFFFF",
+     "accent2": "#2B2620",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EFEDEB",
+     "ink": "#1F1E1D",
+     "muted": "#656669"
+    },
+    "preto-puro": {
+     "nome": "Preto Puro",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F3F3F3",
+     "line": "#E3E3E3",
+     "accent": "#111111",
+     "onAccent": "#FFFFFF",
+     "accent2": "#6B6B6B",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EAEAEA",
+     "ink": "#202123",
+     "muted": "#666A70"
+    },
+    "areia-oliva": {
+     "nome": "Areia e Oliva",
+     "modo": "claro",
+     "bg": "#F1EEE5",
+     "surface": "#FFFFFF",
+     "line": "#DDD8CA",
+     "accent": "#4F6B1C",
+     "onAccent": "#FFFFFF",
+     "accent2": "#9A6B2F",
+     "deep": "#2D3A1A",
+     "onDeep": "#FFFFFF",
+     "soft": "#ECEDEB",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    },
+    "ceu-pastel": {
+     "nome": "Céu Pastel",
+     "modo": "claro",
+     "bg": "#F2F7FD",
+     "surface": "#FFFFFF",
+     "line": "#D8E3F0",
+     "accent": "#1F6FD6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#D2477F",
+     "deep": "#243752",
+     "onDeep": "#FFFFFF",
+     "soft": "#EBEDF1",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    }
+   }
+  },
+  {
+   "slug": "cetim",
+   "numero": 6,
+   "nome": "Cetim",
+   "prefixo": "cetim-",
+   "dados": "props",
+   "pasta": "vitrines/_modelos/_base",
+   "script": "vitrines/_modelos/_base/kit.js",
+   "estilos": [
+    "vitrines/_modelos/_base/base.css",
+    "vitrines/_modelos/cetim/cetim.css"
+   ],
+   "paginas": [
+    "Main",
+    "Colecao",
+    "Produto",
+    "Sacola"
+   ],
+   "descricao": "Delicada e editorial: cantos arredondados, categorias com seta, abas na vitrine e bloco com título serifado.",
+   "origem": "Estrutura estudada na Fitmoda (moda fitness e lingerie); fotos, textos, fontes e cores próprios",
+   "foto": "vitrines/_fotos/amb-estudio-04.jpg",
+   "fontes": [
+    "Urbanist",
+    "Fraunces"
+   ],
+   "layout": {
+    "topo": "classico",
+    "aviso": "setas",
+    "cartao": "simples",
+    "rodape": "claro",
+    "titulos": "esquerda",
+    "faixa": "simples",
+    "filtros": "lateral",
+    "galeria": "lado",
+    "colunas": 4,
+    "inicio": [
+     {
+      "tipo": "hero",
+      "variante": "banner"
+     },
+     {
+      "tipo": "categorias",
+      "variante": "sobre",
+      "titulo": "Compre por categoria",
+      "n": 8
+     },
+     {
+      "tipo": "vitrine",
+      "variante": "grade",
+      "titulo": "Confira os lançamentos",
+      "filtro": "todos",
+      "abas": true,
+      "abaTodos": "Tudo",
+      "n": 8,
+      "verTodos": "Ver todos"
+     },
+     {
+      "tipo": "sobre",
+      "variante": "editorial",
+      "fundo": "soft",
+      "textos": {
+       "kicker": "Coleção",
+       "titulo": "Toque macio,\ntreino firme",
+       "texto": "A @@NOME@@ escolheu peças de toque suave que acompanham o corpo no treino e ficam bonitas no resto do dia.",
+       "itens": []
+      },
+      "botao": "Ver a coleção"
+     },
+     {
+      "tipo": "banner",
+      "variante": "centro",
+      "kicker": "Pensadas além do óbvio",
+      "titulo": "Detalhes que fazem diferença",
+      "texto": "Recortes, alças e cores escolhidas para você treinar se sentindo bem.",
+      "botao": "Ver novidades",
+      "link": "cat:conjuntos"
+     },
+     {
+      "tipo": "instagram",
+      "titulo": "Quem veste"
+     }
+    ]
+   },
+   "textos": {
+    "avisos": [
+     "Compra segura",
+     "Troca fácil em até 7 dias",
+     "5% de desconto no Pix"
+    ],
+    "hero": [
+     {
+      "kicker": "Novidades",
+      "titulo": "Leve como\num abraço",
+      "texto": "Conjuntos de toque macio em cores delicadas.",
+      "botao": "Ver conjuntos",
+      "link": "cat:conjuntos"
+     },
+     {
+      "kicker": "Para o estúdio",
+      "titulo": "Cor que\nacompanha",
+      "texto": "Leggings e tops para pilates, yoga e academia.",
+      "botao": "Ver leggings",
+      "link": "cat:leggings"
+     },
+     {
+      "kicker": "Macacões",
+      "titulo": "Uma peça,\nlook pronto",
+      "texto": "Vista, treine e siga o dia.",
+      "botao": "Ver macacões",
+      "link": "cat:macacoes"
+     }
+    ]
+   },
+   "fotos": {
+    "hero": [
+     "amb-estudio-04",
+     "amb-estilo-07",
+     "amb-estudio-06"
+    ],
+    "sobre": "amb-estilo-01",
+    "banner": "amb-yoga-08",
+    "colecao": "amb-yoga-11",
+    "looks": [
+     "amb-pilates-09",
+     "amb-estilo-01",
+     "amb-yoga-12"
+    ],
+    "ig": [
+     "amb-pilates-09",
+     "amb-yoga-05",
+     "amb-estilo-07",
+     "amb-pilates-03",
+     "amb-yoga-09",
+     "amb-estudio-08"
+    ]
+   },
+   "cores": {
+    "grafite-lima": {
+     "nome": "Grafite Lima",
+     "modo": "claro",
+     "bg": "#FEFFFC",
+     "surface": "#F5F6F2",
+     "line": "#E3E4DF",
+     "accent": "#23282F",
+     "onAccent": "#D4FF2A",
+     "accent2": "#5C7A00",
+     "deep": "#232814",
+     "onDeep": "#FFFFFF",
+     "soft": "#F0E8E4",
+     "ink": "#1F211B",
+     "muted": "#646A66"
+    },
+    "laranja-energia": {
+     "nome": "Laranja Energia",
+     "modo": "claro",
+     "bg": "#FFFDFC",
+     "surface": "#F6F4F2",
+     "line": "#E4E1DF",
+     "accent": "#C54F00",
+     "onAccent": "#FFFFFF",
+     "accent2": "#009991",
+     "deep": "#372116",
+     "onDeep": "#FFFFFF",
+     "soft": "#F5E9E3",
+     "ink": "#201C1A",
+     "muted": "#666365"
+    },
+    "pink-pulse": {
+     "nome": "Pink Pulse",
+     "modo": "claro",
+     "bg": "#FFFDFE",
+     "surface": "#F6F2F4",
+     "line": "#E4E0E2",
+     "accent": "#DA1C7F",
+     "onAccent": "#FFFFFF",
+     "accent2": "#9476E4",
+     "deep": "#381F28",
+     "onDeep": "#FFFFFF",
+     "soft": "#F6E8E7",
+     "ink": "#20191F",
+     "muted": "#66606B"
+    },
+    "azul-atleta": {
+     "nome": "Azul Atleta",
+     "modo": "claro",
+     "bg": "#FDFEFF",
+     "surface": "#F3F4F6",
+     "line": "#E0E1E4",
+     "accent": "#3671DB",
+     "onAccent": "#FFFFFF",
+     "accent2": "#CE7411",
+     "deep": "#1A263A",
+     "onDeep": "#FFFFFF",
+     "soft": "#F0EBEA",
+     "ink": "#191D23",
+     "muted": "#5D6470"
+    },
+    "rubi-dourado": {
+     "nome": "Rubi Dourado",
+     "modo": "claro",
+     "bg": "#FFFDFD",
+     "surface": "#F6F3F2",
+     "line": "#E4E0E0",
+     "accent": "#DE2922",
+     "onAccent": "#FFFFFF",
+     "accent2": "#AE822C",
+     "deep": "#391F1B",
+     "onDeep": "#FFFFFF",
+     "soft": "#F6E8E4",
+     "ink": "#201A1B",
+     "muted": "#666167"
+    },
+    "verde-mata": {
+     "nome": "Verde Mata",
+     "modo": "claro",
+     "bg": "#FCFFFE",
+     "surface": "#F2F6F4",
+     "line": "#E0E3E1",
+     "accent": "#008541",
+     "onAccent": "#FFFFFF",
+     "accent2": "#AA8403",
+     "deep": "#152B1E",
+     "onDeep": "#FFFFFF",
+     "soft": "#EEEBE5",
+     "ink": "#18201F",
+     "muted": "#5C696B"
+    },
+    "vinho-delicado": {
+     "nome": "Vinho Delicado",
+     "modo": "claro",
+     "bg": "#FFFDFE",
+     "surface": "#F6F3F4",
+     "line": "#E4E1E2",
+     "accent": "#8E2A4E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A88548",
+     "deep": "#371E25",
+     "onDeep": "#FFFFFF",
+     "soft": "#F3E8E6",
+     "ink": "#201B1F",
+     "muted": "#66626B"
+    },
+    "lavanda-suave": {
+     "nome": "Lavanda Suave",
+     "modo": "claro",
+     "bg": "#FEFEFF",
+     "surface": "#F5F4F6",
+     "line": "#E2E2E4",
+     "accent": "#7C67B6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#C16E99",
+     "deep": "#272237",
+     "onDeep": "#FFFFFF",
+     "soft": "#F3EAE9",
+     "ink": "#1D1E23",
+     "muted": "#636570"
+    },
+    "ameixa-coral": {
+     "nome": "Ameixa e Coral",
+     "modo": "claro",
+     "bg": "#FFFDFD",
+     "surface": "#F6F4F3",
+     "line": "#E4E1E0",
+     "accent": "#C25035",
+     "onAccent": "#FFFFFF",
+     "accent2": "#D55FA1",
+     "deep": "#39201A",
+     "onDeep": "#FFFFFF",
+     "soft": "#F5E9E5",
+     "ink": "#201C1D",
+     "muted": "#666368"
+    },
+    "marinho-classico": {
+     "nome": "Marinho Clássico",
+     "modo": "claro",
+     "bg": "#FDFEFF",
+     "surface": "#F3F5F6",
+     "line": "#E1E2E4",
+     "accent": "#1E3A6E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A48442",
+     "deep": "#192538",
+     "onDeep": "#FFFFFF",
+     "soft": "#EFE9E7",
+     "ink": "#1B1E23",
+     "muted": "#5F6670"
+    },
+    "caramelo": {
+     "nome": "Caramelo",
+     "modo": "claro",
+     "bg": "#FFFEFD",
+     "surface": "#F6F5F3",
+     "line": "#E4E2E0",
+     "accent": "#A86300",
+     "onAccent": "#FFFFFF",
+     "accent2": "#3F7A33",
+     "deep": "#322110",
+     "onDeep": "#FFFFFF",
+     "soft": "#F4EAE3",
+     "ink": "#201E1C",
+     "muted": "#666667"
+    },
+    "editorial-bronze": {
+     "nome": "Editorial Bronze",
+     "modo": "claro",
+     "bg": "#FFFEFD",
+     "surface": "#F6F5F3",
+     "line": "#E3E2E1",
+     "accent": "#936B2D",
+     "onAccent": "#FFFFFF",
+     "accent2": "#2B2620",
+     "deep": "#30230F",
+     "onDeep": "#FFFFFF",
+     "soft": "#F4EAE4",
+     "ink": "#1F1E1D",
+     "muted": "#656669"
+    },
+    "preto-puro": {
+     "nome": "Preto Puro",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E4E4E4",
+     "accent": "#111111",
+     "onAccent": "#FFFFFF",
+     "accent2": "#6B6B6B",
+     "deep": "#262626",
+     "onDeep": "#FFFFFF",
+     "soft": "#EFE7E3",
+     "ink": "#202123",
+     "muted": "#666A70"
+    },
+    "areia-oliva": {
+     "nome": "Areia e Oliva",
+     "modo": "claro",
+     "bg": "#F1EEE5",
+     "surface": "#FFFFFF",
+     "line": "#DDD8CA",
+     "accent": "#4F6B1C",
+     "onAccent": "#FFFFFF",
+     "accent2": "#9A6B2F",
+     "deep": "#2D3A1A",
+     "onDeep": "#FFFFFF",
+     "soft": "#F1EAE4",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    },
+    "ceu-pastel": {
+     "nome": "Céu Pastel",
+     "modo": "claro",
+     "bg": "#F2F7FD",
+     "surface": "#FFFFFF",
+     "line": "#D8E3F0",
+     "accent": "#1F6FD6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#D2477F",
+     "deep": "#243752",
+     "onDeep": "#FFFFFF",
+     "soft": "#EFEBEA",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    }
+   }
+  },
+  {
+   "slug": "trilha",
+   "numero": 7,
+   "nome": "Trilha",
+   "prefixo": "trilha-",
+   "dados": "props",
+   "pasta": "vitrines/_modelos/_base",
+   "script": "vitrines/_modelos/_base/kit.js",
+   "estilos": [
+    "vitrines/_modelos/_base/base.css",
+    "vitrines/_modelos/trilha/trilha.css"
+   ],
+   "paginas": [
+    "Main",
+    "Colecao",
+    "Produto",
+    "Sacola"
+   ],
+   "descricao": "Editorial ao ar livre: cabeçalho sobre a foto, título vazado gigante, vitrine ao lado de uma foto e duas metades coladas.",
+   "origem": "Estrutura estudada na Bro Fitwear (moda fitness com clima de viagem); fotos, textos, fontes e cores próprios",
+   "foto": "vitrines/_fotos/amb-corrida-12.jpg",
+   "fontes": [
+    "Syne",
+    "Prompt"
+   ],
+   "layout": {
+    "topo": "classico",
+    "sobreposto": true,
+    "aviso": "setas",
+    "cartao": "centro",
+    "rodape": "claro",
+    "titulos": "centro",
+    "faixa": "cor",
+    "filtros": "lateral",
+    "galeria": "lado",
+    "colunas": 4,
+    "inicio": [
+     {
+      "tipo": "hero",
+      "variante": "tela",
+      "nav": "miniaturas"
+     },
+     {
+      "tipo": "vitrine",
+      "variante": "dividida",
+      "titulo": "Peças da estação",
+      "filtro": "novos",
+      "n": 8,
+      "foto": "vit",
+      "fotoTitulo": "Leve na mala",
+      "fotoTexto": "Conjuntos que vão da trilha ao café da cidade.",
+      "verTodos": "Ver todas"
+     },
+     {
+      "tipo": "categorias",
+      "variante": "faixa",
+      "titulo": "Categorias",
+      "n": 8,
+      "botao": "Ver"
+     },
+     {
+      "tipo": "sobre",
+      "variante": "invertido",
+      "textos": {
+       "kicker": "A coleção",
+       "titulo": "Feita para ir longe",
+       "texto": "Cores tiradas da terra, do mar e do fim de tarde. A @@NOME@@ escolheu peças para quem treina onde der: na praia, no parque ou na estrada.",
+       "itens": []
+      },
+      "botao": "Conhecer as peças"
+     },
+     {
+      "tipo": "duplo",
+      "variante": "colado",
+      "classe": "v-centro",
+      "itens": [
+       {
+        "titulo": "Macacões",
+        "botao": "Conheça",
+        "link": "cat:macacoes"
+       },
+       {
+        "titulo": "Conjuntos",
+        "botao": "Conheça",
+        "link": "cat:conjuntos"
+       }
+      ]
+     },
+     {
+      "tipo": "instagram",
+      "titulo": "Pelo caminho"
+     }
+    ]
+   },
+   "textos": {
+    "avisos": [
+     "Frete para todo o Brasil",
+     "Troca fácil em até 7 dias",
+     "5% de desconto no Pix"
+    ],
+    "hero": [
+     {
+      "kicker": "Coleção ao ar livre",
+      "titulo": "Horizonte",
+      "texto": "Peças para correr, caminhar e chegar mais longe.",
+      "botao": "Conheça",
+      "link": "cat:conjuntos"
+     },
+     {
+      "kicker": "Para a trilha",
+      "titulo": "Caminho",
+      "texto": "Leggings e tops para subida, poeira e vento.",
+      "botao": "Conheça",
+      "link": "cat:leggings"
+     },
+     {
+      "kicker": "Fim de tarde",
+      "titulo": "Estrada",
+      "texto": "Macacões para seguir o dia sem trocar de roupa.",
+      "botao": "Conheça",
+      "link": "cat:macacoes"
+     }
+    ]
+   },
+   "fotos": {
+    "hero": [
+     "amb-corrida-12",
+     "amb-corrida-07",
+     "amb-yoga-01"
+    ],
+    "vit": "amb-natureza-03",
+    "sobre": "amb-corrida-15",
+    "duplo": [
+     "amb-natureza-01",
+     "amb-corrida-11"
+    ],
+    "colecao": "amb-corrida-04",
+    "banner": "amb-corrida-02",
+    "looks": [
+     "amb-corrida-04",
+     "amb-natureza-03",
+     "amb-corrida-14"
+    ],
+    "ig": [
+     "amb-corrida-09",
+     "amb-corrida-10",
+     "amb-natureza-02",
+     "amb-estilo-06",
+     "amb-yoga-01",
+     "amb-corrida-02"
+    ]
+   },
+   "cores": {
+    "grafite-lima": {
+     "nome": "Grafite Lima",
+     "modo": "claro",
+     "bg": "#FFFFFD",
+     "surface": "#F5F6F3",
+     "line": "#E3E3E0",
+     "accent": "#23282F",
+     "onAccent": "#D4FF2A",
+     "accent2": "#5C7A00",
+     "deep": "#232814",
+     "onDeep": "#FFFFFF",
+     "soft": "#FCFFF2",
+     "ink": "#1F211B",
+     "muted": "#646A66"
+    },
+    "laranja-energia": {
+     "nome": "Laranja Energia",
+     "modo": "claro",
+     "bg": "#FFFEFD",
+     "surface": "#F6F4F3",
+     "line": "#E3E1E0",
+     "accent": "#C54F00",
+     "onAccent": "#FFFFFF",
+     "accent2": "#009991",
+     "deep": "#372116",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF7F2",
+     "ink": "#201C1A",
+     "muted": "#666365"
+    },
+    "pink-pulse": {
+     "nome": "Pink Pulse",
+     "modo": "claro",
+     "bg": "#FFFDFE",
+     "surface": "#F6F3F5",
+     "line": "#E3E0E2",
+     "accent": "#DA1C7F",
+     "onAccent": "#FFFFFF",
+     "accent2": "#9476E4",
+     "deep": "#381F28",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF3F9",
+     "ink": "#20191F",
+     "muted": "#66606B"
+    },
+    "azul-atleta": {
+     "nome": "Azul Atleta",
+     "modo": "claro",
+     "bg": "#FDFEFF",
+     "surface": "#F3F4F6",
+     "line": "#E1E2E3",
+     "accent": "#3671DB",
+     "onAccent": "#FFFFFF",
+     "accent2": "#CE7411",
+     "deep": "#1A263A",
+     "onDeep": "#FFFFFF",
+     "soft": "#F4F8FF",
+     "ink": "#191D23",
+     "muted": "#5D6470"
+    },
+    "rubi-dourado": {
+     "nome": "Rubi Dourado",
+     "modo": "claro",
+     "bg": "#FFFDFD",
+     "surface": "#F6F3F3",
+     "line": "#E3E0E0",
+     "accent": "#DE2922",
+     "onAccent": "#FFFFFF",
+     "accent2": "#AE822C",
+     "deep": "#391F1B",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF4F3",
+     "ink": "#201A1B",
+     "muted": "#666167"
+    },
+    "verde-mata": {
+     "nome": "Verde Mata",
+     "modo": "claro",
+     "bg": "#FDFFFE",
+     "surface": "#F3F6F4",
+     "line": "#E0E3E2",
+     "accent": "#008541",
+     "onAccent": "#FFFFFF",
+     "accent2": "#AA8403",
+     "deep": "#152B1E",
+     "onDeep": "#FFFFFF",
+     "soft": "#F2FEF8",
+     "ink": "#18201F",
+     "muted": "#5C696B"
+    },
+    "vinho-delicado": {
+     "nome": "Vinho Delicado",
+     "modo": "claro",
+     "bg": "#FFFEFE",
+     "surface": "#F6F4F4",
+     "line": "#E3E1E2",
+     "accent": "#8E2A4E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A88548",
+     "deep": "#371E25",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF6F9",
+     "ink": "#201B1F",
+     "muted": "#66626B"
+    },
+    "lavanda-suave": {
+     "nome": "Lavanda Suave",
+     "modo": "claro",
+     "bg": "#FEFEFF",
+     "surface": "#F5F5F6",
+     "line": "#E2E2E3",
+     "accent": "#7C67B6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#C16E99",
+     "deep": "#272237",
+     "onDeep": "#FFFFFF",
+     "soft": "#FBF9FF",
+     "ink": "#1D1E23",
+     "muted": "#636570"
+    },
+    "ameixa-coral": {
+     "nome": "Ameixa e Coral",
+     "modo": "claro",
+     "bg": "#FFFEFD",
+     "surface": "#F6F4F4",
+     "line": "#E3E1E1",
+     "accent": "#C25035",
+     "onAccent": "#FFFFFF",
+     "accent2": "#D55FA1",
+     "deep": "#39201A",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF7F5",
+     "ink": "#201C1D",
+     "muted": "#666368"
+    },
+    "marinho-classico": {
+     "nome": "Marinho Clássico",
+     "modo": "claro",
+     "bg": "#FEFEFF",
+     "surface": "#F4F5F6",
+     "line": "#E1E2E3",
+     "accent": "#1E3A6E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A48442",
+     "deep": "#192538",
+     "onDeep": "#FFFFFF",
+     "soft": "#F6FAFF",
+     "ink": "#1B1E23",
+     "muted": "#5F6670"
+    },
+    "caramelo": {
+     "nome": "Caramelo",
+     "modo": "claro",
+     "bg": "#FFFEFD",
+     "surface": "#F6F5F3",
+     "line": "#E3E2E0",
+     "accent": "#A86300",
+     "onAccent": "#FFFFFF",
+     "accent2": "#3F7A33",
+     "deep": "#322110",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFFAF4",
+     "ink": "#201E1C",
+     "muted": "#666667"
+    },
+    "editorial-bronze": {
+     "nome": "Editorial Bronze",
+     "modo": "claro",
+     "bg": "#FFFEFE",
+     "surface": "#F6F5F4",
+     "line": "#E3E2E1",
+     "accent": "#936B2D",
+     "onAccent": "#FFFFFF",
+     "accent2": "#2B2620",
+     "deep": "#30230F",
+     "onDeep": "#FFFFFF",
+     "soft": "#FDFAF6",
+     "ink": "#1F1E1D",
+     "muted": "#656669"
+    },
+    "preto-puro": {
+     "nome": "Preto Puro",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#111111",
+     "onAccent": "#FFFFFF",
+     "accent2": "#6B6B6B",
+     "deep": "#262626",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFFFFF",
+     "ink": "#202123",
+     "muted": "#666A70"
+    },
+    "areia-oliva": {
+     "nome": "Areia e Oliva",
+     "modo": "claro",
+     "bg": "#F1EEE5",
+     "surface": "#FFFFFF",
+     "line": "#DDD8CA",
+     "accent": "#4F6B1C",
+     "onAccent": "#FFFFFF",
+     "accent2": "#9A6B2F",
+     "deep": "#2D3A1A",
+     "onDeep": "#FFFFFF",
+     "soft": "#E7E6D9",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    },
+    "ceu-pastel": {
+     "nome": "Céu Pastel",
+     "modo": "claro",
+     "bg": "#F2F7FD",
+     "surface": "#FFFFFF",
+     "line": "#D8E3F0",
+     "accent": "#1F6FD6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#D2477F",
+     "deep": "#243752",
+     "onDeep": "#FFFFFF",
+     "soft": "#E5EFFB",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    }
+   }
+  },
+  {
+   "slug": "vibe",
+   "numero": 8,
+   "nome": "Vibe",
+   "prefixo": "vibe-",
+   "dados": "props",
+   "pasta": "vitrines/_modelos/_base",
+   "script": "vitrines/_modelos/_base/kit.js",
+   "estilos": [
+    "vitrines/_modelos/_base/base.css",
+    "vitrines/_modelos/vibe/vibe.css"
+   ],
+   "paginas": [
+    "Main",
+    "Colecao",
+    "Produto",
+    "Sacola"
+   ],
+   "descricao": "Promocional e jovem: busca grande no topo, letras condensadas, categorias com nome enorme e preço do Pix em destaque.",
+   "origem": "Estrutura estudada na Manalinda (moda fitness feminina); fotos, textos, fontes e cores próprios",
+   "foto": "vitrines/_fotos/amb-academia-10.jpg",
+   "fontes": [
+    "Sofia Sans Condensed",
+    "Sofia Sans"
+   ],
+   "layout": {
+    "topo": "busca",
+    "aviso": "faixa",
+    "cartao": "centro",
+    "rodape": "escuro",
+    "titulos": "centro",
+    "faixa": "simples",
+    "filtros": "lateral",
+    "galeria": "lado",
+    "colunas": 4,
+    "inicio": [
+     {
+      "tipo": "hero",
+      "variante": "tela",
+      "nav": "setas"
+     },
+     {
+      "tipo": "vitrine",
+      "variante": "carrossel",
+      "titulo": "Lançamentos",
+      "filtro": "novos",
+      "n": 8
+     },
+     {
+      "tipo": "categorias",
+      "variante": "faixa",
+      "titulo": "Categorias",
+      "n": 8,
+      "botao": "Ver tudo"
+     },
+     {
+      "tipo": "beneficios",
+      "variante": "centro",
+      "fundo": "soft"
+     },
+     {
+      "tipo": "vitrine",
+      "variante": "carrossel",
+      "titulo": "Conjuntos",
+      "filtro": "cat:conjuntos",
+      "n": 8
+     },
+     {
+      "tipo": "instagram",
+      "titulo": "Quem usa"
+     }
+    ]
+   },
+   "textos": {
+    "avisos": [
+     "5% de desconto no Pix em todo o site"
+    ],
+    "hero": [
+     {
+      "kicker": "Chegou",
+      "titulo": "VIBE DE\nTREINO NOVO",
+      "texto": "Conjuntos em cores que chamam atenção na academia.",
+      "botao": "Ver lançamentos",
+      "link": "cat:conjuntos"
+     },
+     {
+      "kicker": "Leggings",
+      "titulo": "FIRME DO\nCOMEÇO AO FIM",
+      "texto": "Do aquecimento ao último set.",
+      "botao": "Ver leggings",
+      "link": "cat:leggings"
+     },
+     {
+      "kicker": "Tops",
+      "titulo": "COR PARA\nTODO DIA",
+      "texto": "Tops para combinar com tudo o que você já tem.",
+      "botao": "Ver tops",
+      "link": "cat:tops"
+     }
+    ]
+   },
+   "fotos": {
+    "hero": [
+     "amb-academia-10",
+     "amb-corrida-05",
+     "amb-academia-13"
+    ],
+    "colecao": "amb-estudio-03",
+    "banner": "amb-estudio-07",
+    "sobre": "amb-estudio-01",
+    "looks": [
+     "amb-estudio-01",
+     "amb-estudio-08",
+     "amb-estudio-05"
+    ],
+    "ig": [
+     "amb-estudio-01",
+     "amb-estudio-03",
+     "amb-estudio-07",
+     "amb-estudio-08",
+     "amb-estilo-05",
+     "amb-corrida-13"
+    ]
+   },
+   "cores": {
+    "grafite-lima": {
+     "nome": "Grafite Lima",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#23282F",
+     "onAccent": "#D4FF2A",
+     "accent2": "#5C7A00",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#FCFFF2",
+     "ink": "#1F211B",
+     "muted": "#646A66"
+    },
+    "laranja-energia": {
+     "nome": "Laranja Energia",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#C54F00",
+     "onAccent": "#FFFFFF",
+     "accent2": "#009991",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF7F2",
+     "ink": "#201C1A",
+     "muted": "#666365"
+    },
+    "pink-pulse": {
+     "nome": "Pink Pulse",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#DA1C7F",
+     "onAccent": "#FFFFFF",
+     "accent2": "#9476E4",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF3F9",
+     "ink": "#20191F",
+     "muted": "#66606B"
+    },
+    "azul-atleta": {
+     "nome": "Azul Atleta",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#3671DB",
+     "onAccent": "#FFFFFF",
+     "accent2": "#CE7411",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#F4F8FF",
+     "ink": "#191D23",
+     "muted": "#5D6470"
+    },
+    "rubi-dourado": {
+     "nome": "Rubi Dourado",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#DE2922",
+     "onAccent": "#FFFFFF",
+     "accent2": "#AE822C",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF4F3",
+     "ink": "#201A1B",
+     "muted": "#666167"
+    },
+    "verde-mata": {
+     "nome": "Verde Mata",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#008541",
+     "onAccent": "#FFFFFF",
+     "accent2": "#AA8403",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#F2FEF8",
+     "ink": "#18201F",
+     "muted": "#5C696B"
+    },
+    "vinho-delicado": {
+     "nome": "Vinho Delicado",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#8E2A4E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A88548",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF6F9",
+     "ink": "#201B1F",
+     "muted": "#66626B"
+    },
+    "lavanda-suave": {
+     "nome": "Lavanda Suave",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#7C67B6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#C16E99",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#FBF9FF",
+     "ink": "#1D1E23",
+     "muted": "#636570"
+    },
+    "ameixa-coral": {
+     "nome": "Ameixa e Coral",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#C25035",
+     "onAccent": "#FFFFFF",
+     "accent2": "#D55FA1",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF7F5",
+     "ink": "#201C1D",
+     "muted": "#666368"
+    },
+    "marinho-classico": {
+     "nome": "Marinho Clássico",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#1E3A6E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A48442",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#F6FAFF",
+     "ink": "#1B1E23",
+     "muted": "#5F6670"
+    },
+    "caramelo": {
+     "nome": "Caramelo",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#A86300",
+     "onAccent": "#FFFFFF",
+     "accent2": "#3F7A33",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFFAF4",
+     "ink": "#201E1C",
+     "muted": "#666667"
+    },
+    "editorial-bronze": {
+     "nome": "Editorial Bronze",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#936B2D",
+     "onAccent": "#FFFFFF",
+     "accent2": "#2B2620",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#FDFAF6",
+     "ink": "#1F1E1D",
+     "muted": "#656669"
+    },
+    "preto-puro": {
+     "nome": "Preto Puro",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#111111",
+     "onAccent": "#FFFFFF",
+     "accent2": "#6B6B6B",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFFFFF",
+     "ink": "#202123",
+     "muted": "#666A70"
+    },
+    "areia-oliva": {
+     "nome": "Areia e Oliva",
+     "modo": "claro",
+     "bg": "#F1EEE5",
+     "surface": "#FFFFFF",
+     "line": "#DDD8CA",
+     "accent": "#4F6B1C",
+     "onAccent": "#FFFFFF",
+     "accent2": "#9A6B2F",
+     "deep": "#2D3A1A",
+     "onDeep": "#FFFFFF",
+     "soft": "#E7E6D9",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    },
+    "ceu-pastel": {
+     "nome": "Céu Pastel",
+     "modo": "claro",
+     "bg": "#F2F7FD",
+     "surface": "#FFFFFF",
+     "line": "#D8E3F0",
+     "accent": "#1F6FD6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#D2477F",
+     "deep": "#243752",
+     "onDeep": "#FFFFFF",
+     "soft": "#E5EFFB",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    }
+   }
+  },
+  {
+   "slug": "leve",
+   "numero": 9,
+   "nome": "Leve",
+   "prefixo": "leve-",
+   "dados": "props",
+   "pasta": "vitrines/_modelos/_base",
+   "script": "vitrines/_modelos/_base/kit.js",
+   "estilos": [
+    "vitrines/_modelos/_base/base.css",
+    "vitrines/_modelos/leve/leve.css"
+   ],
+   "paginas": [
+    "Main",
+    "Colecao",
+    "Produto",
+    "Sacola"
+   ],
+   "descricao": "Minimalista e solar: cabeçalho transparente, título em minúsculas, muito branco e a foto mandando.",
+   "origem": "Estrutura estudada na Arm Fitness (moda fitness lifestyle); fotos, textos, fontes e cores próprios",
+   "foto": "vitrines/_fotos/amb-natureza-02.jpg",
+   "fontes": [
+    "Plus Jakarta Sans"
+   ],
+   "layout": {
+    "topo": "minimo",
+    "sobreposto": true,
+    "aviso": "faixa",
+    "cartao": "contorno",
+    "rodape": "claro",
+    "titulos": "centro",
+    "faixa": "simples",
+    "filtros": "gaveta",
+    "galeria": "grade",
+    "colunas": 3,
+    "inicio": [
+     {
+      "tipo": "hero",
+      "variante": "tela"
+     },
+     {
+      "tipo": "categorias",
+      "variante": "retratos",
+      "titulo": "categorias",
+      "n": 4
+     },
+     {
+      "tipo": "banner",
+      "variante": "padrao",
+      "cores": true,
+      "kicker": "acabou de chegar",
+      "titulo": "cores novas",
+      "texto": "As cores da estação nos conjuntos e leggings da loja.",
+      "botao": "Ver cores",
+      "link": "cat:conjuntos"
+     },
+     {
+      "tipo": "vitrine",
+      "variante": "grade",
+      "titulo": "novidades",
+      "filtro": "novos",
+      "n": 8,
+      "etiqueta": "novo",
+      "verTodos": "Ver tudo"
+     },
+     {
+      "tipo": "banner",
+      "variante": "centro",
+      "foto": "banner2",
+      "titulo": "leve para onde for",
+      "texto": "Do parque à praia, peças que acompanham o seu dia.",
+      "botao": "Ver a coleção",
+      "link": "todos"
+     }
+    ]
+   },
+   "textos": {
+    "avisos": [
+     "frete para todo o Brasil · 5% off no pix"
+    ],
+    "hero": [
+     {
+      "kicker": "coleção nova",
+      "titulo": "sol, corpo\ne movimento.",
+      "texto": "peças leves para treinar ao ar livre.",
+      "botao": "Ver mais",
+      "link": "cat:conjuntos"
+     },
+     {
+      "kicker": "para a praia",
+      "titulo": "mar à vista.",
+      "texto": "tops e leggings que vão da corrida ao mergulho de fim de tarde.",
+      "botao": "Ver mais",
+      "link": "cat:tops"
+     },
+     {
+      "kicker": "fim de tarde",
+      "titulo": "devagar\ntambém conta.",
+      "texto": "macacões para alongar sem pressa.",
+      "botao": "Ver mais",
+      "link": "cat:macacoes"
+     }
+    ]
+   },
+   "fotos": {
+    "hero": [
+     "amb-natureza-02",
+     "amb-corrida-10",
+     "amb-corrida-15"
+    ],
+    "banner": "amb-pilates-06",
+    "banner2": "amb-natureza-04",
+    "colecao": "amb-natureza-03",
+    "sobre": "amb-yoga-11",
+    "looks": [
+     "amb-estilo-03",
+     "amb-estilo-04",
+     "amb-corrida-08"
+    ],
+    "ig": [
+     "amb-yoga-11",
+     "amb-corrida-09",
+     "amb-natureza-01",
+     "amb-estilo-04",
+     "amb-corrida-10",
+     "amb-yoga-10"
+    ]
+   },
+   "cores": {
+    "grafite-lima": {
+     "nome": "Grafite Lima",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F4F3F1",
+     "line": "#E3E3E3",
+     "accent": "#23282F",
+     "onAccent": "#D4FF2A",
+     "accent2": "#5C7A00",
+     "deep": "#232814",
+     "onDeep": "#FFFFFF",
+     "soft": "#FCFFF2",
+     "ink": "#1F211B",
+     "muted": "#646A66"
+    },
+    "laranja-energia": {
+     "nome": "Laranja Energia",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F4F3F1",
+     "line": "#E3E3E3",
+     "accent": "#C54F00",
+     "onAccent": "#FFFFFF",
+     "accent2": "#009991",
+     "deep": "#372116",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF7F2",
+     "ink": "#201C1A",
+     "muted": "#666365"
+    },
+    "pink-pulse": {
+     "nome": "Pink Pulse",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F4F3F1",
+     "line": "#E3E3E3",
+     "accent": "#DA1C7F",
+     "onAccent": "#FFFFFF",
+     "accent2": "#9476E4",
+     "deep": "#381F28",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF3F9",
+     "ink": "#20191F",
+     "muted": "#66606B"
+    },
+    "azul-atleta": {
+     "nome": "Azul Atleta",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F4F3F1",
+     "line": "#E3E3E3",
+     "accent": "#3671DB",
+     "onAccent": "#FFFFFF",
+     "accent2": "#CE7411",
+     "deep": "#1A263A",
+     "onDeep": "#FFFFFF",
+     "soft": "#F4F8FF",
+     "ink": "#191D23",
+     "muted": "#5D6470"
+    },
+    "rubi-dourado": {
+     "nome": "Rubi Dourado",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F4F3F1",
+     "line": "#E3E3E3",
+     "accent": "#DE2922",
+     "onAccent": "#FFFFFF",
+     "accent2": "#AE822C",
+     "deep": "#391F1B",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF4F3",
+     "ink": "#201A1B",
+     "muted": "#666167"
+    },
+    "verde-mata": {
+     "nome": "Verde Mata",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F4F3F1",
+     "line": "#E3E3E3",
+     "accent": "#008541",
+     "onAccent": "#FFFFFF",
+     "accent2": "#AA8403",
+     "deep": "#152B1E",
+     "onDeep": "#FFFFFF",
+     "soft": "#F2FEF8",
+     "ink": "#18201F",
+     "muted": "#5C696B"
+    },
+    "vinho-delicado": {
+     "nome": "Vinho Delicado",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F4F3F1",
+     "line": "#E3E3E3",
+     "accent": "#8E2A4E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A88548",
+     "deep": "#371E25",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF6F9",
+     "ink": "#201B1F",
+     "muted": "#66626B"
+    },
+    "lavanda-suave": {
+     "nome": "Lavanda Suave",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F4F3F1",
+     "line": "#E3E3E3",
+     "accent": "#7C67B6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#C16E99",
+     "deep": "#272237",
+     "onDeep": "#FFFFFF",
+     "soft": "#FBF9FF",
+     "ink": "#1D1E23",
+     "muted": "#636570"
+    },
+    "ameixa-coral": {
+     "nome": "Ameixa e Coral",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F4F3F1",
+     "line": "#E3E3E3",
+     "accent": "#C25035",
+     "onAccent": "#FFFFFF",
+     "accent2": "#D55FA1",
+     "deep": "#39201A",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF7F5",
+     "ink": "#201C1D",
+     "muted": "#666368"
+    },
+    "marinho-classico": {
+     "nome": "Marinho Clássico",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F4F3F1",
+     "line": "#E3E3E3",
+     "accent": "#1E3A6E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A48442",
+     "deep": "#192538",
+     "onDeep": "#FFFFFF",
+     "soft": "#F6FAFF",
+     "ink": "#1B1E23",
+     "muted": "#5F6670"
+    },
+    "caramelo": {
+     "nome": "Caramelo",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F4F3F1",
+     "line": "#E3E3E3",
+     "accent": "#A86300",
+     "onAccent": "#FFFFFF",
+     "accent2": "#3F7A33",
+     "deep": "#322110",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFFAF4",
+     "ink": "#201E1C",
+     "muted": "#666667"
+    },
+    "editorial-bronze": {
+     "nome": "Editorial Bronze",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F4F3F1",
+     "line": "#E3E3E3",
+     "accent": "#936B2D",
+     "onAccent": "#FFFFFF",
+     "accent2": "#2B2620",
+     "deep": "#30230F",
+     "onDeep": "#FFFFFF",
+     "soft": "#FDFAF6",
+     "ink": "#1F1E1D",
+     "muted": "#656669"
+    },
+    "preto-puro": {
+     "nome": "Preto Puro",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F4F3F1",
+     "line": "#E3E3E3",
+     "accent": "#111111",
+     "onAccent": "#FFFFFF",
+     "accent2": "#6B6B6B",
+     "deep": "#262626",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFFFFF",
+     "ink": "#202123",
+     "muted": "#666A70"
+    },
+    "areia-oliva": {
+     "nome": "Areia e Oliva",
+     "modo": "claro",
+     "bg": "#F1EEE5",
+     "surface": "#FFFFFF",
+     "line": "#DDD8CA",
+     "accent": "#4F6B1C",
+     "onAccent": "#FFFFFF",
+     "accent2": "#9A6B2F",
+     "deep": "#2D3A1A",
+     "onDeep": "#FFFFFF",
+     "soft": "#E7E6D9",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    },
+    "ceu-pastel": {
+     "nome": "Céu Pastel",
+     "modo": "claro",
+     "bg": "#F2F7FD",
+     "surface": "#FFFFFF",
+     "line": "#D8E3F0",
+     "accent": "#1F6FD6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#D2477F",
+     "deep": "#243752",
+     "onDeep": "#FFFFFF",
+     "soft": "#E5EFFB",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    }
+   }
+  },
+  {
+   "slug": "nobre",
+   "numero": 10,
+   "nome": "Nobre",
+   "prefixo": "nobre-",
+   "dados": "props",
+   "pasta": "vitrines/_modelos/_base",
+   "script": "vitrines/_modelos/_base/kit.js",
+   "estilos": [
+    "vitrines/_modelos/_base/base.css",
+    "vitrines/_modelos/nobre/nobre.css"
+   ],
+   "paginas": [
+    "Main",
+    "Colecao",
+    "Produto",
+    "Sacola"
+   ],
+   "descricao": "Premium com dourado: logo serifado, busca grande, destaque com texto à direita, categorias em círculos.",
+   "origem": "Estrutura estudada na Be Rich Moda Fitness; fotos, textos, fontes e cores próprios",
+   "foto": "vitrines/_fotos/amb-natureza-04.jpg",
+   "fontes": [
+    "Cinzel",
+    "Mulish"
+   ],
+   "layout": {
+    "topo": "busca",
+    "aviso": "faixa",
+    "cartao": "centro",
+    "rodape": "escuro",
+    "titulos": "centro",
+    "faixa": "simples",
+    "filtros": "lateral",
+    "galeria": "lado",
+    "colunas": 4,
+    "inicio": [
+     {
+      "tipo": "hero",
+      "variante": "banner",
+      "classe": "direita",
+      "nav": "setas"
+     },
+     {
+      "tipo": "beneficios",
+      "variante": "centro"
+     },
+     {
+      "tipo": "categorias",
+      "variante": "circulos",
+      "titulo": "Compre por categoria",
+      "n": 6
+     },
+     {
+      "tipo": "vitrine",
+      "variante": "grade",
+      "titulo": "Força e presença",
+      "subtitulo": "Escolha a categoria e veja as peças.",
+      "filtro": "todos",
+      "abas": true,
+      "abaTodos": "Lançamentos",
+      "n": 8,
+      "etiqueta": "Lançamento"
+     },
+     {
+      "tipo": "vitrine",
+      "variante": "carrossel",
+      "titulo": "Leggings",
+      "filtro": "cat:leggings",
+      "n": 8
+     },
+     {
+      "tipo": "vitrine",
+      "variante": "carrossel",
+      "titulo": "Conjuntos",
+      "filtro": "cat:conjuntos",
+      "n": 8
+     },
+     {
+      "tipo": "vitrine",
+      "variante": "carrossel",
+      "titulo": "Macacões",
+      "filtro": "cats:macacoes,macaquinhos",
+      "n": 8
+     }
+    ]
+   },
+   "textos": {
+    "avisos": [
+     "Atendimento pelo WhatsApp · 5% de desconto no Pix · Troca em até 7 dias"
+    ],
+    "hero": [
+     {
+      "kicker": "Lançamentos",
+      "titulo": "Coleção\nnobre",
+      "texto": "Peças de acabamento cuidadoso para treinar com presença.",
+      "botao": "Conheça",
+      "link": "cat:conjuntos"
+     },
+     {
+      "kicker": "Leggings",
+      "titulo": "Elegância\nem movimento",
+      "texto": "Caimento bonito do treino ao café.",
+      "botao": "Ver leggings",
+      "link": "cat:leggings"
+     },
+     {
+      "kicker": "Macacões",
+      "titulo": "Peça única,\nolhar atento",
+      "texto": "Uma peça só, look pronto para o dia.",
+      "botao": "Ver macacões",
+      "link": "cat:macacoes"
+     }
+    ]
+   },
+   "fotos": {
+    "hero": [
+     "amb-natureza-04",
+     "amb-yoga-06",
+     "amb-yoga-03"
+    ],
+    "colecao": "amb-pilates-07",
+    "banner": "amb-pilates-04",
+    "sobre": "amb-pilates-05",
+    "looks": [
+     "amb-pilates-05",
+     "amb-pilates-10",
+     "amb-estudio-02"
+    ],
+    "ig": [
+     "amb-pilates-07",
+     "amb-pilates-05",
+     "amb-pilates-10",
+     "amb-estudio-02",
+     "amb-pilates-01",
+     "amb-yoga-06"
+    ]
+   },
+   "cores": {
+    "grafite-lima": {
+     "nome": "Grafite Lima",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#23282F",
+     "onAccent": "#D4FF2A",
+     "accent2": "#A57D2C",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EFEAE1",
+     "ink": "#1F211B",
+     "muted": "#646A66"
+    },
+    "laranja-energia": {
+     "nome": "Laranja Energia",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#C54F00",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A57D2C",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#F4EBDF",
+     "ink": "#201C1A",
+     "muted": "#666365"
+    },
+    "pink-pulse": {
+     "nome": "Pink Pulse",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#DA1C7F",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A57D2C",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#F5EAE3",
+     "ink": "#20191F",
+     "muted": "#66606B"
+    },
+    "azul-atleta": {
+     "nome": "Azul Atleta",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#3671DB",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A57D2C",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EFEDE7",
+     "ink": "#191D23",
+     "muted": "#5D6470"
+    },
+    "rubi-dourado": {
+     "nome": "Rubi Dourado",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#DE2922",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A57D2C",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#F5EAE0",
+     "ink": "#201A1B",
+     "muted": "#666167"
+    },
+    "verde-mata": {
+     "nome": "Verde Mata",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#008541",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A57D2C",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EDEDE1",
+     "ink": "#18201F",
+     "muted": "#5C696B"
+    },
+    "vinho-delicado": {
+     "nome": "Vinho Delicado",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#8E2A4E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A57D2C",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#F2EAE2",
+     "ink": "#201B1F",
+     "muted": "#66626B"
+    },
+    "lavanda-suave": {
+     "nome": "Lavanda Suave",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#7C67B6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A57D2C",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#F2ECE5",
+     "ink": "#1D1E23",
+     "muted": "#636570"
+    },
+    "ameixa-coral": {
+     "nome": "Ameixa e Coral",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#C25035",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A57D2C",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#F4EBE1",
+     "ink": "#201C1D",
+     "muted": "#666368"
+    },
+    "marinho-classico": {
+     "nome": "Marinho Clássico",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#1E3A6E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A57D2C",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EEEBE3",
+     "ink": "#1B1E23",
+     "muted": "#5F6670"
+    },
+    "caramelo": {
+     "nome": "Caramelo",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#A86300",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A57D2C",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#F3ECDF",
+     "ink": "#201E1C",
+     "muted": "#666667"
+    },
+    "editorial-bronze": {
+     "nome": "Editorial Bronze",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#936B2D",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A57D2C",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#F3ECE0",
+     "ink": "#1F1E1D",
+     "muted": "#656669"
+    },
+    "preto-puro": {
+     "nome": "Preto Puro",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#111111",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A57D2C",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EEE9E0",
+     "ink": "#202123",
+     "muted": "#666A70"
+    },
+    "areia-oliva": {
+     "nome": "Areia e Oliva",
+     "modo": "claro",
+     "bg": "#F1EEE5",
+     "surface": "#FFFFFF",
+     "line": "#DDD8CA",
+     "accent": "#4F6B1C",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A57D2C",
+     "deep": "#2D3A1A",
+     "onDeep": "#FFFFFF",
+     "soft": "#F0ECE0",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    },
+    "ceu-pastel": {
+     "nome": "Céu Pastel",
+     "modo": "claro",
+     "bg": "#F2F7FD",
+     "surface": "#FFFFFF",
+     "line": "#D8E3F0",
+     "accent": "#1F6FD6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A57D2C",
+     "deep": "#243752",
+     "onDeep": "#FFFFFF",
+     "soft": "#EEECE6",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    }
+   }
+  },
+  {
+   "slug": "ritmo",
+   "numero": 11,
+   "nome": "Ritmo",
+   "prefixo": "ritmo-",
+   "dados": "props",
+   "pasta": "vitrines/_modelos/_base",
+   "script": "vitrines/_modelos/_base/kit.js",
+   "estilos": [
+    "vitrines/_modelos/_base/base.css",
+    "vitrines/_modelos/ritmo/ritmo.css"
+   ],
+   "paginas": [
+    "Main",
+    "Colecao",
+    "Produto",
+    "Sacola"
+   ],
+   "descricao": "Esportiva e limpa: destaque com itálico grande, destaques da estação com botão preto, blocos de categoria e banner de cor.",
+   "origem": "Estrutura estudada na Track&Field (moda esportiva); fotos, textos, fontes e cores próprios",
+   "foto": "vitrines/_fotos/amb-corrida-02.jpg",
+   "fontes": [
+    "Exo 2"
+   ],
+   "layout": {
+    "topo": "classico",
+    "aviso": "faixa",
+    "cartao": "simples",
+    "rodape": "claro",
+    "titulos": "esquerda",
+    "faixa": "simples",
+    "filtros": "lateral",
+    "galeria": "baixo",
+    "colunas": 4,
+    "inicio": [
+     {
+      "tipo": "hero",
+      "variante": "tela"
+     },
+     {
+      "tipo": "categorias",
+      "variante": "destaques",
+      "titulo": "Destaques da estação",
+      "n": 3,
+      "botao": "Ver mais",
+      "fotos": "ambiente"
+     },
+     {
+      "tipo": "beneficios",
+      "variante": "faixa"
+     },
+     {
+      "tipo": "duplo",
+      "variante": "padrao",
+      "titulo": "Tudo para o seu movimento",
+      "itens": [
+       {
+        "titulo": "Tops e leggings",
+        "botao": "Ver mais",
+        "link": "cat:leggings"
+       },
+       {
+        "titulo": "Para treinar",
+        "botao": "Ver mais",
+        "link": "cat:conjuntos"
+       }
+      ]
+     },
+     {
+      "tipo": "banner",
+      "variante": "cor",
+      "kicker": "Verão",
+      "titulo": "Cores para o calor",
+      "texto": "Tons claros e peças leves para treinar nos dias quentes.",
+      "botao": "Ver mais",
+      "link": "cat:tops"
+     },
+     {
+      "tipo": "looks",
+      "titulo": "Vista o look",
+      "subtitulo": "A peça da foto, direto na sacola."
+     },
+     {
+      "tipo": "vitrine",
+      "variante": "carrossel",
+      "titulo": "Novidades",
+      "filtro": "novos",
+      "n": 8
+     }
+    ]
+   },
+   "textos": {
+    "avisos": [
+     "Entrega para todo o Brasil | 5% de desconto no Pix"
+    ],
+    "hero": [
+     {
+      "kicker": "Verão",
+      "titulo": "Novo ritmo",
+      "texto": "A coleção da estação para correr, pular e treinar ao ar livre.",
+      "botao": "Ver mais",
+      "link": "cat:conjuntos"
+     },
+     {
+      "kicker": "Corrida",
+      "titulo": "Mais leve",
+      "texto": "Tops e leggings para os seus quilômetros.",
+      "botao": "Ver mais",
+      "link": "cat:leggings"
+     },
+     {
+      "kicker": "Ar livre",
+      "titulo": "Sem limite",
+      "texto": "Macacões e conjuntos para o treino do dia.",
+      "botao": "Ver mais",
+      "link": "cat:macacoes"
+     }
+    ]
+   },
+   "fotos": {
+    "hero": [
+     "amb-corrida-02",
+     "amb-corrida-13",
+     "amb-natureza-01"
+    ],
+    "duplo": [
+     "amb-corrida-06",
+     "amb-academia-04"
+    ],
+    "banner": "amb-corrida-01",
+    "usos": [
+     "amb-corrida-03",
+     "amb-estilo-06",
+     "amb-corrida-11"
+    ],
+    "colecao": "amb-corrida-11",
+    "sobre": "amb-corrida-04",
+    "looks": [
+     "amb-corrida-04",
+     "amb-corrida-09",
+     "amb-corrida-14"
+    ],
+    "ig": [
+     "amb-corrida-01",
+     "amb-corrida-06",
+     "amb-corrida-08",
+     "amb-estilo-05",
+     "amb-corrida-13",
+     "amb-natureza-03"
+    ]
+   },
+   "cores": {
+    "grafite-lima": {
+     "nome": "Grafite Lima",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#23282F",
+     "onAccent": "#D4FF2A",
+     "accent2": "#5C7A00",
+     "deep": "#232814",
+     "onDeep": "#FFFFFF",
+     "soft": "#FCFFF2",
+     "ink": "#1F211B",
+     "muted": "#646A66"
+    },
+    "laranja-energia": {
+     "nome": "Laranja Energia",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#C54F00",
+     "onAccent": "#FFFFFF",
+     "accent2": "#009991",
+     "deep": "#372116",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF7F2",
+     "ink": "#201C1A",
+     "muted": "#666365"
+    },
+    "pink-pulse": {
+     "nome": "Pink Pulse",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#DA1C7F",
+     "onAccent": "#FFFFFF",
+     "accent2": "#9476E4",
+     "deep": "#381F28",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF3F9",
+     "ink": "#20191F",
+     "muted": "#66606B"
+    },
+    "azul-atleta": {
+     "nome": "Azul Atleta",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#3671DB",
+     "onAccent": "#FFFFFF",
+     "accent2": "#CE7411",
+     "deep": "#1A263A",
+     "onDeep": "#FFFFFF",
+     "soft": "#F4F8FF",
+     "ink": "#191D23",
+     "muted": "#5D6470"
+    },
+    "rubi-dourado": {
+     "nome": "Rubi Dourado",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#DE2922",
+     "onAccent": "#FFFFFF",
+     "accent2": "#AE822C",
+     "deep": "#391F1B",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF4F3",
+     "ink": "#201A1B",
+     "muted": "#666167"
+    },
+    "verde-mata": {
+     "nome": "Verde Mata",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#008541",
+     "onAccent": "#FFFFFF",
+     "accent2": "#AA8403",
+     "deep": "#152B1E",
+     "onDeep": "#FFFFFF",
+     "soft": "#F2FEF8",
+     "ink": "#18201F",
+     "muted": "#5C696B"
+    },
+    "vinho-delicado": {
+     "nome": "Vinho Delicado",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#8E2A4E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A88548",
+     "deep": "#371E25",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF6F9",
+     "ink": "#201B1F",
+     "muted": "#66626B"
+    },
+    "lavanda-suave": {
+     "nome": "Lavanda Suave",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#7C67B6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#C16E99",
+     "deep": "#272237",
+     "onDeep": "#FFFFFF",
+     "soft": "#FBF9FF",
+     "ink": "#1D1E23",
+     "muted": "#636570"
+    },
+    "ameixa-coral": {
+     "nome": "Ameixa e Coral",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#C25035",
+     "onAccent": "#FFFFFF",
+     "accent2": "#D55FA1",
+     "deep": "#39201A",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF7F5",
+     "ink": "#201C1D",
+     "muted": "#666368"
+    },
+    "marinho-classico": {
+     "nome": "Marinho Clássico",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#1E3A6E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A48442",
+     "deep": "#192538",
+     "onDeep": "#FFFFFF",
+     "soft": "#F6FAFF",
+     "ink": "#1B1E23",
+     "muted": "#5F6670"
+    },
+    "caramelo": {
+     "nome": "Caramelo",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#A86300",
+     "onAccent": "#FFFFFF",
+     "accent2": "#3F7A33",
+     "deep": "#322110",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFFAF4",
+     "ink": "#201E1C",
+     "muted": "#666667"
+    },
+    "editorial-bronze": {
+     "nome": "Editorial Bronze",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#936B2D",
+     "onAccent": "#FFFFFF",
+     "accent2": "#2B2620",
+     "deep": "#30230F",
+     "onDeep": "#FFFFFF",
+     "soft": "#FDFAF6",
+     "ink": "#1F1E1D",
+     "muted": "#656669"
+    },
+    "preto-puro": {
+     "nome": "Preto Puro",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#111111",
+     "onAccent": "#FFFFFF",
+     "accent2": "#6B6B6B",
+     "deep": "#262626",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFFFFF",
+     "ink": "#202123",
+     "muted": "#666A70"
+    },
+    "areia-oliva": {
+     "nome": "Areia e Oliva",
+     "modo": "claro",
+     "bg": "#F1EEE5",
+     "surface": "#FFFFFF",
+     "line": "#DDD8CA",
+     "accent": "#4F6B1C",
+     "onAccent": "#FFFFFF",
+     "accent2": "#9A6B2F",
+     "deep": "#2D3A1A",
+     "onDeep": "#FFFFFF",
+     "soft": "#E7E6D9",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    },
+    "ceu-pastel": {
+     "nome": "Céu Pastel",
+     "modo": "claro",
+     "bg": "#F2F7FD",
+     "surface": "#FFFFFF",
+     "line": "#D8E3F0",
+     "accent": "#1F6FD6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#D2477F",
+     "deep": "#243752",
+     "onDeep": "#FFFFFF",
+     "soft": "#E5EFFB",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    }
+   }
+  },
+  {
+   "slug": "contraste",
+   "numero": 12,
+   "nome": "Contraste",
+   "prefixo": "contraste-",
+   "dados": "props",
+   "pasta": "vitrines/_modelos/_base",
+   "script": "vitrines/_modelos/_base/kit.js",
+   "estilos": [
+    "vitrines/_modelos/_base/base.css",
+    "vitrines/_modelos/contraste/contraste.css"
+   ],
+   "paginas": [
+    "Main",
+    "Colecao",
+    "Produto",
+    "Sacola"
+   ],
+   "descricao": "Preto e branco com atitude: destaque dividido, itálico serifado com letra pesada e cartões em fundo cinza.",
+   "origem": "Estrutura estudada na Divina Fitness / Atara (moda fitness feminina); fotos, textos, fontes e cores próprios",
+   "foto": "vitrines/_fotos/amb-estudio-03.jpg",
+   "fontes": [
+    "Anton",
+    "DM Serif Display",
+    "Poppins"
+   ],
+   "layout": {
+    "topo": "classico",
+    "aviso": "setas",
+    "cartao": "simples",
+    "rodape": "escuro",
+    "titulos": "centro",
+    "faixa": "cor",
+    "filtros": "lateral",
+    "galeria": "grade",
+    "colunas": 4,
+    "inicio": [
+     {
+      "tipo": "hero",
+      "variante": "dividido"
+     },
+     {
+      "tipo": "beneficios",
+      "variante": "faixa"
+     },
+     {
+      "tipo": "categorias",
+      "variante": "procura",
+      "titulo": "O que você está procurando?",
+      "n": 4,
+      "botao": "Comprar"
+     },
+     {
+      "tipo": "duplo",
+      "variante": "centro",
+      "itens": [
+       {
+        "kicker": "Para se destacar",
+        "titulo": "Conjuntos",
+        "botao": "Ver peças",
+        "link": "cat:conjuntos"
+       },
+       {
+        "kicker": "Para o dia a dia",
+        "titulo": "Leggings",
+        "botao": "Ver peças",
+        "link": "cat:leggings"
+       }
+      ]
+     },
+     {
+      "tipo": "vitrine",
+      "variante": "grade",
+      "titulo": "Seleção da loja",
+      "filtro": "todos",
+      "abas": true,
+      "abaTodos": "Todas",
+      "n": 8,
+      "verTodos": "Ver mais"
+     },
+     {
+      "tipo": "instagram",
+      "titulo": "Siga a loja no Instagram"
+     }
+    ]
+   },
+   "textos": {
+    "avisos": [
+     "Troca fácil em até 7 dias",
+     "5% de desconto no Pix",
+     "Entrega para todo o Brasil"
+    ],
+    "hero": [
+     {
+      "kicker": "a trilha do seu treino é",
+      "titulo": "TODO PRETO",
+      "texto": "Peças básicas que combinam com tudo e com qualquer treino.",
+      "botao": "Conferir agora",
+      "link": "cat:conjuntos"
+     },
+     {
+      "kicker": "do agachamento à corrida",
+      "titulo": "SEM\nMEDO",
+      "texto": "Leggings que acompanham cada movimento.",
+      "botao": "Conferir agora",
+      "link": "cat:leggings"
+     },
+     {
+      "kicker": "para quem gosta de detalhe",
+      "titulo": "NOVO\nTOP",
+      "texto": "Tops para treinar e para usar por baixo da jaqueta.",
+      "botao": "Conferir agora",
+      "link": "cat:tops"
+     }
+    ]
+   },
+   "fotos": {
+    "hero": [
+     "amb-estudio-03",
+     "amb-pb-06",
+     "amb-pb-08"
+    ],
+    "duplo": [
+     "amb-academia-13",
+     "amb-academia-03"
+    ],
+    "colecao": "amb-pb-03",
+    "banner": "amb-pb-02",
+    "sobre": "amb-pb-06",
+    "looks": [
+     "amb-pb-08",
+     "amb-academia-03",
+     "amb-estudio-03"
+    ],
+    "ig": [
+     "amb-pb-06",
+     "amb-academia-03",
+     "amb-pb-08",
+     "amb-academia-13",
+     "amb-estudio-03",
+     "amb-pb-07"
+    ]
+   },
+   "cores": {
+    "grafite-lima": {
+     "nome": "Grafite Lima",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F1F1F1",
+     "line": "#E3E3E3",
+     "accent": "#23282F",
+     "onAccent": "#D4FF2A",
+     "accent2": "#5C7A00",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EAEAEA",
+     "ink": "#1F211B",
+     "muted": "#646A66"
+    },
+    "laranja-energia": {
+     "nome": "Laranja Energia",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F1F1F1",
+     "line": "#E3E3E3",
+     "accent": "#C54F00",
+     "onAccent": "#FFFFFF",
+     "accent2": "#009991",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EFEBE9",
+     "ink": "#201C1A",
+     "muted": "#666365"
+    },
+    "pink-pulse": {
+     "nome": "Pink Pulse",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F1F1F1",
+     "line": "#E3E3E3",
+     "accent": "#DA1C7F",
+     "onAccent": "#FFFFFF",
+     "accent2": "#9476E4",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#F0EAED",
+     "ink": "#20191F",
+     "muted": "#66606B"
+    },
+    "azul-atleta": {
+     "nome": "Azul Atleta",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F1F1F1",
+     "line": "#E3E3E3",
+     "accent": "#3671DB",
+     "onAccent": "#FFFFFF",
+     "accent2": "#CE7411",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EAEDF0",
+     "ink": "#191D23",
+     "muted": "#5D6470"
+    },
+    "rubi-dourado": {
+     "nome": "Rubi Dourado",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F1F1F1",
+     "line": "#E3E3E3",
+     "accent": "#DE2922",
+     "onAccent": "#FFFFFF",
+     "accent2": "#AE822C",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#F0EAEA",
+     "ink": "#201A1B",
+     "muted": "#666167"
+    },
+    "verde-mata": {
+     "nome": "Verde Mata",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F1F1F1",
+     "line": "#E3E3E3",
+     "accent": "#008541",
+     "onAccent": "#FFFFFF",
+     "accent2": "#AA8403",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#E9EDEB",
+     "ink": "#18201F",
+     "muted": "#5C696B"
+    },
+    "vinho-delicado": {
+     "nome": "Vinho Delicado",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F1F1F1",
+     "line": "#E3E3E3",
+     "accent": "#8E2A4E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A88548",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EEEAEB",
+     "ink": "#201B1F",
+     "muted": "#66626B"
+    },
+    "lavanda-suave": {
+     "nome": "Lavanda Suave",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F1F1F1",
+     "line": "#E3E3E3",
+     "accent": "#7C67B6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#C16E99",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EDECEF",
+     "ink": "#1D1E23",
+     "muted": "#636570"
+    },
+    "ameixa-coral": {
+     "nome": "Ameixa e Coral",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F1F1F1",
+     "line": "#E3E3E3",
+     "accent": "#C25035",
+     "onAccent": "#FFFFFF",
+     "accent2": "#D55FA1",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EFEBEA",
+     "ink": "#201C1D",
+     "muted": "#666368"
+    },
+    "marinho-classico": {
+     "nome": "Marinho Clássico",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F1F1F1",
+     "line": "#E3E3E3",
+     "accent": "#1E3A6E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A48442",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EAEBEC",
+     "ink": "#1B1E23",
+     "muted": "#5F6670"
+    },
+    "caramelo": {
+     "nome": "Caramelo",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F1F1F1",
+     "line": "#E3E3E3",
+     "accent": "#A86300",
+     "onAccent": "#FFFFFF",
+     "accent2": "#3F7A33",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EEECE9",
+     "ink": "#201E1C",
+     "muted": "#666667"
+    },
+    "editorial-bronze": {
+     "nome": "Editorial Bronze",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F1F1F1",
+     "line": "#E3E3E3",
+     "accent": "#936B2D",
+     "onAccent": "#FFFFFF",
+     "accent2": "#2B2620",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EEECEA",
+     "ink": "#1F1E1D",
+     "muted": "#656669"
+    },
+    "preto-puro": {
+     "nome": "Preto Puro",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F1F1F1",
+     "line": "#E3E3E3",
+     "accent": "#111111",
+     "onAccent": "#FFFFFF",
+     "accent2": "#6B6B6B",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#E9E9E9",
+     "ink": "#202123",
+     "muted": "#666A70"
+    },
+    "areia-oliva": {
+     "nome": "Areia e Oliva",
+     "modo": "claro",
+     "bg": "#F1EEE5",
+     "surface": "#FFFFFF",
+     "line": "#DDD8CA",
+     "accent": "#4F6B1C",
+     "onAccent": "#FFFFFF",
+     "accent2": "#9A6B2F",
+     "deep": "#2D3A1A",
+     "onDeep": "#FFFFFF",
+     "soft": "#EBECEA",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    },
+    "ceu-pastel": {
+     "nome": "Céu Pastel",
+     "modo": "claro",
+     "bg": "#F2F7FD",
+     "surface": "#FFFFFF",
+     "line": "#D8E3F0",
+     "accent": "#1F6FD6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#D2477F",
+     "deep": "#243752",
+     "onDeep": "#FFFFFF",
+     "soft": "#EAECF0",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    }
+   }
+  },
+  {
+   "slug": "studio",
+   "numero": 13,
+   "nome": "Studio",
+   "prefixo": "studio-",
+   "dados": "props",
+   "pasta": "vitrines/_modelos/_base",
+   "script": "vitrines/_modelos/_base/kit.js",
+   "estilos": [
+    "vitrines/_modelos/_base/base.css",
+    "vitrines/_modelos/studio/studio.css"
+   ],
+   "paginas": [
+    "Main",
+    "Colecao",
+    "Produto",
+    "Sacola"
+   ],
+   "descricao": "Marca de estúdio: vantagens no topo, destaque com setas em pílula, fotos em fundo bege e vitrines com título à esquerda.",
+   "origem": "Estrutura estudada na LIVE! (moda esportiva); fotos, textos, fontes e cores próprios",
+   "foto": "vitrines/_fotos/amb-pilates-11.jpg",
+   "fontes": [
+    "Schibsted Grotesk"
+   ],
+   "layout": {
+    "topo": "classico",
+    "aviso": "lista",
+    "cartao": "simples",
+    "rodape": "claro",
+    "titulos": "esquerda",
+    "faixa": "simples",
+    "filtros": "lateral",
+    "galeria": "grade",
+    "colunas": 4,
+    "inicio": [
+     {
+      "tipo": "hero",
+      "variante": "tela",
+      "nav": "setas"
+     },
+     {
+      "tipo": "categorias",
+      "variante": "sobre",
+      "titulo": "Categorias",
+      "n": 8
+     },
+     {
+      "tipo": "vitrine",
+      "variante": "carrossel",
+      "titulo": "Novidades",
+      "filtro": "novos",
+      "n": 8
+     },
+     {
+      "tipo": "vitrine",
+      "variante": "carrossel",
+      "titulo": "Leggings",
+      "filtro": "cat:leggings",
+      "n": 8
+     },
+     {
+      "tipo": "vitrine",
+      "variante": "carrossel",
+      "titulo": "Tops e conjuntos",
+      "filtro": "cats:tops,conjuntos",
+      "n": 8
+     },
+     {
+      "tipo": "contato",
+      "titulo": "Fale com a loja",
+      "foto": "contato"
+     }
+    ]
+   },
+   "textos": {
+    "avisos": [
+     "Entrega para todo o Brasil",
+     "5% de desconto no Pix",
+     "Troca em até 7 dias",
+     "Atendimento no WhatsApp"
+    ],
+    "hero": [
+     {
+      "kicker": "Estúdio",
+      "titulo": "Feita para o seu treino",
+      "texto": "Peças confortáveis para academia, pilates e corrida.",
+      "botao": "Ver a coleção",
+      "link": "cat:conjuntos"
+     },
+     {
+      "kicker": "Leggings",
+      "titulo": "Cada movimento conta",
+      "texto": "Leggings para treinar do jeito que você gosta.",
+      "botao": "Ver leggings",
+      "link": "cat:leggings"
+     },
+     {
+      "kicker": "Tops",
+      "titulo": "Firmeza na medida",
+      "texto": "Tops para treino leve e de impacto.",
+      "botao": "Ver tops",
+      "link": "cat:tops"
+     }
+    ]
+   },
+   "fotos": {
+    "hero": [
+     "amb-pilates-11",
+     "amb-academia-04",
+     "amb-academia-08"
+    ],
+    "contato": "amb-estudio-05",
+    "colecao": "amb-pilates-05",
+    "banner": "amb-estudio-02",
+    "sobre": "amb-estudio-02",
+    "looks": [
+     "amb-estudio-02",
+     "amb-pilates-05",
+     "amb-estudio-05"
+    ],
+    "ig": [
+     "amb-estudio-02",
+     "amb-pilates-05",
+     "amb-estudio-05",
+     "amb-yoga-07",
+     "amb-pilates-04",
+     "amb-yoga-02"
+    ]
+   },
+   "cores": {
+    "grafite-lima": {
+     "nome": "Grafite Lima",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#23282F",
+     "onAccent": "#D4FF2A",
+     "accent2": "#5C7A00",
+     "deep": "#232814",
+     "onDeep": "#FFFFFF",
+     "soft": "#E7E1D9",
+     "ink": "#1F211B",
+     "muted": "#646A66"
+    },
+    "laranja-energia": {
+     "nome": "Laranja Energia",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#C54F00",
+     "onAccent": "#FFFFFF",
+     "accent2": "#009991",
+     "deep": "#372116",
+     "onDeep": "#FFFFFF",
+     "soft": "#EDE3D7",
+     "ink": "#201C1A",
+     "muted": "#666365"
+    },
+    "pink-pulse": {
+     "nome": "Pink Pulse",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#DA1C7F",
+     "onAccent": "#FFFFFF",
+     "accent2": "#9476E4",
+     "deep": "#381F28",
+     "onDeep": "#FFFFFF",
+     "soft": "#EDE1DC",
+     "ink": "#20191F",
+     "muted": "#66606B"
+    },
+    "azul-atleta": {
+     "nome": "Azul Atleta",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#3671DB",
+     "onAccent": "#FFFFFF",
+     "accent2": "#CE7411",
+     "deep": "#1A263A",
+     "onDeep": "#FFFFFF",
+     "soft": "#E8E4DF",
+     "ink": "#191D23",
+     "muted": "#5D6470"
+    },
+    "rubi-dourado": {
+     "nome": "Rubi Dourado",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#DE2922",
+     "onAccent": "#FFFFFF",
+     "accent2": "#AE822C",
+     "deep": "#391F1B",
+     "onDeep": "#FFFFFF",
+     "soft": "#EDE1D8",
+     "ink": "#201A1B",
+     "muted": "#666167"
+    },
+    "verde-mata": {
+     "nome": "Verde Mata",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#008541",
+     "onAccent": "#FFFFFF",
+     "accent2": "#AA8403",
+     "deep": "#152B1E",
+     "onDeep": "#FFFFFF",
+     "soft": "#E6E5D9",
+     "ink": "#18201F",
+     "muted": "#5C696B"
+    },
+    "vinho-delicado": {
+     "nome": "Vinho Delicado",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#8E2A4E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A88548",
+     "deep": "#371E25",
+     "onDeep": "#FFFFFF",
+     "soft": "#EBE1DA",
+     "ink": "#201B1F",
+     "muted": "#66626B"
+    },
+    "lavanda-suave": {
+     "nome": "Lavanda Suave",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#7C67B6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#C16E99",
+     "deep": "#272237",
+     "onDeep": "#FFFFFF",
+     "soft": "#EAE3DE",
+     "ink": "#1D1E23",
+     "muted": "#636570"
+    },
+    "ameixa-coral": {
+     "nome": "Ameixa e Coral",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#C25035",
+     "onAccent": "#FFFFFF",
+     "accent2": "#D55FA1",
+     "deep": "#39201A",
+     "onDeep": "#FFFFFF",
+     "soft": "#ECE3D9",
+     "ink": "#201C1D",
+     "muted": "#666368"
+    },
+    "marinho-classico": {
+     "nome": "Marinho Clássico",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#1E3A6E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A48442",
+     "deep": "#192538",
+     "onDeep": "#FFFFFF",
+     "soft": "#E7E2DB",
+     "ink": "#1B1E23",
+     "muted": "#5F6670"
+    },
+    "caramelo": {
+     "nome": "Caramelo",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#A86300",
+     "onAccent": "#FFFFFF",
+     "accent2": "#3F7A33",
+     "deep": "#322110",
+     "onDeep": "#FFFFFF",
+     "soft": "#ECE3D7",
+     "ink": "#201E1C",
+     "muted": "#666667"
+    },
+    "editorial-bronze": {
+     "nome": "Editorial Bronze",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#936B2D",
+     "onAccent": "#FFFFFF",
+     "accent2": "#2B2620",
+     "deep": "#30230F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EBE4D9",
+     "ink": "#1F1E1D",
+     "muted": "#656669"
+    },
+    "preto-puro": {
+     "nome": "Preto Puro",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#111111",
+     "onAccent": "#FFFFFF",
+     "accent2": "#6B6B6B",
+     "deep": "#262626",
+     "onDeep": "#FFFFFF",
+     "soft": "#E6E0D8",
+     "ink": "#202123",
+     "muted": "#666A70"
+    },
+    "areia-oliva": {
+     "nome": "Areia e Oliva",
+     "modo": "claro",
+     "bg": "#F1EEE5",
+     "surface": "#FFFFFF",
+     "line": "#DDD8CA",
+     "accent": "#4F6B1C",
+     "onAccent": "#FFFFFF",
+     "accent2": "#9A6B2F",
+     "deep": "#2D3A1A",
+     "onDeep": "#FFFFFF",
+     "soft": "#E8E4D8",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    },
+    "ceu-pastel": {
+     "nome": "Céu Pastel",
+     "modo": "claro",
+     "bg": "#F2F7FD",
+     "surface": "#FFFFFF",
+     "line": "#D8E3F0",
+     "accent": "#1F6FD6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#D2477F",
+     "deep": "#243752",
+     "onDeep": "#FFFFFF",
+     "soft": "#E7E4DF",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    }
+   }
+  },
+  {
+   "slug": "bloco",
+   "numero": 14,
+   "nome": "Bloco",
+   "prefixo": "bloco-",
+   "dados": "props",
+   "pasta": "vitrines/_modelos/_base",
+   "script": "vitrines/_modelos/_base/kit.js",
+   "estilos": [
+    "vitrines/_modelos/_base/base.css",
+    "vitrines/_modelos/bloco/bloco.css"
+   ],
+   "paginas": [
+    "Main",
+    "Colecao",
+    "Produto",
+    "Sacola"
+   ],
+   "descricao": "Campanha forte: cabeçalho preto, título condensado na cor da loja, faixa de vantagens colorida, fotos coladas e perguntas.",
+   "origem": "Estrutura estudada na Lupo (moda esportiva e íntima); fotos, textos, fontes e cores próprios",
+   "foto": "vitrines/_fotos/amb-pilates-09.jpg",
+   "fontes": [
+    "Bebas Neue",
+    "Figtree"
+   ],
+   "layout": {
+    "topo": "minimo",
+    "aviso": "faixa",
+    "cartao": "simples",
+    "rodape": "escuro",
+    "titulos": "esquerda",
+    "faixa": "cor",
+    "filtros": "lateral",
+    "galeria": "lado",
+    "colunas": 4,
+    "inicio": [
+     {
+      "tipo": "hero",
+      "variante": "recorte"
+     },
+     {
+      "tipo": "beneficios",
+      "variante": "destaque"
+     },
+     {
+      "tipo": "categorias",
+      "variante": "blocos",
+      "classe": "colado",
+      "titulo": "Escolhas da loja",
+      "n": 3,
+      "botao": "Comprar"
+     },
+     {
+      "tipo": "banner",
+      "variante": "centro",
+      "classe": "cinza",
+      "kicker": "Treino sem pausa",
+      "titulo": "Tudo para o seu treino",
+      "texto": "Leggings, tops e conjuntos para todos os dias da semana.",
+      "botao": "Ver a coleção",
+      "link": "todos"
+     },
+     {
+      "tipo": "vitrine",
+      "variante": "carrossel",
+      "titulo": "Novidades",
+      "filtro": "novos",
+      "n": 8,
+      "verTodos": "Ver tudo"
+     },
+     {
+      "tipo": "categorias",
+      "variante": "mosaico",
+      "titulo": "Compre por categoria",
+      "n": 4
+     },
+     {
+      "tipo": "faq",
+      "titulo": "Dúvidas frequentes"
+     }
+    ]
+   },
+   "textos": {
+    "avisos": [
+     "Frete para todo o Brasil · 5% de desconto no Pix"
+    ],
+    "hero": [
+     {
+      "kicker": "Coleção nova",
+      "titulo": "TREINO\nTODO DIA",
+      "texto": "Peças firmes e confortáveis para a semana inteira.",
+      "botao": "Comprar agora",
+      "link": "cat:conjuntos"
+     },
+     {
+      "kicker": "Leggings",
+      "titulo": "FIRME\nE LEVE",
+      "texto": "Leggings que seguram sem apertar.",
+      "botao": "Ver leggings",
+      "link": "cat:leggings"
+     },
+     {
+      "kicker": "Tops",
+      "titulo": "PRONTA\nPARA IR",
+      "texto": "Tops para treinar e para o dia.",
+      "botao": "Ver tops",
+      "link": "cat:tops"
+     }
+    ]
+   },
+   "fotos": {
+    "hero": [
+     "amb-pilates-09",
+     "amb-corrida-14",
+     "amb-corrida-08"
+    ],
+    "banner": "amb-pb-05",
+    "colecao": "amb-pb-02",
+    "sobre": "amb-academia-09",
+    "looks": [
+     "amb-academia-09",
+     "amb-corrida-08",
+     "amb-pilates-09"
+    ],
+    "ig": [
+     "amb-academia-09",
+     "amb-corrida-08",
+     "amb-academia-07",
+     "amb-corrida-14",
+     "amb-pb-08",
+     "amb-academia-04"
+    ]
+   },
+   "cores": {
+    "grafite-lima": {
+     "nome": "Grafite Lima",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F2F2F2",
+     "line": "#E3E3E3",
+     "accent": "#23282F",
+     "onAccent": "#D4FF2A",
+     "accent2": "#F5C518",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#FCFFF2",
+     "ink": "#1F211B",
+     "muted": "#646A66"
+    },
+    "laranja-energia": {
+     "nome": "Laranja Energia",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F2F2F2",
+     "line": "#E3E3E3",
+     "accent": "#C54F00",
+     "onAccent": "#FFFFFF",
+     "accent2": "#F5C518",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF7F2",
+     "ink": "#201C1A",
+     "muted": "#666365"
+    },
+    "pink-pulse": {
+     "nome": "Pink Pulse",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F2F2F2",
+     "line": "#E3E3E3",
+     "accent": "#DA1C7F",
+     "onAccent": "#FFFFFF",
+     "accent2": "#F5C518",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF3F9",
+     "ink": "#20191F",
+     "muted": "#66606B"
+    },
+    "azul-atleta": {
+     "nome": "Azul Atleta",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F2F2F2",
+     "line": "#E3E3E3",
+     "accent": "#3671DB",
+     "onAccent": "#FFFFFF",
+     "accent2": "#F5C518",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#F4F8FF",
+     "ink": "#191D23",
+     "muted": "#5D6470"
+    },
+    "rubi-dourado": {
+     "nome": "Rubi Dourado",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F2F2F2",
+     "line": "#E3E3E3",
+     "accent": "#DE2922",
+     "onAccent": "#FFFFFF",
+     "accent2": "#F5C518",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF4F3",
+     "ink": "#201A1B",
+     "muted": "#666167"
+    },
+    "verde-mata": {
+     "nome": "Verde Mata",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F2F2F2",
+     "line": "#E3E3E3",
+     "accent": "#008541",
+     "onAccent": "#FFFFFF",
+     "accent2": "#F5C518",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#F2FEF8",
+     "ink": "#18201F",
+     "muted": "#5C696B"
+    },
+    "vinho-delicado": {
+     "nome": "Vinho Delicado",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F2F2F2",
+     "line": "#E3E3E3",
+     "accent": "#8E2A4E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#F5C518",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF6F9",
+     "ink": "#201B1F",
+     "muted": "#66626B"
+    },
+    "lavanda-suave": {
+     "nome": "Lavanda Suave",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F2F2F2",
+     "line": "#E3E3E3",
+     "accent": "#7C67B6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#F5C518",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#FBF9FF",
+     "ink": "#1D1E23",
+     "muted": "#636570"
+    },
+    "ameixa-coral": {
+     "nome": "Ameixa e Coral",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F2F2F2",
+     "line": "#E3E3E3",
+     "accent": "#C25035",
+     "onAccent": "#FFFFFF",
+     "accent2": "#F5C518",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFF7F5",
+     "ink": "#201C1D",
+     "muted": "#666368"
+    },
+    "marinho-classico": {
+     "nome": "Marinho Clássico",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F2F2F2",
+     "line": "#E3E3E3",
+     "accent": "#1E3A6E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#F5C518",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#F6FAFF",
+     "ink": "#1B1E23",
+     "muted": "#5F6670"
+    },
+    "caramelo": {
+     "nome": "Caramelo",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F2F2F2",
+     "line": "#E3E3E3",
+     "accent": "#A86300",
+     "onAccent": "#FFFFFF",
+     "accent2": "#F5C518",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFFAF4",
+     "ink": "#201E1C",
+     "muted": "#666667"
+    },
+    "editorial-bronze": {
+     "nome": "Editorial Bronze",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F2F2F2",
+     "line": "#E3E3E3",
+     "accent": "#936B2D",
+     "onAccent": "#FFFFFF",
+     "accent2": "#F5C518",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#FDFAF6",
+     "ink": "#1F1E1D",
+     "muted": "#656669"
+    },
+    "preto-puro": {
+     "nome": "Preto Puro",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F2F2F2",
+     "line": "#E3E3E3",
+     "accent": "#111111",
+     "onAccent": "#FFFFFF",
+     "accent2": "#F5C518",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#FFFFFF",
+     "ink": "#202123",
+     "muted": "#666A70"
+    },
+    "areia-oliva": {
+     "nome": "Areia e Oliva",
+     "modo": "claro",
+     "bg": "#F1EEE5",
+     "surface": "#FFFFFF",
+     "line": "#DDD8CA",
+     "accent": "#4F6B1C",
+     "onAccent": "#FFFFFF",
+     "accent2": "#F5C518",
+     "deep": "#2D3A1A",
+     "onDeep": "#FFFFFF",
+     "soft": "#E7E6D9",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    },
+    "ceu-pastel": {
+     "nome": "Céu Pastel",
+     "modo": "claro",
+     "bg": "#F2F7FD",
+     "surface": "#FFFFFF",
+     "line": "#D8E3F0",
+     "accent": "#1F6FD6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#F5C518",
+     "deep": "#243752",
+     "onDeep": "#FFFFFF",
+     "soft": "#E5EFFB",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    }
+   }
+  },
+  {
+   "slug": "foco",
+   "numero": 15,
+   "nome": "Foco",
+   "prefixo": "foco-",
+   "dados": "props",
+   "pasta": "vitrines/_modelos/_base",
+   "script": "vitrines/_modelos/_base/kit.js",
+   "estilos": [
+    "vitrines/_modelos/_base/base.css",
+    "vitrines/_modelos/foco/foco.css"
+   ],
+   "paginas": [
+    "Main",
+    "Colecao",
+    "Produto",
+    "Sacola"
+   ],
+   "descricao": "Logo em bloco de cor, título com letras espaçadas sobre foto de estúdio, linha de usos e vitrine ao lado de foto.",
+   "origem": "Estrutura estudada na Body For Sure (moda fitness); fotos, textos, fontes e cores próprios",
+   "foto": "vitrines/_fotos/amb-estudio-01.jpg",
+   "fontes": [
+    "Lexend"
+   ],
+   "layout": {
+    "topo": "classico",
+    "aviso": "faixa",
+    "cartao": "simples",
+    "rodape": "claro",
+    "titulos": "esquerda",
+    "faixa": "simples",
+    "filtros": "lateral",
+    "galeria": "lado",
+    "colunas": 4,
+    "inicio": [
+     {
+      "tipo": "hero",
+      "variante": "dividido",
+      "classe": "estudio"
+     },
+     {
+      "tipo": "beneficios",
+      "variante": "faixa"
+     },
+     {
+      "tipo": "vitrine",
+      "variante": "carrossel",
+      "titulo": "Novidades",
+      "filtro": "novos",
+      "n": 8
+     },
+     {
+      "tipo": "usos",
+      "titulo": "Para cada momento",
+      "itens": [
+       {
+        "nome": "Dia a dia",
+        "link": "cat:conjuntos"
+       },
+       {
+        "nome": "Pilates",
+        "link": "cat:macaquinhos"
+       },
+       {
+        "nome": "Corrida",
+        "link": "cat:tops"
+       },
+       {
+        "nome": "Treino",
+        "link": "cat:leggings"
+       }
+      ]
+     },
+     {
+      "tipo": "vitrine",
+      "variante": "dividida",
+      "titulo": "Para treinar já",
+      "filtro": "roupas",
+      "n": 8,
+      "foto": "vit",
+      "fotoTitulo": "LEGGINGS",
+      "fotoTexto": "Para treino, corrida e dia a dia."
+     },
+     {
+      "tipo": "contato",
+      "titulo": "Fale com a gente",
+      "foto": "contato",
+      "texto": "Tire dúvidas de tamanho, peça fotos e combine a entrega pelo WhatsApp."
+     }
+    ]
+   },
+   "textos": {
+    "avisos": [
+     "ENTREGA PARA TODO O BRASIL · 5% OFF NO PIX"
+    ],
+    "hero": [
+     {
+      "kicker": "Coleção nova",
+      "titulo": "NOVO",
+      "texto": "Cores de estúdio para treinar com foco.",
+      "botao": "Confira",
+      "link": "cat:conjuntos"
+     },
+     {
+      "kicker": "Leggings",
+      "titulo": "FOCO",
+      "texto": "Leggings para todos os treinos da semana.",
+      "botao": "Confira",
+      "link": "cat:leggings"
+     },
+     {
+      "kicker": "Tops",
+      "titulo": "COR",
+      "texto": "Tops em tons que combinam entre si.",
+      "botao": "Confira",
+      "link": "cat:tops"
+     }
+    ]
+   },
+   "fotos": {
+    "hero": [
+     "amb-estudio-01",
+     "amb-estudio-08",
+     "amb-estudio-07"
+    ],
+    "usos": [
+     "amb-estilo-05",
+     "amb-pilates-10",
+     "amb-corrida-06",
+     "amb-academia-09"
+    ],
+    "vit": "amb-estilo-04",
+    "contato": "amb-pb-07",
+    "colecao": "amb-estudio-03",
+    "banner": "amb-estudio-01",
+    "sobre": "amb-estudio-01",
+    "looks": [
+     "amb-estudio-01",
+     "amb-estudio-08",
+     "amb-estilo-04"
+    ],
+    "ig": [
+     "amb-estudio-01",
+     "amb-estudio-08",
+     "amb-estudio-07",
+     "amb-estilo-04",
+     "amb-pilates-10",
+     "amb-estilo-05"
+    ]
+   },
+   "cores": {
+    "grafite-lima": {
+     "nome": "Grafite Lima",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#23282F",
+     "onAccent": "#D4FF2A",
+     "accent2": "#5C7A00",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#E7E9EB",
+     "ink": "#1F211B",
+     "muted": "#646A66"
+    },
+    "laranja-energia": {
+     "nome": "Laranja Energia",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#C54F00",
+     "onAccent": "#FFFFFF",
+     "accent2": "#009991",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EDEAEA",
+     "ink": "#201C1A",
+     "muted": "#666365"
+    },
+    "pink-pulse": {
+     "nome": "Pink Pulse",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#DA1C7F",
+     "onAccent": "#FFFFFF",
+     "accent2": "#9476E4",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EDE9EE",
+     "ink": "#20191F",
+     "muted": "#66606B"
+    },
+    "azul-atleta": {
+     "nome": "Azul Atleta",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#3671DB",
+     "onAccent": "#FFFFFF",
+     "accent2": "#CE7411",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#E8ECF1",
+     "ink": "#191D23",
+     "muted": "#5D6470"
+    },
+    "rubi-dourado": {
+     "nome": "Rubi Dourado",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#DE2922",
+     "onAccent": "#FFFFFF",
+     "accent2": "#AE822C",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EDE9EB",
+     "ink": "#201A1B",
+     "muted": "#666167"
+    },
+    "verde-mata": {
+     "nome": "Verde Mata",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#008541",
+     "onAccent": "#FFFFFF",
+     "accent2": "#AA8403",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#E6ECEC",
+     "ink": "#18201F",
+     "muted": "#5C696B"
+    },
+    "vinho-delicado": {
+     "nome": "Vinho Delicado",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#8E2A4E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A88548",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EBE9EC",
+     "ink": "#201B1F",
+     "muted": "#66626B"
+    },
+    "lavanda-suave": {
+     "nome": "Lavanda Suave",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#7C67B6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#C16E99",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EAEBF0",
+     "ink": "#1D1E23",
+     "muted": "#636570"
+    },
+    "ameixa-coral": {
+     "nome": "Ameixa e Coral",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#C25035",
+     "onAccent": "#FFFFFF",
+     "accent2": "#D55FA1",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#ECEAEB",
+     "ink": "#201C1D",
+     "muted": "#666368"
+    },
+    "marinho-classico": {
+     "nome": "Marinho Clássico",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#1E3A6E",
+     "onAccent": "#FFFFFF",
+     "accent2": "#A48442",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#E7EAED",
+     "ink": "#1B1E23",
+     "muted": "#5F6670"
+    },
+    "caramelo": {
+     "nome": "Caramelo",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#A86300",
+     "onAccent": "#FFFFFF",
+     "accent2": "#3F7A33",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#ECEBEA",
+     "ink": "#201E1C",
+     "muted": "#666667"
+    },
+    "editorial-bronze": {
+     "nome": "Editorial Bronze",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#936B2D",
+     "onAccent": "#FFFFFF",
+     "accent2": "#2B2620",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#EBEBEB",
+     "ink": "#1F1E1D",
+     "muted": "#656669"
+    },
+    "preto-puro": {
+     "nome": "Preto Puro",
+     "modo": "claro",
+     "bg": "#FFFFFF",
+     "surface": "#F6F6F6",
+     "line": "#E3E3E3",
+     "accent": "#111111",
+     "onAccent": "#FFFFFF",
+     "accent2": "#6B6B6B",
+     "deep": "#0E0E0F",
+     "onDeep": "#FFFFFF",
+     "soft": "#E6E8EA",
+     "ink": "#202123",
+     "muted": "#666A70"
+    },
+    "areia-oliva": {
+     "nome": "Areia e Oliva",
+     "modo": "claro",
+     "bg": "#F1EEE5",
+     "surface": "#FFFFFF",
+     "line": "#DDD8CA",
+     "accent": "#4F6B1C",
+     "onAccent": "#FFFFFF",
+     "accent2": "#9A6B2F",
+     "deep": "#2D3A1A",
+     "onDeep": "#FFFFFF",
+     "soft": "#E8EBEB",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    },
+    "ceu-pastel": {
+     "nome": "Céu Pastel",
+     "modo": "claro",
+     "bg": "#F2F7FD",
+     "surface": "#FFFFFF",
+     "line": "#D8E3F0",
+     "accent": "#1F6FD6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#D2477F",
+     "deep": "#243752",
+     "onDeep": "#FFFFFF",
+     "soft": "#E7EBF1",
+     "ink": "#15171A",
+     "muted": "#5A5F66"
+    }
+   }
   }
  ]
 }

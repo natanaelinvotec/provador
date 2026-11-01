@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Sacola · @@NOME@@</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<!-- estilos: o carregador põe base.css e a folha do modelo (modelos.json "estilos") -->
+</helmet>
+<div class="{{modeloCls}}" style="{{vars}}" data-tela="sacola" data-topo="{{lay.topo}}" data-aviso="{{lay.aviso}}" data-cartao="{{lay.cartao}}" data-rodape="{{lay.rodape}}" data-titulos="{{lay.titulos}}">
+
+<sc-if value="{{temAvisos}}" hint-placeholder-val="{{true}}">
+<div class="avisos" aria-label="Avisos da loja">
+<div class="wrap avisos-in">
+<sc-if value="{{variosAvisos}}" hint-placeholder-val="{{true}}"><button class="aviso-seta" type="button" aria-label="Aviso anterior" onClick="{{avisoAntes}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></button></sc-if>
+<p class="aviso-um">{{aviso1}}</p>
+<div class="aviso-todos"><sc-for list="{{avisos}}" as="a" hint-placeholder-count="4"><span>{{a}}</span></sc-for></div>
+<div class="aviso-corre" aria-hidden="true"><div><sc-for list="{{avisos}}" as="a" hint-placeholder-count="4"><span>{{a}}</span></sc-for><sc-for list="{{avisos}}" as="a" hint-placeholder-count="4"><span>{{a}}</span></sc-for></div></div>
+<sc-if value="{{variosAvisos}}" hint-placeholder-val="{{true}}"><button class="aviso-seta" type="button" aria-label="Próximo aviso" onClick="{{avisoDepois}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button></sc-if>
+</div>
+</div>
+</sc-if>
+
+<header class="top">
+<div class="wrap top-in">
+<button class="ibtn hamb" type="button" aria-label="Abrir menu" aria-expanded="{{menuAberto}}" onClick="{{abrirMenu}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"></path></svg></button>
+<a class="logo" href="Main.dc.html" aria-label="@@MARCA@@, página inicial"><i aria-hidden="true">@@INICIAIS@@</i><span>@@MARCA@@</span></a>
+<nav class="nav" aria-label="Principal">
+<a class="{{on.colecao}}" href="Colecao.dc.html">Coleção</a>
+<sc-for list="{{nav}}" as="n" hint-placeholder-count="5"><a class="{{n.cls}}" href="Colecao.dc.html?cat={{n.id}}">{{n.nome}}</a></sc-for>
+</nav>
+<div class="busca-d"><form class="busca" role="search" onSubmit="{{buscar}}"><label class="sr" for="busca-d">Buscar na loja</label><input id="busca-d" type="search" placeholder="Buscar peças" value="{{termo}}" onChange="{{digitar}}"><button type="submit" aria-label="Buscar"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M20 20l-4.2-4.2"></path></svg></button></form></div>
+<div class="acoes">
+<button class="ibtn busca-ico" type="button" aria-label="Buscar" aria-expanded="{{buscaAberta}}" onClick="{{abrirBusca}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M20 20l-4.2-4.2"></path></svg></button>
+<a class="ibtn sacola-ico" href="Sacola.dc.html" aria-label="{{sacolaRotulo}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2"></path></svg><sc-if value="{{temSacola}}" hint-placeholder-val="{{false}}"><span class="count">{{sacolaN}}</span></sc-if></a>
+</div>
+</div>
+<nav class="nav2" aria-label="Categorias"><div class="wrap nav2-in">
+<a href="Colecao.dc.html">Todas as peças</a>
+<sc-for list="{{nav}}" as="n" hint-placeholder-count="5"><a class="{{n.cls}}" href="Colecao.dc.html?cat={{n.id}}">{{n.nome}}</a></sc-for>
+</div></nav>
+<div class="{{buscaCls}}"><div class="wrap"><form class="busca" role="search" onSubmit="{{buscar}}"><label class="sr" for="busca-c">Buscar na loja</label><input id="busca-c" type="search" placeholder="Buscar peças" value="{{termo}}" onChange="{{digitar}}"><button type="submit" aria-label="Buscar"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="M20 20l-4.2-4.2"></path></svg></button></form></div></div>
+<nav class="{{menuCls}}" aria-label="Menu da loja"><div class="wrap"><ul>
+<li><a class="{{on.inicio}}" href="Main.dc.html">Início</a></li>
+<li><a class="{{on.colecao}}" href="Colecao.dc.html">Todas as peças</a></li>
+<sc-for list="{{nav}}" as="n" hint-placeholder-count="5"><li><a href="Colecao.dc.html?cat={{n.id}}">{{n.nome}}</a></li></sc-for>
+<li><a href="Sacola.dc.html">Sacola</a></li>
+</ul></div></nav>
+</header>
+
+<main class="wrap" id="topo">
+<ol class="trilha"><li><a href="Main.dc.html">Início</a></li><li>Sacola</li></ol>
+
+<sc-if value="{{vazia}}" hint-placeholder-val="{{false}}">
+<div class="sec sac-vazia">
+<div class="vazio">
+<h1 class="disp">Sua sacola está vazia</h1>
+<p>{{vaziaTxt}}</p>
+<a class="btn" href="Colecao.dc.html">Ver a coleção</a>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{cheia}}" hint-placeholder-val="{{true}}">
+<div class="sac">
+<div>
+<div class="sac-t"><h1 class="disp">Sacola</h1><span>{{qtdTxt}}</span></div>
+<ul class="linhas">
+<sc-for list="{{linhas}}" as="l" hint-placeholder-count="2">
+<li class="linha">
+<a href="Produto.dc.html?item={{l.grupo}}"><img src="{{l.img}}" alt="{{l.alt}}"></a>
+<div><b><a href="Produto.dc.html?item={{l.grupo}}">{{l.nome}}</a></b><small>{{l.detalhe}}</small><small>{{l.unit}} cada</small></div>
+<div class="linha-dir">
+<strong>{{l.total}}</strong>
+<div class="qtd qtd-p" role="group" aria-label="Quantidade de {{l.nome}}">
+<button type="button" aria-label="Diminuir" onClick="{{l.menos}}">−</button>
+<output>{{l.qtd}}</output>
+<button type="button" aria-label="Aumentar" onClick="{{l.mais}}">+</button>
+</div>
+<button class="tirar" type="button" onClick="{{l.tirar}}">Tirar da sacola</button>
+</div>
+</li>
+</sc-for>
+</ul>
+<p class="continuar"><a class="mais" href="Colecao.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>Continuar comprando</a></p>
+</div>
+
+<form class="resumo" aria-labelledby="res-t" onSubmit="{{enviar}}">
+<h2 id="res-t">Resumo do pedido</h2>
+<dl class="contas">
+<div><dt>Peças</dt><dd>{{subtotal}}</dd></div>
+<div><dt>Frete</dt><dd>Combinado no WhatsApp</dd></div>
+<div class="tot"><dt>Total</dt><dd>{{subtotal}}</dd></div>
+<div class="pixd"><dt>No Pix</dt><dd>{{totalPix}}</dd></div>
+</dl>
+<label class="campo"><span>Seu nome</span><input type="text" autocomplete="name" maxlength="60" placeholder="Como a loja te chama" value="{{nome}}" onChange="{{mudaNome}}"></label>
+<label class="campo"><span>CEP para entrega</span><input type="text" inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000" value="{{cep}}" onChange="{{mudaCep}}"></label>
+<fieldset class="pags">
+<legend>Como prefere pagar</legend>
+<sc-for list="{{pags}}" as="pg" hint-placeholder-count="3"><button class="{{pg.cls}}" type="button" aria-pressed="{{pg.on}}" onClick="{{pg.pick}}">{{pg.nome}}</button></sc-for>
+</fieldset>
+<button class="btn" type="submit" disabled="{{semZap}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 19.5l1.2-3.9A8 8 0 1 1 8.6 18.4zM9.2 9.3c.3 2.3 2.2 4.3 4.6 4.8l1.2-1.1 1.8.9-.4 1.6c-3.6.2-7-3.1-7-6.8l1.6-.4.8 1.8z"></path></svg>Enviar pedido pelo WhatsApp</button>
+<p class="nota">{{notaEnvio}}</p>
+<sc-if value="{{enviado}}" hint-placeholder-val="{{false}}">
+<p class="ok" role="status">Abrimos o WhatsApp com o pedido. Depois de mandar, você pode esvaziar a sacola.<button class="tirar" type="button" onClick="{{esvaziar}}">Esvaziar</button></p>
+</sc-if>
+</form>
+</div>
+</sc-if>
+
+<sc-if value="{{temSugestoes}}" hint-placeholder-val="{{true}}">
+<section class="sec" aria-labelledby="sug-t">
+<div class="sec-h"><div><h2 id="sug-t" class="disp">{{sugTitulo}}</h2></div></div>
+<div class="grade rel">
+<sc-for list="{{sugestoes}}" as="p" hint-placeholder-count="4">
+<article class="card">
+<div class="card-media">
+<a class="card-img" href="Produto.dc.html?item={{p.id}}" aria-label="Ver {{p.nome}}"><img src="{{p.img}}" alt="{{p.alt}}" loading="lazy"><sc-if value="{{p.temImg2}}" hint-placeholder-val="{{false}}"><img class="img2" src="{{p.img2}}" alt="" loading="lazy"></sc-if></a>
+<sc-if value="{{p.temEtiqueta}}" hint-placeholder-val="{{false}}"><span class="selo">{{p.etiqueta}}</span></sc-if>
+<button class="{{p.favCls}}" type="button" aria-label="{{p.favRotulo}}" aria-pressed="{{p.fav}}" onClick="{{p.favoritar}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg></button>
+<sc-if value="{{p.rapido}}" hint-placeholder-val="{{false}}"><button class="add" type="button" onClick="{{p.adicionar}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2"></path></svg><span>Adicionar à sacola</span></button></sc-if>
+<sc-if value="{{p.escolher}}" hint-placeholder-val="{{true}}"><a class="add" href="Produto.dc.html?item={{p.id}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2"></path></svg><span>Escolher tamanho</span></a></sc-if>
+</div>
+<div class="card-info">
+<span class="card-cat">{{p.cat}}</span>
+<h3><a href="Produto.dc.html?item={{p.id}}">{{p.nome}}</a></h3>
+<div class="preco"><b>{{p.preco}}</b><span class="pix">{{p.pix}} no Pix</span></div>
+<div class="cores" aria-label="{{p.coresTxt}}"><sc-for list="{{p.cores}}" as="k" hint-placeholder-count="1"><span class="cor" style="background: {{k}}"></span></sc-for><span class="mais-cores">{{p.maisCores}}</span></div>
+<div class="card-tams" aria-label="Tamanhos"><sc-for list="{{p.tams}}" as="t" hint-placeholder-count="4"><span>{{t}}</span></sc-for></div>
+<a class="card-btn" href="Produto.dc.html?item={{p.id}}">Comprar</a>
+</div>
+</article>
+</sc-for>
+</div>
+</section>
+</sc-if>
+</main>
+
+<footer class="rod">
+<div class="wrap">
+
+<div class="cols">
+<div class="rod-marca"><a class="logo" href="Main.dc.html"><i aria-hidden="true">@@INICIAIS@@</i><span>@@MARCA@@</span></a><p>Moda fitness para treinar e para o dia a dia. @@CIDADE@@</p></div>
+<div><h3>Loja</h3><ul><li><a href="Colecao.dc.html">Todas as peças</a></li><sc-for list="{{nav}}" as="n" hint-placeholder-count="4"><li><a href="Colecao.dc.html?cat={{n.id}}">{{n.nome}}</a></li></sc-for></ul></div>
+<div><h3>Ajuda</h3><ul><li><a href="Sacola.dc.html">Sua sacola</a></li><li>Troca em até 7 dias</li><li>Entrega para todo o Brasil</li><li>Pix, cartão ou boleto</li></ul></div>
+<div><h3>Contato</h3><ul>
+<sc-if value="{{temZap}}" hint-placeholder-val="{{false}}"><li><a href="{{zap}}" target="_blank" rel="noopener">WhatsApp {{whatsTxt}}</a></li></sc-if>
+<sc-if value="{{temIg}}" hint-placeholder-val="{{false}}"><li><a href="{{igLink}}" target="_blank" rel="noopener">Instagram {{igTxt}}</a></li></sc-if>
+<li>@@CIDADE@@</li></ul></div>
+</div>
+<div class="base"><span>© {{ano}} @@NOME@@</span><span>Pix · Cartão · Boleto</span></div>
+</div>
+</footer>
+
+<sc-if value="{{temZap}}" hint-placeholder-val="{{false}}"><a class="zap-flut" href="{{zap}}" target="_blank" rel="noopener" aria-label="Falar com a loja no WhatsApp"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 19.5l1.2-3.9A8 8 0 1 1 8.6 18.4zM9.2 9.3c.3 2.3 2.2 4.3 4.6 4.8l1.2-1.1 1.8.9-.4 1.6c-3.6.2-7-3.1-7-6.8l1.6-.4.8 1.8z"></path></svg></a></sc-if>
+
+<sc-if value="{{temAviso}}" hint-placeholder-val="{{false}}">
+<div class="toast" role="status"><span>{{aviso}}</span><a href="Sacola.dc.html">Ver sacola</a><button type="button" aria-label="Fechar aviso" onClick="{{fecharAviso}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button></div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"itens":{"editor":null},"cor":{"editor":null},"links":{"editor":null},"modelo":{"editor":null}}'>
+class Component extends DCLogic {
+  renderVals() { return window.PrebuildKit.telaSacola(this, { nome: '@@NOME@@', whats: '@@WHATS@@', ig: '@@IG@@' }); }
+}
+</script>
+</body>
+</html>
