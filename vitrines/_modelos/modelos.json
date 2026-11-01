@@ -1,0 +1,191 @@
+{
+ "versao": 1,
+ "sobre": "Pré-builds (modelos de site) da vitrine. A loja guarda um slug só, no campo vitrine: prefixo do modelo + cor (ex.: arena-pink-pulse). Sem prefixo é o modelo 1, Clássico, cujas cores são as pastas vitrines/<cor>. Como criar um modelo novo: README.md desta pasta.",
+ "modelos": [
+  {
+   "slug": "classico",
+   "numero": 1,
+   "nome": "Clássico",
+   "prefixo": "",
+   "dados": "mockup",
+   "descricao": "Claro e delicado, com fotos grandes e letras finas. É o modelo da Ais Moda Fitness.",
+   "origem": "Mockup aprovado da Ais Moda Fitness",
+   "foto": "assets/img/vitrines/vinho-delicado.jpg"
+  },
+  {
+   "slug": "arena",
+   "numero": 2,
+   "nome": "Arena",
+   "prefixo": "arena-",
+   "dados": "props",
+   "pasta": "vitrines/_modelos/arena",
+   "script": "vitrines/_modelos/arena/arena.js",
+   "paginas": [
+    "Main",
+    "Colecao",
+    "Produto",
+    "Sacola"
+   ],
+   "descricao": "Escura e esportiva, com letras fortes e cortes em diagonal. Cara de academia.",
+   "origem": "Engenharia reversa da estrutura do tema Fitfinity (Shopify); fotos, textos e cores próprios",
+   "foto": "vitrines/_fotos/arena-hero-1.jpg",
+   "fontes": [
+    "Unbounded",
+    "Barlow",
+    "Barlow Condensed"
+   ],
+   "cores": {
+    "grafite-lima": {
+     "nome": "Grafite Lima",
+     "modo": "escuro",
+     "bg": "#0B0D10",
+     "surface": "#15181D",
+     "line": "#262A31",
+     "accent": "#D4FF2A",
+     "onAccent": "#0B0D10",
+     "accent2": "#8AA0B8"
+    },
+    "laranja-energia": {
+     "nome": "Laranja Energia",
+     "modo": "escuro",
+     "bg": "#0D0A08",
+     "surface": "#18130F",
+     "line": "#2B231C",
+     "accent": "#FF7A1F",
+     "onAccent": "#0D0A08",
+     "accent2": "#1FC7BE"
+    },
+    "pink-pulse": {
+     "nome": "Pink Pulse",
+     "modo": "escuro",
+     "bg": "#0E0910",
+     "surface": "#191120",
+     "line": "#2C2034",
+     "accent": "#FF3D9A",
+     "onAccent": "#0E0910",
+     "accent2": "#A98BFF"
+    },
+    "azul-atleta": {
+     "nome": "Azul Atleta",
+     "modo": "escuro",
+     "bg": "#070B15",
+     "surface": "#0F1626",
+     "line": "#1E2940",
+     "accent": "#4D8DFF",
+     "onAccent": "#070B15",
+     "accent2": "#FF9A3D"
+    },
+    "rubi-dourado": {
+     "nome": "Rubi Dourado",
+     "modo": "escuro",
+     "bg": "#0D0808",
+     "surface": "#1A1010",
+     "line": "#301D1C",
+     "accent": "#FF4438",
+     "onAccent": "#0D0808",
+     "accent2": "#E8B65A"
+    },
+    "verde-mata": {
+     "nome": "Verde Mata",
+     "modo": "escuro",
+     "bg": "#06100B",
+     "surface": "#0E1A14",
+     "line": "#1C3026",
+     "accent": "#2EE68F",
+     "onAccent": "#06100B",
+     "accent2": "#F2C54E"
+    },
+    "vinho-delicado": {
+     "nome": "Vinho Delicado",
+     "modo": "escuro",
+     "bg": "#110810",
+     "surface": "#1D0F19",
+     "line": "#33202D",
+     "accent": "#FF6B98",
+     "onAccent": "#110810",
+     "accent2": "#E8C07A"
+    },
+    "lavanda-suave": {
+     "nome": "Lavanda Suave",
+     "modo": "escuro",
+     "bg": "#0D0B15",
+     "surface": "#181425",
+     "line": "#2A2440",
+     "accent": "#B9A2FF",
+     "onAccent": "#0D0B15",
+     "accent2": "#FF9FD0"
+    },
+    "ameixa-coral": {
+     "nome": "Ameixa e Coral",
+     "modo": "escuro",
+     "bg": "#110A0F",
+     "surface": "#1E121A",
+     "line": "#34202D",
+     "accent": "#FF7E5F",
+     "onAccent": "#110A0F",
+     "accent2": "#E46AAE"
+    },
+    "marinho-classico": {
+     "nome": "Marinho Clássico",
+     "modo": "escuro",
+     "bg": "#060B17",
+     "surface": "#0E1628",
+     "line": "#1D2A45",
+     "accent": "#6FAAFF",
+     "onAccent": "#060B17",
+     "accent2": "#DDB86F"
+    },
+    "caramelo": {
+     "nome": "Caramelo",
+     "modo": "escuro",
+     "bg": "#100C08",
+     "surface": "#1C1610",
+     "line": "#322719",
+     "accent": "#FFAA45",
+     "onAccent": "#100C08",
+     "accent2": "#9BD38A"
+    },
+    "editorial-bronze": {
+     "nome": "Editorial Bronze",
+     "modo": "escuro",
+     "bg": "#0E0C0A",
+     "surface": "#1A1714",
+     "line": "#2E2A24",
+     "accent": "#E0B06A",
+     "onAccent": "#0E0C0A",
+     "accent2": "#F3EEE5"
+    },
+    "preto-puro": {
+     "nome": "Preto Puro",
+     "modo": "escuro",
+     "bg": "#000000",
+     "surface": "#111111",
+     "line": "#242424",
+     "accent": "#FFFFFF",
+     "onAccent": "#000000",
+     "accent2": "#9A9A9A"
+    },
+    "areia-oliva": {
+     "nome": "Areia e Oliva",
+     "modo": "claro",
+     "bg": "#F1EEE5",
+     "surface": "#FFFFFF",
+     "line": "#DDD8CA",
+     "accent": "#4F6B1C",
+     "onAccent": "#FFFFFF",
+     "accent2": "#9A6B2F"
+    },
+    "ceu-pastel": {
+     "nome": "Céu Pastel",
+     "modo": "claro",
+     "bg": "#F2F7FD",
+     "surface": "#FFFFFF",
+     "line": "#D8E3F0",
+     "accent": "#1F6FD6",
+     "onAccent": "#FFFFFF",
+     "accent2": "#D2477F"
+    }
+   }
+  }
+ ]
+}
