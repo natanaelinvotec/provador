@@ -17,6 +17,8 @@
   var reduzMovimento = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var VITRINES = [], MODELOS = [], modelo = { slug: 'classico', nome: 'Clássico', prefixo: '' }, atual = null, iframe = null;
+  // cor que o provador mostra ao abrir o site (o cabide rosa); ?vitrine= no endereço tem prioridade
+  var COR_INICIAL = 'pink-pulse';
   // cores que o modelo atual tem (o modelo 1 tem todas as do catálogo)
   function coresDoModelo() { return VITRINES.filter(function (v) { return !modelo.prefixo || (modelo.cores && modelo.cores[v.slug]); }); }
   function paleta(v) { var t = modelo.prefixo && modelo.cores ? modelo.cores[v.slug] : null; return t ? [t.bg, t.accent, t.accent2, t.bg] : (v.cores || []); }
@@ -88,7 +90,7 @@
   function trocarModelo(slug) {
     var m = MODELOS.filter(function (x) { return x.slug === slug; })[0];
     if (!m || m.slug === modelo.slug) return;
-    var cor = atual ? atual.cor : 'grafite-lima';
+    var cor = atual ? atual.cor : COR_INICIAL;
     modelo = m; atual = null;
     montarModelos(); montarArara(); montarGaleria();
     var c = coresDoModelo();
@@ -224,7 +226,7 @@
         return MODELOS.length > 1 ? '<optgroup label="' + esc('Modelo ' + m.numero + ': ' + m.nome) + '">' + ops + '</optgroup>' : ops;
       }).join(''));
       var cores = coresDoModelo();
-      var inicial = cores.filter(function (v) { return v.slug === sp.cor; })[0] || cores.filter(function (v) { return v.slug === 'grafite-lima'; })[0] || cores[0];
+      var inicial = cores.filter(function (v) { return v.slug === sp.cor; })[0] || cores.filter(function (v) { return v.slug === COR_INICIAL; })[0] || cores[0];
       atual = null; experimentar(inicial.slug);
       if (pedida) escolherVitrine(pedida);
       // a cortina abre quando o provador aparece na tela (no site novo ele fica abaixo do topo)
