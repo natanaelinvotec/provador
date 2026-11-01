@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>@@NOME@@</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="vitrines/_modelos/arena/arena.css">
+</helmet>
+<div class="arena" style="{{vars}}">
+
+<!--TOPO-->
+
+<main id="topo">
+<section class="hero" aria-label="Destaques">
+<div class="wrap hero-in">
+<div class="hero-txt">
+<p class="kick">{{slide.kicker}}</p>
+<h1 class="disp">{{slide.titulo}}</h1>
+<p>{{slide.texto}}</p>
+<div class="hero-btns">
+<sc-if value="{{slide.id}}" hint-placeholder-val="{{false}}"><a class="btn" href="Produto.dc.html?item={{slide.id}}">Ver a peça <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a></sc-if>
+<sc-if value="{{slide.semId}}" hint-placeholder-val="{{true}}"><a class="btn" href="Colecao.dc.html">Ver lançamentos <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a></sc-if>
+<sc-if value="{{temLooks}}" hint-placeholder-val="{{true}}"><a class="btn btn-ln" href="#looks">Montar meu look</a></sc-if>
+</div>
+<sc-if value="{{variosSlides}}" hint-placeholder-val="{{true}}">
+<div class="hero-nav">
+<span class="hero-num"><b>{{slide.num}}</b> / {{totalSlides}}</span>
+<div class="dots">
+<sc-for list="{{dots}}" as="d" hint-placeholder-count="3">
+<button class="{{d.cls}}" type="button" aria-label="{{d.rotulo}}" aria-pressed="{{d.on}}" onClick="{{d.ir}}"></button>
+</sc-for>
+</div>
+<button class="seta" type="button" aria-label="Destaque anterior" onClick="{{anterior}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></button>
+<button class="seta" type="button" aria-label="Próximo destaque" onClick="{{proximo}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button>
+</div>
+</sc-if>
+</div>
+<div class="hero-art">
+<span class="hero-barra" aria-hidden="true"></span>
+<figure class="hero-foto"><img src="{{slide.img}}" alt="{{slide.alt}}"></figure>
+</div>
+</div>
+</section>
+
+<div class="wrap">
+<div class="bens">
+<div class="bem"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"></path><circle cx="7" cy="17.5" r="1.8"></circle><circle cx="17" cy="17.5" r="1.8"></circle></svg><div><b>Entrega para todo o Brasil</b><span>Rastreio pelo WhatsApp</span></div></div>
+<div class="bem"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"></path><path d="M18 3v4h-4M6 21v-4h4"></path></svg><div><b>Troca fácil</b><span>Até 7 dias depois de receber</span></div></div>
+<div class="bem"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 9-9 9-9-9z"></path><path d="M8.5 12h7"></path></svg><div><b>Pix com desconto</b><span>Ou cartão, se preferir</span></div></div>
+<div class="bem"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.5-4A8 8 0 1 1 8 19z"></path></svg><div><b>Atendimento no WhatsApp</b><span>Ajuda com o tamanho certo</span></div></div>
+</div>
+</div>
+
+<sc-if value="{{vazio}}" hint-placeholder-val="{{false}}">
+<section class="sec"><div class="wrap"><p class="vazio">A loja está arrumando a vitrine. Volte daqui a pouco para ver as peças.</p></div></section>
+</sc-if>
+
+<sc-if value="{{temCats}}" hint-placeholder-val="{{true}}">
+<section class="sec" aria-labelledby="cat-t">
+<div class="wrap">
+<div class="sec-h">
+<div><h2 id="cat-t" class="disp"><span class="slash">//</span>Compre por categoria</h2><p>Do top ao acessório, tudo pensado para o treino.</p></div>
+<a class="mais" href="Colecao.dc.html">Ver tudo <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+<div class="cats">
+<sc-for list="{{cats}}" as="c" hint-placeholder-count="6">
+<a class="cat" href="Colecao.dc.html?cat={{c.id}}"><img src="{{c.img}}" alt="" loading="lazy"><span class="cat-txt"><span><b>{{c.nome}}</b><span>{{c.qtd}}</span></span><span class="cat-ir" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"></path></svg></span></span></a>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section class="sec" aria-labelledby="lan-t">
+<div class="wrap">
+<div class="sec-h">
+<div><h2 id="lan-t" class="disp"><span class="slash">//</span>Lançamentos</h2><p>As peças que acabaram de chegar na loja.</p></div>
+<a class="mais" href="Colecao.dc.html">Ver a coleção <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+<div class="tabs" role="group" aria-label="Filtrar lançamentos">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+<button class="{{t.cls}}" type="button" aria-pressed="{{t.on}}" onClick="{{t.pick}}">{{t.nome}}</button>
+</sc-for>
+</div>
+<div class="grade">
+<sc-for list="{{produtos}}" as="p" hint-placeholder-count="8">
+<!--CARD-->
+</sc-for>
+</div>
+</div>
+</section>
+</sc-if>
+
+<section class="sec" id="sobre" aria-labelledby="sob-t">
+<div class="wrap sobre">
+<figure class="sobre-foto"><img src="{{fotoSobre}}" alt="Mulher de top preto se alongando em um estúdio escuro" loading="lazy"><figcaption>Testada no treino</figcaption></figure>
+<div>
+<h2 id="sob-t" class="disp">Feita para treinar. <span>De verdade.</span></h2>
+<p>A @@NOME@@ escolhe peças que aguentam agachamento, corrida e suor. Do aquecimento ao último set, sem ficar ajeitando a roupa.</p>
+<ul class="checks">
+<li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"></path></svg>Não fica transparente no agachamento</li>
+<li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"></path></svg>Tecido que seca rápido e respira</li>
+<li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"></path></svg>Cós alto que não desce na corrida</li>
+<li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"></path></svg>Ajuda com o tamanho pelo WhatsApp</li>
+</ul>
+<a class="btn" href="Colecao.dc.html">Conhecer as peças</a>
+<div class="pagto" aria-label="Formas de pagamento"><span>Pix</span><span>Cartão de crédito</span><span>Boleto</span><span>WhatsApp</span></div>
+</div>
+</div>
+</section>
+
+<section class="camp" aria-labelledby="camp-t">
+<img src="{{fotoBanner}}" alt="" loading="lazy">
+<div class="wrap">
+<h2 id="camp-t" class="disp"><span>Treine no</span><span>seu ritmo</span></h2>
+<p>Leggings que seguram e tops com sustentação para quem treina pesado.</p>
+<a class="btn" href="Colecao.dc.html?cat=leggings">Ver leggings</a>
+</div>
+</section>
+
+<sc-if value="{{temLooks}}" hint-placeholder-val="{{true}}">
+<section class="sec" id="looks" aria-labelledby="look-t">
+<div class="wrap">
+<div class="sec-h">
+<div><h2 id="look-t" class="disp"><span class="slash">//</span>Looks prontos</h2><p>Combinações montadas pela loja. Leve tudo de uma vez.</p></div>
+</div>
+<div class="looks">
+<sc-for list="{{looks}}" as="l" hint-placeholder-count="3">
+<a class="look" href="Produto.dc.html?item={{l.id}}"><img src="{{l.img}}" alt="{{l.alt}}" loading="lazy">
+<span class="look-txt"><b>{{l.nome}}</b>
+<ul><sc-for list="{{l.pecas}}" as="pc" hint-placeholder-count="3"><li>{{pc}}</li></sc-for></ul>
+<span class="look-pe"><strong>{{l.total}}</strong><span>Ver o look</span></span>
+</span></a>
+</sc-for>
+</div>
+</div>
+</section>
+</sc-if>
+
+<section class="sec" aria-labelledby="como-t">
+<div class="wrap">
+<div class="sec-h"><div><h2 id="como-t" class="disp"><span class="slash">//</span>Comprar é rápido</h2></div></div>
+<ol class="passos">
+<li class="passo"><span class="passo-n">01</span><h3>Escolha a peça</h3><p>Veja a cor, o tamanho e a tabela de medidas de cada peça.</p></li>
+<li class="passo"><span class="passo-n">02</span><h3>Mande a sacola</h3><p>O pedido vai pronto para o WhatsApp da loja, com tamanhos e cores.</p></li>
+<li class="passo"><span class="passo-n">03</span><h3>Pague e receba</h3><p>Pix, cartão ou boleto. Você acompanha o envio e pode trocar em até 7 dias.</p></li>
+</ol>
+</div>
+</section>
+
+<sc-if value="{{temIgFotos}}" hint-placeholder-val="{{true}}">
+<section class="sec" aria-labelledby="ig-t">
+<div class="wrap">
+<div class="sec-h">
+<div><h2 id="ig-t" class="disp"><span class="slash">//</span>No Instagram</h2><p>Marque a loja no seu treino e apareça aqui.</p></div>
+<sc-if value="{{temIg}}" hint-placeholder-val="{{false}}"><a class="mais" href="{{igLink}}" target="_blank" rel="noopener">{{igTxt}} <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a></sc-if>
+</div>
+<div class="ig">
+<sc-for list="{{igs}}" as="g" hint-placeholder-count="6">
+<a href="{{g.link}}" aria-label="{{g.rotulo}}"><img src="{{g.img}}" alt="" loading="lazy"></a>
+</sc-for>
+</div>
+</div>
+</section>
+</sc-if>
+</main>
+
+<!--RODAPE-->
+<!--EXTRA-->
+<div class="news">
+<div><h2 class="disp">Entre para o time</h2><p>Lançamentos e peças novas primeiro no Instagram e no WhatsApp da loja.</p></div>
+<div class="news-acao">
+<sc-if value="{{temIg}}" hint-placeholder-val="{{false}}"><a class="btn" href="{{igLink}}" target="_blank" rel="noopener">Seguir no Instagram</a></sc-if>
+<sc-if value="{{temZap}}" hint-placeholder-val="{{false}}"><a class="btn btn-ln" href="{{zap}}" target="_blank" rel="noopener">Chamar no WhatsApp</a></sc-if>
+<sc-if value="{{semContato}}" hint-placeholder-val="{{true}}"><a class="btn" href="Colecao.dc.html">Ver a coleção</a></sc-if>
+</div>
+</div>
+<!--/EXTRA-->
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"itens":{"editor":null},"cor":{"editor":null},"links":{"editor":null}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    var self = this;
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    this.__giro = setInterval(function () {
+      var st = self.state || {};
+      if (st.parado || (self.__n || 0) < 2 || document.hidden) return;
+      self.setState({ slide: ((st.slide || 0) + 1) % self.__n });
+    }, 7000);
+  }
+  componentWillUnmount() { clearInterval(this.__giro); }
+  renderVals() {
+    var K = window.ArenaKit, self = this, p = this.props || {}, st = this.state || {};
+    var base = K.topo(this, 'inicio', { nome: '@@NOME@@', whats: '@@WHATS@@', ig: '@@IG@@' });
+    var cat = K.catalogo(p.itens), F = K.foto, A = K.AMBIENTE;
+    var curto = function (t, n) { t = String(t || ''); return t.length > n ? t.slice(0, n - 1).replace(/\s+\S*$/, '') + '…' : t; };
+
+    // destaques: na demonstração, fotos de ambiente; na loja, as peças dela
+    var slides;
+    if (p.demo || !cat.roupas.length) {
+      slides = [
+        { kicker: 'Lançamento da semana', titulo: 'Treino pesado,\npeça leve.', texto: 'Conjuntos que seguram o agachamento sem ficar transparentes. Tecido que respira do aquecimento ao último set.', img: F(A.hero[0]), alt: 'Mulher de top e legging escuros segurando cordas de treino na academia', id: '' },
+        { kicker: 'Conjuntos', titulo: 'Feita para\nsuar junto.', texto: 'Top com sustentação de verdade e legging de cós alto que não desce no meio da corrida.', img: F(A.hero[1]), alt: 'Mulher de top cinza fazendo rosca com halter em fundo escuro', id: '' },
+        { kicker: 'Coleção nova', titulo: 'Cor que aparece\nno treino.', texto: 'Peças em cores fortes para quem gosta de chamar atenção na academia.', img: F(A.hero[2]), alt: 'Mulher de top vermelho na academia com equipamentos ao fundo', id: '' }
+      ];
+    } else {
+      slides = cat.roupas.slice().sort(function (a, b) { return (b.novo - a.novo) || (a.ordem - b.ordem); }).slice(0, 3).map(function (g, n) {
+        return { kicker: g.novo ? 'Novidade na loja' : g.catNome, titulo: g.nome, texto: curto(g.descricao, 150) || ('Disponível em ' + g.coresTxt + '. Peça escolhida para treinar com conforto.'), img: g.img, alt: g.alt, id: g.id };
+      });
+    }
+    var n = slides.length; this.__n = n;
+    var i = Math.min(st.slide || 0, n - 1);
+    var ir = function (k) { return function () { self.setState({ slide: (k + n) % n, parado: true }); }; };
+    var slide = Object.assign({ num: '0' + (i + 1), semId: !slides[i].id }, slides[i]);
+
+    // lançamentos
+    var FAM = [['todos', 'Todos', null], ['conjuntos', 'Conjuntos', ['conjuntos']], ['macacoes', 'Macacões e macaquinhos', ['macacoes', 'macaquinhos']], ['legtop', 'Leggings e tops', ['leggings', 'tops']], ['acessorios', 'Acessórios', ['acessorios']]];
+    var tem = function (f) { return !f[2] || cat.grupos.some(function (g) { return f[2].indexOf(g.cat) >= 0; }); };
+    var abas = FAM.filter(tem);
+    var aba = abas.filter(function (f) { return f[0] === st.aba; })[0] || abas[0];
+    var ordenados = cat.grupos.slice().sort(function (a, b) { return (b.novo - a.novo) || (a.ordem - b.ordem); });
+    var produtos = ordenados.filter(function (g) { return !aba[2] || aba[2].indexOf(g.cat) >= 0; }).slice(0, 8).map(function (g) { return K.cardVivo(self, g); });
+
+    // looks: uma roupa + até dois acessórios
+    var roupas = cat.roupas.filter(function (g) { return g.cat === 'conjuntos' || g.cat === 'macacoes' || g.cat === 'macaquinhos'; });
+    if (roupas.length < 3) roupas = roupas.concat(cat.roupas.filter(function (g) { return roupas.indexOf(g) < 0; }));
+    var NOMES = ['Look treino', 'Look leve', 'Look dia a dia'];
+    var looks = roupas.slice(0, 3).map(function (g, k) {
+      var extras = [cat.accs[k], cat.accs[k + 3]].filter(Boolean);
+      var tot = g.preco + extras.reduce(function (s, a) { return s + a.preco; }, 0);
+      return { id: g.id, nome: NOMES[k], img: p.demo ? F(A.looks[k]) : g.img, alt: p.demo ? 'Mulheres treinando com roupas esportivas' : g.alt, pecas: [g.nome].concat(extras.map(function (a) { return a.nome; })), total: K.brl(tot) };
+    });
+
+    // fotos do Instagram: ambiente na demonstração, peças da loja na loja
+    var igImgs = p.demo ? A.ig.map(F) : cat.grupos.slice(0, 6).map(function (g) { return g.img; });
+    var igs = igImgs.map(function (src) { return { img: src, link: base.igLink || '#topo', rotulo: base.temIg ? 'Ver o Instagram da loja' : 'Voltar ao topo' }; });
+
+    return Object.assign(base, {
+      slide: slide, totalSlides: '0' + n, variosSlides: n > 1,
+      anterior: ir(i - 1), proximo: ir(i + 1),
+      dots: slides.map(function (x, k) { return { cls: k === i ? 'dot on' : 'dot', on: k === i, rotulo: 'Ir para o destaque ' + (k + 1), ir: ir(k) }; }),
+      vazio: cat.vazio, temCats: !cat.vazio, cats: cat.cats,
+      tabs: abas.map(function (f) { return { nome: f[1], on: f === aba, cls: f === aba ? 'tab on' : 'tab', pick: function () { self.setState({ aba: f[0] }); } }; }),
+      produtos: produtos,
+      fotoSobre: F(A.sobre), fotoBanner: F(A.banner),
+      temLooks: looks.length > 0, looks: looks,
+      temIgFotos: igs.length >= 3 && (p.demo || base.temIg), igs: igs.slice(0, 6),
+      semContato: !base.temIg && !base.temZap
+    });
+  }
+}
+</script>
+</body>
+</html>

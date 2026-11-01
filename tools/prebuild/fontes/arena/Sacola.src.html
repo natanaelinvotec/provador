@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Sacola · @@NOME@@</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="vitrines/_modelos/arena/arena.css">
+</helmet>
+<div class="arena" style="{{vars}}">
+
+<!--TOPO-->
+
+<main class="wrap" id="topo">
+<ol class="trilha"><li><a href="Main.dc.html">Início</a></li><li>Sacola</li></ol>
+
+<sc-if value="{{vazia}}" hint-placeholder-val="{{false}}">
+<div class="sec" style="padding-top: 40px">
+<div class="vazio">
+<h1 class="disp" style="font-size: clamp(28px, 4cqw, 48px); color: var(--ink)">Sua sacola está vazia</h1>
+<p>{{vaziaTxt}}</p>
+<a class="btn" href="Colecao.dc.html">Ver a coleção</a>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{cheia}}" hint-placeholder-val="{{true}}">
+<div class="sac">
+<div>
+<div class="sac-t"><h1 class="disp">Sacola</h1><span>{{qtdTxt}}</span></div>
+<ul class="linhas">
+<sc-for list="{{linhas}}" as="l" hint-placeholder-count="2">
+<li class="linha">
+<a href="Produto.dc.html?item={{l.grupo}}"><img src="{{l.img}}" alt="{{l.alt}}"></a>
+<div><b><a href="Produto.dc.html?item={{l.grupo}}">{{l.nome}}</a></b><small>{{l.detalhe}}</small><small>{{l.unit}} cada</small></div>
+<div class="linha-dir">
+<strong>{{l.total}}</strong>
+<div class="qtd qtd-p" role="group" aria-label="Quantidade de {{l.nome}}">
+<button type="button" aria-label="Diminuir" onClick="{{l.menos}}">−</button>
+<output>{{l.qtd}}</output>
+<button type="button" aria-label="Aumentar" onClick="{{l.mais}}">+</button>
+</div>
+<button class="tirar" type="button" onClick="{{l.tirar}}">Tirar da sacola</button>
+</div>
+</li>
+</sc-for>
+</ul>
+<p style="margin-top: 18px"><a class="mais" href="Colecao.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>Continuar comprando</a></p>
+</div>
+
+<form class="resumo" aria-labelledby="res-t" onSubmit="{{enviar}}">
+<h2 id="res-t">Resumo do pedido</h2>
+<dl class="contas">
+<div><dt>Peças</dt><dd>{{subtotal}}</dd></div>
+<div><dt>Frete</dt><dd>Combinado no WhatsApp</dd></div>
+<div class="tot"><dt>Total</dt><dd>{{subtotal}}</dd></div>
+<div class="pixd"><dt>No Pix</dt><dd>{{totalPix}}</dd></div>
+</dl>
+<label class="campo"><span>Seu nome</span><input type="text" autocomplete="name" maxlength="60" placeholder="Como a loja te chama" value="{{nome}}" onChange="{{mudaNome}}"></label>
+<label class="campo"><span>CEP para entrega</span><input type="text" inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000" value="{{cep}}" onChange="{{mudaCep}}"></label>
+<fieldset class="pags">
+<legend>Como prefere pagar</legend>
+<sc-for list="{{pags}}" as="pg" hint-placeholder-count="3">
+<button class="{{pg.cls}}" type="button" aria-pressed="{{pg.on}}" onClick="{{pg.pick}}">{{pg.nome}}</button>
+</sc-for>
+</fieldset>
+<button class="btn" type="submit" disabled="{{semZap}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 19.5l1.2-3.9A8 8 0 1 1 8.6 18.4z"></path></svg>Enviar pedido pelo WhatsApp</button>
+<p class="nota">{{notaEnvio}}</p>
+<sc-if value="{{enviado}}" hint-placeholder-val="{{false}}">
+<p class="ok" role="status">Abrimos o WhatsApp com o pedido. Depois de mandar, você pode esvaziar a sacola.<button class="tirar" type="button" onClick="{{esvaziar}}" style="margin-left: auto">Esvaziar</button></p>
+</sc-if>
+</form>
+</div>
+</sc-if>
+
+<sc-if value="{{temSugestoes}}" hint-placeholder-val="{{true}}">
+<section class="sec" aria-labelledby="sug-t">
+<div class="sec-h"><div><h2 id="sug-t" class="disp"><span class="slash">//</span>{{sugTitulo}}</h2></div></div>
+<div class="grade rel">
+<sc-for list="{{sugestoes}}" as="p" hint-placeholder-count="4">
+<!--CARD-->
+</sc-for>
+</div>
+</section>
+</sc-if>
+</main>
+
+<!--RODAPE-->
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"itens":{"editor":null},"cor":{"editor":null},"links":{"editor":null}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var K = window.ArenaKit, self = this, p = this.props || {}, st = this.state || {};
+    var marca = { nome: '@@NOME@@', whats: '@@WHATS@@', ig: '@@IG@@' };
+    var base = K.topo(this, 'sacola', marca);
+    var cat = K.catalogo(p.itens), sac = K.sacola(p.chave);
+    var linhas = sac.linhas(), n = sac.contar(), total = sac.total();
+    var pag = st.pag || 'pix';
+    var numero = p.demo ? '' : K.numeroWhats(marca.whats);
+    var naSacola = {}; linhas.forEach(function (l) { naSacola[l.grupo] = 1; });
+    var sug = (linhas.length ? cat.accs : cat.grupos).filter(function (g) { return !naSacola[g.id]; }).slice(0, 4);
+    var mexeu = function () { self.setState({ t: Date.now(), enviado: false }); };
+
+    return Object.assign(base, {
+      vazia: linhas.length === 0, cheia: linhas.length > 0,
+      vaziaTxt: cat.vazio ? 'A loja está arrumando a vitrine. Volte daqui a pouco.' : 'Escolha suas peças na coleção. Elas ficam guardadas aqui, neste aparelho.',
+      qtdTxt: K.plural(n, 'peça', 'peças'),
+      linhas: linhas.map(function (l) {
+        return {
+          grupo: l.grupo, nome: l.nome, img: l.img, alt: l.nome + ' ' + K.minus(l.cor), qtd: String(l.qtd),
+          detalhe: l.cor + (l.tam && l.tam !== 'U' ? ' · Tamanho ' + l.tam : ''),
+          unit: K.brl(l.preco), total: K.brl(l.preco * l.qtd),
+          menos: function () { sac.mudar(l.id, l.qtd - 1); mexeu(); },
+          mais: function () { sac.mudar(l.id, l.qtd + 1); mexeu(); },
+          tirar: function () { sac.tirar(l.id); mexeu(); }
+        };
+      }),
+      subtotal: K.brl(total), totalPix: K.brl(total * (1 - K.PIX)),
+      nome: st.nome || '', cep: st.cep || '',
+      mudaNome: function (e) { self.setState({ nome: e.target.value }); },
+      mudaCep: function (e) { var d = e.target.value.replace(/\D/g, '').slice(0, 8); self.setState({ cep: d.length > 5 ? d.slice(0, 5) + '-' + d.slice(5) : d }); },
+      pags: [['pix', 'Pix'], ['cartao', 'Cartão'], ['combinar', 'Combinar']].map(function (x) { return { nome: x[1], on: x[0] === pag, cls: x[0] === pag ? 'pag on' : 'pag', pick: function () { self.setState({ pag: x[0] }); } }; }),
+      semZap: !numero,
+      notaEnvio: numero ? 'O pedido vai pronto para o WhatsApp da loja. A loja confirma o frete, o prazo e o pagamento por lá.' : 'Na loja publicada, este botão manda o pedido pronto para o WhatsApp da loja.',
+      enviar: function () {
+        if (!numero) return;
+        var txt = K.textoPedido(marca.nome, sac.linhas(), { nome: (st.nome || '').trim(), cep: st.cep || '', pagamento: pag });
+        window.open('https://wa.me/' + numero + '?text=' + encodeURIComponent(txt), '_blank', 'noopener');
+        self.setState({ enviado: true });
+      },
+      enviado: !!st.enviado,
+      esvaziar: function () { sac.limpar(); self.setState({ enviado: false, t: Date.now() }); },
+      temSugestoes: sug.length > 0,
+      sugTitulo: linhas.length ? 'Aproveite e leve' : 'Para começar',
+      sugestoes: sug.map(function (g) { return K.cardVivo(self, g); })
+    });
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Produto · @@NOME@@</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="vitrines/_modelos/arena/arena.css">
+</helmet>
+<div class="arena" style="{{vars}}">
+
+<!--TOPO-->
+
+<main class="wrap" id="topo">
+<sc-if value="{{semProduto}}" hint-placeholder-val="{{false}}">
+<div class="sec"><p class="vazio">A loja está arrumando a vitrine. Volte daqui a pouco para ver as peças.</p></div>
+</sc-if>
+
+<sc-if value="{{temProduto}}" hint-placeholder-val="{{true}}">
+<ol class="trilha"><li><a href="Main.dc.html">Início</a></li><li><a href="Colecao.dc.html?cat={{g.cat}}">{{g.catNome}}</a></li><li>{{g.nome}}</li></ol>
+
+<div class="prod">
+<div class="galeria" aria-label="Fotos do produto">
+<div class="miniaturas">
+<sc-for list="{{fotos}}" as="f" hint-placeholder-count="3">
+<button class="{{f.cls}}" type="button" aria-label="Ver foto: {{f.nome}}" aria-pressed="{{f.on}}" onClick="{{f.pick}}"><img src="{{f.src}}" alt="" style="transform-origin: {{f.orig}}; transform: scale({{f.z}})"></button>
+</sc-for>
+</div>
+<div class="foto">
+<img src="{{atual.src}}" alt="{{fotoAlt}}" style="transform-origin: {{atual.orig}}; transform: scale({{atual.z}})">
+<sc-if value="{{g.novo}}" hint-placeholder-val="{{false}}"><span class="selo">Novo</span></sc-if>
+<div class="foto-pe">
+<span>{{atual.nome}} · {{fotoNum}}</span>
+<div class="setas">
+<button class="seta-f" type="button" aria-label="Foto anterior" onClick="{{antes}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+<button class="seta-f" type="button" aria-label="Próxima foto" onClick="{{depois}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="info">
+<div class="info-cab">
+<span class="info-cat">{{g.catNome}}</span>
+<h1 class="disp">{{g.nome}}</h1>
+<p class="ref">{{refTxt}}</p>
+</div>
+
+<div class="precos">
+<div class="preco-g"><b>{{preco}}</b><span class="pix"><strong>{{pix}}</strong> no Pix</span></div>
+<p class="parcela">Pague no Pix, no cartão ou combine pelo WhatsApp.</p>
+</div>
+
+<div>
+<p class="rotulo">Cor: <span>{{corNome}}</span></p>
+<div class="cores-g" role="group" aria-label="Cor">
+<sc-for list="{{cores}}" as="c" hint-placeholder-count="2">
+<button class="{{c.cls}}" type="button" aria-pressed="{{c.on}}" onClick="{{c.pick}}"><i style="background-color: {{c.hex}}" aria-hidden="true"></i>{{c.nome}}</button>
+</sc-for>
+</div>
+</div>
+
+<div>
+<p class="rotulo">Tamanho: <span>{{tamNome}}</span><sc-if value="{{temMedidas}}" hint-placeholder-val="{{true}}"><a href="#detalhes" onClick="{{verMedidas}}">Tabela de medidas</a></sc-if></p>
+<div class="tams" role="group" aria-label="Tamanho">
+<sc-for list="{{tams}}" as="t" hint-placeholder-count="4">
+<button class="{{t.cls}}" type="button" aria-pressed="{{t.on}}" aria-disabled="{{t.fora}}" title="{{t.dica}}" onClick="{{t.pick}}">{{t.nome}}</button>
+</sc-for>
+</div>
+<p class="estoque"><i aria-hidden="true"></i>{{estoque}}</p>
+</div>
+
+<div class="compra">
+<div class="qtd" role="group" aria-label="Quantidade">
+<button type="button" aria-label="Diminuir" onClick="{{menos}}">−</button>
+<output aria-live="polite">{{qtd}}</output>
+<button type="button" aria-label="Aumentar" onClick="{{maisUm}}">+</button>
+</div>
+<button class="btn" type="button" onClick="{{adicionar}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6z"></path><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg>Adicionar à sacola</button>
+<button class="{{favCls}}" type="button" aria-label="Favoritar" aria-pressed="{{fav}}" onClick="{{favoritar}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg></button>
+</div>
+
+<sc-if value="{{adicionado}}" hint-placeholder-val="{{false}}">
+<p class="ok" role="status"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>{{msgSacola}}<a href="Sacola.dc.html">Ver sacola</a></p>
+</sc-if>
+
+<sc-if value="{{temZap}}" hint-placeholder-val="{{false}}">
+<a class="zap" href="{{zapPeca}}" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 19.5l1.2-3.9A8 8 0 1 1 8.6 18.4z"></path><path d="M9.2 9.3c.3 2.3 2.2 4.3 4.6 4.8l1.2-1.1 1.8.9-.4 1.6c-3.6.2-7-3.1-7-6.8l1.6-.4.8 1.8z"></path></svg>Tirar dúvida pelo WhatsApp</a>
+</sc-if>
+
+<ul class="garantias">
+<li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"></path><path d="M18 3v4h-4M6 21v-4h4"></path></svg><span><b>Troca fácil</b>Em até 7 dias após receber</span></li>
+<li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"></path><circle cx="7" cy="17.5" r="1.8"></circle><circle cx="17" cy="17.5" r="1.8"></circle></svg><span><b>Entrega no Brasil</b>Frete combinado no pedido</span></li>
+<li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10"></rect><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"></path></svg><span><b>Pagamento seguro</b>Pix, cartão ou boleto</span></li>
+</ul>
+</div>
+</div>
+
+<section class="abas" id="detalhes" aria-label="Detalhes do produto">
+<div class="abas-nav" role="tablist">
+<sc-for list="{{abas}}" as="a" hint-placeholder-count="3">
+<button class="{{a.cls}}" type="button" role="tab" aria-selected="{{a.on}}" onClick="{{a.pick}}">{{a.nome}}</button>
+</sc-for>
+</div>
+
+<sc-if value="{{abaDesc}}" hint-placeholder-val="{{true}}">
+<div class="aba-corpo" role="tabpanel">
+<div>
+<h3>{{g.nome}}</h3>
+<p>{{descricao}}</p>
+</div>
+<ul class="marcas">
+<sc-for list="{{pontos}}" as="pt" hint-placeholder-count="3"><li>{{pt}}</li></sc-for>
+</ul>
+</div>
+</sc-if>
+
+<sc-if value="{{abaMedidas}}" hint-placeholder-val="{{false}}">
+<div class="aba-corpo" role="tabpanel">
+<div>
+<h3>Medidas do corpo, em centímetros</h3>
+<table class="tabela">
+<thead><tr><th scope="col">Tamanho</th><th scope="col">Busto</th><th scope="col">Cintura</th><th scope="col">Quadril</th></tr></thead>
+<tbody>
+<sc-for list="{{medidas}}" as="m" hint-placeholder-count="4">
+<tr class="{{m.cls}}"><td>{{m.t}}</td><td>{{m.b}}</td><td>{{m.c}}</td><td>{{m.q}}</td></tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+<div>
+<h3>Como escolher</h3>
+<p>Meça a parte mais larga do busto e do quadril e a parte mais fina da cintura. Se ficar entre dois tamanhos, escolha o maior para mais conforto ou o menor para mais compressão.</p>
+<p>Ficou em dúvida? Mande suas medidas para a loja pelo WhatsApp.</p>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{abaTrocas}}" hint-placeholder-val="{{false}}">
+<div class="aba-corpo" role="tabpanel">
+<div>
+<h3>Troca e devolução</h3>
+<p>Você tem 7 dias depois de receber para trocar ou devolver. A peça precisa estar sem uso e com a etiqueta.</p>
+<p>Chame a loja no WhatsApp para combinar a troca.</p>
+</div>
+<ul class="marcas">
+<li>Troca de tamanho ou de cor</li>
+<li>Devolução com reembolso no mesmo meio de pagamento</li>
+<li>Vale-compras, se preferir</li>
+</ul>
+</div>
+</sc-if>
+</section>
+
+<sc-if value="{{temExtras}}" hint-placeholder-val="{{true}}">
+<section class="sec" aria-labelledby="extras-t">
+<div class="sec-h"><div><h2 id="extras-t" class="disp"><span class="slash">//</span>Complete o treino</h2></div></div>
+<div class="extras">
+<sc-for list="{{extras}}" as="e" hint-placeholder-count="4">
+<div class="extra">
+<img src="{{e.img}}" alt="{{e.nome}}" loading="lazy">
+<div><b>{{e.nome}}</b><span>{{e.preco}}</span></div>
+<button class="{{e.cls}}" type="button" aria-label="{{e.rotulo}}" aria-pressed="{{e.on}}" onClick="{{e.pick}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{e.icone}}"></path></svg></button>
+</div>
+</sc-for>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{temRel}}" hint-placeholder-val="{{true}}">
+<section class="sec" aria-labelledby="mais-t">
+<div class="sec-h"><div><h2 id="mais-t" class="disp"><span class="slash">//</span>Você também pode gostar</h2></div><a class="mais" href="Colecao.dc.html">Ver coleção <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a></div>
+<div class="grade rel">
+<sc-for list="{{relacionados}}" as="p" hint-placeholder-count="4">
+<!--CARD-->
+</sc-for>
+</div>
+</section>
+</sc-if>
+</sc-if>
+</main>
+
+<!--RODAPE-->
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"itens":{"editor":null},"cor":{"editor":null},"links":{"editor":null}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var K = window.ArenaKit, self = this, p = this.props || {}, st = this.state || {};
+    var marca = { nome: '@@NOME@@', whats: '@@WHATS@@', ig: '@@IG@@' };
+    var base = K.topo(this, 'produto', marca);
+    var cat = K.catalogo(p.itens);
+    var g = cat.porId[p.item] || cat.roupas[0] || cat.grupos[0];
+    if (!g) return Object.assign(base, { semProduto: true, temProduto: false });
+    var sac = K.sacola(p.chave), favs = K.favoritos(p.chave);
+
+    var v = g.vars.filter(function (x) { return x.cor === st.cor; })[0] || g.vars[0];
+    // fotos: as da peça; com uma foto só, os detalhes são recortes dela
+    var vistas = [{ nome: 'Frente', src: v.img, orig: '50% 50%', z: 1 }];
+    if (v.img2) vistas.push({ nome: 'Outra vista', src: v.img2, orig: '50% 50%', z: 1 });
+    vistas.push({ nome: 'Detalhe de cima', src: v.img, orig: '50% 30%', z: 1.9 });
+    if (!v.img2) vistas.push({ nome: 'Detalhe de baixo', src: v.img, orig: '50% 74%', z: 1.8 });
+    var n = vistas.length, foto = Math.min(st.foto || 0, n - 1);
+
+    var acessorio = g.cat === 'acessorios' || (v.tamanhos.length === 1 && v.tamanhos[0] === 'U');
+    var TODOS = acessorio ? ['U'] : ['P', 'M', 'G', 'GG'];
+    var tem = function (t) { return v.tamanhos.indexOf(t) >= 0; };
+    var tam = st.tam && tem(st.tam) ? st.tam : (tem('M') ? 'M' : v.tamanhos[0]);
+    var qtd = st.qtd || 1;
+    var nomeTam = function (t) { return t === 'U' ? 'Único' : t; };
+
+    var extrasOn = st.extras || {};
+    var extras = cat.accs.filter(function (a) { return a.id !== g.id; }).slice(0, 4);
+    var rel = (cat.porCat[g.cat] || []).filter(function (x) { return x.id !== g.id; });
+    rel = rel.concat(cat.grupos.filter(function (x) { return x.id !== g.id && rel.indexOf(x) < 0 && x.cat !== 'acessorios'; })).slice(0, 4);
+    var zap = K.linkWhats(p.demo ? '' : marca.whats, 'Olá! Tenho uma dúvida sobre ' + g.nome + ' (' + v.cor + ').');
+    var aba = st.aba || 'desc';
+    var ABAS = acessorio ? [['desc', 'Descrição'], ['trocas', 'Trocas']] : [['desc', 'Descrição'], ['medidas', 'Medidas'], ['trocas', 'Trocas']];
+    var pontos = acessorio
+      ? ['Combina com os conjuntos da loja', 'Disponível em ' + g.coresTxt, 'Pode ir na mesma sacola das roupas']
+      : ['Tamanhos ' + v.tamanhos.map(nomeTam).join(', '), 'Disponível em ' + g.coresTxt, 'Troca de tamanho em até 7 dias', 'Ajuda com o tamanho pelo WhatsApp'];
+
+    return Object.assign(base, {
+      semProduto: false, temProduto: true, g: g,
+      refTxt: g.vars.length > 1 ? g.vars.length + ' cores · ' + g.catNome : g.catNome + (v.cor !== 'Única' ? ' · ' + v.cor : ''),
+      fotos: vistas.map(function (f, i) { return Object.assign({}, f, { on: i === foto, cls: i === foto ? 'mini-btn on' : 'mini-btn', pick: function () { self.setState({ foto: i }); } }); }),
+      atual: vistas[foto], fotoNum: (foto + 1) + ' de ' + n,
+      fotoAlt: g.nome + ' ' + K.minus(v.cor) + ', ' + vistas[foto].nome.toLowerCase(),
+      antes: function () { self.setState({ foto: (foto + n - 1) % n }); },
+      depois: function () { self.setState({ foto: (foto + 1) % n }); },
+      preco: K.brl(v.preco), pix: K.brl(v.preco * (1 - K.PIX)),
+      corNome: v.cor,
+      cores: g.vars.map(function (x) { var on = x === v; return { nome: x.cor, hex: x.hex, on: on, cls: on ? 'cor-btn on' : 'cor-btn', pick: function () { self.setState({ cor: x.cor, foto: 0, adicionado: false }); } }; }),
+      tamNome: nomeTam(tam), temMedidas: !acessorio,
+      tams: TODOS.map(function (t) {
+        var fora = !tem(t);
+        return { nome: nomeTam(t), on: t === tam, fora: fora, dica: fora ? 'Esgotado' : 'Disponível', cls: 'tam' + (t === tam ? ' on' : '') + (fora ? ' fora' : ''), pick: function () { if (!fora) self.setState({ tam: t, adicionado: false }); } };
+      }),
+      estoque: acessorio ? 'Disponível' : 'Disponível no tamanho ' + nomeTam(tam),
+      qtd: String(qtd),
+      menos: function () { self.setState({ qtd: Math.max(1, qtd - 1) }); },
+      maisUm: function () { self.setState({ qtd: Math.min(9, qtd + 1) }); },
+      adicionar: function () {
+        sac.por({ grupo: g.id, nome: g.nome, cor: v.cor, tam: tam, preco: v.preco, img: v.img, qtd: qtd });
+        self.setState({ adicionado: true });
+      },
+      adicionado: !!st.adicionado,
+      msgSacola: 'Na sacola: ' + g.nome + ', ' + K.minus(v.cor) + (acessorio ? '' : ', tamanho ' + tam) + (qtd > 1 ? ', ' + qtd + ' unidades' : ''),
+      fav: favs.tem(g.id), favCls: favs.tem(g.id) ? 'fav-g on' : 'fav-g',
+      favoritar: function () { favs.alternar(g.id); self.setState({ favT: Date.now() }); },
+      temZap: !!zap, zapPeca: zap,
+      verMedidas: function () { self.setState({ aba: 'medidas' }); },
+      abas: ABAS.map(function (a) { return { nome: a[1], on: a[0] === aba, cls: a[0] === aba ? 'aba on' : 'aba', pick: function () { self.setState({ aba: a[0] }); } }; }),
+      abaDesc: aba === 'desc', abaMedidas: aba === 'medidas' && !acessorio, abaTrocas: aba === 'trocas',
+      descricao: g.descricao || (g.nome + ' da ' + marca.nome + ', em ' + g.coresTxt + '. Escolha a cor e o tamanho e mande o pedido pela sacola.'),
+      pontos: pontos,
+      medidas: [['P', '82–88', '62–68', '90–96'], ['M', '88–94', '68–74', '96–102'], ['G', '94–100', '74–80', '102–108'], ['GG', '100–106', '80–86', '108–114']]
+        .map(function (m) { return { t: m[0], b: m[1], c: m[2], q: m[3], cls: m[0] === tam ? 'on' : '' }; }),
+      temExtras: extras.length > 0,
+      extras: extras.map(function (a) {
+        var on = !!extrasOn[a.id], av = a.vars[0];
+        return { nome: a.nome, preco: K.brl(a.preco), img: a.img, on: on, cls: on ? 'mais-btn on' : 'mais-btn',
+          rotulo: (on ? 'Já está na sacola: ' : 'Adicionar à sacola: ') + a.nome,
+          icone: on ? 'M5 12.5l4.5 4.5L19 7.5' : 'M12 5v14M5 12h14',
+          pick: function () {
+            if (on) return;
+            sac.por({ grupo: a.id, nome: a.nome, cor: av.cor, tam: av.tamanhos[0], preco: av.preco, img: av.img, qtd: 1 });
+            var x = Object.assign({}, extrasOn); x[a.id] = true; self.setState({ extras: x, aviso: 'Na sacola: ' + a.nome });
+          } };
+      }),
+      temRel: rel.length > 0,
+      relacionados: rel.map(function (x) { return K.cardVivo(self, x); })
+    });
+  }
+}
+</script>
+</body>
+</html>
