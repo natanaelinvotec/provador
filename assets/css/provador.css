@@ -112,7 +112,7 @@ body.pv{margin:0;background:var(--papel);color:var(--tinta);font:500 var(--t4)/1
 .capa-nobre strong{font-weight:500;text-transform:uppercase;letter-spacing:.05em}
 .capa-nobre small{color:#E8C77A}
 .capa-bloco{--capa-f:"Bebas Neue"}
-.capa-bloco strong{text-transform:uppercase;font-size:clamp(40px,5vw,76px);color:var(--c-ac)}
+.capa-bloco strong{text-transform:uppercase;font-size:clamp(40px,5vw,76px);color:#fff}
 .capa-cetim{--capa-f:"Fraunces"}
 .capa-cetim strong{font-style:italic;font-weight:400}
 .capa-vibe{--capa-f:"Sofia Sans Condensed"}
@@ -126,7 +126,8 @@ body.pv{margin:0;background:var(--papel);color:var(--tinta);font:500 var(--t4)/1
 .capa-studio{--capa-f:"Schibsted Grotesk"}.capa-studio strong{font-weight:700;letter-spacing:-.04em}
 .capa-arena{--capa-f:"Unbounded"}.capa-arena strong{font-weight:800;text-transform:uppercase}
 
-@media (max-width:760px){
+/* até tablet o topo usa a composição de celular: capa no centro, texto e botão embaixo, sem se encostarem */
+@media (max-width:1024px){
   .pv-poster{height:210vh}
   .pv-poster-titulo{font-size:18.5vw;top:60px}
   .pv-capas{top:calc(60px + 8vw);bottom:auto;width:min(calc(100% - 2 * var(--m)),calc((100svh - 290px) * 2 / 3));transform:translateX(-50%)}
