@@ -58,10 +58,13 @@
     abrir: 'M14 4h6v6M20 4l-9 9M18 14v6H4V6h6', lapis: 'M4 20h4L19 9l-4-4L4 16zM14 6l4 4', sair: 'M15 4h4v16h-4M10 8l-4 4 4 4M6 12h10',
     entrada: 'M12 4v11M7 10l5 5 5-5M5 20h14', calendario: 'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4', etiqueta: 'M3 12V4h8l10 10-8 8zM7.5 7.5h.01',
     caminhao: 'M3 6h11v10H3zM14 9h4l3 3v4h-7M7 19a2 2 0 1 0 0-4a2 2 0 0 0 0 4zM17 19a2 2 0 1 0 0-4a2 2 0 0 0 0 4z', voltar: 'M15 6l-6 6 6 6', avancar: 'M9 6l6 6-6 6',
-    busca: 'M11 4a7 7 0 1 0 0 14a7 7 0 0 0 0-14zM20 20l-4-4', presente: 'M4 10h16v10H4zM3 7h18v3H3zM12 7v13M12 7c-2-4-6-3-5 0M12 7c2-4 6-3 5 0'
+    busca: 'M11 4a7 7 0 1 0 0 14a7 7 0 0 0 0-14zM20 20l-4-4', canais: 'M18 3a3 3 0 1 0 0 6a3 3 0 0 0 0-6zM6 9a3 3 0 1 0 0 6a3 3 0 0 0 0-6zM18 15a3 3 0 1 0 0 6a3 3 0 0 0 0-6zM8.6 13.5l6.8 3.9M15.4 6.6l-6.8 3.9',
+    baixar: 'M12 4v11M7 10l5 5 5-5M5 20h14', presente: 'M4 10h16v10H4zM3 7h18v3H3zM12 7v13M12 7c-2-4-6-3-5 0M12 7c2-4 6-3 5 0'
   };
   var icone = function (k, cls) { return '<svg class="lj-ic' + (cls ? ' ' + cls : '') + '" viewBox="0 0 24 24" aria-hidden="true"><path d="' + IC[k] + '"/></svg>'; };
   var ABAS = [['hoje', 'Hoje'], ['vender', 'Vender'], ['pedidos', 'Pedidos'], ['estoque', 'Estoque'], ['caixa', 'Caixa'], ['relatorios', 'Relatórios'], ['clientes', 'Clientes']];
+  // telas fora do menu de baixo (no celular entram pelo Menu do topo)
+  var ROTAS = ABAS.concat([['canais', 'Canais de venda']]);
   var CORES_FORMA = { pix: 'var(--s1)', cartao: 'var(--s2)', dinheiro: 'var(--s3)', outro: 'var(--s4)' };
   var NOME_FORMA = { pix: 'Pix', cartao: 'Cartão (maquininha)', dinheiro: 'Dinheiro', outro: 'Outro' };
   var CATEGORIAS_CAIXA = [['venda', 'Venda'], ['fornecedor', 'Fornecedor'], ['aluguel', 'Aluguel'], ['embalagem', 'Embalagem'], ['frete', 'Frete'], ['marketing', 'Divulgação'], ['retirada', 'Retirada da dona'], ['conta', 'Conta'], ['outro', 'Outro']];
@@ -73,7 +76,8 @@
     conta: null, loja: null, itens: [], d: { vendas: [], caixa: [], contas: [], movimentos: [], vip: [], avisos: [], erros: {} },
     aba: 'hoje', carrinho: [], venda: vendaNova(), pedFiltro: 'pago', pedBusca: '', pedLimite: 40, destacar: '',
     estVista: 'pecas', estFiltro: 'todas', estBusca: '', grade: {}, etq: { formato: pref('etqFormato') || 'a4', sel: {} },
-    caixaMes: U.dia().slice(0, 7), relDias: 30, cliBusca: '', cupom: pref('cupom') || 'VOLTEI10', stream: null, camT: 0
+    caixaMes: U.dia().slice(0, 7), relDias: 30, cliBusca: '', cupom: pref('cupom') || 'VOLTEI10', stream: null, camT: 0,
+    canais: { cfg: null, status: null, carregado: false, carregando: false, erro: '' }
   };
   var peca = function (id) { return S.itens.filter(function (i) { return i.id === id; })[0]; };
   var venda = function (id) { return S.d.vendas.filter(function (v) { return v.id === id; })[0]; };
@@ -159,14 +163,14 @@
     var lado = $('#lj-lado');
     lado.innerHTML = '<div class="lj-marca"><span class="lj-ini" aria-hidden="true">' + esc(iniciais()) + '</span><div><b>' + esc(S.loja.nome) + '</b><span>Painel da loja</span>' + demo + '</div></div>' +
       '<nav class="lj-nav" aria-label="Seções do painel">' + nav + '</nav>' +
-      '<div class="lj-lado-pe"><a href="../montar/">' + icone('lapis') + 'Editar vitrine e fotos</a>' +
+      '<div class="lj-lado-pe"><a href="#canais" data-aba="canais">' + icone('canais') + 'Canais de venda</a><a href="../montar/">' + icone('lapis') + 'Editar vitrine e fotos</a>' +
       '<a href="' + esc(link) + '" target="_blank" rel="noopener">' + icone('abrir') + 'Ver minha loja</a>' +
       '<button type="button" data-acao="sair">' + icone('sair') + 'Sair</button></div>';
     lado.hidden = false;
     var topo = $('#lj-topo');
     topo.innerHTML = '<span class="lj-ini" aria-hidden="true">' + esc(iniciais()) + '</span><div class="lj-topo-nome"><b>' + esc(S.loja.nome) + '</b>' + demo + '</div>' +
       '<details class="lj-menu"><summary>Menu</summary><div class="lj-menu-caixa">' +
-      '<a href="../montar/">' + icone('lapis') + 'Editar vitrine e fotos</a><a href="' + esc(link) + '" target="_blank" rel="noopener">' + icone('abrir') + 'Ver minha loja</a>' +
+      '<a href="#canais" data-aba="canais">' + icone('canais') + 'Canais de venda</a><a href="../montar/">' + icone('lapis') + 'Editar vitrine e fotos</a><a href="' + esc(link) + '" target="_blank" rel="noopener">' + icone('abrir') + 'Ver minha loja</a>' +
       '<button type="button" data-acao="sair">' + icone('sair') + 'Sair</button></div></details>';
     topo.hidden = false;
   }
@@ -179,10 +183,10 @@
     });
   }
   function irPara(aba) {
-    if (!ABAS.some(function (a) { return a[0] === aba; })) aba = 'hoje';
+    if (!ROTAS.some(function (a) { return a[0] === aba; })) aba = 'hoje';
     var mudou = S.aba !== aba;
     S.aba = aba;
-    $$('.lj-aba').forEach(function (a) { if (a.dataset.aba === aba) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+    $$('[data-aba]').forEach(function (a) { if (a.dataset.aba === aba) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
     $$('.lj-menu').forEach(function (m) { m.open = false; });
     desenhar();
     if (mudou) window.scrollTo(0, 0);
@@ -619,7 +623,7 @@
   }
   TELAS.estoque = function () {
     var vistas = [['pecas', 'Peças'], ['etiquetas', 'Etiquetas'], ['movimentos', 'Movimentos']];
-    var h = cab('Estoque', 'Quantas peças tem de cada tamanho. Tamanho zerado some da vitrine.', '<button type="button" class="lj-btn pri" data-acao="entrada">' + icone('entrada') + 'Entrada de mercadoria</button>') +
+    var h = cab('Estoque', 'Quantas peças tem de cada tamanho. Tamanho zerado some da vitrine e dos canais de venda.', '<a class="lj-btn" href="#canais">' + icone('canais') + 'Canais de venda</a><button type="button" class="lj-btn pri" data-acao="entrada">' + icone('entrada') + 'Entrada de mercadoria</button>') +
       '<div class="lj-seg lj-vistas" role="group" aria-label="O que ver">' + vistas.map(function (v) { return '<button type="button" class="lj-seg-b" data-acao="est-vista" data-v="' + v[0] + '" aria-pressed="' + (S.estVista === v[0]) + '">' + v[1] + '</button>'; }).join('') + '</div>';
     if (!S.itens.length) return h + '<section class="lj-card">' + vazio('A loja ainda não tem peças', 'Suba as fotos das peças no montador. Depois o estoque e as etiquetas aparecem aqui.', '<a class="lj-btn pri" href="../montar/">Subir fotos das peças</a>') + '</section>';
     if (S.estVista === 'etiquetas') return h + telaEtiquetas();
@@ -930,6 +934,163 @@
     return h + '<div class="lj-grade2">' + compr + '<div class="lj-coluna">' + vipH + avH + '</div></div>';
   };
 
+  /* ---------- canais de venda: Meta, Google, Shopee e Shein ---------- */
+  var CN = window.Canais;
+  var TIPOS = { meta: 'text/csv', google: 'text/tab-separated-values', bling: 'text/csv', planilha: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' };
+  var CANAIS_VENDA = [
+    { id: 'meta', titulo: 'Instagram, WhatsApp e anúncios', onde: 'Catálogo da Meta', link: 'meta', rotLink: 'Link para colar na Meta', baixar: ['meta'],
+      custo: 'O catálogo não tem custo. Anúncios de catálogo são pagos à parte, no Gerenciador de Anúncios.',
+      passos: [
+        'Entre em <b>business.facebook.com/commerce</b> com a conta que administra o Instagram e o WhatsApp da loja.',
+        'Crie um catálogo do tipo <b>E-commerce</b> (produtos vendidos on-line).',
+        'Em <b>Catálogo › Fontes de dados › Adicionar itens</b>, escolha <b>Feed de dados</b>, depois <b>Programado</b>, e cole o link acima. Repetição: diária. Moeda: real.',
+        'Espere a primeira leitura e confira a aba <b>Problemas</b>. Peça recusada aparece lá com o motivo.',
+        'WhatsApp Business: <b>Ferramentas comerciais › Catálogo</b> e ligue ao catálogo que você criou.',
+        'Instagram: <b>Configurações › Empresa › Compras no Instagram</b>. A Meta analisa a conta antes de liberar as marcações nos posts e pode pedir domínio próprio verificado.'
+      ] },
+    { id: 'google', titulo: 'Google Shopping', onde: 'Google Merchant Center', link: 'google', rotLink: 'Link para colar no Merchant Center', baixar: ['google'],
+      custo: 'Aparecer nas listagens gratuitas do Google não tem custo. Anúncios do Shopping são pagos à parte, no Google Ads.',
+      passos: [
+        'Entre em <b>merchants.google.com</b> com a conta Google da loja e cadastre a empresa.',
+        'Informe o site da loja. Com domínio próprio fica mais simples: o Google pede que o site seja de quem vende.',
+        'Cadastre o frete e a política de troca. Sem isso o Google não mostra os produtos.',
+        'Em <b>Produtos › Adicionar produtos › Adicionar de um arquivo</b>, escolha <b>Buscar o arquivo de um URL</b>, cole o link acima e marque busca diária.',
+        'Ligue as <b>listagens gratuitas</b>. Os anúncios do Shopping são opcionais.'
+      ] },
+    { id: 'shopee', titulo: 'Shopee', onde: 'pelo Bling ou pelo UpSeller', baixar: ['bling', 'planilha'],
+      custo: 'A Shopee cobra comissão e taxa por item vendido. Confira a tabela atual no Seller Centre antes de definir o preço.',
+      passos: [
+        'Abra a loja no <b>Seller Centre da Shopee</b>.',
+        'Bling: <b>Configurações › Importação de dados › Importar e atualizar produtos</b>, operação <b>Cadastrar novos</b>, escolha a planilha do Bling, ligue <b>Atualizar estoque</b> se quiser levar o estoque, clique em <b>Validar</b> e depois em <b>Importar</b>.',
+        'Ainda no Bling, ligue a integração com a Shopee e publique os anúncios escolhendo a categoria da Shopee.',
+        'Sem Bling? No <b>UpSeller</b> (gratuito): <b>Armazém › Importar & Exportar › Migração de Produtos</b>, envie a planilha .xlsx e ligue cada coluna ao campo dele.'
+      ] },
+    { id: 'shein', titulo: 'Shein', onde: 'pelo Bling ou pelo UpSeller', baixar: ['bling', 'planilha'],
+      custo: 'A Shein cobra comissão por venda e pede CNPJ. Vendedor novo costuma ter um período sem comissão: confira no portal.',
+      passos: [
+        'Faça o cadastro de vendedor na <b>Shein Brasil</b>. A Shein analisa a loja antes de liberar.',
+        'O Bling é parceiro oficial da Shein: importe a planilha do Bling (mesmo passo da Shopee) e ligue a integração com a Shein.',
+        'No UpSeller o caminho é o mesmo: importe a planilha .xlsx e publique na Shein.',
+        'TikTok Shop, AliExpress e Magalu entram pelos mesmos hubs, com a mesma planilha.'
+      ] }
+  ];
+  var NOME_ARQ = { meta: 'Planilha da Meta (.csv)', google: 'Arquivo do Google (.tsv)', bling: 'Planilha do Bling (.csv)', planilha: 'Planilha para hubs (.xlsx)' };
+  function opcoesCanais() {
+    var c = (P.cfg && P.cfg.canais) || {};
+    return { site: c.site, canaisBase: c.base, cfg: S.canais.cfg || {} };
+  }
+  function carregarCanais() {
+    var c = S.canais;
+    if (c.carregando) return;
+    c.carregando = true; c.erro = '';
+    Promise.all([
+      G.lerCanais(S.conta, S.loja).catch(function (e) { c.erro = G.erroAmigavel(e); return null; }),
+      lerStatusCanais()
+    ]).then(function (r) {
+      c.cfg = r[0]; c.status = r[1]; c.carregado = true; c.carregando = false;
+      if (S.aba === 'canais') desenhar();
+    });
+  }
+  // status.json: o workflow grava a cada publicação (hora, quantas peças e fotos foram)
+  function lerStatusCanais() {
+    if (G.modo === 'demo' || !S.loja.slug || !window.fetch) return Promise.resolve(null);
+    return fetch(CN.enderecos(S.loja.slug, opcoesCanais()).status + '?t=' + Date.now(), { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
+  }
+  function haQuanto(iso) {
+    var d = new Date(iso), min = Math.round((Date.now() - d) / 60000);
+    if (isNaN(d)) return '—';
+    if (min < 2) return 'agora há pouco';
+    if (min < 60) return 'há ' + min + ' min';
+    if (min < 48 * 60) return 'há ' + Math.round(min / 60) + ' h';
+    return 'em ' + quando(iso);
+  }
+  function baixarArquivo(nome, conteudo, tipo) {
+    var blob = new Blob([conteudo], { type: tipo + (typeof conteudo === 'string' ? ';charset=utf-8' : '') });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = nome; a.rel = 'noopener';
+    document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  }
+  function seloCanal(ativo, st) {
+    if (G.modo === 'demo') return '<span class="lj-chip">Demonstração</span>';
+    if (!ativo) return '<span class="lj-chip">Desligado</span>';
+    if (st && st.atualizadoEm) return '<span class="lj-chip ok">' + icone('check') + 'Link no ar</span>';
+    return '<span class="lj-chip at">Aguardando a 1ª publicação</span>';
+  }
+  function cardCanal(k, ativo, end, st) {
+    var link = k.link ? '<label class="lj-campo">' + esc(k.rotLink) +
+        '<span class="lj-link-vip"><input id="lj-link-' + k.id + '" value="' + esc(end[k.link]) + '" readonly' + (ativo ? '' : ' disabled') + '>' +
+        '<button type="button" class="lj-btn" data-acao="copiar-canal" data-k="' + k.link + '"' + (ativo ? '' : ' disabled') + '>' + icone('copiar') + 'Copiar</button></span></label>' : '';
+    var baixar = '<div class="lj-botoes">' + k.baixar.map(function (a) {
+      return '<button type="button" class="lj-btn" data-acao="baixar-canal" data-k="' + a + '">' + icone('baixar') + esc(NOME_ARQ[a]) + '</button>';
+    }).join('') + '</div>';
+    return '<section class="lj-card lj-canal" aria-labelledby="lj-t-' + k.id + '"><div class="lj-card-topo"><div><h2 id="lj-t-' + k.id + '">' + esc(k.titulo) + '</h2><p class="lj-sub">' + esc(k.onde) + '</p></div>' +
+      (k.link ? seloCanal(ativo, st) : '') + '</div>' + link + baixar +
+      '<details class="lj-passos"><summary>Como ligar, passo a passo</summary><ol>' + k.passos.map(function (p) { return '<li>' + p + '</li>'; }).join('') + '</ol></details>' +
+      '<p class="lj-nota">' + esc(k.custo) + '</p></section>';
+  }
+  function opcoes(lista, atual) { return lista.map(function (x) { return '<option value="' + x[0] + '"' + (x[0] === atual ? ' selected' : '') + '>' + esc(x[1]) + '</option>'; }).join(''); }
+  function formCanais(cfg, ativo) {
+    var marca = cfg.marca || P.marcaDaLoja(S.loja).NOME;
+    var num = function (nome, rot, v, min, max, dica) {
+      return '<label class="lj-campo">' + rot + '<input name="' + nome + '" type="number" inputmode="numeric" min="' + min + '" max="' + max + '" step="1" value="' + esc(v) + '" required>' + (dica ? '<small>' + dica + '</small>' : '') + '</label>';
+    };
+    return '<form class="lj-card" data-form="canais" aria-labelledby="lj-t-cfg" novalidate><div class="lj-card-topo"><div><h2 id="lj-t-cfg">Dados que os canais pedem</h2>' +
+      '<p class="lj-sub">Valem para todas as peças. A Shopee e a Shein usam o peso e a embalagem para calcular o frete.</p></div></div>' +
+      '<div class="lj-form">' +
+      '<label class="lj-campo larga">Marca que aparece nos anúncios<input name="marca" maxlength="80" value="' + esc(marca) + '" required></label>' +
+      '<label class="lj-campo">Público<select name="genero">' + opcoes(CN.GENEROS, cfg.genero) + '</select></label>' +
+      '<label class="lj-campo">Faixa de idade<select name="idade">' + opcoes(CN.IDADES, cfg.idade) + '</select></label>' +
+      '<label class="lj-campo">Categoria das roupas<select name="catRoupas">' + opcoes(CN.CATEGORIAS, cfg.catRoupas) + '</select></label>' +
+      '<label class="lj-campo">Categoria dos acessórios<select name="catAcess">' + opcoes(CN.CATEGORIAS, cfg.catAcess) + '</select></label>' +
+      num('pesoG', 'Peso de uma peça embalada (g)', cfg.pesoG, 10, 30000, 'Uma legging embalada pesa perto de 250 g.') +
+      '<label class="lj-campo">NCM (para nota fiscal)<input name="ncm" inputmode="numeric" maxlength="10" value="' + esc(cfg.ncm ? cfg.ncm.slice(0, 4) + '.' + cfg.ncm.slice(4, 6) + '.' + cfg.ncm.slice(6) : '') + '" placeholder="0000.00.00"><small>Opcional. Seu contador confirma o código.</small></label>' +
+      '<fieldset class="lj-fs larga"><legend>Embalagem (cm)</legend><div class="lj-form3">' +
+      num('comprimentoCm', 'Comprimento', cfg.comprimentoCm, 1, 200) + num('larguraCm', 'Largura', cfg.larguraCm, 1, 200) + num('alturaCm', 'Altura', cfg.alturaCm, 1, 200) +
+      '</div></fieldset></div>' +
+      '<p class="lj-erro" role="alert"></p>' +
+      '<div class="lj-botoes lj-cfg-botoes"><button type="submit" class="lj-btn pri">' + (ativo ? 'Salvar dados' : 'Ligar os canais de venda') + '</button>' +
+      (ativo ? '<button type="button" class="lj-btn perigo" data-acao="canais-desligar">Desligar os canais</button>' : '') + '</div></form>';
+  }
+  function conferenciaCanais(conf) {
+    var bl = conf.bloqueadas, dc = conf.dicas;
+    var lista = function (arr, tom) {
+      return '<ul class="lj-linhas">' + arr.slice(0, 40).map(function (x) {
+        var i = peca(x.id);
+        return '<li>' + miniatura(i, 44) + '<div class="tx"><b>' + esc(x.nome) + '</b><span>' + esc(x.motivos.join('; ')) + '</span></div>' + (tom ? '<span class="lj-chip ' + tom + '">Fora</span>' : '') + '</li>';
+      }).join('') + '</ul>' + (arr.length > 40 ? '<p class="lj-nota">Mostrando 40 de ' + arr.length + '.</p>' : '');
+    };
+    return '<section class="lj-card" aria-labelledby="lj-t-conf"><div class="lj-card-topo"><div><h2 id="lj-t-conf">Conferência das peças</h2>' +
+      '<p class="lj-sub">' + (bl.length ? plural(bl.length, 'peça ficou', 'peças ficaram') + ' de fora até ser corrigida' : 'Toda peça com foto e preço entra nos canais') + '</p></div>' +
+      (bl.length ? '<a class="lj-btn" href="../montar/">' + icone('lapis') + 'Corrigir no montador</a>' : '') + '</div>' +
+      (bl.length ? lista(bl, 'cr') : '') +
+      (dc.length ? '<details class="lj-passos"><summary>' + plural(dc.length, 'dica', 'dicas') + ' para vender mais</summary>' + lista(dc, '') + '</details>' : '') +
+      (conf.vip ? '<p class="lj-nota">' + plural(conf.vip, 'lançamento VIP entra', 'lançamentos VIP entram') + ' nos canais quando abrir para todo mundo.</p>' : '') +
+      '</section>';
+  }
+  TELAS.canais = function () {
+    var c = S.canais;
+    var h = cab('Canais de venda', 'Suas peças no Instagram, no WhatsApp, no Google, na Shopee e na Shein, com o mesmo código da etiqueta.', '');
+    if (!c.carregado) { carregarCanais(); return h + '<section class="lj-card"><p class="lj-carregando" role="status"><span class="lj-giro" aria-hidden="true"></span>Lendo os canais da loja…</p></section>'; }
+    var o = opcoesCanais(), cfg = CN.limparCfg(c.cfg || {}), ativo = !!(c.cfg && c.cfg.ativo), st = c.status;
+    var conf = CN.conferir(S.loja, S.itens, o), end = CN.enderecos(S.loja.slug, o);
+    var topo = '';
+    if (c.erro) topo = '<div class="lj-alerta" role="alert">' + icone('alerta') + '<div><b>Não deu para ler a configuração dos canais</b><span>' + esc(c.erro) + '</span></div><button type="button" class="lj-btn" data-acao="canais-reler">Tentar de novo</button></div>';
+    else if (G.modo === 'demo') topo = '<div class="lj-banner"><div><b>Demonstração</b><span>Os arquivos baixam com as peças daqui, mas nada é publicado. Na loja de verdade os links ficam no ar sozinhos.</span></div></div>';
+    else if (!ativo) topo = '<div class="lj-banner"><div><b>Canais desligados</b><span>Ao ligar, a cada 3 horas o Provador publica os arquivos e as fotos das suas peças num endereço público, e a Meta, o Google e os hubs leem dali sozinhos.</span></div></div>';
+    var publicado = G.modo === 'demo' ? 'Só na loja real' : st && st.atualizadoEm ? haQuanto(st.atualizadoEm) : (ativo ? 'Aguardando' : 'Desligado');
+    var kpis = '<div class="lj-kpis">' +
+      kpi('Peças nos canais', num(conf.prontas), 'de ' + plural(conf.pecas - conf.vip, 'peça', 'peças') + ' da loja') +
+      kpi('Variações', num(conf.variacoes), 'cor e tamanho, cada uma com o código da etiqueta') +
+      kpi('Ficaram de fora', num(conf.bloqueadas.length), conf.bloqueadas.length ? 'veja a conferência abaixo' : 'nenhuma pendência', conf.bloqueadas.length ? 'at' : '') +
+      kpi('Última publicação', esc(publicado), st && st.variacoes != null ? plural(st.variacoes, 'variação publicada', 'variações publicadas') : 'a cada 3 horas, quando ligado') + '</div>';
+    var canais = '<div class="lj-canais">' + CANAIS_VENDA.map(function (k) { return cardCanal(k, ativo, end, st); }).join('') + '</div>';
+    var vendeu = '<section class="lj-card lj-canal-nota"><h2>Vendeu pela Shopee ou pela Shein?</h2><p>Lance em <a href="#vender">Vender</a> com o canal Shopee ou Shein. O estoque baixa aqui e a vitrine, a Meta e o Google atualizam na próxima publicação. ' +
+      'Para levar o estoque daqui para o Bling, importe a planilha do Bling de novo com a operação <b>Atualizar</b>.</p></section>';
+    return h + topo + kpis + '<div class="lj-grade2">' + '<div class="lj-coluna">' + formCanais(cfg, ativo) + conferenciaCanais(conf) + '</div>' + '<div class="lj-coluna">' + canais + vendeu + '</div></div>';
+  };
+
   /* ---------- telas sem casca ---------- */
   function telaSemConta() {
     document.body.classList.add('sem-casca');
@@ -1060,6 +1221,22 @@
       if (!totalEtq()) return aviso('Marque pelo menos uma peça.');
       imprimir(folhasEtq(0), S.etq.formato === 'a4' ? 'size:A4 portrait;margin:0' : 'size:50mm 30mm;margin:0');
     },
+    'copiar-canal': function (b) { copiar(CN.enderecos(S.loja.slug, opcoesCanais())[b.dataset.k], 'Link copiado. Cole no ' + (b.dataset.k === 'meta' ? 'Commerce Manager' : 'Merchant Center') + '.'); },
+    'baixar-canal': function (b) {
+      var k = b.dataset.k, a = CN.arquivos(S.loja, S.itens, opcoesCanais());
+      if (!a.linhas.length) return aviso('Nenhuma peça com foto e preço para mandar ainda.');
+      baixarArquivo((S.loja.slug || 'loja') + '-' + CN.ARQUIVOS[k], a[k], TIPOS[k]);
+      aviso(NOME_ARQ[k].replace(/ \(.*\)$/, '') + ' baixada com ' + plural(a.linhas.length, 'variação', 'variações'));
+    },
+    'canais-reler': function () { S.canais.carregado = false; desenhar(); },
+    'canais-desligar': function (b) {
+      confirmar('Desligar os canais de venda?', 'Os links param de ser atualizados na próxima publicação. O que já está na Meta, no Google e nos hubs continua lá até você tirar.', 'Desligar', true).then(function (ok) {
+        if (!ok) return;
+        ocupar(b, 'Desligando…', G.salvarCanais(S.conta, S.loja, Object.assign({}, S.canais.cfg, { ativo: false }))).then(function (d) {
+          S.canais.cfg = d; desenhar(); aviso('Canais desligados');
+        }).catch(falhou);
+      });
+    },
     mes: function (b) { S.caixaMes = U.somarMes(S.caixaMes, Number(b.dataset.d)); desenhar(); },
     'rel-dias': function (b) { S.relDias = Number(b.dataset.d); desenhar(); }
   };
@@ -1123,6 +1300,22 @@
     var botao = f.querySelector('button[type="submit"]') || (f.id && $('button[form="' + f.id + '"]'));
     var erro = function (msg) { var p = $('.lj-erro', f); if (p) p.textContent = msg; else aviso(msg); };
     if (tipo === 'codigo') { processarCodigo(f.codigo.value); return; }
+    if (tipo === 'canais') {
+      var dados = {}, ligar = !(S.canais.cfg && S.canais.cfg.ativo);
+      ['marca', 'genero', 'idade', 'catRoupas', 'catAcess', 'ncm'].forEach(function (k) { dados[k] = f[k].value; });
+      ['pesoG', 'comprimentoCm', 'larguraCm', 'alturaCm'].forEach(function (k) { dados[k] = Math.round(Number(f[k].value)); });
+      if (!dados.marca.trim()) { erro('Escreva a marca que aparece nos anúncios.'); f.marca.focus(); return; }
+      var ruim = ['pesoG', 'comprimentoCm', 'larguraCm', 'alturaCm'].filter(function (k) { return !(dados[k] >= Number(f[k].min) && dados[k] <= Number(f[k].max)); })[0];
+      if (ruim) { erro(ruim === 'pesoG' ? 'Peso entre 10 g e 30 kg.' : 'Medidas da embalagem entre 1 e 200 cm.'); f[ruim].focus(); return; }
+      var ncm = String(dados.ncm).replace(/\D/g, '');
+      if (ncm && ncm.length !== 8) { erro('O NCM tem 8 números. Ex.: 6104.63.00'); f.ncm.focus(); return; }
+      dados.ncm = ncm; dados.ativo = true;
+      ocupar(botao, ligar ? 'Ligando…' : 'Salvando…', G.salvarCanais(S.conta, S.loja, dados)).then(function (d) {
+        S.canais.cfg = d; desenhar();
+        aviso(ligar ? (G.modo === 'demo' ? 'Canais ligados na demonstração' : 'Canais ligados. Os links entram no ar na próxima publicação, em até 3 horas.') : 'Dados salvos');
+      }).catch(function (x) { erro(G.erroAmigavel(x)); });
+      return;
+    }
     if (tipo === 'caixa') {
       var tp = (f.querySelector('input[name="tipo"]:checked') || {}).value;
       if (!(U.centavos(f.valor.value) > 0)) { erro('Digite o valor. Ex.: 120,50'); f.valor.focus(); return; }
