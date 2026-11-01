@@ -54,3 +54,9 @@ O que **não** entra aqui (depende do Asaas ou de servidor): checkout com Pix e 
 
 ## Regras
 As regras novas estão em `firestore.rules` (gestão privada da dona; VIP e avisos: público só cria com campos conferidos; acompanhamento: leitura por token). Qualquer campo novo precisa entrar lá.
+
+## Canais de venda (Meta, Google, Shopee e Shein)
+- `shared/canais.js` (navegador e Node): uma linha por peça × tamanho; `id` = código da etiqueta (`SKU-TAM`), `item_group_id` = grupo da vitrine (`cat-nome`), link `vitrine.html?l={slug}&p=produto&item={grupo}` (ou `https://{dominio}/?p=produto&item={grupo}`). Peça sem foto, sem preço, sem categoria, com código repetido ou em lançamento VIP fica de fora. Arquivos: `meta.csv` (Meta), `google.tsv` (Merchant Center), `bling.csv` (colunas da planilha do Bling: B Código, AJ Código Pai, AR URL Imagens Externas; variação com descrição `Cor:X;Tamanho:Y`) e `planilha.xlsx` (UpSeller e outros hubs).
+- `canaisAtivos/{slug}` (leitura pública, só a dona grava): `ativo`, `marca`, `genero`, `idade`, `catRoupas`, `catAcess`, `pesoG`, `comprimentoCm`, `larguraCm`, `alturaCm`, `ncm`, `lojaId`, `slug`, `atualizadoEm`.
+- Painel `loja/#canais`: liga/desliga, dados dos canais, conferência das peças, baixar os arquivos, copiar os links e passo a passo de cada canal. Vendas que chegam pela Shopee/Shein entram em Vender com o canal `shopee`/`shein`.
+- Workflow `.github/workflows/canais.yml` (a cada 3 horas) roda `tools/canais/gerar.js`: lê o Firestore pela API REST sem chave (só o que é público), grava `canais/{slug}/` com os arquivos, as fotos (`img/{itemId}-{n}.jpg`) e `status.json` (a hora só muda quando o conteúdo muda). Loja que desligou ou saiu do ar tem a pasta removida; erro de rede mantém o que estava.
