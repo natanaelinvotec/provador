@@ -3,238 +3,412 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Provador · Loja virtual pronta para moda fitness e roupas</title>
-  <meta name="description" content="Escolha o modelo do site e uma das 15 cores, mande logo, fotos e produtos, e sua loja de roupas vai ao ar com Pix, cartão e WhatsApp. Teste cada vitrine ao vivo antes de decidir.">
+  <title>Provador · Loja virtual pronta para quem vende roupa</title>
+  <meta name="description" content="Escolha um dos 15 modelos de site e uma das 15 cores, suba as fotos pelo celular e venda no mesmo dia. Caixa, estoque com etiqueta, relatórios e o app da sua cliente no mesmo lugar. 15 dias grátis.">
   <meta name="theme-color" content="#0A1630">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Provador: experimente a loja antes de pagar por ela">
-  <meta property="og:description" content="Modelos de site prontos para lojas de roupas, cada um em 15 cores. Teste ao vivo, escolha e receba sua loja com seu nome e seu domínio.">
+  <meta property="og:title" content="Provador: a loja inteira, do provador ao caixa">
+  <meta property="og:description" content="15 modelos de site, 15 cores, fotos tratadas no celular e um painel para caixa, estoque e relatórios. Prove a loja antes de pagar.">
   <meta property="og:image" content="assets/img/vitrines/grafite-lima.jpg">
   <script src="config/plataforma.config.js"></script>
   <script src="assets/js/rota.js"></script>
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%230A1630'/%3E%3Cpath d='M16 7c1.7 0 3 1.3 3 3 0 1.2-.7 2.2-1.8 2.7L16 13.3v1.4l9 6.2c.9.6.5 2.1-.6 2.1H7.6c-1.1 0-1.5-1.5-.6-2.1l9-6.2' fill='none' stroke='%2300E676' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -2 48 60'%3E%3Cpath fill='%230A1630' fill-rule='evenodd' d='M0 56V12L12 0h16l12 12v17L29 40H14v16zM30.5 17a6 6 0 1 1-12 0 6 6 0 0 1 12 0z'/%3E%3C/svg%3E">
+  <link rel="preload" href="assets/fonts/contraste/DMSerifDisplay-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap">
-  <link rel="stylesheet" href="assets/css/fontes.css">
-  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="assets/css/provador.css">
+  <script>document.documentElement.classList.add('js');</script>
 </head>
 <body class="pv">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="pv-etiqueta" viewBox="0 0 40 56"><path fill-rule="evenodd" d="M0 56V12L12 0h16l12 12v17L29 40H14v16zM30.5 17a6 6 0 1 1-12 0 6 6 0 0 1 12 0z"/></symbol>
+  </svg>
   <a class="pv-pular" href="#conteudo">Pular para o conteúdo</a>
 
   <header class="pv-cabeca">
-    <div class="pv-larg pv-cabeca-in">
-      <a class="pv-marca" href="#topo" aria-label="Provador, início">
-        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 6c1.9 0 3.3 1.4 3.3 3.2 0 1.3-.8 2.4-2 2.9l-1.3.6v1.6l9.6 6.6c1 .7.5 2.3-.7 2.3H7.1c-1.2 0-1.7-1.6-.7-2.3l9.6-6.6"/></svg>
-        <span>provador</span>
-      </a>
-      <nav class="pv-nav" aria-label="Seções">
-        <a href="#vitrines">Vitrines</a>
-        <a href="#como">Como funciona</a>
-        <a href="#planos">Planos</a>
-        <a href="#perguntas">Perguntas</a>
-      </nav>
-      <a class="pv-btn pv-btn-escuro pv-cabeca-cta" href="montar/">Quero minha loja</a>
-    </div>
+    <a class="pv-marca" href="#topo" aria-label="Provador, início">
+      <svg viewBox="0 0 40 56" aria-hidden="true"><use href="#pv-etiqueta"/></svg>
+      <span>Provador</span>
+    </a>
+    <nav class="pv-nav" aria-label="Seções">
+      <a href="#provador">Modelos</a>
+      <a href="#alem">Além do site</a>
+      <a href="#clientes">Sua cliente</a>
+      <a href="#planos">Planos</a>
+      <a href="#perguntas">Perguntas</a>
+    </nav>
+    <a class="pv-entrar" href="montar/?entrar=1">Entrar</a>
   </header>
 
   <main id="conteudo">
-    <!-- HERO: o provador -->
-    <section class="pv-hero" id="topo" aria-labelledby="hero-titulo">
-      <div class="pv-larg pv-hero-grade">
-        <div class="pv-hero-texto">
-          <h1 id="hero-titulo">Experimente a loja antes de pagar por ela.</h1>
-          <p class="pv-lead">São modelos de site prontos para moda fitness e roupas, cada um em 15 cores. Escolha o seu, suba as fotos das peças e a loja vai ao ar na hora, com o seu nome e o seu WhatsApp. Os primeiros 15 dias são grátis.</p>
-          <div class="pv-acoes">
-            <a class="pv-btn pv-btn-pri" href="montar/">Montar minha loja</a>
-            <a class="pv-btn pv-btn-linha" href="#vitrines">Ver modelos e cores</a>
-          </div>
-          <ul class="pv-garantias">
-            <li>15 dias grátis, sem cartão</li>
-            <li>O dinheiro das vendas cai direto na sua conta</li>
-            <li>Domínio no seu nome, no Registro.br</li>
-          </ul>
+    <!-- TOPO: o nome fica parado e as lojas trocam por baixo dele, como num provador -->
+    <section class="pv-poster" id="topo" aria-labelledby="hero-titulo" style="--chao:#FFF3F9">
+      <div class="pv-poster-palco">
+        <h1 class="pv-poster-titulo" id="hero-titulo"><span aria-hidden="true">Provador</span><span class="pv-sr">Provador: loja virtual pronta para quem vende roupa</span></h1>
+        <div class="pv-capas" id="pv-capas" aria-hidden="true">
+          <figure class="capa capa-bloco ativa" data-ui style="--c-bg:#FFFFFF;--c-ac:#DA1C7F;--c-on:#FFFFFF;--c-ink:#20191F">
+            <img src="vitrines/_fotos/amb-pilates-09.jpg" alt="" width="1200" height="1500">
+            <figcaption><small>Coleção nova</small><strong>TREINO
+TODO DIA</strong><span>Comprar agora</span></figcaption>
+          </figure>
         </div>
+        <p class="pv-poster-legenda" id="pv-capa-legenda">Bloco, na cor Pink Pulse</p>
+        <p class="pv-poster-texto">A loja virtual pronta para quem vende roupa: escolha o modelo, suba as fotos pelo celular e venda hoje. <b>15 dias grátis</b>, depois a partir de <b data-preco-min>R$ 59</b> por mês.</p>
+        <a class="pv-btn pv-poster-acao" href="montar/">Montar minha loja</a>
+      </div>
+    </section>
 
-        <div class="pv-provador" aria-label="Provador de vitrines">
+    <!-- PROVADOR AO VIVO -->
+    <section class="pv-sec pv-provador-sec" id="provador" aria-labelledby="prov-titulo">
+      <div class="pv-provador-texto">
+        <h2 id="prov-titulo">Prove a loja antes de pagar</h2>
+        <p>Escolha o modelo na arara e a cor nos cabides. A loja no quadro é de verdade: navegue, abra uma peça, encha a sacola.</p>
+        <div class="pv-legenda" aria-live="polite">
+          <b id="pv-nome">Grafite Lima</b>
+          <span id="pv-desc">Grafite azulado com lima. Forte, direto, cara de academia.</span>
+        </div>
+        <div class="pv-legenda-acoes">
+          <a class="pv-btn" id="pv-quero" href="montar/?vitrine=grafite-lima">Quero esta</a>
+          <a class="pv-link" id="pv-abrir" href="vitrine.html?v=grafite-lima" target="_blank" rel="noopener">Abrir em tela cheia</a>
+        </div>
+      </div>
+      <div class="pv-provador" aria-label="Provador de vitrines">
+        <div class="pv-arara-modelos">
+          <span class="pv-varao" aria-hidden="true"></span>
           <div class="pv-modelos" role="group" aria-label="Modelo do site" data-modelos></div>
-          <div class="pv-arara" role="group" aria-label="Escolha uma vitrine para experimentar">
-            <span class="pv-varao" aria-hidden="true"></span>
-            <div class="pv-cabides" id="pv-cabides"></div>
+        </div>
+        <div class="pv-tela">
+          <div class="pv-tela-barra" aria-hidden="true"><span id="pv-endereco">sualoja.com.br</span></div>
+          <div class="pv-tela-vidro" id="pv-vidro">
+            <img class="pv-tela-foto" id="pv-foto" src="assets/img/vitrines/grafite-lima.jpg" alt="Vitrine Grafite Lima" width="640" height="400">
+            <div class="pv-cortina" aria-hidden="true"><span></span><span></span></div>
           </div>
-          <div class="pv-tela">
-            <div class="pv-tela-barra" aria-hidden="true"><i></i><i></i><i></i><span id="pv-endereco">sualoja.com.br</span></div>
-            <div class="pv-tela-vidro" id="pv-vidro">
-              <img class="pv-tela-foto" id="pv-foto" src="assets/img/vitrines/grafite-lima.jpg" alt="Vitrine Grafite Lima" width="640" height="400">
-              <div class="pv-cortina" aria-hidden="true"><span></span><span></span></div>
+        </div>
+        <div class="pv-arara" role="group" aria-label="Cor da loja">
+          <span class="pv-varao" aria-hidden="true"></span>
+          <div class="pv-cabides" id="pv-cabides"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AS 15 CORES DO MODELO -->
+    <section class="pv-cores-sec" id="vitrines" aria-labelledby="vit-titulo">
+      <div class="pv-cores-topo">
+        <h2 id="vit-titulo">As 15 cores deste modelo</h2>
+        <p>15 modelos vezes 15 cores: 225 lojas diferentes, e todas vendem do mesmo jeito.</p>
+        <div class="pv-filtros" role="group" aria-label="Filtrar por fundo" id="pv-filtros"></div>
+      </div>
+      <ul class="pv-galeria" id="pv-galeria"></ul>
+    </section>
+
+    <!-- ALÉM DO SITE -->
+    <section class="pv-alem" id="alem" aria-labelledby="alem-titulo">
+      <div class="pv-alem-col">
+        <h2 id="alem-titulo">Do provador ao caixa</h2>
+        <p class="pv-alem-intro">A vitrine é a parte que a cliente vê. Por trás dela, o painel da loja cuida do caixa, do estoque e dos números.</p>
+        <ol class="pv-modulos" id="pv-modulos">
+          <li data-modulo="caixa" class="ativo">
+            <button type="button" aria-controls="tela-caixa" aria-pressed="true">Caixa e financeiro</button>
+            <p>Entradas e saídas do dia, Pix, cartão e dinheiro separados, e as contas a pagar com aviso antes de vencer.</p>
+          </li>
+          <li data-modulo="estoque">
+            <button type="button" aria-controls="tela-estoque" aria-pressed="false">Estoque com etiqueta</button>
+            <p>Cada peça com a grade de tamanhos. A etiqueta sai com código de barras e, na venda, a câmera do celular lê e dá baixa.</p>
+          </li>
+          <li data-modulo="relatorios">
+            <button type="button" aria-controls="tela-relatorios" aria-pressed="false">Relatórios que respondem</button>
+            <p>O que mais vende, o que está parado há 60 dias, o ticket médio e de onde vêm as vendas.</p>
+          </li>
+          <li data-modulo="fluxos">
+            <button type="button" aria-controls="tela-fluxos" aria-pressed="false">Fluxos que andam sozinhos</button>
+            <p>Pedido pago vira separação, etiqueta e aviso para a cliente. A reposição chegou e a lista de espera fica sabendo.</p>
+          </li>
+          <li data-modulo="apps">
+            <button type="button" aria-controls="tela-apps" aria-pressed="false">App da loja e da equipe</button>
+            <p>A vendedora vende no balcão pelo celular, lendo a etiqueta. A cliente instala a loja na tela do celular dela.</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="pv-alem-palco">
+        <div class="pv-painel" data-ui role="region" aria-label="Exemplo do painel da loja, com dados de exemplo" id="pv-painel">
+          <div class="pn-barra"><svg viewBox="0 0 40 56" aria-hidden="true"><use href="#pv-etiqueta"/></svg><b>Lua Fit Moda</b><span>Dados de exemplo</span></div>
+
+          <div class="pn-tela ativa" id="tela-caixa" data-tela="caixa">
+            <div class="pn-numeros">
+              <div><span>Entrou em outubro</span><b>R$ 18.430</b></div>
+              <div><span>Saiu</span><b>R$ 7.912</b></div>
+              <div><span>Saldo</span><b>R$ 10.518</b></div>
+            </div>
+            <div class="pn-bloco">
+              <div class="pn-bloco-topo"><b>Entradas e saídas por semana</b><span class="pn-leg"><i style="background:#0E9A82"></i>Entradas <i style="background:#C2410C"></i>Saídas</span></div>
+              <div class="pn-grafico" id="gr-caixa"></div>
+            </div>
+            <div class="pn-duas">
+              <div class="pn-bloco">
+                <div class="pn-bloco-topo"><b>Como a cliente pagou</b></div>
+                <div class="pn-pilha" id="gr-pagto"></div>
+              </div>
+              <div class="pn-bloco">
+                <div class="pn-bloco-topo"><b>A pagar esta semana</b></div>
+                <ul class="pn-lista">
+                  <li><span>Malharia Sul, 2ª parcela</span><b>R$ 1.240</b><em>sex</em></li>
+                  <li><span>Aluguel da loja</span><b>R$ 2.300</b><em>dia 10</em></li>
+                  <li><span>Embalagens</span><b>R$ 186</b><em>seg</em></li>
+                </ul>
+              </div>
             </div>
           </div>
-          <div class="pv-legenda" aria-live="polite">
-            <div>
-              <b id="pv-nome">Grafite Lima</b>
-              <span id="pv-desc">Grafite azulado com lima. Forte, direto, cara de academia.</span>
+
+          <div class="pn-tela" id="tela-estoque" data-tela="estoque" hidden>
+            <div class="pn-duas pn-duas-estoque">
+              <div class="pn-bloco">
+                <div class="pn-bloco-topo"><b>Grade de tamanhos</b><span>peças na loja</span></div>
+                <table class="pn-grade">
+                  <thead><tr><th scope="col">Peça</th><th scope="col">P</th><th scope="col">M</th><th scope="col">G</th><th scope="col">GG</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row">Conjunto Essencial</th><td>4</td><td>6</td><td>3</td><td>2</td></tr>
+                    <tr><th scope="row">Conjunto Pilates</th><td>2</td><td class="baixo">1</td><td class="zero">0</td><td>–</td></tr>
+                    <tr><th scope="row">Legging Cós Alto</th><td>7</td><td>9</td><td>5</td><td>3</td></tr>
+                    <tr><th scope="row">Top Nadador</th><td class="baixo">1</td><td>4</td><td>3</td><td>–</td></tr>
+                    <tr><th scope="row">Macacão Atleta</th><td>3</td><td>2</td><td class="zero">0</td><td>–</td></tr>
+                  </tbody>
+                </table>
+                <p class="pn-aviso"><b>G do Conjunto Pilates acabou.</b> 3 clientes estão na lista de espera.</p>
+              </div>
+              <div class="pn-bloco pn-bloco-etiqueta">
+                <div class="pn-bloco-topo"><b>Etiqueta</b><span>código de barras de verdade</span></div>
+                <div class="pn-etiqueta" id="pn-etiqueta">
+                  <span class="pn-etq-furo" aria-hidden="true"></span>
+                  <b class="pn-etq-loja" id="pn-etq-loja">Lua Fit Moda</b>
+                  <span class="pn-etq-peca">Conjunto Pilates</span>
+                  <span class="pn-etq-grade"><em>Tam.</em> M <em>Cor</em> Chocolate</span>
+                  <strong class="pn-etq-preco">R$ 199,90</strong>
+                  <svg class="pn-etq-barras" id="pn-etq-barras" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true"></svg>
+                  <span class="pn-etq-sku" id="pn-etq-sku">CJPIL-CHO-M</span>
+                </div>
+                <label class="pn-campo">Escreva o nome da sua loja<input id="pn-etq-input" maxlength="22" placeholder="Lua Fit Moda" autocomplete="organization"></label>
+              </div>
             </div>
-            <div class="pv-legenda-acoes">
-              <a class="pv-btn pv-btn-linha pv-mini" id="pv-abrir" href="vitrine.html?v=grafite-lima" target="_blank" rel="noopener">Abrir em tela cheia</a>
-              <a class="pv-btn pv-btn-pri pv-mini" id="pv-quero" href="montar/?vitrine=grafite-lima">Quero esta</a>
+          </div>
+
+          <div class="pn-tela" id="tela-relatorios" data-tela="relatorios" hidden>
+            <div class="pn-numeros">
+              <div><span>Ticket médio</span><b>R$ 186</b></div>
+              <div><span>Pedidos no mês</span><b>99</b></div>
+              <div><span>Peças paradas</span><b>14</b></div>
+            </div>
+            <div class="pn-duas">
+              <div class="pn-bloco">
+                <div class="pn-bloco-topo"><b>Mais vendidas em 30 dias</b><span>peças</span></div>
+                <div class="pn-grafico" id="gr-top"></div>
+              </div>
+              <div class="pn-bloco">
+                <div class="pn-bloco-topo"><b>De onde vêm as vendas</b></div>
+                <div class="pn-pilha" id="gr-canal"></div>
+                <div class="pn-bloco-topo pn-sub"><b>Paradas há mais de 60 dias</b></div>
+                <ul class="pn-lista">
+                  <li><span>Body Menta, GG</span><b>4 peças</b><em>72 dias</em></li>
+                  <li><span>Legging Capri, P</span><b>3 peças</b><em>65 dias</em></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="pn-tela" id="tela-fluxos" data-tela="fluxos" hidden>
+            <ul class="pn-fluxos">
+              <li><span class="pn-gatilho">Pedido pago</span><span>Separar as peças</span><span>Imprimir a etiqueta de envio</span><span>Avisar a cliente no WhatsApp</span></li>
+              <li><span class="pn-gatilho">Reposição chegou</span><span>Dar entrada no estoque</span><span>Avisar a lista de espera</span></li>
+              <li><span class="pn-gatilho">Coleção nova</span><span>Abrir para a lista VIP</span><span>Abrir para todo mundo 24 h depois</span></li>
+              <li><span class="pn-gatilho">Cliente sem comprar há 60 dias</span><span>Mandar um cupom de volta</span></li>
+              <li><span class="pn-gatilho">Conta vence em 3 dias</span><span>Avisar você no painel</span></li>
+            </ul>
+          </div>
+
+          <div class="pn-tela" id="tela-apps" data-tela="apps" hidden>
+            <div class="pn-apps">
+              <div class="pn-cel pn-cel-vendas">
+                <div class="pn-cel-topo">Venda no balcão</div>
+                <div class="pn-cel-leitor"><span class="pn-cel-mira" aria-hidden="true"></span><svg class="pn-cel-barras" id="pn-cel-barras" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true"></svg></div>
+                <div class="pn-cel-item"><img src="vitrines/_fotos/c2.jpg" alt="" width="720" height="900" loading="lazy"><span><b>Conjunto Pilates</b>M, Chocolate</span><strong>R$ 199,90</strong></div>
+                <div class="pn-cel-total"><span>Pix</span><b>Venda registrada, estoque baixado</b></div>
+              </div>
+              <div class="pn-apps-texto">
+                <p><b>App de vendas.</b> Leu a etiqueta, a venda entra no caixa e sai do estoque na mesma hora. Serve para a loja física e para feira.</p>
+                <p><b>App da cliente.</b> A loja fica na tela do celular dela, com o seu ícone, a lista VIP e o aviso de reposição.</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- O QUE VEM -->
-    <section class="pv-faixa" aria-labelledby="vem-titulo">
-      <div class="pv-larg">
-        <h2 id="vem-titulo">Toda vitrine já vem com a loja inteira por trás</h2>
-        <ul class="pv-vem">
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg><div><b>Catálogo por categorias</b><span>Conjuntos, leggings, tops, macacões, acessórios. Cada produto no lugar certo, com cores e tamanhos.</span></div></li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8zM9 8a3 3 0 0 1 6 0"/></svg><div><b>Sacola com Pix e cartão</b><span>A cliente fecha a compra no site. Quem prefere conversar finaliza pelo WhatsApp com a sacola pronta.</span></div></li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><div><b>Painel da loja</b><span>Você troca preço, foto e estoque sozinha, vê os pedidos do dia e quanto vendeu no mês.</span></div></li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM11 18h2"/></svg><div><b>Feita para o celular</b><span>A maioria das compras vem do Instagram, no celular. A vitrine foi desenhada primeiro para ele.</span></div></li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c2.5 2.5 3.5 5.5 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-5.5-3.5-9s1-6.5 3.5-9z"/></svg><div><b>Seu domínio</b><span>sualoja.com.br apontando para a vitrine, com cadeado de site seguro.</span></div></li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg><div><b>Modo claro e escuro</b><span>A cliente escolhe. As cores da sua marca continuam certas nos dois.</span></div></li>
+    <!-- O QUE A CLIENTE DA LOJA GANHA -->
+    <section class="pv-sec pv-clientes" id="clientes" aria-labelledby="cli-titulo">
+      <div class="pv-clientes-cel" aria-hidden="true">
+        <div class="cel" data-ui>
+          <div class="cel-tela ativa" data-cel="vip">
+            <div class="cel-loja">Lua Fit Moda</div>
+            <img src="vitrines/_fotos/c4.jpg" alt="" width="720" height="900" loading="lazy">
+            <div class="cel-cartao"><b>Coleção Verão abre amanhã, 19 h</b><span>Você está na lista VIP e entra 24 h antes de todo mundo.</span><em>Ver a prévia</em></div>
+          </div>
+          <div class="cel-tela" data-cel="compra">
+            <div class="cel-loja">Sacola</div>
+            <div class="cel-sacola"><img src="vitrines/_fotos/c2.jpg" alt="" width="720" height="900" loading="lazy"><span><b>Conjunto Pilates</b>M, Chocolate</span><strong>R$ 199,90</strong></div>
+            <div class="cel-sacola"><img src="vitrines/_fotos/t1.jpg" alt="" width="720" height="900" loading="lazy"><span><b>Top Nadador</b>P, Rosa claro</span><strong>R$ 89,90</strong></div>
+            <div class="cel-pagar"><span class="sel">Pix, 5% off</span><span>Cartão</span><span>WhatsApp</span></div>
+            <em class="cel-botao">Fechar pedido, R$ 275,31</em>
+          </div>
+          <div class="cel-tela" data-cel="app">
+            <div class="cel-inicio">
+              <span></span><span></span><span></span><span></span>
+              <span class="cel-icone"><svg viewBox="0 0 40 56"><use href="#pv-etiqueta"/></svg></span><span></span><span></span><span></span>
+            </div>
+            <div class="cel-cartao"><b>Adicionar Lua Fit Moda à tela de início?</b><span>Abre como app, com o ícone da loja.</span><em>Adicionar</em></div>
+          </div>
+          <div class="cel-tela" data-cel="reposicao">
+            <div class="cel-aviso"><b>Lua Fit Moda</b><span>Chegou o G do Conjunto Pilates. Separamos um para você até amanhã.</span></div>
+            <img src="vitrines/_fotos/c2.jpg" alt="" width="720" height="900" loading="lazy">
+          </div>
+          <div class="cel-tela" data-cel="favoritos">
+            <div class="cel-loja">Favoritos</div>
+            <div class="cel-grade"><img src="vitrines/_fotos/c3.jpg" alt="" width="720" height="900" loading="lazy"><img src="vitrines/_fotos/m1.jpg" alt="" width="720" height="900" loading="lazy"><img src="vitrines/_fotos/l1.jpg" alt="" width="720" height="900" loading="lazy"><img src="vitrines/_fotos/q2.jpg" alt="" width="720" height="900" loading="lazy"></div>
+          </div>
+          <div class="cel-tela" data-cel="pedido">
+            <div class="cel-loja">Pedido 1042</div>
+            <ol class="cel-linha"><li class="feito">Pagamento aprovado</li><li class="feito">Peças separadas</li><li class="agora">Saiu para entrega</li><li>Entregue</li></ol>
+          </div>
+        </div>
+      </div>
+      <div class="pv-clientes-lista">
+        <h2 id="cli-titulo">O que a sua cliente ganha</h2>
+        <ul class="pv-vantagens" id="pv-vantagens">
+          <li data-cel="vip" class="ativo"><button type="button" aria-expanded="true"><span>Novidades antes de todo mundo</span><em>Lista VIP</em></button><p>Ela entra na lista da sua loja e vê a coleção nova um dia antes de abrir para o público.</p></li>
+          <li data-cel="compra"><button type="button" aria-expanded="false"><span>Compra online a qualquer hora</span><em>Pix, cartão ou WhatsApp</em></button><p>Escolhe cor e tamanho, monta a sacola e paga no site, ou manda o pedido pronto no seu WhatsApp.</p></li>
+          <li data-cel="app"><button type="button" aria-expanded="false"><span>A loja na tela do celular</span><em>Sem loja de aplicativos</em></button><p>Um toque instala a sua loja no celular dela, com o seu ícone e o seu nome.</p></li>
+          <li data-cel="reposicao"><button type="button" aria-expanded="false"><span>Aviso quando chegar o tamanho</span><em>Lista de espera</em></button><p>Acabou o M? Ela deixa o contato e recebe o aviso quando a peça voltar.</p></li>
+          <li data-cel="favoritos"><button type="button" aria-expanded="false"><span>Favoritos e sacola guardados</span><em>No celular dela</em></button><p>O que ela curtiu e o que pôs na sacola continuam lá quando ela voltar.</p></li>
+          <li data-cel="pedido"><button type="button" aria-expanded="false"><span>Pedido acompanhado</span><em>Do pagamento à entrega</em></button><p>Ela vê quando o pedido foi separado, enviado e entregue, sem precisar perguntar.</p></li>
         </ul>
       </div>
     </section>
 
-    <!-- GALERIA -->
-    <section class="pv-sec" id="vitrines" aria-labelledby="vit-titulo">
-      <div class="pv-larg">
-        <div class="pv-sec-topo">
-          <div>
-            <h2 id="vit-titulo">Modelos e cores</h2>
-            <p>Escolha o modelo do site e a cor dos menus. Todos funcionam do mesmo jeito; muda a cara: letras, formas e o clima da loja. Abra qualquer um e navegue como se fosse cliente.</p>
-          </div>
-          <div class="pv-filtros-col">
-            <div class="pv-filtros" role="group" aria-label="Modelo do site" data-modelos></div>
-            <div class="pv-filtros" role="group" aria-label="Filtrar por estilo" id="pv-filtros"></div>
-          </div>
-        </div>
-        <ul class="pv-galeria" id="pv-galeria"></ul>
-      </div>
-    </section>
-
     <!-- COMO FUNCIONA -->
-    <section class="pv-sec pv-sec-branca" id="como" aria-labelledby="como-titulo">
-      <div class="pv-larg">
-        <div class="pv-sec-topo"><div><h2 id="como-titulo">Da foto à loja no ar</h2><p>Você monta sozinha, vendo a loja pronta ao lado. Leva uns 15 minutos.</p></div></div>
-        <ol class="pv-passos">
-          <li><b>Escolha a vitrine</b><span>Experimente os modelos e as 15 cores aqui no site e fique com o que mais combina com a sua marca. Dá para trocar depois.</span></li>
-          <li><b>Suba as fotos</b><span>Tire com o celular. A gente endireita, recorta, acerta a luz e descobre a cor de cada peça. Você só confere nome e preço.</span></li>
-          <li><b>Publique</b><span>Crie seu acesso e a loja vai ao ar na hora, com 15 dias grátis. É o mesmo acesso do seu painel.</span></li>
-          <li><b>Comece a vender</b><span>Coloque o link na bio. Quando quiser, a loja passa para o seu domínio.</span></li>
-        </ol>
-      </div>
+    <section class="pv-sec pv-como" id="como" aria-labelledby="como-titulo">
+      <h2 id="como-titulo">Do celular à loja no ar em uns 15 minutos</h2>
+      <ol class="pv-frases">
+        <li><b>Escolha o modelo e a cor.</b><span>Dá para trocar depois sem perder peça, foto nem pedido.</span></li>
+        <li><b>Fotografe as peças.</b><span>O Provador endireita, recorta, acerta a luz e descobre a cor de cada peça.</span></li>
+        <li><b>Confira nome e preço.</b><span>Tudo pelo celular, vendo a loja pronta ao lado.</span></li>
+        <li><b>Publique e venda.</b><span>A loja vai ao ar na hora, com 15 dias grátis e sem cartão.</span></li>
+      </ol>
     </section>
 
     <!-- PLANOS -->
-    <section class="pv-sec" id="planos" aria-labelledby="planos-titulo">
-      <div class="pv-larg">
-        <div class="pv-sec-topo"><div><h2 id="planos-titulo">Planos</h2><p>Uma taxa para montar a loja e uma mensalidade para manter no ar. Sem fidelidade.</p></div></div>
-        <div class="pv-planos" id="pv-planos">
-          <div class="pv-plano" data-plano="vitrine">
-            <h3>Vitrine</h3>
-            <p class="pv-plano-pra">Para começar a vender pelo site com pedido no WhatsApp.</p>
-            <p class="pv-preco"><b data-mensal>R$ 59</b><span>por mês</span></p>
-            <p class="pv-impl">Montagem: <b data-impl>R$ 600</b>, uma vez</p>
-            <ul>
-              <li>A vitrine escolhida com a sua marca</li>
-              <li>Catálogo por categorias, cores e tamanhos</li>
-              <li>Sacola enviada pronta no WhatsApp</li>
-              <li>Painel para trocar produtos e preços</li>
-            </ul>
-            <a class="pv-btn pv-btn-linha" href="montar/?plano=vitrine" data-plano-escolha="vitrine">Quero o Vitrine</a>
-          </div>
-          <div class="pv-plano pv-plano-destaque" data-plano="loja">
-            <p class="pv-plano-tag">Para quem já vende pelo Instagram</p>
-            <h3>Loja</h3>
-            <p class="pv-plano-pra">A loja completa, com a compra fechada no site.</p>
-            <p class="pv-preco"><b data-mensal>R$ 129</b><span>por mês</span></p>
-            <p class="pv-impl">Montagem: <b data-impl>R$ 1.800</b>, uma vez</p>
-            <ul>
-              <li>Tudo do Vitrine</li>
-              <li>Checkout com Pix e cartão</li>
-              <li>Painel de pedidos, estoque e vendas do mês</li>
-              <li>Seu domínio configurado</li>
-            </ul>
-            <a class="pv-btn pv-btn-pri" href="montar/?plano=loja" data-plano-escolha="loja">Quero o Loja</a>
-          </div>
-          <div class="pv-plano" data-plano="completo">
-            <h3>Completo</h3>
-            <p class="pv-plano-pra">Loja, app da cliente e app de vendas para a equipe.</p>
-            <p class="pv-preco"><b data-mensal>R$ 179</b><span>por mês</span></p>
-            <p class="pv-impl">Montagem: <b data-impl>R$ 3.000</b>, uma vez</p>
-            <ul>
-              <li>Tudo do Loja</li>
-              <li>App da cliente: pedidos, favoritos e trocas</li>
-              <li>App de vendas para vender na loja física</li>
-              <li>Textos de produto escritos com ajuda de IA</li>
-            </ul>
-            <a class="pv-btn pv-btn-linha" href="montar/?plano=completo" data-plano-escolha="completo">Quero o Completo</a>
-          </div>
-        </div>
-        <p class="pv-split" id="pv-split">Nos planos com venda pelo site entra também <b>1,5% de cada venda paga</b>. O resto vai direto para a sua conta. Domínio .com.br, se você ainda não tiver: <b>R$ 40 por ano</b>.</p>
+    <section class="pv-sec pv-planos-sec" id="planos" aria-labelledby="planos-titulo">
+      <h2 class="pv-sr" id="planos-titulo">Planos</h2>
+      <div class="pv-planos-nomes" role="tablist" aria-label="Planos">
+        <button type="button" role="tab" id="aba-vitrine" aria-controls="plano-vitrine" aria-selected="false" data-aba="vitrine">Vitrine</button>
+        <button type="button" role="tab" id="aba-loja" aria-controls="plano-loja" aria-selected="true" data-aba="loja">Loja</button>
+        <button type="button" role="tab" id="aba-completo" aria-controls="plano-completo" aria-selected="false" data-aba="completo">Completo</button>
       </div>
+      <div class="pv-planos" id="pv-planos">
+        <div class="pv-plano" data-plano="vitrine" id="plano-vitrine" role="tabpanel" aria-labelledby="aba-vitrine" hidden>
+          <span class="pv-plano-furo" aria-hidden="true"></span>
+          <p class="pv-preco"><b data-mensal>R$ 59</b><span>por mês</span></p>
+          <p class="pv-impl">Montagem: <b data-impl>R$ 600</b>, uma vez</p>
+          <p class="pv-plano-pra">Para começar a vender pelo site com o pedido chegando no WhatsApp. A vitrine escolhida com a sua marca, catálogo por categoria, cor e tamanho, e o painel para trocar produtos e preços.</p>
+          <a class="pv-btn" href="montar/?plano=vitrine" data-plano-escolha="vitrine">Quero o plano Vitrine</a>
+        </div>
+        <div class="pv-plano" data-plano="loja" id="plano-loja" role="tabpanel" aria-labelledby="aba-loja">
+          <span class="pv-plano-furo" aria-hidden="true"></span>
+          <p class="pv-preco"><b data-mensal>R$ 129</b><span>por mês</span></p>
+          <p class="pv-impl">Montagem: <b data-impl>R$ 1.800</b>, uma vez</p>
+          <p class="pv-plano-pra">Para quem já vende pelo Instagram. Tudo do Vitrine, mais a compra fechada no site com Pix e cartão, o painel de pedidos, estoque e vendas do mês, e o seu domínio configurado.</p>
+          <a class="pv-btn" href="montar/?plano=loja" data-plano-escolha="loja">Quero o plano Loja</a>
+        </div>
+        <div class="pv-plano" data-plano="completo" id="plano-completo" role="tabpanel" aria-labelledby="aba-completo" hidden>
+          <span class="pv-plano-furo" aria-hidden="true"></span>
+          <p class="pv-preco"><b data-mensal>R$ 179</b><span>por mês</span></p>
+          <p class="pv-impl">Montagem: <b data-impl>R$ 3.000</b>, uma vez</p>
+          <p class="pv-plano-pra">Tudo do Loja, mais o app da cliente com pedidos, favoritos e trocas, o app de vendas para a loja física e os textos de produto escritos com ajuda de IA.</p>
+          <a class="pv-btn" href="montar/?plano=completo" data-plano-escolha="completo">Quero o plano Completo</a>
+        </div>
+      </div>
+      <p class="pv-split" id="pv-split">Nos planos com venda pelo site entra também <b>1,5% de cada venda paga</b>. O resto vai direto para a sua conta. Domínio .com.br, se você ainda não tiver: <b>R$ 40 por ano</b>.</p>
     </section>
 
     <!-- PERGUNTAS -->
-    <section class="pv-sec pv-sec-branca" id="perguntas" aria-labelledby="faq-titulo">
-      <div class="pv-larg pv-faq-grade">
-        <div><h2 id="faq-titulo">Perguntas</h2><p>Não achou a sua? Mande no formulário do fim da página que a gente responde no WhatsApp.</p></div>
-        <div class="pv-faq">
-          <details><summary>Quanto tempo leva para a loja ficar pronta?</summary><p>Montando sozinha, uns 15 minutos: com as fotos no celular, a loja vai ao ar assim que você publica. Se preferir que a gente monte, o prazo combinado vai escrito na proposta.</p></details>
-          <details><summary>Como funcionam os 15 dias grátis?</summary><p>A loja fica no ar com tudo funcionando, sem pedir cartão. Antes de acabar, você escolhe um plano para continuar. Se não escolher, a loja sai do ar e suas fotos e produtos ficam guardados.</p></details>
-          <details><summary>Posso trocar de vitrine depois?</summary><p>Pode. Seus produtos, fotos e pedidos continuam os mesmos, só muda a cara da loja.</p></details>
-          <details><summary>Como funciona a taxa por venda?</summary><p>Nos planos com venda pelo site, uma pequena porcentagem de cada venda paga fica com a plataforma, já descontada no pagamento. Venda cancelada ou não paga não conta. O valor aparece no seu painel, venda a venda.</p></details>
-          <details><summary>O domínio fica no meu nome?</summary><p>Fica. Ele é registrado no seu CPF ou CNPJ no Registro.br. Se um dia você sair, leva o domínio junto.</p></details>
-          <details><summary>Preciso entender de site?</summary><p>Não. Trocar foto, preço e estoque é pelo painel da loja, no celular. Para mudanças maiores, é só chamar.</p></details>
-          <details><summary>E se eu quiser cancelar?</summary><p>Não tem fidelidade. A loja fica no ar até o fim do mês pago e você recebe a lista dos seus produtos e pedidos.</p></details>
-        </div>
+    <section class="pv-sec pv-faq-sec" id="perguntas" aria-labelledby="faq-titulo">
+      <div class="pv-faq-lista">
+        <h2 id="faq-titulo">Perguntas</h2>
+        <ul class="pv-faq" id="pv-faq">
+          <li class="ativo"><button type="button" aria-expanded="true">Quanto tempo leva para a loja ficar pronta?</button><div class="pv-faq-r"><p>Montando sozinha, uns 15 minutos: com as fotos no celular, a loja vai ao ar assim que você publica. Se preferir que a gente monte, o prazo vai escrito na proposta.</p></div></li>
+          <li><button type="button" aria-expanded="false">Como funcionam os 15 dias grátis?</button><div class="pv-faq-r"><p>A loja fica no ar com tudo funcionando, sem pedir cartão. Antes de acabar, você escolhe um plano para continuar. Se não escolher, a loja sai do ar e suas fotos e produtos ficam guardados.</p></div></li>
+          <li><button type="button" aria-expanded="false">Posso trocar de modelo ou de cor depois?</button><div class="pv-faq-r"><p>Pode, quantas vezes quiser. Seus produtos, fotos e pedidos continuam os mesmos, só muda a cara da loja.</p></div></li>
+          <li><button type="button" aria-expanded="false">Como funciona a taxa por venda?</button><div class="pv-faq-r"><p>Nos planos com venda pelo site, uma pequena porcentagem de cada venda paga fica com a plataforma, já descontada no pagamento. Venda cancelada ou não paga não conta. O valor aparece no seu painel, venda a venda.</p></div></li>
+          <li><button type="button" aria-expanded="false">O domínio fica no meu nome?</button><div class="pv-faq-r"><p>Fica. Ele é registrado no seu CPF ou CNPJ no Registro.br. Se um dia você sair, leva o domínio junto.</p></div></li>
+          <li><button type="button" aria-expanded="false">Preciso entender de site?</button><div class="pv-faq-r"><p>Não. Foto, preço e estoque se trocam pelo painel da loja, no celular. Para mudanças maiores, é só chamar.</p></div></li>
+          <li><button type="button" aria-expanded="false">E se eu quiser cancelar?</button><div class="pv-faq-r"><p>Não tem fidelidade. A loja fica no ar até o fim do mês pago e você recebe a lista dos seus produtos e pedidos.</p></div></li>
+        </ul>
       </div>
+      <div class="pv-faq-painel" id="pv-faq-painel" role="region" aria-label="Resposta" aria-live="polite"></div>
     </section>
 
     <!-- PEDIDO -->
     <section class="pv-pedido" id="pedido" aria-labelledby="pedido-titulo">
-      <div class="pv-larg pv-pedido-grade">
-        <div class="pv-pedido-texto">
-          <h2 id="pedido-titulo">Prefere que a gente monte?</h2>
-          <p>Sem tempo para tirar as fotos? Deixe seus dados e a gente chama você no WhatsApp para montar a loja com o seu material. Nada é cobrado antes de você aprovar a proposta.</p>
-          <div class="pv-escolhida" id="pv-escolhida" hidden>
-            <img id="pv-escolhida-img" src="" alt="" width="640" height="400">
-            <span>Vitrine escolhida: <b id="pv-escolhida-nome"></b></span>
-          </div>
+      <img class="pv-pedido-foto" src="vitrines/_fotos/amb-estudio-06.jpg" alt="" width="1400" height="921" loading="lazy">
+      <div class="pv-pedido-cartao">
+        <h2 id="pedido-titulo">Prefere que a gente monte?</h2>
+        <p>Deixe seus dados e a gente chama você no WhatsApp para montar a loja com o seu material. Nada é cobrado antes de você aprovar a proposta.</p>
+        <div class="pv-escolhida" id="pv-escolhida" hidden>
+          <img id="pv-escolhida-img" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="" width="640" height="400">
+          <span>Vitrine escolhida: <b id="pv-escolhida-nome"></b></span>
         </div>
         <form class="pv-form" id="pv-form" novalidate>
-          <div class="pv-campos">
-            <label class="pv-campo">Seu nome<input name="nome" autocomplete="name" maxlength="80" required></label>
-            <label class="pv-campo">Nome da loja<input name="loja" autocomplete="organization" maxlength="80" required></label>
-            <label class="pv-campo">Instagram da loja<input name="instagram" maxlength="40" placeholder="@sualoja" autocapitalize="off"></label>
-            <label class="pv-campo">WhatsApp com DDD<input name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" maxlength="20" placeholder="(67) 99999-0000" required></label>
-            <label class="pv-campo">Vitrine<select name="vitrine" id="pv-sel-vitrine"><option value="">Ainda não sei</option></select></label>
-            <label class="pv-campo">Plano<select name="plano"><option value="vitrine">Vitrine</option><option value="loja" selected>Loja</option><option value="completo">Completo</option></select></label>
-            <label class="pv-campo pv-campo-largo">Conte da sua loja (opcional)<textarea name="mensagem" rows="3" maxlength="500" placeholder="O que você vende, onde vende hoje, se já tem domínio..."></textarea></label>
-            <label class="pv-mel" aria-hidden="true">Não preencha<input name="site" tabindex="-1" autocomplete="off"></label>
-          </div>
+          <label class="pv-campo">Seu nome<input name="nome" autocomplete="name" maxlength="80" required aria-describedby="pv-form-erro"></label>
+          <label class="pv-campo">Nome da loja<input name="loja" autocomplete="organization" maxlength="80" required aria-describedby="pv-form-erro"></label>
+          <label class="pv-campo">Instagram da loja<input name="instagram" maxlength="40" placeholder="@sualoja" autocapitalize="off"></label>
+          <label class="pv-campo">WhatsApp com DDD<input name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" maxlength="20" placeholder="(67) 99999-0000" required aria-describedby="pv-form-erro"></label>
+          <label class="pv-campo">Vitrine<select name="vitrine" id="pv-sel-vitrine"><option value="">Ainda não sei</option></select></label>
+          <label class="pv-campo">Plano<select name="plano"><option value="vitrine">Vitrine</option><option value="loja" selected>Loja</option><option value="completo">Completo</option></select></label>
+          <label class="pv-campo pv-campo-largo">Conte da sua loja (opcional)<textarea name="mensagem" rows="2" maxlength="500" placeholder="O que você vende, onde vende hoje, se já tem domínio..."></textarea></label>
+          <label class="pv-mel" aria-hidden="true">Não preencha<input name="site" tabindex="-1" autocomplete="off"></label>
           <p class="pv-form-erro" id="pv-form-erro" role="alert"></p>
-          <button class="pv-btn pv-btn-pri pv-btn-largo" type="submit">Enviar pedido</button>
+          <button class="pv-btn pv-btn-largo" type="submit">Enviar pedido</button>
           <p class="pv-form-nota">Seus dados servem só para falarmos com você sobre a loja.</p>
         </form>
         <div class="pv-ok" id="pv-ok" hidden tabindex="-1">
           <h3>Pedido enviado</h3>
           <p>Recebemos o pedido da <b id="pv-ok-loja"></b>. Vamos chamar você no WhatsApp para combinar os próximos passos.</p>
-          <a class="pv-btn pv-btn-pri" id="pv-ok-whats" href="#" target="_blank" rel="noopener" hidden>Falar agora no WhatsApp</a>
+          <a class="pv-btn" id="pv-ok-whats" href="#" target="_blank" rel="noopener" hidden>Falar agora no WhatsApp</a>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="pv-pe">
-    <div class="pv-larg pv-pe-in">
-      <a class="pv-marca pv-marca-clara" href="#topo"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 6c1.9 0 3.3 1.4 3.3 3.2 0 1.3-.8 2.4-2 2.9l-1.3.6v1.6l9.6 6.6c1 .7.5 2.3-.7 2.3H7.1c-1.2 0-1.7-1.6-.7-2.3l9.6-6.6"/></svg><span>provador</span></a>
-      <p>Lojas virtuais para quem vende roupa. Feito em Mato Grosso do Sul.</p>
-      <nav aria-label="Rodapé"><a href="#vitrines">Vitrines</a><a href="#planos">Planos</a><a href="montar/">Montar minha loja</a><a href="montar/?entrar=1">Entrar na minha loja</a><a href="painel/" rel="nofollow">Equipe</a></nav>
+    <p class="pv-pe-nome" aria-hidden="true"><svg viewBox="0 0 40 56"><use href="#pv-etiqueta"/></svg>Provador</p>
+    <div class="pv-pe-linha">
+      <div class="pv-pe-lugares">
+        <a href="montar/">Montar minha loja</a>
+        <a href="montar/?entrar=1">Entrar na minha loja</a>
+        <a href="#pedido" id="pv-pe-whats">Falar com a gente</a>
+      </div>
+      <nav class="pv-pe-links" aria-label="Rodapé">
+        <a href="#provador">Modelos</a>
+        <a href="#alem">Além do site</a>
+        <a href="#clientes">Sua cliente</a>
+        <a href="#planos">Planos</a>
+        <a href="#perguntas">Perguntas</a>
+        <a href="painel/" rel="nofollow">Equipe</a>
+      </nav>
+    </div>
+    <div class="pv-pe-fim">
+      <p>Provador, lojas virtuais para quem vende roupa. Feito em Mato Grosso do Sul. Fotos de ambiente do Unsplash, <a href="vitrines/_fotos/CREDITOS-AMBIENTE.md">créditos aqui</a>.</p>
+      <a href="#topo">Voltar ao topo</a>
     </div>
   </footer>
 
@@ -242,5 +416,6 @@
   <script src="shared/seed.js"></script>
   <script src="shared/plataforma.js"></script>
   <script src="assets/js/site.js"></script>
+  <script src="assets/js/provador-pagina.js"></script>
 </body>
 </html>

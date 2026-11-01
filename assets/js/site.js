@@ -52,6 +52,7 @@
       if (!iframe) {
         iframe = document.createElement('iframe');
         iframe.title = 'Vitrine ao vivo';
+        iframe.setAttribute('tabindex', '-1'); // o Tab não entra na loja do quadro; "Abrir em tela cheia" dá o acesso completo
         iframe.setAttribute('loading', 'eager');
         iframe.addEventListener('load', function () { escalar(); iframe.classList.add('pronta'); });
         $('#pv-vidro').insertBefore(iframe, $('.pv-cortina'));
@@ -79,7 +80,8 @@
   // botões de modelo (pré-build): no provador e na galeria
   function montarModelos() {
     var html = MODELOS.map(function (m) {
-      return '<button class="pv-filtro" type="button" data-modelo="' + esc(m.slug) + '" aria-pressed="' + (m.slug === modelo.slug) + '">' + esc(m.numero + ' · ' + m.nome) + '</button>';
+      // a etiqueta mostra o nome do modelo na letra dele (provador.css); o número fica no title
+      return '<button class="pv-filtro" type="button" data-modelo="' + esc(m.slug) + '" aria-pressed="' + (m.slug === modelo.slug) + '" title="Modelo ' + esc(m.numero) + '"><span>' + esc(m.nome) + '</span></button>';
     }).join('');
     Array.prototype.forEach.call(document.querySelectorAll('[data-modelos]'), function (el) { el.innerHTML = MODELOS.length > 1 ? html : ''; });
   }
@@ -176,7 +178,7 @@
       .catch(function (err) {
         var campos = (err && err.campos) || [];
         campos.forEach(function (k) { if (f.elements[k]) f.elements[k].setAttribute('aria-invalid', 'true'); });
-        erro.textContent = campos.length ? 'Falta ' + campos.map(function (k) { return ROTULO[k] || k; }).join(', ') + '.' : 'Não deu para enviar agora. Confira a internet e tente de novo.';
+        erro.textContent = campos.length ? 'Falta ' + campos.map(function (k) { return ROTULO[k] || k; }).join(', ') + '.' : 'Não deu para enviar agora. Seus dados continuam aqui: confira a internet e tente de novo.';
         if (campos.length && f.elements[campos[0]]) f.elements[campos[0]].focus();
       })
       .then(function () { botao.disabled = false; botao.textContent = 'Enviar pedido'; });
@@ -215,7 +217,15 @@
       var inicial = cores.filter(function (v) { return v.slug === sp.cor; })[0] || cores.filter(function (v) { return v.slug === 'grafite-lima'; })[0] || cores[0];
       atual = null; experimentar(inicial.slug);
       if (pedida) escolherVitrine(pedida);
-      var abrir = function () { requestAnimationFrame(function () { $('.pv-provador').classList.add('pv-aberta'); }); };
+      // a cortina abre quando o provador aparece na tela (no site novo ele fica abaixo do topo)
+      var abrir = function () {
+        var el = $('.pv-provador');
+        if (!('IntersectionObserver' in window)) { el.classList.add('pv-aberta'); return; }
+        var io = new IntersectionObserver(function (es) {
+          if (es.some(function (x) { return x.isIntersecting; })) { io.disconnect(); requestAnimationFrame(function () { el.classList.add('pv-aberta'); }); }
+        }, { threshold: 0.35 });
+        io.observe(el);
+      };
       var foto = $('#pv-foto');
       if (foto.complete) abrir(); else { foto.addEventListener('load', abrir); setTimeout(abrir, 1500); }
     }).catch(function () {
