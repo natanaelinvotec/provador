@@ -27,9 +27,26 @@
   }
   function catalogo(st) {
     if (st.catalogo) return Promise.resolve(st.catalogo);
-    return P.catalogo('../').then(function (c) { st.catalogo = c; return c; });
+    return Promise.all([P.catalogo('../'), P.modelos('../').catch(function () { return []; })]).then(function (r) {
+      st.modelos = (r[1] || []).slice().sort(function (a, b) { return a.numero - b.numero; });
+      st.catalogo = r[0]; return r[0];
+    });
   }
-  function nomeVitrine(st, slug) { var v = (st.catalogo || []).filter(function (x) { return x.slug === slug; })[0]; return v ? v.nome : (slug || '—'); }
+  function nomeVitrine(st, slug) { return slug ? P.nomeVitrine(slug, st.catalogo, st.modelos) : '—'; }
+  // todas as vitrines possíveis: cada modelo (pré-build) com as cores que ele tem
+  function vitrinesPorModelo(st) {
+    var mods = st.modelos && st.modelos.length ? st.modelos : [{ slug: 'classico', nome: 'Clássico', numero: 1, prefixo: '' }];
+    return mods.map(function (m) {
+      return { modelo: m, itens: (st.catalogo || []).filter(function (v) { return !m.prefixo || (v.publica && m.cores && m.cores[v.slug]); }).map(function (v) {
+        var t = m.prefixo ? m.cores[v.slug] : null;
+        return { slug: m.prefixo + v.slug, nome: t ? t.nome : v.nome, sub: t ? (t.modo === 'claro' ? 'fundo claro' : 'fundo escuro') : v.estilo + (v.publica ? '' : ', exclusiva'), cores: t ? [t.bg, t.accent, t.accent2] : (v.cores || []), t: t, cor: v.slug };
+      }) };
+    });
+  }
+  function topoVitrine(x) {
+    if (!x.t) return '<img src="../assets/img/vitrines/' + esc(x.cor) + '.jpg" alt="" loading="lazy">';
+    return '<span style="display:block;aspect-ratio:16/10;border-radius:10px;background:linear-gradient(110deg,' + esc(x.t.bg) + ' 0 56%,' + esc(x.t.accent) + ' 56% 70%,' + esc(x.t.bg) + ' 70% 76%,' + esc(x.t.accent2) + ' 76% 80%,' + esc(x.t.bg) + ' 80%)"></span>';
+  }
   function erroCampos(form, campos) {
     Array.prototype.forEach.call(form.querySelectorAll('.mg-campo'), function (c) { c.classList.remove('erro'); });
     Array.prototype.forEach.call(form.querySelectorAll('[aria-invalid]'), function (el) { el.removeAttribute('aria-invalid'); });
@@ -204,7 +221,9 @@
   function formLoja(d, st, l, extra) {
     l = l || { plano: 'loja', status: 'fila', dono: {}, implantacao: {} };
     var planos = Object.keys(d.precos.planos).map(function (k) { return '<option value="' + k + '"' + (l.plano === k ? ' selected' : '') + '>' + esc(d.precos.planos[k].nome) + ' (' + brl0(d.precos.planos[k].mensal) + '/mês)</option>'; }).join('');
-    var vits = '<option value="">Escolher depois</option>' + (st.catalogo || []).map(function (v) { return '<option value="' + esc(v.slug) + '"' + (l.vitrine === v.slug ? ' selected' : '') + '>' + esc(v.nome) + '</option>'; }).join('');
+    var vits = '<option value="">Escolher depois</option>' + vitrinesPorModelo(st).map(function (g) {
+      return '<optgroup label="' + esc('Modelo ' + g.modelo.numero + ': ' + g.modelo.nome) + '">' + g.itens.map(function (v) { return '<option value="' + esc(v.slug) + '"' + (l.vitrine === v.slug ? ' selected' : '') + '>' + esc(v.nome) + '</option>'; }).join('') + '</optgroup>';
+    }).join('');
     var campo = function (rot, nome, val, tipo, extraAttr, dica) {
       return '<label class="mg-campo">' + esc(rot) + '<input name="' + nome + '" type="' + (tipo || 'text') + '" value="' + esc(val == null ? '' : val) + '"' + (extraAttr || '') + '>' + (dica ? '<small>' + esc(dica) + '</small>' : '') + '</label>';
     };
@@ -313,12 +332,13 @@
   // gerar site: escolher a vitrine e receber o link
   A['loja-gerar'] = function (el, st) {
     var l = st.dados.lojas[el.dataset.id];
-    catalogo(st).then(function (cat) {
-      var cards = cat.map(function (v) {
-        return '<button type="button" class="mg-vit" data-acao="escolher-vitrine" data-slug="' + esc(v.slug) + '" aria-pressed="' + (l.vitrine === v.slug) + '">' +
-          '<img src="../assets/img/vitrines/' + esc(v.slug) + '.jpg" alt="" loading="lazy"><b>' + esc(v.nome) + '</b><span>' + esc(v.estilo) + (v.publica ? '' : ', exclusiva') + '</span></button>';
+    catalogo(st).then(function () {
+      var cards = vitrinesPorModelo(st).map(function (g) {
+        return '<h3 style="grid-column:1/-1;margin:10px 0 0">Modelo ' + esc(g.modelo.numero + ': ' + g.modelo.nome) + '</h3>' + g.itens.map(function (v) {
+          return '<button type="button" class="mg-vit" data-acao="escolher-vitrine" data-slug="' + esc(v.slug) + '" aria-pressed="' + (l.vitrine === v.slug) + '">' + topoVitrine(v) + '<b>' + esc(v.nome) + '</b><span>' + esc(v.sub) + '</span></button>';
+        }).join('');
       }).join('');
-      PN.abrirModal('<h2>Site da ' + esc(l.nome) + '</h2><p class="mg-sub">Escolha a vitrine. A loja abre com o nome, o Instagram e a cidade do cadastro.</p>' +
+      PN.abrirModal('<h2>Site da ' + esc(l.nome) + '</h2><p class="mg-sub">Escolha o modelo e a cor. A loja abre com o nome, o Instagram e a cidade do cadastro.</p>' +
         '<form data-form="gerar" novalidate style="margin-top:16px"><input type="hidden" name="id" value="' + esc(l.id) + '"><input type="hidden" name="vitrine" value="' + esc(l.vitrine || '') + '">' +
         '<div class="mg-vitrines">' + cards + '</div>' +
         '<div class="rodape"><a class="mg-btn" id="mg-ver-vitrine" href="../vitrine.html?v=' + esc(l.vitrine || 'vinho-delicado') + '" target="_blank" rel="noopener">' + ic('abrir') + 'Ver a vitrine</a>' +
@@ -655,10 +675,13 @@
     if (!st.catalogo) return card('Vitrines', '', vazio('Carregando as vitrines…', ''));
     var uso = {};
     lista(d.lojas).forEach(function (l) { if (l.vitrine) uso[l.vitrine] = (uso[l.vitrine] || 0) + 1; });
-    return card('Vitrines', st.catalogo.filter(function (v) { return v.publica; }).length + ' modelos no site de vendas, mais as exclusivas de clientes.', '<div class="mg-vitrines">' + st.catalogo.map(function (v) {
-      return '<a class="mg-vit" href="../vitrine.html?v=' + esc(v.slug) + '" target="_blank" rel="noopener"><img src="../assets/img/vitrines/' + esc(v.slug) + '.jpg" alt="" loading="lazy"><b>' + esc(v.nome) + '</b>' +
-        '<span>' + esc(v.estilo) + (v.publica ? '' : ', exclusiva') + '. ' + (uso[v.slug] ? uso[v.slug] + ' loja' + (uso[v.slug] === 1 ? '' : 's') : 'nenhuma loja ainda') + '</span>' +
-        '<span style="display:flex;gap:4px;margin-top:6px">' + (v.cores || []).map(function (c) { return '<i class="mg-cor" style="background:' + esc(c) + '"></i>'; }).join('') + '</span></a>';
+    var grupos = vitrinesPorModelo(st);
+    return card('Vitrines', grupos.length + (grupos.length === 1 ? ' modelo de site' : ' modelos de site (pré-builds)') + ', cada um com as cores do catálogo, mais as exclusivas de clientes.', '<div class="mg-vitrines">' + grupos.map(function (g) {
+      return '<h3 style="grid-column:1/-1;margin:12px 0 0">Modelo ' + esc(g.modelo.numero + ': ' + g.modelo.nome) + '</h3>' + g.itens.map(function (v) {
+        return '<a class="mg-vit" href="../vitrine.html?v=' + esc(v.slug) + '" target="_blank" rel="noopener">' + topoVitrine(v) + '<b>' + esc(v.nome) + '</b>' +
+          '<span>' + esc(v.sub) + '. ' + (uso[v.slug] ? uso[v.slug] + ' loja' + (uso[v.slug] === 1 ? '' : 's') : 'nenhuma loja ainda') + '</span>' +
+          '<span style="display:flex;gap:4px;margin-top:6px">' + v.cores.map(function (c) { return '<i class="mg-cor" style="background:' + esc(c) + '"></i>'; }).join('') + '</span></a>';
+      }).join('');
     }).join('') + '</div>');
   };
   D.vitrines = function (main, st) { if (!st.catalogo) catalogo(st).then(function () { PN.render(); }); };
