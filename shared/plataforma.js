@@ -588,6 +588,23 @@
     aplicarAcao: aplicarAcao,
     catalogo: function (base) {
       return fetch((base || '') + 'vitrines/catalogo.json', { cache: 'no-cache' }).then(function (r) { return r.json(); });
+    },
+    /** Pré-builds (modelos de site). A vitrine da loja é prefixo do modelo + cor: "arena-pink-pulse"; sem prefixo, modelo 1. */
+    modelos: function (base) {
+      return fetch((base || '') + 'vitrines/_modelos/modelos.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (d) { return d.modelos || []; });
+    },
+    separarVitrine: function (slug, modelos) {
+      slug = String(slug || '');
+      var m = (modelos || []).filter(function (x) { return x.prefixo && slug.indexOf(x.prefixo) === 0 && slug.length > x.prefixo.length; })
+        .sort(function (a, b) { return b.prefixo.length - a.prefixo.length; })[0];
+      var m1 = (modelos || []).filter(function (x) { return !x.prefixo; })[0] || { slug: 'classico', nome: 'Clássico', numero: 1, prefixo: '' };
+      return m ? { modelo: m, cor: slug.slice(m.prefixo.length) } : { modelo: m1, cor: slug };
+    },
+    /** "Arena · Pink Pulse" (modelo 1 mostra só a cor, como sempre foi). */
+    nomeVitrine: function (slug, catalogo, modelos) {
+      var s = window.Plataforma.separarVitrine(slug, modelos), c = (catalogo || []).filter(function (v) { return v.slug === s.cor; })[0];
+      var cor = c ? c.nome : (s.modelo.cores && s.modelo.cores[s.cor] ? s.modelo.cores[s.cor].nome : s.cor);
+      return s.modelo.prefixo ? s.modelo.nome + ' · ' + cor : cor;
     }
   }, api);
 })();
