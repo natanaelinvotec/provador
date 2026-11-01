@@ -1,0 +1,54 @@
+# Pré-builds: monta as telas do motor comum, gera as cores dos modelos e baixa fotos e fontes livres.
+# Roda quando algo muda em tools/prebuild/ (ou pelo botão "Run workflow") e grava o resultado na main.
+name: Pré-builds
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/prebuild/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: prebuilds
+  cancel-in-progress: false
+
+jobs:
+  montar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Fotos e fontes (Unsplash e Google Fonts)
+        run: python3 tools/prebuild/baixar_ativos.py
+
+      - name: Telas do motor comum
+        run: |
+          if [ -f tools/prebuild/fontes/_base/partes.py ]; then python3 tools/prebuild/fontes/_base/partes.py; fi
+
+      - name: Modelos e cores
+        run: |
+          if [ -f tools/prebuild/modelos_motor.py ]; then python3 tools/prebuild/modelos_motor.py; fi
+
+      - name: Gravar na main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A vitrines assets
+          if git diff --cached --quiet; then echo "Nada mudou."; exit 0; fi
+          git commit -m "Pré-builds: telas, cores, fotos e fontes geradas pelo workflow"
+          git pull --rebase origin main
+          git push
+
+      - name: Atualizar o GitHub Pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds" || echo "O Pages atualiza no próximo commit."
