@@ -254,6 +254,29 @@ service cloud.firestore {
       allow delete: if dono(resource.data.lojaId);
     }
 
+    // canais de venda (Meta, Google e hubs): a dona liga e configura; leitura pública porque o workflow
+    // que publica os arquivos dos canais lê daqui (só dados de catálogo, nada financeiro nem de clientes)
+    function medidaOk(v, min, max) { return v is int && v >= min && v <= max; }
+    function canaisOk(d) {
+      return d.keys().hasOnly(['lojaId', 'slug', 'ativo', 'marca', 'genero', 'idade', 'catRoupas', 'catAcess',
+          'pesoG', 'comprimentoCm', 'larguraCm', 'alturaCm', 'ncm', 'atualizadoEm'])
+        && d.ativo is bool && texto(d.marca, 0, 80)
+        && d.genero in ['female', 'male', 'unisex'] && d.idade in ['adult', 'teen', 'kids']
+        && d.catRoupas in ['5322', '1604', '167', '166'] && d.catAcess in ['5322', '1604', '167', '166']
+        && medidaOk(d.pesoG, 10, 30000) && medidaOk(d.comprimentoCm, 1, 200) && medidaOk(d.larguraCm, 1, 200) && medidaOk(d.alturaCm, 1, 200)
+        && d.ncm is string && d.ncm.matches('^([0-9]{8})?$') && texto(d.atualizadoEm, 0, 30);
+    }
+    match /canaisAtivos/{slug} {
+      allow read: if true;
+      allow create, update: if slugOk(slug)
+        && dono(request.resource.data.lojaId)
+        && request.resource.data.slug == slug
+        && (resource == null || resource.data.lojaId == request.resource.data.lojaId)
+        && get(/databases/$(database)/documents/lojasPublicas/$(slug)).data.lojaId == request.resource.data.lojaId
+        && canaisOk(request.resource.data);
+      allow delete: if dono(resource.data.lojaId) || plataforma();
+    }
+
     match /{caminho=**} { allow read, write: if false; }
   }
 }
