@@ -22,7 +22,7 @@
   var DICAS = ['Luz de janela, sem flash', 'Fundo liso (parede ou lençol)', 'Celular em pé', 'Sem filtro e sem moldura'];
 
   var S = {
-    passo: 0, rz: null, conta: null, painel: false, lojaReal: null, vitrines: [], catAtiva: 'conjuntos', pagPrevia: 'inicio',
+    passo: 0, rz: null, conta: null, painel: false, lojaReal: null, vitrines: [], modelos: [], catAtiva: 'conjuntos', pagPrevia: 'inicio',
     removidos: [], salvando: false, entrando: false
   };
   var PASSOS_NOVO = ['Sua loja', 'Vitrine', 'Fotos', 'Publicar'], PASSOS_PAINEL = ['Loja', 'Vitrine', 'Fotos', 'Plano'];
@@ -39,7 +39,20 @@
     tGravar = setTimeout(function () { window.Rascunho.gravar(S.rz).catch(function () { aviso('O navegador não deixou guardar o rascunho.'); }); }, 350);
     if (previa !== false) { clearTimeout(tPrevia); tPrevia = setTimeout(atualizarPrevia, 900); }
   }
+  // as 15 cores do modelo escolhido, na barra de cima da prévia: troca a cor sem sair do passo atual
+  function desenharCoresPrevia() {
+    var box = $('#mt-previa-cores');
+    if (!box || !S.vitrines.length) return;
+    var m = P.separarVitrine(S.rz.vitrine, S.modelos).modelo;
+    box.innerHTML = S.vitrines.filter(function (v) { return v.publica && (!m.prefixo || (m.cores && m.cores[v.slug])); }).map(function (v) {
+      var t = m.prefixo ? m.cores[v.slug] : null, c = t ? [t.bg, t.accent] : [(v.cores || [])[0], (v.cores || [])[1]];
+      var slug = m.prefixo + v.slug, nome = t ? t.nome : v.nome;
+      return '<button type="button" class="mt-cor" data-vitrine="' + esc(slug) + '" aria-pressed="' + (S.rz.vitrine === slug) + '" title="' + esc(nome) + '" aria-label="Cor ' + esc(nome) + '"' +
+        ' style="background:linear-gradient(135deg,' + esc(c[0]) + ' 0 50%,' + esc(c[1]) + ' 50% 100%)"></button>';
+    }).join('');
+  }
   function atualizarPrevia() {
+    desenharCoresPrevia();
     var q = new URLSearchParams({ rascunho: '1', v: S.rz.vitrine, p: S.pagPrevia, t: String(Date.now()) });
     $('#mt-iframe').src = '../vitrine.html?' + q.toString();
     var marca = (S.rz.loja.marcaCurta || S.rz.loja.nome || 'sualoja').toLowerCase().replace(/[^a-z0-9]+/g, '');
@@ -93,11 +106,20 @@
       campo('WhatsApp da loja', 'whatsappLoja', l.whatsappLoja, ' type="tel" inputmode="tel" maxlength="20" autocomplete="tel"', 'Onde as clientes falam com você. Com DDD.') +
       (S.painel ? '' : campo('Seu nome', 'donoNome', l.donoNome, ' maxlength="80" autocomplete="name"')) + '</form>';
   }
+  // a vitrine é modelo (pré-build) + cor: "pink-pulse" no modelo 1, "arena-pink-pulse" no Arena
   function telaVitrine() {
-    var lista = S.vitrines.filter(function (v) { return v.publica; });
-    return '<h1>Escolha a vitrine</h1><p class="mt-sub">Todas funcionam igual. Muda a cara da loja. Pode trocar quando quiser.</p>' +
-      '<div class="mt-vits">' + lista.map(function (v) {
-        return '<button type="button" class="mt-vit" data-vitrine="' + esc(v.slug) + '" aria-pressed="' + (S.rz.vitrine === v.slug) + '"><img src="../assets/img/vitrines/' + esc(v.slug) + '.jpg" alt="" loading="lazy"><b>' + esc(v.nome) + '</b><span>' + esc(v.estilo) + '</span></button>';
+    var sep = P.separarVitrine(S.rz.vitrine, S.modelos), m = sep.modelo;
+    var cores = S.vitrines.filter(function (v) { return v.publica && (!m.prefixo || (m.cores && m.cores[v.slug])); });
+    var modelos = S.modelos.length > 1 ? '<h2 class="mt-h2">Modelo do site</h2><div class="mt-mods" role="group" aria-label="Modelo do site">' + S.modelos.map(function (x) {
+      return '<button type="button" class="mt-mod" data-modelo="' + esc(x.slug) + '" aria-pressed="' + (x.slug === m.slug) + '"><img src="../' + esc(x.foto) + '" alt="" loading="lazy">' +
+        '<span class="mt-mod-n">Modelo ' + esc(x.numero) + '</span><b>' + esc(x.nome) + '</b><span>' + esc(x.descricao) + '</span></button>';
+    }).join('') + '</div><h2 class="mt-h2">Cor dos menus e botões</h2>' : '';
+    return '<h1>Escolha o modelo e a cor</h1><p class="mt-sub">O modelo muda o desenho do site; a cor muda o tom dos menus e botões. Pode trocar quando quiser.</p>' + modelos +
+      '<div class="mt-vits">' + cores.map(function (v) {
+        var slug = m.prefixo + v.slug, t = m.prefixo ? m.cores[v.slug] : null;
+        var topo = t ? '<span class="mt-amostra" style="background:' + esc(t.bg) + '"><i style="background:' + esc(t.accent) + '"></i><i style="background:' + esc(t.accent2) + '"></i></span>'
+          : '<img src="../assets/img/vitrines/' + esc(v.slug) + '.jpg" alt="" loading="lazy">';
+        return '<button type="button" class="mt-vit" data-vitrine="' + esc(slug) + '" aria-pressed="' + (S.rz.vitrine === slug) + '">' + topo + '<b>' + esc(t ? t.nome : v.nome) + '</b><span>' + esc(t ? (t.modo === 'claro' ? 'Fundo claro' : 'Fundo escuro') : v.estilo) + '</span></button>';
       }).join('') + '</div>';
   }
 
@@ -197,7 +219,11 @@
     else if (semPreco) ok += '<p class="mt-falta leve">' + semPreco + (semPreco === 1 ? ' foto está' : ' fotos estão') + ' sem preço. Pode publicar e completar depois no painel.</p>';
     return ok;
   }
-  function nomeVitrine(slug) { var v = S.vitrines.filter(function (x) { return x.slug === slug; })[0]; return v ? v.nome : slug; }
+  function nomeVitrine(slug) { return P.nomeVitrine(slug, S.vitrines, S.modelos); }
+  function vitrineValida(slug) {
+    var s = P.separarVitrine(slug, S.modelos), c = S.vitrines.filter(function (v) { return v.slug === s.cor && v.publica; })[0];
+    return !!c && (!s.modelo.prefixo || !!(s.modelo.cores && s.modelo.cores[s.cor]));
+  }
   function diasTeste() { var l = S.lojaReal; if (!l) return 0; var ate = l.trialAteMs || Date.parse(l.trialAte); return Math.max(0, Math.ceil((ate - Date.now()) / 864e5)); }
   function linkLoja() { return S.lojaReal ? new URL('../vitrine.html?l=' + encodeURIComponent(S.lojaReal.slug), location.href).href : ''; }
   function telaPlano() {
@@ -322,6 +348,14 @@
     if (!b) return;
     if (b.dataset.passo) return ir(Number(b.dataset.passo));
     if (b.dataset.vitrine) { S.rz.vitrine = b.dataset.vitrine; mudou(); desenhar(); atualizarPrevia(); return; }
+    if (b.dataset.modelo) {
+      // troca o modelo e fica na mesma cor (se o modelo novo não tiver a cor, vai para a primeira)
+      var mod = S.modelos.filter(function (x) { return x.slug === b.dataset.modelo; })[0], cor = P.separarVitrine(S.rz.vitrine, S.modelos).cor;
+      if (!mod) return;
+      var nova = mod.prefixo + cor;
+      if (!vitrineValida(nova)) { var c1 = S.vitrines.filter(function (v) { return v.publica && vitrineValida(mod.prefixo + v.slug); })[0]; if (c1) nova = mod.prefixo + c1.slug; }
+      S.rz.vitrine = nova; mudou(); desenhar(); atualizarPrevia(); return;
+    }
     if (b.dataset.cat) { S.catAtiva = b.dataset.cat; desenhar(); return; }
     if (b.dataset.pag) { S.pagPrevia = b.dataset.pag; Array.prototype.forEach.call(document.querySelectorAll('[data-pag]'), function (x) { x.setAttribute('aria-pressed', String(x === b)); }); atualizarPrevia(); return; }
     if (b.dataset.tam) {
@@ -378,10 +412,11 @@
   /* ---------- início ---------- */
   function iniciar() {
     var q = new URLSearchParams(location.search);
-    Promise.all([window.Rascunho.ler(), P.catalogo('../'), P.contaLojista().catch(function () { return null; })]).then(function (r) {
+    Promise.all([window.Rascunho.ler(), P.catalogo('../'), P.contaLojista().catch(function () { return null; }), P.modelos('../').catch(function () { return []; })]).then(function (r) {
       S.rz = r[0] && r[0].loja ? r[0] : novoRascunho();
       S.vitrines = r[1] || [];
-      if (q.get('vitrine') && S.vitrines.some(function (v) { return v.slug === q.get('vitrine') && v.publica; })) S.rz.vitrine = q.get('vitrine');
+      S.modelos = r[3] || [];
+      if (q.get('vitrine') && vitrineValida(q.get('vitrine'))) S.rz.vitrine = q.get('vitrine');
       if (['vitrine', 'loja', 'completo'].indexOf(q.get('plano')) >= 0) S.rz.loja.plano = q.get('plano');
       S.conta = r[2];
       if (q.get('entrar') === '1' && !S.conta) S.entrando = true;
