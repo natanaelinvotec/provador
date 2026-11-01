@@ -26,6 +26,8 @@
     removidos: [], salvando: false, entrando: false
   };
   var PASSOS_NOVO = ['Sua loja', 'Vitrine', 'Fotos', 'Publicar'], PASSOS_PAINEL = ['Loja', 'Vitrine', 'Fotos', 'Plano'];
+  // veio do painel da loja (?volta=loja): depois de entrar ou publicar, volta para ../loja/
+  var VOLTA_LOJA = new URLSearchParams(location.search).get('volta') === 'loja';
 
   function novoRascunho() {
     return { loja: { nome: '', marcaCurta: '', marcaSub: 'MODA FITNESS', cidade: '', instagram: '', whatsappLoja: '', donoNome: '', plano: 'loja' }, vitrine: 'vinho-delicado', itens: [], atualizado: Date.now() };
@@ -288,6 +290,8 @@
     st.hidden = false;
     st.innerHTML = (l.status === 'teste' ? '<span class="mt-selo">' + (dias ? dias + (dias === 1 ? ' dia grátis' : ' dias grátis') : 'teste encerrado') + '</span>' : '<span class="mt-selo ok">loja ativa</span>') +
       '<a href="' + esc(linkLoja()) + '" target="_blank" rel="noopener">Ver minha loja</a>';
+    var irLoja = $('#mt-ir-loja'); if (irLoja) irLoja.hidden = false;
+    if (VOLTA_LOJA) { location.replace('../loja/'); return; }
     desenharPassos(); atualizarPrevia();
   }
   function salvarPainel() {

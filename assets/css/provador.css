@@ -487,7 +487,9 @@ html:not(.js) .pv-vantagens p{max-height:none}
 @keyframes pv-troca{from{opacity:0}to{opacity:1}}
 .pv-plano-furo{position:absolute;top:26px;left:50%;width:24px;height:24px;margin-left:-12px;border-radius:50%;background:var(--papel)}
 .pv-preco{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
-.pv-preco b{font:400 clamp(64px,8.6vw,136px)/.9 var(--f-tit);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.pv-preco-de{flex-basis:100%;font:400 clamp(26px,2.4vw,36px)/1 var(--f-tit);color:#FFD2E1;text-decoration:line-through;text-decoration-thickness:3px;text-decoration-color:#fff}
+.pv-preco-de[hidden]{display:none}
+.pv-preco b{font:400 clamp(60px,7.6vw,124px)/.9 var(--f-tit);letter-spacing:-.03em;font-variant-numeric:tabular-nums;white-space:nowrap}
 .pv-preco span{font-weight:800;font-size:18px}
 .pv-impl{font-weight:600;font-size:18px}
 .pv-impl b{font-weight:800}
@@ -581,3 +583,7 @@ html:not(.js) .pv-faq-r{display:block;padding:0 0 12px 23px}
 @media (prefers-reduced-motion:reduce){.js .pv-entra{opacity:1;transform:none;transition:none}}
 .pv-chega-claro{background:var(--campo);color:var(--tinta);margin-left:4px;transform:translateY(-1px)}
 .pv-breve{display:inline-block;padding:3px 8px;background:#fff;color:var(--rosa-2);font:800 13px/1.2 var(--f-txt);white-space:nowrap;vertical-align:1px}
+.pv-impl s{color:#FFD2E1;text-decoration-thickness:2px;text-decoration-color:#fff}
+.pv-impl s[hidden],.pv-impl .pv-sr[hidden]{display:none}
+.pv-equipe{font-weight:600;font-size:16px;margin-top:-6px;max-width:44ch}
+.pv-equipe b{font-weight:800}

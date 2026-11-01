@@ -157,11 +157,21 @@
       var col = document.querySelector('.pv-plano[data-plano="' + k + '"]');
       if (!col) return;
       col.querySelector('[data-mensal]').textContent = brl(p.planos[k].mensal);
+      var de = col.querySelector('[data-mensal-de]'), vDe = Number(p.planos[k].mensalDe) || 0;
+      if (de) { de.textContent = brl(vDe); de.hidden = !(vDe > p.planos[k].mensal); if (de.previousElementSibling) de.previousElementSibling.hidden = de.hidden; }
       col.querySelector('[data-impl]').textContent = brl(p.planos[k].implantacao);
+      var iDe = col.querySelector('[data-impl-de]'), vIDe = Number(p.planos[k].implantacaoDe) || 0;
+      if (iDe) { iDe.textContent = brl(vIDe); iDe.hidden = !(vIDe > 0); if (iDe.previousElementSibling) iDe.previousElementSibling.hidden = iDe.hidden; }
+      var parc = col.querySelector('[data-parcelas]'), n = Math.max(1, Number(p.implantacaoParcelas) || 1);
+      if (parc) parc.textContent = n > 1 ? n + 'x de ' + brl(Math.round(p.planos[k].implantacao / n * 100) / 100) : brl(p.planos[k].implantacao);
     });
     var taxa = pct(p.splitPct) + (p.splitFixo ? ' + ' + brl(p.splitFixo) : '');
-    $('#pv-split').innerHTML = 'Nos planos com venda pelo site entra também <b>' + esc(taxa) + ' de cada venda paga</b>. O resto vai direto para a sua conta.' +
-      (p.dominioAno ? ' Domínio .com.br, se você ainda não tiver: <b>' + esc(brl(p.dominioAno)) + ' por ano</b>.' : '');
+    // montagem pela equipe (o mesmo valor em todos os planos; usa o do plano Loja)
+    var eq = (p.planos.loja || p.planos[Object.keys(p.planos)[0]] || {}).implantacao, ne = Math.max(1, Number(p.implantacaoParcelas) || 1);
+    Array.prototype.forEach.call(document.querySelectorAll('[data-impl-equipe]'), function (el) { el.textContent = brl(eq); });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-parcelas-equipe]'), function (el) { el.textContent = ne > 1 ? ne + 'x de ' + brl(Math.round(eq / ne * 100) / 100) : brl(eq); });
+    // a taxa por venda não aparece nos planos; fica só o domínio
+    $('#pv-split').innerHTML = p.dominioAno ? 'Domínio .com.br, se você ainda não tiver: <b>' + esc(brl(p.dominioAno)) + ' por ano</b>.' : '';
   }
 
   /* ---------- formulário ---------- */

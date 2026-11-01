@@ -10,7 +10,7 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
-  var brl = function (n, dec) { return (Number(n) || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: dec ? 2 : 0, maximumFractionDigits: dec ? 2 : 0 }); };
+  var brl = function (n, dec) { var v = Number(n) || 0; dec = dec || Math.abs(v - Math.round(v)) > 0.004; return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: dec ? 2 : 0, maximumFractionDigits: dec ? 2 : 0 }); };
   var reduz = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var cfg = window.PROVADOR_CONFIG || {};
 
@@ -18,8 +18,8 @@
    * Situação de cada módulo no painel da lojista. 'pronto' some com o selo; 'chegando' mostra "Em breve".
    * Quando um módulo for lançado, troque aqui para 'pronto'.
    */
-  var MODULOS = { caixa: 'chegando', estoque: 'chegando', relatorios: 'chegando', fluxos: 'chegando', apps: 'chegando' };
-  var CLIENTE = { vip: 'chegando', compra: 'pronto', app: 'chegando', reposicao: 'chegando', favoritos: 'pronto', pedido: 'chegando' };
+  var MODULOS = { caixa: 'pronto', estoque: 'pronto', relatorios: 'pronto', fluxos: 'pronto', apps: 'pronto' };
+  var CLIENTE = { vip: 'pronto', compra: 'pronto', app: 'pronto', reposicao: 'pronto', favoritos: 'pronto', pedido: 'pronto' };
 
   /* ---------- topo: capas dos modelos sob o nome fixo ---------- */
   var HERO = [['bloco', 'pink-pulse'], ['trilha', 'laranja-energia'], ['impacto', 'grafite-lima'],

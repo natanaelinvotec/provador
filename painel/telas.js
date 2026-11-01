@@ -577,11 +577,14 @@
     var planos = Object.keys(p.planos).map(function (k) {
       return '<fieldset class="mg-card" style="border:0;box-shadow:none;background:var(--card2);padding:14px"><legend class="mg-sub" style="font-weight:800;color:var(--tinta)">' + esc(p.planos[k].nome) + '</legend><div class="mg-form" style="grid-template-columns:1fr 1fr">' +
         '<label class="mg-campo">Mensalidade (R$)<input name="' + k + '.mensal" type="number" min="0" step="0.01" value="' + esc(p.planos[k].mensal) + '"></label>' +
-        '<label class="mg-campo">Implantação (R$)<input name="' + k + '.implantacao" type="number" min="0" step="0.01" value="' + esc(p.planos[k].implantacao) + '"></label></div></fieldset>';
+        '<label class="mg-campo">Mensalidade "de", riscada (R$)<input name="' + k + '.mensalDe" type="number" min="0" step="0.01" value="' + esc(p.planos[k].mensalDe || 0) + '"><small>0 tira o preço riscado do site.</small></label>' +
+        '<label class="mg-campo">Montagem "de", riscada (R$)<input name="' + k + '.implantacaoDe" type="number" min="0" step="0.01" value="' + esc(p.planos[k].implantacaoDe || 0) + '"><small>Montando sozinha é grátis.</small></label>' +
+        '<label class="mg-campo">Montagem pela equipe (R$)<input name="' + k + '.implantacao" type="number" min="0" step="0.01" value="' + esc(p.planos[k].implantacao) + '"></label></div></fieldset>';
     }).join('');
     var form = '<form data-form="precos" novalidate><div class="mg-grade mg-g3">' + planos + '</div><div class="mg-form" style="margin-top:14px">' +
       '<label class="mg-campo">Split: % de cada venda paga<input name="splitPct" type="number" min="0" max="20" step="0.1" value="' + esc(p.splitPct) + '"><small>De 0 a 20%.</small></label>' +
       '<label class="mg-campo">Split: R$ fixo por pedido pago<input name="splitFixo" type="number" min="0" max="50" step="0.01" value="' + esc(p.splitFixo) + '"><small>Opcional, soma ao percentual.</small></label>' +
+      '<label class="mg-campo">Montagem pela equipe: em até quantas vezes<input name="implantacaoParcelas" type="number" min="1" max="12" step="1" value="' + esc(p.implantacaoParcelas || 1) + '"></label>' +
       '<label class="mg-campo">Domínio por ano (R$)<input name="dominioAno" type="number" min="0" step="0.01" value="' + esc(p.dominioAno) + '"></label>' +
       '<label class="mg-campo">Dia de vencimento<input name="venceDia" type="number" min="1" max="28" step="1" value="' + esc(p.venceDia) + '"><small>De 1 a 28, igual para todo mês.</small></label>' +
       '<label class="mg-campo">Gateway com split ligado?<select name="gatewayLigado"><option value="nao"' + (p.gatewayLigado ? '' : ' selected') + '>Ainda não (split previsto)</option><option value="sim"' + (p.gatewayLigado ? ' selected' : '') + '>Sim</option></select></label></div>' +
@@ -616,11 +619,14 @@
     var p = JSON.parse(JSON.stringify(atual));
     Object.keys(p.planos).forEach(function (k) {
       p.planos[k].mensal = Number(form.elements[k + '.mensal'].value);
+      p.planos[k].mensalDe = Number(form.elements[k + '.mensalDe'] ? form.elements[k + '.mensalDe'].value || 0 : p.planos[k].mensalDe || 0);
+      p.planos[k].implantacaoDe = Number(form.elements[k + '.implantacaoDe'] ? form.elements[k + '.implantacaoDe'].value || 0 : p.planos[k].implantacaoDe || 0);
       p.planos[k].implantacao = Number(form.elements[k + '.implantacao'].value);
     });
     p.splitPct = Number(form.elements.splitPct.value);
     p.splitFixo = Number(form.elements.splitFixo.value || 0);
     p.dominioAno = Number(form.elements.dominioAno.value);
+    if (form.elements.implantacaoParcelas) p.implantacaoParcelas = Number(form.elements.implantacaoParcelas.value) || 1;
     p.venceDia = Number(form.elements.venceDia.value);
     p.gatewayLigado = form.elements.gatewayLigado.value === 'sim';
     return p;

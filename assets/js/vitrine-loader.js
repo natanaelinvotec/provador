@@ -4,6 +4,8 @@
  *   vitrine.html?v=<vitrine>&p=<pagina>   demonstração de um modelo do catálogo
  *   vitrine.html?l=<loja>&p=<pagina>      loja de uma cliente (marca e vitrine vêm do cadastro)
  *   domínio próprio (ex.: aismodafitness.com.br) -> procura a loja pelo domínio
+ *   ...&vip=<código>          lançamentos VIP da loja;  ...&acompanhar=<token>  página "Acompanhar pedido"
+ *   (os extras de todos os modelos ficam em assets/js/vitrine-extras.js)
  *
  * As telas são os arquivos .dc.html da vitrine; as marcas @@...@@ viram os dados da loja.
  * Pré-builds (vitrines/_modelos/modelos.json): o slug da vitrine é prefixo do modelo + cor
@@ -151,7 +153,9 @@
       if (loja.status !== 'ativa' && !testeValido(loja)) throw new Error(loja.status === 'teste' ? 'O teste grátis desta loja terminou. Fale com a loja pelo Instagram.' : 'Esta loja ainda não está no ar.');
       if (!SLUG.test(String(loja.vitrine || ''))) throw new Error('Esta loja ainda não tem vitrine.');
       var itens = loja.lojaId && plat.itensDaLoja ? await plat.itensDaLoja(loja.lojaId).catch(function () { return []; }) : [];
-      return { vitrine: loja.vitrine, marca: loja.marca, base: { l: loja.slug }, loja: true, itens: await emBlob(itens) };
+      // estoque zerado e lançamento VIP (assets/js/vitrine-extras.js), antes das fotos virarem blob:
+      if (window.VitrineExtras) itens = await window.VitrineExtras.filtrarItens(itens, loja, p);
+      return { vitrine: loja.vitrine, marca: loja.marca, base: { l: loja.slug }, loja: true, publica: loja, itens: await emBlob(itens) };
     }
     // 2) prévia do montador: rascunho guardado neste navegador
     if (p.rascunho && window.Rascunho) {
@@ -209,6 +213,17 @@
       if (p.tela) props.telaInicial = p.tela;
       DCRuntime.mount(src, document.getElementById('app'), { props: props, key: 'vitrine' });
       document.documentElement.setAttribute('data-vitrine', r.vitrine);
+      // avise-me, lista VIP, instalar a loja e acompanhar pedido, por cima de qualquer modelo (assets/js/vitrine-extras.js)
+      if (window.VitrineExtras) {
+        try {
+          window.VitrineExtras.montar({
+            loja: r.publica || null, lojaId: (r.publica && r.publica.lojaId) || '', slug: r.base.l || '', params: p, pagina: page,
+            demo: !r.loja, rascunho: !!r.base.rascunho, item: p.item || '', itens: r.itens || [], porProps: porProps,
+            marca: Object.assign({}, DEMO, r.marca || {}),
+            links: { inicio: linkFor(r.base, 'inicio'), colecao: linkFor(r.base, 'colecao'), produto: linkFor(r.base, 'produto'), sacola: linkFor(r.base, 'sacola') }
+          });
+        } catch (ex) { console.warn('[vitrine] extras:', ex); }
+      }
     } catch (e) {
       showError(e.message || String(e));
     }

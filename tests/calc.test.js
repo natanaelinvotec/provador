@@ -10,7 +10,8 @@ test('preços: padrão e valor fora da faixa volta ao padrão', () => {
   const p = C.lerPrecos({ splitPct: 50, venceDia: 31, planos: { loja: { mensal: -5, implantacao: 2000 } } });
   assert.equal(p.splitPct, 1.5);
   assert.equal(p.venceDia, 10);
-  assert.equal(p.planos.loja.mensal, 129);
+  assert.equal(p.planos.loja.mensal, 69.9);
+  assert.equal(p.planos.loja.mensalDe, 129);
   assert.equal(p.planos.loja.implantacao, 2000);
 });
 
@@ -24,10 +25,10 @@ test('validarPrecos recusa vencimento 31 e campo negativo', () => {
 
 test('rendimento: mensalidade + split + domínio', () => {
   const r = C.rendimento({ plano: 'loja', dominio: 'x.com.br' }, { gmvPago: 10000, pagos: 200 }, P);
-  assert.equal(r.assinatura, 129);
+  assert.equal(r.assinatura, 69.9);
   assert.equal(r.split, 150);
   assert.equal(r.site, 3.33);
-  assert.equal(r.total, 282.33);
+  assert.equal(r.total, 223.23);
   assert.equal(C.rendimento({ plano: 'loja', cobranca: { isento: true } }, {}, P).assinatura, 0);
 });
 

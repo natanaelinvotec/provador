@@ -14,10 +14,13 @@
 
   var PADRAO = {
     planos: {
-      vitrine: { nome: 'Vitrine', mensal: 59, implantacao: 600 },
-      loja: { nome: 'Loja', mensal: 129, implantacao: 1800 },
-      completo: { nome: 'Completo', mensal: 179, implantacao: 3000 }
+      // mensalDe / implantacaoDe: preço "de" mostrado riscado no site (0 = sem preço riscado).
+      // implantacao: montagem pela equipe de marketing (montando sozinha no montador, é grátis).
+      vitrine: { nome: 'Vitrine', mensal: 49.9, mensalDe: 59, implantacao: 189.9, implantacaoDe: 600 },
+      loja: { nome: 'Loja', mensal: 69.9, mensalDe: 129, implantacao: 189.9, implantacaoDe: 1800 },
+      completo: { nome: 'Completo', mensal: 79.9, mensalDe: 179, implantacao: 189.9, implantacaoDe: 3000 }
     },
+    implantacaoParcelas: 5, // a montagem pela equipe pode ser dividida em até N vezes
     splitPct: 1.5,        // % de cada venda paga que fica com a plataforma
     splitFixo: 0,         // R$ por pedido pago (opcional)
     dominioAno: 40,       // repasse anual do domínio, rateado por mês
@@ -31,7 +34,7 @@
   var FAIXAS = {
     splitPct: [0, 20], splitFixo: [0, 50], dominioAno: [0, 1000], venceDia: [1, 28], trialDias: [0, 90],
     iaPrecoEntradaMilhao: [0, 10000], iaPrecoSaidaMilhao: [0, 10000], iaTetoMes: [0, 1000000],
-    mensal: [0, 10000], implantacao: [0, 100000]
+    mensal: [0, 10000], mensalDe: [0, 10000], implantacao: [0, 100000], implantacaoDe: [0, 100000], implantacaoParcelas: [1, 12]
   };
 
   function arred(v) { return Math.round((Number(v) || 0) * 100) / 100; }
@@ -46,12 +49,15 @@
     });
     if (Number.isInteger(p.venceDia) && noIntervalo(p.venceDia, 'venceDia')) out.venceDia = p.venceDia;
     if (typeof p.gatewayLigado === 'boolean') out.gatewayLigado = p.gatewayLigado;
+    if (Number.isInteger(p.implantacaoParcelas) && noIntervalo(p.implantacaoParcelas, 'implantacaoParcelas')) out.implantacaoParcelas = p.implantacaoParcelas;
     if (p.planos) {
       Object.keys(out.planos).forEach(function (id) {
         var src = p.planos[id];
         if (!src) return;
         if (noIntervalo(src.mensal, 'mensal')) out.planos[id].mensal = src.mensal;
+        if (noIntervalo(src.mensalDe, 'mensalDe')) out.planos[id].mensalDe = src.mensalDe;
         if (noIntervalo(src.implantacao, 'implantacao')) out.planos[id].implantacao = src.implantacao;
+        if (noIntervalo(src.implantacaoDe, 'implantacaoDe')) out.planos[id].implantacaoDe = src.implantacaoDe;
       });
     }
     return out;
@@ -68,6 +74,8 @@
       var src = (p.planos || {})[id] || {};
       if (!noIntervalo(src.mensal, 'mensal')) erros.push(id + '.mensal');
       if (!noIntervalo(src.implantacao, 'implantacao')) erros.push(id + '.implantacao');
+      if (src.mensalDe != null && !noIntervalo(src.mensalDe, 'mensalDe')) erros.push(id + '.mensalDe');
+      if (src.implantacaoDe != null && !noIntervalo(src.implantacaoDe, 'implantacaoDe')) erros.push(id + '.implantacaoDe');
     });
     return erros;
   }

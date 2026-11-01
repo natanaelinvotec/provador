@@ -123,11 +123,13 @@
     if (!l) return null;
     var o = { slug: l.slug, vitrine: l.vitrine, status: l.status, dominio: l.dominio || '', marca: marcaDaLoja(l), lojaId: l.id };
     if (l.status === 'teste') { o.trialAte = l.trialAte || ''; if (l.trialAteTs) o.trialAteTs = l.trialAteTs; }
+    if (l.vipHash) o.vipHash = l.vipHash; // demonstração: o painel da loja guarda o hash do link VIP junto da loja
     return o;
   }
   // campos que a própria lojista pode mudar na loja dela (o resto, como cobrança e status, é da plataforma)
   var CAMPOS_LOJISTA = ['nome', 'marcaCurta', 'marcaSub', 'cidade', 'instagram', 'whatsappLoja', 'vitrine', 'dominioPedido'];
-  var CAMPOS_ITEM = ['nome', 'cat', 'cor', 'hex', 'preco', 'tamanhos', 'img', 'img2', 'novo', 'ordem', 'descricao'];
+  // estoque: { P: 3, M: 0, ... } por tamanho; sku: código da etiqueta; vipAte: 'AAAA-MM-DDTHH:MM' (até essa hora, só a lista VIP vê a peça)
+  var CAMPOS_ITEM = ['nome', 'cat', 'cor', 'hex', 'preco', 'tamanhos', 'img', 'img2', 'novo', 'ordem', 'descricao', 'estoque', 'sku', 'vipAte'];
   function limparItem(i) {
     var o = {}; CAMPOS_ITEM.forEach(function (k) { if (i[k] !== undefined && i[k] !== null && i[k] !== '') o[k] = i[k]; });
     o.nome = texto(o.nome, 80) || 'Peça'; o.cor = texto(o.cor, 30); o.descricao = texto(o.descricao, 600);
@@ -136,6 +138,12 @@
     o.preco = Math.max(0, Math.min(100000, Math.round((Number(o.preco) || 0) * 100) / 100));
     o.tamanhos = (o.tamanhos || []).filter(function (t) { return ['P', 'M', 'G', 'GG', 'U'].indexOf(t) >= 0; });
     o.ordem = Number(o.ordem) || 0; o.novo = !!o.novo;
+    if (o.estoque && typeof o.estoque === 'object') {
+      var e = {}; o.tamanhos.forEach(function (t) { if (t in o.estoque) e[t] = Math.max(0, Math.min(9999, Math.round(Number(o.estoque[t]) || 0))); });
+      if (Object.keys(e).length) o.estoque = e; else delete o.estoque;
+    } else delete o.estoque;
+    if (o.sku && !/^[A-Z0-9-]{1,24}$/.test(o.sku)) delete o.sku;
+    if (o.vipAte && !/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}$/.test(o.vipAte)) delete o.vipAte;
     return o;
   }
   function dadosLojaNova(rz, uid, email) {
@@ -434,7 +442,10 @@
             if (outra(r[1])) return Promise.reject(new Error('Este domínio já está em outra loja.'));
             var lote = F.writeBatch(db);
             lote.set(F.doc(db, 'lojas', k), l);
-            lote.set(F.doc(db, 'lojasPublicas', l.slug), lojaPublica(l));
+            // merge: preserva o vipHash que a lojista gravou pelo painel da loja (o link VIP continua valendo)
+            var pub = lojaPublica(l);
+            if (l.status !== 'teste') { pub.trialAte = F.deleteField(); pub.trialAteTs = F.deleteField(); }
+            lote.set(F.doc(db, 'lojasPublicas', l.slug), pub, { merge: true });
             if (l.dominio) lote.set(F.doc(db, 'dominios', l.dominio.replace(/^www\./, '')), { slug: l.slug });
             // ponteiros públicos antigos saem junto, senão o endereço velho continua abrindo a loja
             if (antes && antes.slug && antes.slug !== l.slug) lote.delete(F.doc(db, 'lojasPublicas', antes.slug));
@@ -486,7 +497,7 @@
       return firebase().then(function (f) {
         var F = f.F, lote = F.writeBatch(f.db);
         lote.set(F.doc(f.db, 'financeiroPlataforma', 'precos'), Object.assign({}, p, { atualizadoEm: new Date().toISOString(), porUid: f.auth.currentUser.uid }));
-        lote.set(F.doc(f.db, 'site', 'planos'), { planos: p.planos, splitPct: p.splitPct, splitFixo: p.splitFixo, dominioAno: p.dominioAno });
+        lote.set(F.doc(f.db, 'site', 'planos'), { planos: p.planos, splitPct: p.splitPct, splitFixo: p.splitFixo, dominioAno: p.dominioAno, implantacaoParcelas: p.implantacaoParcelas || 1 });
         return lote.commit().then(function () { return p; });
       });
     },
@@ -585,6 +596,9 @@
   var api = modo === 'firebase' ? API_FB : API_DEMO;
   window.Plataforma = Object.assign({
     modo: modo, cfg: CFG, slugify: slugify, ehHostDaPlataforma: ehHostDaPlataforma, marcaDaLoja: marcaDaLoja, hostValido: hostValido,
+    /** Acesso ao Firebase para os módulos de gestão (shared/gestao.js) e da vitrine (shared/publico.js). Em demonstração, rejeita. */
+    fb: function () { return modo === 'firebase' ? firebase() : Promise.reject(new Error('modo demonstração')); },
+    demo: demo, limparItem: limparItem,
     aplicarAcao: aplicarAcao,
     catalogo: function (base) {
       return fetch((base || '') + 'vitrines/catalogo.json', { cache: 'no-cache' }).then(function (r) { return r.json(); });
