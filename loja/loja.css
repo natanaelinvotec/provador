@@ -375,6 +375,22 @@ body.lj.sem-casca{padding-left:0}
 .lj-toast{position:fixed;left:50%;bottom:24px;z-index:95;transform:translate(-50%,20px);opacity:0;max-width:calc(100vw - 32px);background:var(--trilho);color:#fff;padding:12px 18px;border-radius:16px;font-weight:700;text-align:center;pointer-events:none;transition:opacity .2s,transform .2s var(--ease)}
 .lj-toast.on{opacity:1;transform:translate(-50%,0)}
 
+/* ---------- Canais de venda ---------- */
+.lj-canais{display:flex;flex-direction:column;gap:18px;min-width:0}
+.lj-canal .lj-campo{margin-bottom:12px}
+.lj-canal .lj-nota{margin-top:10px}
+.lj-passos{margin-top:12px;border-top:1px solid var(--linha)}
+.lj-passos summary{cursor:pointer;color:var(--navy);font-weight:700;min-height:44px;display:flex;align-items:center}
+.lj-passos ol{margin:2px 0 6px;padding-left:22px;display:flex;flex-direction:column;gap:8px;font-size:14px;line-height:1.5}
+.lj-passos li::marker{font-weight:800;color:var(--navy)}
+.lj-passos .lj-linhas{margin-bottom:4px}
+.lj-form3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.lj-cfg-botoes{margin-top:16px}
+.lj-carregando{display:flex;align-items:center;justify-content:center;gap:12px;min-height:96px;margin:0;color:var(--suave);font-weight:700}
+.lj-canal-nota p{margin:6px 0 0;font-size:14px;color:var(--suave)}
+.lj .lj-lado-pe a[aria-current="page"]{background:#fff;color:var(--trilho)}
+.lj .lj-menu-caixa a[aria-current="page"]{background:var(--card2)}
+
 /* ---------- telas médias ---------- */
 @media (max-width:1180px){
   .lj-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
