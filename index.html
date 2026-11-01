@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Provador · Loja virtual pronta para moda fitness e roupas</title>
-  <meta name="description" content="Escolha uma das 15 vitrines, mande logo, fotos e produtos, e sua loja de roupas vai ao ar com Pix, cartão e WhatsApp. Teste cada vitrine ao vivo antes de decidir.">
+  <meta name="description" content="Escolha o modelo do site e uma das 15 cores, mande logo, fotos e produtos, e sua loja de roupas vai ao ar com Pix, cartão e WhatsApp. Teste cada vitrine ao vivo antes de decidir.">
   <meta name="theme-color" content="#0A1630">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Provador: experimente a loja antes de pagar por ela">
-  <meta property="og:description" content="15 vitrines prontas para lojas de roupas. Teste ao vivo, escolha e receba sua loja com seu nome e seu domínio.">
+  <meta property="og:description" content="Modelos de site prontos para lojas de roupas, cada um em 15 cores. Teste ao vivo, escolha e receba sua loja com seu nome e seu domínio.">
   <meta property="og:image" content="assets/img/vitrines/grafite-lima.jpg">
   <script src="config/plataforma.config.js"></script>
   <script src="assets/js/rota.js"></script>
@@ -45,10 +45,10 @@
       <div class="pv-larg pv-hero-grade">
         <div class="pv-hero-texto">
           <h1 id="hero-titulo">Experimente a loja antes de pagar por ela.</h1>
-          <p class="pv-lead">São 15 vitrines prontas para moda fitness e roupas. Escolha a sua, suba as fotos das peças e a loja vai ao ar na hora, com o seu nome e o seu WhatsApp. Os primeiros 15 dias são grátis.</p>
+          <p class="pv-lead">São modelos de site prontos para moda fitness e roupas, cada um em 15 cores. Escolha o seu, suba as fotos das peças e a loja vai ao ar na hora, com o seu nome e o seu WhatsApp. Os primeiros 15 dias são grátis.</p>
           <div class="pv-acoes">
             <a class="pv-btn pv-btn-pri" href="montar/">Montar minha loja</a>
-            <a class="pv-btn pv-btn-linha" href="#vitrines">Ver as 15 vitrines</a>
+            <a class="pv-btn pv-btn-linha" href="#vitrines">Ver modelos e cores</a>
           </div>
           <ul class="pv-garantias">
             <li>15 dias grátis, sem cartão</li>
@@ -58,6 +58,7 @@
         </div>
 
         <div class="pv-provador" aria-label="Provador de vitrines">
+          <div class="pv-modelos" role="group" aria-label="Modelo do site" data-modelos></div>
           <div class="pv-arara" role="group" aria-label="Escolha uma vitrine para experimentar">
             <span class="pv-varao" aria-hidden="true"></span>
             <div class="pv-cabides" id="pv-cabides"></div>
@@ -103,10 +104,13 @@
       <div class="pv-larg">
         <div class="pv-sec-topo">
           <div>
-            <h2 id="vit-titulo">As 15 vitrines</h2>
-            <p>Todas funcionam do mesmo jeito. Muda a cara: cores, letras, formas e o clima da loja. Abra qualquer uma e navegue como se fosse cliente.</p>
+            <h2 id="vit-titulo">Modelos e cores</h2>
+            <p>Escolha o modelo do site e a cor dos menus. Todos funcionam do mesmo jeito; muda a cara: letras, formas e o clima da loja. Abra qualquer um e navegue como se fosse cliente.</p>
           </div>
-          <div class="pv-filtros" role="group" aria-label="Filtrar por estilo" id="pv-filtros"></div>
+          <div class="pv-filtros-col">
+            <div class="pv-filtros" role="group" aria-label="Modelo do site" data-modelos></div>
+            <div class="pv-filtros" role="group" aria-label="Filtrar por estilo" id="pv-filtros"></div>
+          </div>
         </div>
         <ul class="pv-galeria" id="pv-galeria"></ul>
       </div>
@@ -117,7 +121,7 @@
       <div class="pv-larg">
         <div class="pv-sec-topo"><div><h2 id="como-titulo">Da foto à loja no ar</h2><p>Você monta sozinha, vendo a loja pronta ao lado. Leva uns 15 minutos.</p></div></div>
         <ol class="pv-passos">
-          <li><b>Escolha a vitrine</b><span>Experimente as 15 aqui no site e fique com a que mais combina com a sua marca. Dá para trocar depois.</span></li>
+          <li><b>Escolha a vitrine</b><span>Experimente os modelos e as 15 cores aqui no site e fique com o que mais combina com a sua marca. Dá para trocar depois.</span></li>
           <li><b>Suba as fotos</b><span>Tire com o celular. A gente endireita, recorta, acerta a luz e descobre a cor de cada peça. Você só confere nome e preço.</span></li>
           <li><b>Publique</b><span>Crie seu acesso e a loja vai ao ar na hora, com 15 dias grátis. É o mesmo acesso do seu painel.</span></li>
           <li><b>Comece a vender</b><span>Coloque o link na bio. Quando quiser, a loja passa para o seu domínio.</span></li>
