@@ -20,11 +20,11 @@
   var CHAVE = 'provador:gestao:demo:';
 
   var TAMS = ['P', 'M', 'G', 'GG', 'U'];
-  var CANAIS = ['balcao', 'whatsapp', 'instagram', 'site', 'outro'];
+  var CANAIS = ['balcao', 'whatsapp', 'instagram', 'site', 'shopee', 'shein', 'marketplace', 'outro'];
   var FORMAS = ['pix', 'cartao', 'dinheiro', 'outro'];
   var STATUS = ['pago', 'separado', 'enviado', 'entregue', 'cancelado'];
   var NOMES = {
-    canal: { balcao: 'Balcão', whatsapp: 'WhatsApp', instagram: 'Instagram', site: 'Site', outro: 'Outro' },
+    canal: { balcao: 'Balcão', whatsapp: 'WhatsApp', instagram: 'Instagram', site: 'Site', shopee: 'Shopee', shein: 'Shein', marketplace: 'Outro marketplace', outro: 'Outro' },
     forma: { pix: 'Pix', cartao: 'Cartão', dinheiro: 'Dinheiro', outro: 'Outro' },
     status: { pago: 'Pago', separado: 'Separado', enviado: 'Enviado', entregue: 'Entregue', cancelado: 'Cancelado' },
     motivo: { entrada: 'Entrada', venda: 'Venda', ajuste: 'Ajuste', troca: 'Devolução' }
@@ -288,7 +288,9 @@
     },
     gravarVip: function (conta, loja, codigo, hash) {
       return Promise.resolve(P.demo.mudar(function (d) { var l = d.lojas[conta.uid]; if (l) { l.vipCodigo = codigo; l.vipHash = hash; } }));
-    }
+    },
+    lerCanais: function (conta) { var d = lerDemo(conta.uid); return Promise.resolve(d.canais ? copia(d.canais) : null); },
+    salvarCanais: function (conta, loja, doc) { return Promise.resolve(mudarDemo(conta.uid, function (d) { d.canais = copia(doc); return copia(doc); })); }
   };
 
   /* ---------- modo Firebase ---------- */
@@ -432,6 +434,14 @@
         lote.update(F.doc(f.db, 'lojasPublicas', loja.slug), { vipHash: hash });
         return lote.commit();
       });
+    },
+    // canaisAtivos/{slug}: público (o workflow que publica os arquivos dos canais lê daqui); só a dona grava
+    lerCanais: function (conta, loja) {
+      return P.fb().then(function (f) { return f.F.getDoc(f.F.doc(f.db, 'canaisAtivos', loja.slug)); })
+        .then(function (s) { return s.exists() ? s.data() : null; });
+    },
+    salvarCanais: function (conta, loja, doc) {
+      return P.fb().then(function (f) { return f.F.setDoc(f.F.doc(f.db, 'canaisAtivos', loja.slug), doc); }).then(function () { return doc; });
     }
   };
 
@@ -688,6 +698,17 @@
       return true;
     }));
   }
+  /** Canais de venda (Meta, Google, Shopee e Shein pelos hubs): configuração pública da loja. */
+  function lerCanais(conta, loja) {
+    if (!loja || !loja.slug) return rejeitar('A loja ainda não tem endereço público.');
+    return B.lerCanais(conta, loja);
+  }
+  function salvarCanais(conta, loja, cfg) {
+    if (!loja || !loja.slug) return rejeitar('A loja ainda não tem endereço público.');
+    if (!window.Canais) return rejeitar('Falta carregar shared/canais.js.');
+    var doc = Object.assign({ lojaId: conta.uid, slug: loja.slug }, window.Canais.limparCfg(cfg), { atualizadoEm: new Date().toISOString() });
+    return B.salvarCanais(conta, loja, doc);
+  }
   function limparDemo(conta) {
     if (modo !== 'demo') return rejeitar('Só no modo demonstração.');
     try { localStorage.removeItem(CHAVE + conta.uid); } catch (e) { /* nada */ }
@@ -702,7 +723,7 @@
     registrarVenda: registrarVenda, cancelarVenda: cancelarVenda, mudarStatusPedido: mudarStatusPedido, salvarVenda: salvarVenda,
     entradaEstoque: entradaEstoque, salvarEstoque: salvarEstoque, marcarVip: marcarVip,
     lancarCaixa: lancarCaixa, apagarCaixa: apagarCaixa, salvarConta: salvarConta, pagarConta: pagarConta, apagarConta: apagarConta,
-    marcarAvisado: marcarAvisado, gerarLinkVip: gerarLinkVip,
+    marcarAvisado: marcarAvisado, gerarLinkVip: gerarLinkVip, lerCanais: lerCanais, salvarCanais: salvarCanais,
     exemplos: exemplos, limparDemo: limparDemo,
     sku: sku, codigo: codigo, lerCodigo: lerCodigo, estoqueTotal: estoqueTotal, nomeComCor: nomeComCor,
     token: token, sha256: sha256, wa: wa, links: links, erroAmigavel: erroAmigavel,
