@@ -579,3 +579,4 @@ html:not(.js) .pv-faq-r{display:block;padding:0 0 12px 23px}
 .js .pv-entra.visto{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.js .pv-entra{opacity:1;transform:none;transition:none}}
 .pv-chega-claro{background:var(--campo);color:var(--tinta);margin-left:4px;transform:translateY(-1px)}
+.pv-breve{display:inline-block;padding:3px 8px;background:#fff;color:var(--rosa-2);font:800 13px/1.2 var(--f-txt);white-space:nowrap;vertical-align:1px}
