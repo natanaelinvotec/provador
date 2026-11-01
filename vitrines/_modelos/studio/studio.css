@@ -1,0 +1,62 @@
+/* Modelo 13 · Studio — marca de estúdio: vantagens no topo, setas em pílula, fotos em fundo bege e vitrines com título à esquerda. */
+@font-face{font-family:"Schibsted Grotesk";src:url("../../../assets/fonts/studio/SchibstedGrotesk.woff2") format("woff2");font-weight:400 800;font-display:swap}
+.pb-studio{
+  --f-display:"Schibsted Grotesk",system-ui,sans-serif;--f-body:"Schibsted Grotesk",system-ui,sans-serif;
+  --t-tam:clamp(22px,1.9vw,27px);--t-peso:700;--t-esp:-.02em;
+  --h-tam:clamp(44px,5.6vw,92px);--h-peso:700;--h-esp:-.04em;--h-lh:.95;
+  --r-btn:999px;--r-chip:999px;--r-card:8px;--r-img:6px;--btn-caixa:none;--btn-esp:0;--btn-tam:15px;--btn-peso:600;--k-caixa:none;--k-esp:0;
+  --card-foto-bg:var(--soft);--top-h:74px;--foto:3/4.2
+}
+.pb-studio{font-size:16px}
+.pb-studio .avisos{background:var(--bg);color:var(--ink);border-bottom:1px solid var(--line);font-weight:500;font-size:13px;letter-spacing:0}
+.pb-studio .avisos-in{min-height:40px}
+.pb-studio[data-aviso="lista"] .aviso-todos{justify-content:center;gap:42px}
+.pb-studio .logo{font-weight:800;font-size:27px;letter-spacing:-.06em}
+.pb-studio .logo span::after{content:"!";color:var(--accent)}
+.pb-studio .nav{font-size:15px;font-weight:500;gap:6px 28px}
+.pb-studio .nav a.on::after,.pb-studio .nav a:hover::after{height:2px;background:var(--ink)}
+.pb-studio .busca{min-width:260px;padding:0 4px 0 16px;border:0;border-radius:999px;background:var(--surface)}
+.pb-studio .busca input{width:100%}
+/* destaque: texto embaixo à esquerda e setas em pílula com o número */
+.pb-studio .sec-hero.v-tela .hero-in{justify-content:flex-start;align-items:flex-end;text-align:left;min-height:clamp(560px,52vw,800px);padding-bottom:120px}
+.pb-studio .sec-hero.v-tela .hero-txt{justify-items:start}
+.pb-studio .sec-hero.v-tela .hero-btns{justify-content:flex-start}
+.pb-studio .sec-hero.v-tela .hero-midia::after{background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.55))}
+.pb-studio .sec-hero .kick{font-size:15px;font-weight:600}
+.pb-studio .sec-hero .btn{background:#fff;border-color:#fff;color:#111}
+.pb-studio .nav-setas .hero-nav{padding:0 var(--gut);gap:10px;bottom:36px}
+.pb-studio .nav-setas .hero-nav .seta{width:54px;height:36px;border:0;border-radius:999px;background:rgba(255,255,255,.92);color:#111}
+.pb-studio .nav-setas .hero-num{display:block;color:#fff;font-weight:600;letter-spacing:.02em;margin-left:6px}
+/* categorias com etiqueta em pílula sobre a foto */
+.pb-studio .sec-categorias.v-sobre .cat-txt{grid-template-columns:auto;justify-content:start}
+.pb-studio .sec-categorias.v-sobre .cat-txt b{padding:8px 16px;border-radius:999px;background:#fff;color:#111;font-size:15px;font-weight:600;text-shadow:none;box-shadow:0 2px 12px rgba(0,0,0,.14)}
+.pb-studio .sec-categorias.v-sobre .cat-foto::after{display:none}
+.pb-studio .sec-categorias.v-sobre .cat-ir{display:none}
+.pb-studio .sec-categorias.v-sobre .cat-foto{background:var(--soft)}
+/* vitrines: título à esquerda e setas em pílula à direita */
+.pb-studio .sec-h .seta{width:54px;height:38px;border-radius:999px;background:var(--surface);border-color:transparent}
+.pb-studio .mais{font-weight:600;text-decoration:underline;text-underline-offset:4px}
+.pb-studio .mais .ic{display:none}
+/* cartão em fundo bege de estúdio, sacola no canto */
+.pb-studio .card h3{font-weight:500;font-size:15px}
+.pb-studio .preco b{font-weight:700}
+.pb-studio .preco .pix{color:var(--accent);font-weight:600}
+.pb-studio .selo{border-radius:3px;background:var(--ink);color:var(--bg);font-size:10.5px}
+.pb-studio .add{left:auto;right:10px;width:42px;min-height:42px;padding:0;border-radius:50%;opacity:1;transform:none;background:var(--bg)}
+.pb-studio .add span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.pb-studio .cor{width:12px;height:12px}
+/* contato */
+.pb-studio .contato{border-radius:8px;margin:0 auto;max-width:calc(var(--w) - 2 * var(--gut))}
+.pb-studio .contato-img{opacity:.6}
+.pb-studio .contato-txt h2{letter-spacing:-.04em}
+.pb-studio .chip,.pb-studio .aba{font-weight:600}
+.pb-studio .faixa h1,.pb-studio .info h1,.pb-studio .sac-t h1{letter-spacing:-.04em}
+@media (max-width:1100px){
+  .pb-studio .busca{min-width:0}
+}
+@media (max-width:860px){
+  .pb-studio .sec-hero.v-tela .hero-in{min-height:clamp(520px,140vw,660px);padding-bottom:96px}
+  .pb-studio .hero-txt h1{font-size:clamp(40px,12vw,60px)}
+  .pb-studio .contato{max-width:none;border-radius:0}
+  .pb-studio .add{width:38px;min-height:38px}
+}

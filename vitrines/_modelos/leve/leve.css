@@ -1,0 +1,58 @@
+/* Modelo 9 · Leve — minimalista e solar: cabeçalho transparente, título em minúsculas, muito branco e a foto mandando. */
+@font-face{font-family:"Plus Jakarta Sans";src:url("../../../assets/fonts/leve/PlusJakartaSans.woff2") format("woff2");font-weight:300 800;font-display:swap}
+.pb-leve{
+  --f-display:"Plus Jakarta Sans",system-ui,sans-serif;--f-body:"Plus Jakarta Sans",system-ui,sans-serif;
+  --t-tam:13px;--t-peso:600;--t-caixa:uppercase;--t-esp:.32em;
+  --h-tam:clamp(48px,6.4vw,104px);--h-peso:800;--h-caixa:lowercase;--h-esp:-.045em;--h-lh:.92;
+  --r-btn:4px;--r-chip:999px;--r-card:0;--r-img:2px;--btn-tam:12px;--btn-esp:.22em;--btn-pad:14px 34px;--btn-peso:600;
+  --k-caixa:lowercase;--k-esp:.04em;--sec-y:clamp(56px,7vw,110px);--top-h:72px;--card-foto-bg:var(--surface)
+}
+.pb-leve .avisos{background:var(--ink);color:var(--bg);font-weight:500;font-size:12px;letter-spacing:.04em}
+.pb-leve .logo{font-weight:800;font-size:22px;letter-spacing:-.05em;text-transform:lowercase}
+.pb-leve .logo span::after{content:".";color:var(--accent)}
+.pb-leve .nav{justify-content:center;font-size:13px;font-weight:500;gap:6px 30px;text-transform:lowercase}
+.pb-leve .nav a.on::after,.pb-leve .nav a:hover::after{height:1px;background:currentColor}
+/* destaque: tela cheia com título em minúsculas, texto à esquerda embaixo */
+.pb-leve .sec-hero.v-tela .hero-in{justify-content:flex-start;align-items:flex-end;text-align:left;min-height:clamp(600px,56vw,860px);padding-bottom:110px}
+.pb-leve .sec-hero.v-tela .hero-txt{justify-items:start}
+.pb-leve .sec-hero.v-tela .hero-btns{justify-content:flex-start}
+.pb-leve .sec-hero.v-tela .hero-midia::after{background:linear-gradient(180deg,rgba(0,0,0,.28),transparent 30%,rgba(0,0,0,.5))}
+.pb-leve .sec-hero .kick{font-size:15px;font-weight:500;letter-spacing:.02em}
+.pb-leve .sec-hero .hero-p{font-size:18px;font-weight:400}
+.pb-leve .sec-hero .btn{background:transparent;border-color:#fff;color:#fff}
+.pb-leve .sec-hero .btn:hover{background:#fff;color:#111}
+.pb-leve .sec-hero .btn .ic{display:none}
+.pb-leve .hero-nav{justify-content:flex-start;max-width:var(--w);margin:0 auto;padding:0 var(--gut)}
+/* títulos pequenos com letras espaçadas */
+.pb-leve .sec-h{margin-bottom:36px}
+.pb-leve .sec-h h2{font-family:var(--f-body)}
+.pb-leve .sec-h p{font-size:15px}
+/* categorias: 4 retratos com o nome espaçado embaixo */
+.pb-leve .sec-categorias.v-retratos .cats{--cat-n:4;gap:18px}
+.pb-leve .cat-foto{aspect-ratio:4/5.4}
+.pb-leve .cat-txt{justify-items:center}
+.pb-leve .cat-txt b{font-weight:600;font-size:12px;letter-spacing:.32em}
+.pb-leve .cat-qtd{font-size:12px}
+/* banner de cores novas com amostras */
+.pb-leve .banner::after{background:linear-gradient(90deg,rgba(0,0,0,.45),rgba(0,0,0,.05) 70%)}
+.pb-leve .banner-txt h2{text-transform:lowercase;letter-spacing:-.045em;font-weight:800}
+.pb-leve .banner-txt .kick{text-transform:lowercase;letter-spacing:.02em;font-size:15px;font-weight:500}
+.pb-leve .banner-cores span{width:34px;height:34px;border-radius:2px}
+.pb-leve .sec-banner .btn{background:#fff;border-color:#fff;color:#111;border-radius:999px}
+.pb-leve .sec-banner.v-centro .btn{background:transparent;color:#fff;border-radius:4px}
+.pb-leve .sec-banner.v-centro .banner-in{min-height:clamp(420px,40vw,600px)}
+/* cartão: foto em fundo cinza claro, etiqueta contornada e botão contornado */
+.pb-leve .card h3{font-weight:500;font-size:15px}
+.pb-leve .preco b{font-weight:700}
+.pb-leve .selo{border:1px solid var(--ink);background:transparent;color:var(--ink);border-radius:2px;letter-spacing:.2em;font-weight:600}
+.pb-leve[data-cartao="contorno"] .card-btn{border-width:1px;border-radius:6px;font-weight:600;letter-spacing:.22em;font-size:12px}
+.pb-leve .ver-mais{border-radius:4px}
+.pb-leve .mais{font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:600}
+.pb-leve .chip,.pb-leve .aba{text-transform:lowercase}
+.pb-leve .faixa h1,.pb-leve .info h1,.pb-leve .sac-t h1{text-transform:lowercase;letter-spacing:-.04em;font-weight:800}
+.pb-leve .rod h3{letter-spacing:.24em;font-weight:600}
+@media (max-width:860px){
+  .pb-leve .sec-hero.v-tela .hero-in{min-height:clamp(560px,150vw,700px);padding-bottom:80px}
+  .pb-leve .hero-txt h1{font-size:clamp(44px,13vw,64px)}
+  .pb-leve .sec-categorias.v-retratos .cats{gap:12px}
+}

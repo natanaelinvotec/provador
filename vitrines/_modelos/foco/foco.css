@@ -1,0 +1,55 @@
+/* Modelo 15 · Foco — logo em bloco de cor, título com letras espaçadas sobre foto de estúdio, usos e vitrine ao lado de foto. */
+@font-face{font-family:"Lexend";src:url("../../../assets/fonts/foco/Lexend.woff2") format("woff2");font-weight:200 800;font-display:swap}
+.pb-foco{
+  --f-display:"Lexend",system-ui,sans-serif;--f-body:"Lexend",system-ui,sans-serif;
+  --t-tam:clamp(22px,2vw,28px);--t-peso:600;--t-esp:-.01em;
+  --h-tam:clamp(64px,9vw,150px);--h-peso:300;--h-caixa:uppercase;--h-esp:.32em;--h-lh:1;
+  --r-btn:0;--r-chip:0;--r-card:0;--r-img:0;--btn-tam:12.5px;--btn-esp:.2em;--btn-peso:600;--k-esp:.3em;
+  --card-foto-bg:var(--soft);--top-h:72px
+}
+.pb-foco{font-size:15px;font-weight:300}
+.pb-foco .avisos{background:#0E0E0F;color:#fff;font-weight:500;font-size:11.5px;letter-spacing:.2em}
+/* logo em bloco da cor da loja */
+.pb-foco .top-in{grid-template-columns:auto auto 1fr auto;grid-template-areas:"logo nav busca acoes"}
+.pb-foco .busca-d{justify-self:end}
+.pb-foco .logo{gap:0;font-weight:700;font-size:17px;letter-spacing:.02em;text-transform:uppercase}
+.pb-foco .logo i{display:grid;place-items:center;width:52px;height:52px;background:var(--accent);color:var(--on-accent);font-size:20px;font-weight:800;letter-spacing:-.02em}
+.pb-foco .logo span{display:grid;place-items:center;height:52px;padding:0 14px;background:#0E0E0F;color:#fff}
+.pb-foco .rod .logo span{background:transparent;color:inherit;padding:0 0 0 12px}
+.pb-foco .nav{font-size:13.5px;font-weight:500;gap:6px 24px}
+.pb-foco .nav a.on::after,.pb-foco .nav a:hover::after{height:2px}
+/* destaque: painel claro com título de letras bem espaçadas + foto de estúdio colorida */
+.pb-foco .sec-hero.estudio.v-dividido{grid-template-columns:1.1fr .9fr;background:var(--soft);color:var(--ink)}
+.pb-foco .sec-hero.estudio .hero-midia{min-height:clamp(520px,46vw,720px)}
+.pb-foco .sec-hero.estudio .hero-midia img{object-position:var(--hero-pos,50% 22%)}
+.pb-foco .hero-txt h1{margin-right:-.32em}
+.pb-foco .sec-hero .kick{font-weight:500;color:var(--accent)}
+.pb-foco .sec-hero .hero-p{font-weight:300;letter-spacing:.04em;color:var(--muted)}
+.pb-foco .sec-hero.estudio .btn{min-height:auto;padding:6px 0;border:0;border-bottom:1.5px solid currentColor;border-radius:0;background:transparent;color:var(--ink)}
+.pb-foco .sec-hero .btn .ic{transform:rotate(-45deg)}
+/* vantagens finas */
+.pb-foco .bem b{font-weight:600}
+.pb-foco .bem span{font-weight:300}
+/* vitrines: setas quadradas, cartão em fundo de estúdio */
+.pb-foco .sec-h h2{font-weight:600}
+.pb-foco .mais{font-weight:500;letter-spacing:.08em;text-transform:uppercase;font-size:12.5px}
+.pb-foco .card h3{font-weight:400;font-size:14.5px}
+.pb-foco .preco b{font-weight:600}
+.pb-foco .selo{background:var(--accent);color:var(--on-accent);border-radius:0}
+.pb-foco .add{border-radius:0;background:#0E0E0F;color:#fff}
+/* usos: fotos coladas com o nome espaçado */
+.pb-foco .uso b{font-family:var(--f-display);font-weight:300;letter-spacing:.42em}
+.pb-foco .usos{gap:0}
+/* vitrine ao lado de foto com título espaçado */
+.pb-foco .vit-foto-txt b{font-weight:300;letter-spacing:.32em}
+.pb-foco .contato-txt h2{font-weight:300;letter-spacing:.08em;text-transform:uppercase}
+.pb-foco .chip,.pb-foco .aba{font-weight:500}
+.pb-foco .faixa h1,.pb-foco .info h1,.pb-foco .sac-t h1{font-weight:300;text-transform:uppercase;letter-spacing:.12em}
+@media (max-width:860px){
+  .pb-foco .top-in,.pb-foco[data-topo] .top-in{grid-template-columns:auto 1fr auto;grid-template-areas:"hamb logo acoes"}
+  .pb-foco .logo i{width:40px;height:40px;font-size:16px}
+  .pb-foco .logo span{height:40px;padding:0 10px;font-size:14px}
+  .pb-foco .hero-txt h1{font-size:clamp(48px,15vw,76px);letter-spacing:.24em}
+  .pb-foco .sec-hero.estudio.v-dividido{grid-template-columns:1fr}
+  .pb-foco .sec-hero.estudio .hero-midia{min-height:clamp(340px,100vw,480px)}
+}

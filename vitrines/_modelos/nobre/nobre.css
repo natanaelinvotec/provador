@@ -1,0 +1,62 @@
+/* Modelo 10 · Nobre — premium com dourado: logo serifado, busca grande, destaque com texto à direita, categorias em círculos. */
+@font-face{font-family:"Cinzel";src:url("../../../assets/fonts/nobre/Cinzel.woff2") format("woff2");font-weight:400 700;font-display:swap}
+@font-face{font-family:"Mulish";src:url("../../../assets/fonts/nobre/Mulish.woff2") format("woff2");font-weight:300 800;font-display:swap}
+.pb-nobre{
+  --ouro:var(--accent2);
+  --f-display:"Cinzel",Georgia,serif;--f-body:"Mulish",system-ui,sans-serif;
+  --t-tam:clamp(24px,2.3vw,34px);--t-peso:500;--t-caixa:uppercase;--t-esp:.08em;
+  --h-tam:clamp(44px,5.4vw,86px);--h-peso:500;--h-caixa:uppercase;--h-esp:.06em;--h-lh:1.02;
+  --r-btn:0;--r-chip:999px;--btn-esp:.26em;--btn-tam:12px;--btn-pad:16px 34px;--btn-peso:700;--k-esp:.3em;--top-h:86px
+}
+.pb-nobre{font-size:15px}
+.pb-nobre .avisos{background:#0E0E0F;color:#E2C27A;font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.pb-nobre .logo{font-family:var(--f-display);font-weight:700;font-size:28px;letter-spacing:.16em;text-transform:uppercase;color:var(--ouro)}
+.pb-nobre .logo i{display:grid;place-items:center;width:40px;height:40px;border:1.5px solid currentColor;border-radius:50%;font-size:14px;letter-spacing:.04em}
+.pb-nobre[data-topo="busca"] .busca{min-height:46px;border:1px solid var(--line);background:var(--bg)}
+.pb-nobre .acoes::before{content:"Atendimento";margin-right:10px;font-size:13px;font-weight:600;color:var(--muted)}
+.pb-nobre .nav2-in{justify-content:center;gap:12px 46px;font-size:12.5px;font-weight:700;letter-spacing:.16em}
+.pb-nobre .nav2 a:hover,.pb-nobre .nav2 a.on{color:var(--ouro)}
+/* destaque: foto à esquerda, título serifado espaçado à direita */
+.pb-nobre .sec-hero .hero-txt{max-width:540px;gap:20px}
+.pb-nobre .sec-hero .kick{color:color-mix(in srgb,var(--ouro) 72%,#000);font-weight:800}
+.pb-nobre .hero-txt h1::after{content:"";display:block;width:80px;height:1px;margin-top:22px;background:var(--ouro)}
+.pb-nobre .sec-hero .btn{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.pb-nobre .sec-hero .btn .ic{display:none}
+.pb-nobre .hero-nav .seta{border:0;background:transparent;color:var(--ink)}
+.pb-nobre .hero-num{color:var(--muted)}
+/* vantagens centralizadas e finas */
+.pb-nobre .sec-beneficios{border-bottom:1px solid var(--line)}
+.pb-nobre .sec-beneficios .bem .ic{color:var(--ouro);stroke-width:1.2;width:32px;height:32px}
+.pb-nobre .bem b{font-weight:700;letter-spacing:.02em}
+/* títulos centralizados em serifa */
+.pb-nobre .sec-h h2::after{content:"";display:block;width:40px;height:1px;margin:14px auto 0;background:var(--ouro)}
+/* categorias em círculos grandes */
+.pb-nobre .sec-categorias.v-circulos .cat,.pb-nobre .sec-categorias.v-circulos .cat-foto{width:176px}
+.pb-nobre .sec-categorias.v-circulos .cat-foto{box-shadow:0 0 0 1px var(--line),0 0 0 6px var(--bg),0 0 0 7px color-mix(in srgb,var(--ouro) 50%,transparent)}
+.pb-nobre .sec-categorias.v-circulos .cat-txt b{font-family:var(--f-display);font-size:15px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+/* abas em botões: preto cheio x contornado */
+.pb-nobre .abas{gap:10px}
+.pb-nobre .aba{min-height:44px;padding:8px 26px;border:1px solid var(--ink);border-radius:0;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+/* cartão: etiqueta escura com letra dourada, nome centralizado e bolinhas de cor */
+.pb-nobre .selo{background:#0E0E0F;color:#E2C27A;border-radius:999px;font-size:10.5px;letter-spacing:.12em}
+.pb-nobre .card h3{font-size:14.5px;font-weight:600}
+.pb-nobre .preco b{font-size:16px;font-weight:800}
+.pb-nobre .preco .pix{color:var(--muted)}
+.pb-nobre .cor{width:16px;height:16px}
+.pb-nobre .add{border-radius:0;letter-spacing:.16em;font-size:12px}
+.pb-nobre .ver-mais{letter-spacing:.2em}
+.pb-nobre .rod .logo{color:#E2C27A}
+.pb-nobre .rod h3{color:#E2C27A}
+.pb-nobre .chip{letter-spacing:.06em}
+.pb-nobre .faixa h1,.pb-nobre .info h1,.pb-nobre .sac-t h1{font-family:var(--f-display);font-weight:500;text-transform:uppercase;letter-spacing:.06em}
+@media (max-width:1100px){
+  .pb-nobre .acoes::before{display:none}
+}
+@media (max-width:860px){
+  .pb-nobre .logo{font-size:21px;letter-spacing:.12em}
+  .pb-nobre .logo i{display:none}
+  .pb-nobre .sec-categorias.v-circulos .cat,.pb-nobre .sec-categorias.v-circulos .cat-foto{width:104px}
+  .pb-nobre .sec-categorias.v-circulos .cat-txt b{font-size:12px}
+  .pb-nobre .aba{padding:8px 14px;letter-spacing:.1em}
+  .pb-nobre .hero-txt h1::after{margin-top:16px}
+}

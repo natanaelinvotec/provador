@@ -1,0 +1,74 @@
+/* Modelo 4 · Aura — leve e arredondada: logo no centro, menu em pílulas, cartões bege e cartões de produto com borda. */
+@font-face{font-family:"Italiana";src:url("../../../assets/fonts/aura/Italiana-400.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Nunito";src:url("../../../assets/fonts/aura/Nunito.woff2") format("woff2");font-weight:200 1000;font-display:swap}
+@font-face{font-family:"Nunito";src:url("../../../assets/fonts/aura/Nunito-Italic.woff2") format("woff2");font-weight:200 1000;font-style:italic;font-display:swap}
+.pb-aura{
+  --f-display:"Italiana",Georgia,serif;--f-body:"Nunito",system-ui,sans-serif;
+  --t-tam:clamp(24px,2.2vw,32px);--t-peso:400;--t-caixa:uppercase;--t-esp:.04em;
+  --h-tam:clamp(52px,6.6vw,108px);--h-peso:400;--h-caixa:uppercase;--h-esp:.01em;--h-lh:.92;
+  --r-card:18px;--r-img:12px;--r-btn:999px;--r-chip:999px;--r-campo:999px;
+  --btn-tam:13px;--btn-pad:14px 28px;--btn-esp:.08em;--k-esp:.22em;--top-h:84px
+}
+.pb-aura .avisos{font-size:12px;font-weight:600;letter-spacing:.06em}
+.pb-aura .avisos-in{min-height:32px}
+/* cabeçalho em dois andares: busca em pílula, logo com subtítulo no meio, menu em pílulas pretas */
+.pb-aura .top{border-bottom:0}
+.pb-aura .top-in .logo{flex-direction:column;align-items:center;gap:4px}
+.pb-aura .top-in .logo span{font-family:var(--f-display);font-size:34px;font-weight:400;letter-spacing:.14em;text-transform:uppercase}
+.pb-aura .top-in .logo::after{content:"moda fitness";font-family:var(--f-body);font-size:10px;font-weight:700;letter-spacing:.46em;text-transform:uppercase;color:var(--muted)}
+.pb-aura .busca{padding:0 6px 0 18px;border:0;border-radius:999px;background:var(--surface)}
+.pb-aura .busca input{font-size:13.5px}
+.pb-aura .ibtn{border-radius:50%;background:var(--surface)}
+.pb-aura .acoes{gap:8px}
+.pb-aura .nav2{border-top:0}
+.pb-aura .nav2-in{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:10px;padding-top:2px;padding-bottom:14px;font-size:12px;letter-spacing:.1em}
+.pb-aura .nav2 a{display:grid;place-items:center;min-height:38px;padding:0 10px;border-radius:999px;background:var(--ink);color:var(--bg);text-align:center;transition:background .2s}
+.pb-aura .nav2 a:hover,.pb-aura .nav2 a.on{background:var(--accent);color:var(--on-accent)}
+/* destaque com a lista de peças ao lado */
+.pb-aura .sec-hero .kick{font-size:12px;letter-spacing:.3em;color:var(--muted)}
+.pb-aura .hero-txt h1{font-family:var(--f-display)}
+.pb-aura .sec-hero .btn{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.pb-aura .sec-hero.v-lista .hero-lista{border-radius:22px;padding:20px}
+.pb-aura .hero-lista-t{font-family:var(--f-display);font-size:22px;font-weight:400;letter-spacing:.06em;color:var(--ink);text-transform:uppercase}
+.pb-aura .hero-lista img{border-radius:50%}
+.pb-aura .ponto{border-width:1px}
+/* vantagens em cartão branco flutuante */
+.pb-aura .sec-beneficios.v-cartao .bens{border-radius:22px;box-shadow:0 14px 40px rgba(20,20,20,.08)}
+.pb-aura .bem b{font-weight:800;font-size:13.5px}
+/* títulos de seção: caixa alta à esquerda com subtítulo */
+.pb-aura .sec-h p{font-size:15px}
+.pb-aura .sec-h .mais{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+/* categorias em cartões bege */
+.pb-aura .sec-categorias.v-cartoes .cat{padding:30px 24px 28px;border-radius:24px}
+.pb-aura .sec-categorias.v-cartoes .cat-txt b{font-size:clamp(28px,2.8vw,42px);text-transform:uppercase;letter-spacing:.06em}
+.pb-aura .sec-categorias.v-cartoes .cat::after{content:"Confira";border-radius:999px;background:var(--ink);color:var(--bg);letter-spacing:.12em}
+/* cartão com borda arredondada, preço do Pix em destaque e botão em pílula com contorno degradê */
+.pb-aura[data-cartao="pilula"] .card{border-color:var(--line);border-radius:18px}
+.pb-aura .card-media{border-radius:12px}
+.pb-aura .card h3{font-weight:700;font-size:14.5px}
+.pb-aura .preco{flex-direction:column;align-items:center;gap:0}
+.pb-aura .preco b{order:2;font-size:13px;font-weight:600;color:var(--muted)}
+.pb-aura .preco .pix{order:1;color:var(--ink);font-size:18px;font-weight:900}
+.pb-aura .selo{border-radius:999px;background:var(--ink);color:var(--bg)}
+.pb-aura .card-btn{border:2px solid transparent;background:linear-gradient(var(--ink),var(--ink)) padding-box,linear-gradient(90deg,var(--accent),var(--accent2)) border-box;color:var(--bg);letter-spacing:.12em}
+.pb-aura .card-btn:hover{background:linear-gradient(var(--accent),var(--accent)) padding-box,linear-gradient(90deg,var(--accent),var(--accent2)) border-box;color:var(--on-accent)}
+.pb-aura .sec-vitrine.v-grade .ver-mais{border-radius:999px}
+/* banner calmo e Instagram arredondado */
+.pb-aura .sec-banner .banner{border-radius:28px;margin:0 var(--gut)}
+.pb-aura .sec-banner{max-width:var(--w);margin:0 auto}
+.pb-aura .banner-txt h2{font-family:var(--f-display);font-weight:400;text-transform:uppercase;letter-spacing:.02em}
+.pb-aura .sec-banner .btn{background:#fff;border-color:#fff;color:#111}
+.pb-aura .ig a{border-radius:18px}
+.pb-aura .chip,.pb-aura .aba{border-radius:999px}
+.pb-aura .rod{background:var(--surface)}
+.pb-aura .rod .logo span{font-family:var(--f-display);font-weight:400;letter-spacing:.12em;text-transform:uppercase}
+.pb-aura .faixa h1,.pb-aura .info h1,.pb-aura .sac-t h1{font-family:var(--f-display);font-weight:400;text-transform:uppercase;letter-spacing:.04em}
+@media (max-width:860px){
+  .pb-aura{--top-h:66px}
+  .pb-aura .top-in .logo span{font-size:24px}
+  .pb-aura .top-in .logo::after{font-size:8px;letter-spacing:.38em}
+  .pb-aura .ibtn{background:transparent}
+  .pb-aura .sec-banner .banner{border-radius:20px}
+  .pb-aura .avisos{font-size:11px;letter-spacing:.02em}
+  .pb-aura .preco .pix{font-size:15px}
+}

@@ -1,0 +1,68 @@
+/* Modelo 5 · Impacto — campanha em preto e branco: foto P&B em tela cheia, letras enormes, atalho por tamanho e cartões com tamanhos. */
+@font-face{font-family:"Archivo";src:url("../../../assets/fonts/impacto/Archivo.woff2") format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Archivo";src:url("../../../assets/fonts/impacto/Archivo-Italic.woff2") format("woff2");font-weight:100 900;font-style:italic;font-display:swap}
+.pb-impacto{
+  --f-display:"Archivo",system-ui,sans-serif;--f-body:"Archivo",system-ui,sans-serif;
+  --t-tam:clamp(22px,2vw,30px);--t-peso:800;--t-esp:-.01em;
+  --h-tam:clamp(58px,8.6vw,148px);--h-peso:900;--h-caixa:uppercase;--h-esp:-.035em;--h-lh:.84;
+  --r-btn:999px;--r-chip:999px;--r-card:10px;--r-img:6px;
+  --btn-tam:13px;--btn-pad:14px 30px;--btn-esp:.04em;--btn-peso:800;--top-h:66px;--foto:3/4
+}
+.pb-impacto{font-size:15px}
+.pb-impacto .avisos{background:#0E0E0F;color:#fff;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.pb-impacto .logo{font-weight:900;font-size:26px;letter-spacing:-.04em;text-transform:uppercase}
+.pb-impacto .nav{justify-content:center;font-size:14px;font-weight:700}
+.pb-impacto .nav a.on::after,.pb-impacto .nav a:hover::after{height:3px}
+.pb-impacto .nav a:first-child{padding:6px 16px;border-radius:999px;background:var(--ink);color:var(--bg)}
+.pb-impacto .nav a:first-child::after{display:none}
+/* destaque P&B com título gigante */
+.pb-impacto .sec-hero .hero-midia img{filter:grayscale(1) contrast(1.1)}
+.pb-impacto .sec-hero.v-tela .hero-midia::after{background:linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.05) 35%,rgba(0,0,0,.55))}
+.pb-impacto .sec-hero .hero-in{min-height:clamp(540px,50vw,780px)}
+.pb-impacto .sec-hero .kick{font-size:14px;font-weight:700;letter-spacing:.3em}
+.pb-impacto .sec-hero .hero-p{font-size:18px;font-weight:500}
+.pb-impacto .sec-hero .btn{background:#fff;border-color:#fff;color:#111}
+/* vantagens em faixa preta, a primeira na cor da loja */
+.pb-impacto .sec-beneficios.v-escura .bem{padding:24px 22px}
+.pb-impacto .sec-beneficios.v-escura .bem:first-child{background:var(--accent);color:var(--on-accent)}
+.pb-impacto .sec-beneficios.v-escura .bem:first-child .ic,.pb-impacto .sec-beneficios.v-escura .bem:first-child span{color:inherit}
+.pb-impacto .bem b{font-weight:800;text-transform:uppercase;letter-spacing:.03em;font-size:13px}
+/* títulos com bolinha na cor da loja e "ver todos" sublinhado */
+.pb-impacto .sec-h h2::before{content:"";display:inline-block;width:.38em;height:.38em;margin-right:.4em;border-radius:50%;background:var(--accent);vertical-align:.12em}
+.pb-impacto .mais{text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1.5px}
+.pb-impacto .mais .ic{display:none}
+/* atalho por tamanho: botões grandes */
+.pb-impacto .tams-atalho a{padding:26px 10px;border:2px solid var(--ink);border-radius:14px;background:var(--bg)}
+.pb-impacto .tams-atalho a:hover{background:var(--ink);color:var(--bg)}
+.pb-impacto .tams-atalho a:hover small{color:inherit}
+.pb-impacto .tams-atalho b{font-size:40px;font-weight:900;line-height:1}
+/* vitrine em fundo cinza */
+.pb-impacto .fundo-soft{background:var(--surface)}
+.pb-impacto .fundo-soft .card-media{background:#fff}
+/* cartão: referência, nome, preço forte, Pix em pílula e tamanhos em bolinhas */
+.pb-impacto .card-cat{font-size:11px;letter-spacing:.12em}
+.pb-impacto .card h3{font-weight:600;font-size:14.5px}
+.pb-impacto .preco b{font-size:19px;font-weight:900;color:var(--accent)}
+.pb-impacto .preco .pix{padding:2px 9px;border:1.5px solid var(--ink);border-radius:999px;color:var(--ink);font-size:11.5px;font-weight:800}
+.pb-impacto .selo{background:var(--accent);color:var(--on-accent);font-weight:800}
+.pb-impacto .card-tams span{border-color:var(--ink);font-weight:700}
+.pb-impacto .add{border-radius:999px;background:var(--ink);color:var(--bg)}
+/* categorias em retratos com rótulo forte */
+.pb-impacto .sec-categorias .cat-txt b{font-weight:900;font-size:15px;letter-spacing:.06em}
+.pb-impacto .cat-foto img{filter:saturate(.9)}
+/* coleções em dois banners */
+.pb-impacto .duplo-i{border-radius:10px}
+.pb-impacto .duplo-txt b{font-weight:900;text-transform:uppercase;letter-spacing:-.03em;font-size:clamp(34px,4.4vw,72px)}
+.pb-impacto .duplo-txt .btn{border-radius:999px;background:#fff;border-color:#fff;color:#111}
+.pb-impacto .look-peca{border-radius:10px}
+.pb-impacto .chip,.pb-impacto .aba{font-weight:700}
+.pb-impacto .faixa h1,.pb-impacto .info h1,.pb-impacto .sac-t h1{font-weight:900;text-transform:uppercase;letter-spacing:-.03em}
+.pb-impacto .rod .logo{color:#fff}
+@media (max-width:860px){
+  .pb-impacto .sec-hero .hero-in{min-height:clamp(480px,130vw,620px)}
+  .pb-impacto .hero-txt h1{font-size:clamp(44px,14vw,72px)}
+  .pb-impacto .tams-atalho b{font-size:28px}
+  .pb-impacto .tams-atalho a{padding:16px 6px}
+  .pb-impacto .sec-beneficios.v-escura .bem:first-child{grid-column:1 / -1}
+  .pb-impacto .logo{font-size:22px}
+}

@@ -1,0 +1,66 @@
+/* Modelo 12 · Contraste — preto e branco com atitude: destaque dividido, itálico serifado com letra pesada e cartões em fundo cinza. */
+@font-face{font-family:"Anton";src:url("../../../assets/fonts/contraste/Anton-400.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"DM Serif Display";src:url("../../../assets/fonts/contraste/DMSerifDisplay-400.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"DM Serif Display";src:url("../../../assets/fonts/contraste/DMSerifDisplay-Italic-400.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Poppins";src:url("../../../assets/fonts/poppins-300.woff") format("woff");font-weight:300;font-display:swap}
+@font-face{font-family:"Poppins";src:url("../../../assets/fonts/poppins-400.woff") format("woff");font-weight:400;font-display:swap}
+@font-face{font-family:"Poppins";src:url("../../../assets/fonts/poppins-500.woff") format("woff");font-weight:500;font-display:swap}
+@font-face{font-family:"Poppins";src:url("../../../assets/fonts/poppins-700.woff") format("woff");font-weight:600 700;font-display:swap}
+.pb-contraste{
+  --f-display:"Anton","Impact",sans-serif;--f-serif:"DM Serif Display",Georgia,serif;--f-body:"Poppins",system-ui,sans-serif;
+  --t-tam:13px;--t-peso:600;--t-caixa:uppercase;--t-esp:.22em;
+  --h-tam:clamp(64px,8.4vw,140px);--h-peso:400;--h-caixa:uppercase;--h-esp:.005em;--h-lh:.92;
+  --r-btn:999px;--r-chip:999px;--r-card:0;--r-img:0;--btn-tam:12.5px;--btn-esp:.1em;--btn-peso:600;--top-h:74px;--card-foto-bg:var(--surface)
+}
+.pb-contraste{font-size:15px}
+.pb-contraste .avisos{background:#000;color:#fff;font-weight:500;font-size:12.5px;letter-spacing:.04em}
+/* cabeçalho escuro */
+.pb-contraste .top{background:var(--deep);color:var(--on-deep);border-bottom-color:transparent}
+.pb-contraste .logo{font-family:var(--f-body);font-weight:700;font-size:25px;letter-spacing:-.04em;text-transform:lowercase}
+.pb-contraste .nav{font-size:13px;font-weight:500;letter-spacing:.04em;text-transform:lowercase}
+.pb-contraste .nav a.on::after,.pb-contraste .nav a:hover::after{background:#fff;height:1px}
+.pb-contraste .top .busca{border-color:rgba(255,255,255,.4)}
+.pb-contraste .top .busca input::placeholder{color:rgba(255,255,255,.7)}
+.pb-contraste .count{background:#fff;color:#000}
+.pb-contraste .menu.on{background:var(--deep);color:var(--on-deep)}
+.pb-contraste .menu a{border-color:rgba(255,255,255,.14)}
+/* destaque dividido: itálico serifado em cima, palavra pesada enorme embaixo */
+.pb-contraste .sec-hero.v-dividido{background:#000}
+.pb-contraste .sec-hero.v-dividido .hero-midia{background:var(--surface)}
+.pb-contraste .sec-hero .kick{font-family:var(--f-serif);font-style:italic;font-size:clamp(26px,2.6vw,40px);font-weight:400;letter-spacing:0;text-transform:none;line-height:1.1}
+.pb-contraste .hero-txt h1{font-family:var(--f-display)}
+.pb-contraste .sec-hero .hero-p{font-size:15px;color:rgba(255,255,255,.8)}
+.pb-contraste .sec-hero.v-dividido .btn{background:#fff;color:#000;border-color:#fff}
+.pb-contraste .sec-hero.v-dividido .btn .ic{display:none}
+/* títulos minúsculos com tracinho */
+.pb-contraste .sec-h h2{font-family:var(--f-body)}
+.pb-contraste .sec-h h2::after{content:"";display:block;width:26px;height:2px;margin:12px auto 0;background:var(--ink)}
+.pb-contraste .bem b{font-weight:600}
+/* categorias "o que você está procurando?" */
+.pb-contraste .sec-categorias.v-procura .cat-txt b{font-family:var(--f-display);font-weight:400;font-size:clamp(24px,2.4vw,34px);letter-spacing:.02em;text-transform:uppercase}
+/* dois banners: itálico + palavra pesada */
+.pb-contraste .duplo-i{aspect-ratio:4/3.6}
+.pb-contraste .duplo-txt{top:0;bottom:0;align-content:center}
+.pb-contraste .duplo-txt small{font-family:var(--f-serif);font-style:italic;font-size:clamp(22px,2.2vw,32px)}
+.pb-contraste .duplo-txt b{font-family:var(--f-display);font-weight:400;text-transform:uppercase;font-size:clamp(44px,5.4vw,88px);letter-spacing:.01em}
+.pb-contraste .duplo-txt .btn{border-radius:999px;border-color:#fff;color:#fff}
+.pb-contraste .duplo-i::after{background:rgba(0,0,0,.32)}
+/* abas em texto sublinhado e cartão em fundo cinza */
+.pb-contraste .abas{gap:6px 26px}
+.pb-contraste .aba{min-height:32px;padding:4px 0;border:0;border-bottom:2px solid transparent;border-radius:0;font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.pb-contraste .aba.on{border-color:var(--ink);background:transparent;color:var(--ink)}
+.pb-contraste .card-media{background:var(--surface)}
+.pb-contraste .card h3{font-weight:500;font-size:14px}
+.pb-contraste .preco b{font-weight:700}
+.pb-contraste .selo{border-radius:0;background:#000;color:#fff}
+.pb-contraste .add{border-radius:999px;background:#000;color:#fff}
+.pb-contraste .ver-mais{border:0;border-bottom:2px solid currentColor;border-radius:0;min-height:0;padding:4px 0}
+.pb-contraste .mais{font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;text-decoration:underline;text-underline-offset:5px}
+.pb-contraste .mais .ic{display:none}
+.pb-contraste .ig{gap:4px}
+.pb-contraste .faixa h1,.pb-contraste .info h1,.pb-contraste .sac-t h1{font-family:var(--f-display);font-weight:400;text-transform:uppercase;letter-spacing:.01em}
+@media (max-width:860px){
+  .pb-contraste .hero-txt h1{font-size:clamp(54px,17vw,88px)}
+  .pb-contraste .sec-hero.v-dividido .hero-in{background:#000}
+  .pb-contraste .sec-hero:not(.v-tela) .hero-midia::after{display:none}
+}

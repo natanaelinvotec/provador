@@ -1,0 +1,33 @@
+/* Modelo 3 · Pulso — clara e direta, título fino em caixa alta, cartão com botão de comprar de ponta a ponta. */
+@font-face{font-family:"Outfit";src:url("../../../assets/fonts/pulso/Outfit.woff2") format("woff2");font-weight:100 900;font-display:swap}
+.pb-pulso{
+  --f-display:"Outfit",system-ui,sans-serif;--f-body:"Outfit",system-ui,sans-serif;
+  --t-tam:clamp(22px,2vw,28px);--t-peso:300;--t-caixa:uppercase;--t-esp:.08em;
+  --h-tam:clamp(42px,5.4vw,84px);--h-peso:300;--h-esp:-.01em;--h-lh:1.02;
+  --btn-pad:14px 30px;--btn-esp:.08em;--r-btn:0;--r-chip:0;--foto:3/4;--top-h:78px
+}
+.pb-pulso .avisos{background:var(--accent);color:var(--on-accent);text-transform:uppercase;letter-spacing:.08em;font-size:12px}
+.pb-pulso .logo{font-weight:700;font-size:22px;letter-spacing:.02em;text-transform:lowercase}
+.pb-pulso .logo i{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-size:12px;font-weight:700;letter-spacing:0;text-transform:uppercase}
+.pb-pulso .nav{font-size:12.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;gap:6px 24px}
+.pb-pulso .nav a.on::after,.pb-pulso .nav a:hover::after{height:1px}
+.pb-pulso .busca{border-bottom-width:1px}
+.pb-pulso .hero-txt h1{font-weight:300}
+.pb-pulso .sec-hero .btn{min-height:44px;border-radius:999px;background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.pb-pulso .sec-hero .kick{color:var(--accent)}
+.pb-pulso .sec-beneficios.tom{background:var(--soft)}
+.pb-pulso .sec-beneficios .bem .ic{color:var(--accent)}
+.pb-pulso .sec-beneficios .bem b{font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.04em}
+.pb-pulso .sec-h h2{position:relative}
+.pb-pulso .card h3{font-size:12.5px;font-weight:500;letter-spacing:.03em;text-transform:uppercase;line-height:1.4}
+.pb-pulso .card-btn{border-radius:2px;min-height:42px}
+.pb-pulso .selo{border-radius:2px;background:var(--accent2);color:#fff}
+.pb-pulso .preco .pix{color:var(--accent)}
+.pb-pulso .sec-categorias.v-blocos .cat-txt b{font-weight:300;text-transform:uppercase;letter-spacing:.06em;font-size:clamp(22px,2.2vw,34px)}
+.pb-pulso .sec-categorias.v-blocos .cat-txt::after{content:"Ver mais";font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:underline;text-underline-offset:4px}
+.pb-pulso .look-peca{border-radius:0}
+.pb-pulso .ig a{border-radius:18px}
+.pb-pulso .rod h3{font-weight:500}
+.pb-pulso .chip,.pb-pulso .aba{border-radius:0;text-transform:uppercase;font-size:12.5px;letter-spacing:.06em}
+.pb-pulso .faixa h1,.pb-pulso .info h1,.pb-pulso .sac-t h1{font-weight:300;text-transform:uppercase;letter-spacing:.04em}
+.pb-pulso .info h1{font-size:clamp(24px,2.4vw,34px)}

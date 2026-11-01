@@ -1,0 +1,64 @@
+/* Modelo 14 · Bloco — campanha forte: cabeçalho preto, título condensado na cor da loja, faixa amarela, fotos coladas e perguntas. */
+@font-face{font-family:"Bebas Neue";src:url("../../../assets/fonts/bloco/BebasNeue-400.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Figtree";src:url("../../../assets/fonts/bloco/Figtree.woff2") format("woff2");font-weight:300 800;font-display:swap}
+.pb-bloco{
+  --amarelo:var(--accent2);
+  --f-display:"Bebas Neue","Impact",sans-serif;--f-body:"Figtree",system-ui,sans-serif;
+  --t-tam:clamp(30px,3vw,46px);--t-peso:400;--t-esp:.01em;
+  --h-tam:clamp(76px,10.4vw,176px);--h-peso:400;--h-caixa:uppercase;--h-esp:.005em;--h-lh:.86;
+  --r-btn:0;--r-chip:0;--r-card:0;--r-img:0;--btn-tam:13px;--btn-esp:.1em;--btn-peso:800;--top-h:64px;--card-foto-bg:var(--surface)
+}
+.pb-bloco{font-size:15px}
+.pb-bloco .avisos{background:var(--amarelo);color:#111;font-weight:800;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+/* cabeçalho preto fino */
+.pb-bloco .top{background:#0E0E0F;color:#fff;border-bottom:0}
+.pb-bloco .logo{font-family:var(--f-display);font-weight:400;font-size:34px;letter-spacing:.04em;text-transform:uppercase}
+.pb-bloco .logo i{display:grid;place-items:center;width:34px;height:34px;background:var(--amarelo);color:#111;font-size:19px;letter-spacing:0}
+.pb-bloco .nav{font-size:13px;font-weight:600;gap:6px 26px}
+.pb-bloco .nav a.on::after,.pb-bloco .nav a:hover::after{background:var(--amarelo)}
+.pb-bloco .count{background:var(--amarelo);color:#111}
+.pb-bloco .menu.on{background:#0E0E0F;color:#fff}
+.pb-bloco .menu a{border-color:rgba(255,255,255,.14)}
+.pb-bloco .busca-cel.on{background:#0E0E0F}
+/* destaque recortado com título condensado enorme */
+.pb-bloco .sec-hero.v-recorte .hero-midia{background:#0E0E0F}
+.pb-bloco .sec-hero .kick{font-weight:800;letter-spacing:.2em}
+.pb-bloco .sec-hero .btn{background:#111;border-color:#111;color:#fff}
+.pb-bloco .sec-hero .btn:hover{background:var(--amarelo);border-color:var(--amarelo);color:#111}
+/* faixa de vantagens amarela */
+.pb-bloco .sec-beneficios.v-destaque{background:var(--amarelo);color:#111}
+.pb-bloco .bem b{font-weight:800;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase}
+.pb-bloco .sec-beneficios.v-destaque .bem span{color:#3A3A3A}
+/* fotos coladas com botão amarelo */
+.pb-bloco .sec-categorias.colado .cat-txt b{font-family:var(--f-display);font-weight:400;font-size:clamp(36px,3.6vw,56px);letter-spacing:.02em}
+.pb-bloco .sec-categorias.colado .cat-btn{color:#111}
+/* banner P&B com título amarelo */
+.pb-bloco .sec-banner .banner-txt h2{color:var(--amarelo);font-size:clamp(56px,8vw,128px)}
+.pb-bloco .sec-banner .kick{font-weight:800;letter-spacing:.24em}
+.pb-bloco .sec-banner .btn{background:transparent;border-color:#fff;color:#fff}
+.pb-bloco .sec-banner .btn:hover{background:#fff;color:#111}
+/* vitrine: título grande e leve à esquerda, "ver tudo" pequeno */
+.pb-bloco .sec-h h2{text-transform:uppercase}
+.pb-bloco .mais{font-size:13px;font-weight:700}
+.pb-bloco .mais .ic{width:22px;height:22px;padding:3px;border-radius:50%;background:var(--amarelo);color:#111}
+.pb-bloco .card h3{font-size:14px;font-weight:500}
+.pb-bloco .preco b{font-weight:800}
+.pb-bloco .selo{background:#111;color:#fff;font-size:10.5px;padding:4px 8px}
+.pb-bloco .cor{border-radius:2px}
+.pb-bloco .add{background:var(--amarelo);color:#111}
+.pb-bloco .seta{border-radius:0}
+/* mosaico com o nome em amarelo */
+.pb-bloco .sec-categorias.v-mosaico .cat-foto::after{background:linear-gradient(180deg,transparent 35%,rgba(0,0,0,.72))}
+.pb-bloco .sec-categorias.v-mosaico .cat-txt b{font-family:var(--f-display);font-weight:400;font-size:clamp(26px,2.6vw,40px);letter-spacing:.03em}
+/* perguntas */
+.pb-bloco .faq-i button{font-weight:700}
+.pb-bloco .faq-i.on .ic{color:#111;background:var(--amarelo);border-radius:50%}
+.pb-bloco .rod .logo i{color:#111}
+.pb-bloco .chip,.pb-bloco .aba{font-weight:700}
+.pb-bloco .faixa h1,.pb-bloco .info h1,.pb-bloco .sac-t h1{font-family:var(--f-display);font-weight:400;text-transform:uppercase;letter-spacing:.02em}
+.pb-bloco .info h1{font-size:clamp(34px,3.4vw,52px)}
+@media (max-width:860px){
+  .pb-bloco .logo{font-size:28px}
+  .pb-bloco .hero-txt h1{font-size:clamp(64px,20vw,104px)}
+  .pb-bloco .sec-banner .banner-txt h2{font-size:clamp(48px,15vw,80px)}
+}

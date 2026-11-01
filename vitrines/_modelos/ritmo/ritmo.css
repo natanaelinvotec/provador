@@ -1,0 +1,55 @@
+/* Modelo 11 · Ritmo — esportiva e limpa: itálico grande no destaque, botões pretos retos, blocos de categoria e banner de cor. */
+@font-face{font-family:"Exo 2";src:url("../../../assets/fonts/ritmo/Exo2.woff2") format("woff2");font-weight:300 800;font-display:swap}
+@font-face{font-family:"Exo 2";src:url("../../../assets/fonts/ritmo/Exo2-Italic.woff2") format("woff2");font-weight:300 800;font-style:italic;font-display:swap}
+.pb-ritmo{
+  --f-display:"Exo 2",system-ui,sans-serif;--f-body:"Exo 2",system-ui,sans-serif;
+  --t-tam:clamp(24px,2.2vw,32px);--t-peso:600;--t-esp:-.01em;
+  --h-tam:clamp(64px,9vw,150px);--h-peso:300;--h-esp:-.02em;--h-lh:.9;
+  --r-btn:2px;--r-chip:2px;--r-card:2px;--r-img:0;--btn-tam:12.5px;--btn-esp:.14em;--btn-pad:14px 30px;--top-h:70px
+}
+.pb-ritmo{font-size:15.5px}
+.pb-ritmo .avisos{background:#2B2D30;color:#fff;font-weight:500;letter-spacing:.08em;font-size:12px;text-transform:uppercase}
+.pb-ritmo .logo{font-weight:800;font-style:italic;font-size:26px;letter-spacing:-.03em;text-transform:uppercase}
+.pb-ritmo .logo span::after{content:"";display:inline-block;width:.32em;height:.32em;margin-left:.12em;background:var(--accent);transform:skewX(-14deg)}
+.pb-ritmo .nav{font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;gap:6px 26px}
+/* destaque: legenda fina e palavra em itálico enorme */
+.pb-ritmo .sec-hero .hero-in{min-height:clamp(560px,52vw,800px)}
+.pb-ritmo .sec-hero .kick{font-size:clamp(20px,2vw,30px);font-weight:300;letter-spacing:.24em}
+.pb-ritmo .hero-txt h1{font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:-.03em}
+.pb-ritmo .sec-hero .hero-p{font-weight:400}
+.pb-ritmo .sec-hero .btn{min-height:40px;padding:8px 24px;border-radius:999px;background:transparent;border-color:#fff;color:#fff;font-size:11.5px}
+.pb-ritmo .sec-hero .btn .ic{display:none}
+.pb-ritmo .ponto{width:8px;height:8px}
+/* títulos médios, sem caixa alta */
+.pb-ritmo .mais{font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.pb-ritmo .btn,.pb-ritmo .btn-ln{text-transform:uppercase}
+/* destaques da estação: legenda e botão preto */
+.pb-ritmo .sec-categorias.v-destaques .cat-txt b{font-weight:600;font-size:20px}
+.pb-ritmo .sec-categorias.v-destaques .cat-qtd{font-size:14px}
+.pb-ritmo .sec-categorias.v-destaques .cat-btn{border-radius:2px;background:#111;color:#fff}
+/* selos em faixa */
+.pb-ritmo .sec-beneficios.v-faixa{margin-top:var(--sec-y);border-top:1px solid var(--line)}
+.pb-ritmo .bem b{font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:12.5px}
+/* blocos de categoria com nome branco enorme */
+.pb-ritmo .duplo-i{aspect-ratio:4/4.4}
+.pb-ritmo .duplo-txt{left:0;right:0;top:0;bottom:0;align-content:center;justify-items:center;text-align:center}
+.pb-ritmo .duplo-txt b{font-weight:800;font-style:italic;text-transform:uppercase;font-size:clamp(36px,4.8vw,78px);letter-spacing:-.03em}
+.pb-ritmo .duplo-txt .btn{border-radius:2px;background:#fff;border-color:#fff;color:#111}
+.pb-ritmo .duplo-i::after{background:rgba(0,0,0,.28)}
+/* banner de cor */
+.pb-ritmo .sec-banner.v-cor .kick{font-size:18px;font-weight:300;letter-spacing:.3em}
+.pb-ritmo .sec-banner.v-cor h2{font-style:italic;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.pb-ritmo .sec-banner.v-cor .btn{background:transparent;color:var(--on-accent);border-color:var(--on-accent)}
+.pb-ritmo .sec-banner.v-cor .btn:hover{background:var(--on-accent);color:var(--accent)}
+/* cartão limpo */
+.pb-ritmo .card h3{font-weight:500;font-size:14.5px}
+.pb-ritmo .preco b{font-weight:700}
+.pb-ritmo .selo{border-radius:2px;background:#111;color:#fff}
+.pb-ritmo .add{background:#111;color:#fff;border-radius:2px;letter-spacing:.12em}
+.pb-ritmo .look-peca{border-radius:2px}
+.pb-ritmo .faixa h1,.pb-ritmo .info h1,.pb-ritmo .sac-t h1{font-weight:700;font-style:italic;text-transform:uppercase;letter-spacing:-.02em}
+@media (max-width:860px){
+  .pb-ritmo .sec-hero .hero-in{min-height:clamp(520px,140vw,660px)}
+  .pb-ritmo .hero-txt h1{font-size:clamp(50px,15vw,80px)}
+  .pb-ritmo .logo{font-size:22px}
+}

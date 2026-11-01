@@ -1,0 +1,63 @@
+/* Modelo 8 · Vibe — promocional e jovem: busca grande no topo, letras condensadas, categorias com nome enorme e Pix em destaque. */
+@font-face{font-family:"Sofia Sans Condensed";src:url("../../../assets/fonts/vibe/SofiaSansCondensed.woff2") format("woff2");font-weight:300 900;font-display:swap}
+@font-face{font-family:"Sofia Sans Condensed";src:url("../../../assets/fonts/vibe/SofiaSansCondensed-Italic.woff2") format("woff2");font-weight:300 900;font-style:italic;font-display:swap}
+@font-face{font-family:"Sofia Sans";src:url("../../../assets/fonts/vibe/SofiaSans.woff2") format("woff2");font-weight:300 800;font-display:swap}
+.pb-vibe{
+  --f-display:"Sofia Sans Condensed","Arial Narrow",sans-serif;--f-body:"Sofia Sans",system-ui,sans-serif;--f-ui:"Sofia Sans Condensed","Arial Narrow",sans-serif;
+  --t-tam:clamp(24px,2.2vw,32px);--t-peso:800;--t-caixa:uppercase;--t-esp:.02em;
+  --h-tam:clamp(64px,8.8vw,150px);--h-peso:900;--h-caixa:uppercase;--h-esp:-.01em;--h-lh:.84;
+  --r-btn:4px;--r-chip:4px;--r-card:0;--r-img:0;--btn-tam:15px;--btn-esp:.06em;--btn-peso:800;--top-h:82px
+}
+.pb-vibe{font-size:15.5px}
+.pb-vibe .avisos{font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.pb-vibe .logo{font-family:var(--f-display);font-weight:900;font-size:28px;letter-spacing:.01em;text-transform:uppercase}
+.pb-vibe .logo i{display:grid;place-items:center;width:40px;height:40px;border:2.5px solid currentColor;border-radius:50%;font-size:15px;font-weight:900;letter-spacing:-.04em}
+.pb-vibe[data-topo="busca"] .busca{min-height:46px}
+.pb-vibe .nav2{border-top:1px solid var(--line);border-bottom:0}
+.pb-vibe .nav2-in{font-size:15px;font-weight:800;letter-spacing:.06em}
+.pb-vibe .nav2 a:hover,.pb-vibe .nav2 a.on{color:var(--accent)}
+/* destaque com letra condensada enorme e setas quadradas */
+.pb-vibe .sec-hero.v-tela .hero-midia::after{background:linear-gradient(180deg,rgba(0,0,0,.42),rgba(0,0,0,.3) 50%,rgba(0,0,0,.55))}
+.pb-vibe .sec-hero .hero-in{min-height:clamp(520px,48vw,720px)}
+.pb-vibe .sec-hero{--hero-pos:50% 42%}
+.pb-vibe .sec-hero .kick{display:inline-block;justify-self:center;padding:5px 12px;background:var(--accent);color:var(--on-accent);font-family:var(--f-ui);font-size:15px;font-weight:800;letter-spacing:.14em}
+.pb-vibe .hero-txt h1{font-style:italic;text-shadow:0 4px 40px rgba(0,0,0,.35)}
+.pb-vibe .sec-hero .hero-p{font-size:19px;font-weight:600}
+.pb-vibe .sec-hero .btn{background:#fff;border-color:#fff;color:#111}
+.pb-vibe .nav-setas .hero-nav{position:absolute;inset:50% 0 auto;justify-content:space-between;max-width:none;padding:0 18px;transform:translateY(-50%)}
+.pb-vibe .nav-setas .hero-num{display:none}
+.pb-vibe .hero-nav .seta{width:48px;height:48px;border:0;border-radius:4px;background:rgba(255,255,255,.92);color:#111}
+/* títulos centralizados com tracinho embaixo */
+.pb-vibe .sec-h h2::after{content:"";display:block;width:44px;height:3px;margin:12px auto 0;background:var(--accent)}
+.pb-vibe:not([data-titulos="centro"]) .sec-h h2::after{margin-left:0}
+/* cartão: foto em fundo branco, nome centralizado, de/por e Pix grande */
+.pb-vibe .card-media{background:#fff}
+.pb-vibe .card h3{font-weight:600;font-size:15px}
+.pb-vibe .preco{flex-direction:column;align-items:center;gap:0}
+.pb-vibe .preco b{font-family:var(--f-body);font-size:13px;font-weight:500;color:var(--muted)}
+.pb-vibe .preco b::before{content:"de "}
+.pb-vibe .preco .pix{font-family:var(--f-ui);font-size:23px;font-weight:900;color:var(--accent);letter-spacing:.01em}
+.pb-vibe .selo{background:var(--accent);color:var(--on-accent);font-family:var(--f-ui);font-size:13px;font-weight:900}
+.pb-vibe .add{font-family:var(--f-ui);font-size:15px;font-weight:800}
+/* categorias com nome enorme em caixa alta e botão contornado */
+.pb-vibe .sec-categorias.v-faixa .cat-foto{aspect-ratio:1}
+.pb-vibe .sec-categorias.v-faixa .cat{flex-basis:calc((100% - 24px) / 4)}
+.pb-vibe .sec-categorias.v-faixa .cat-txt{top:0;bottom:0;align-content:center}
+.pb-vibe .sec-categorias.v-faixa .cat-foto::after{background:rgba(0,0,0,.3)}
+.pb-vibe .sec-categorias.v-faixa .cat-txt b{font-size:clamp(32px,3.4vw,52px);font-weight:900;text-transform:uppercase;letter-spacing:0;line-height:.9}
+.pb-vibe .sec-categorias.v-faixa .cat-btn{border-width:2px;font-family:var(--f-ui);font-size:14px;font-weight:800}
+/* diferenciais */
+.pb-vibe .sec-beneficios.v-centro .bem .ic{width:40px;height:40px;padding:8px;border-radius:50%;background:var(--accent);color:var(--on-accent);stroke-width:1.6}
+.pb-vibe .bem b{font-family:var(--f-ui);font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
+.pb-vibe .bem span{font-size:14px}
+.pb-vibe .ig{gap:4px}
+.pb-vibe .chip,.pb-vibe .aba{font-family:var(--f-ui);font-size:15px;font-weight:800;text-transform:uppercase}
+.pb-vibe .faixa h1,.pb-vibe .info h1,.pb-vibe .sac-t h1{font-family:var(--f-display);font-weight:900;text-transform:uppercase}
+@media (max-width:860px){
+  .pb-vibe .hero-txt h1{font-size:clamp(52px,16vw,84px)}
+  .pb-vibe .nav-setas .hero-nav{inset:auto 0 18px;transform:none;justify-content:center;gap:12px}
+  .pb-vibe .sec-categorias.v-faixa .cat{flex-basis:calc((100% - 8px) / 1.6)}
+  .pb-vibe .preco .pix{font-size:19px}
+  .pb-vibe .logo{font-size:23px}
+  .pb-vibe .logo i{width:32px;height:32px;font-size:12px}
+}
