@@ -1,0 +1,50 @@
+# Canais de venda: a cada 3 horas publica, para cada loja que ligou os canais no painel,
+# os arquivos da Meta, do Google, do Bling e a planilha dos hubs, mais as fotos das peças, em canais/{loja}/.
+# Lê só o que o Firestore deixa qualquer pessoa ler (catálogo público). Também roda pelo botão "Run workflow".
+name: Canais de venda
+
+on:
+  schedule:
+    # a cada 3 horas: cada rodada lê o catálogo das lojas ligadas (conta na cota de leituras do Firestore)
+    - cron: '17 */3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: canais
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Arquivos e fotos das lojas
+        run: node tools/canais/gerar.js
+
+      - name: Gravar na main
+        id: gravar
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A canais
+          if git diff --cached --quiet; then echo "Nada mudou."; exit 0; fi
+          git commit -m "Canais de venda: catálogos e fotos atualizados"
+          git pull --rebase origin main
+          git push
+          echo "mudou=1" >> "$GITHUB_OUTPUT"
+
+      - name: Atualizar o GitHub Pages
+        if: steps.gravar.outputs.mudou == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds" || echo "O Pages atualiza no próximo commit."
