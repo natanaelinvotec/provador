@@ -204,8 +204,14 @@
     b.push('<button class="mg-btn mini perigo" type="button" data-acao="loja-excluir" data-id="' + esc(l.id) + '">' + ic('lixo') + 'Excluir</button>');
     return '<article class="mg-card mg-loja"><div class="mg-loja-topo"><div><h3>' + esc(l.nome) + (l.exemplo ? ' <span class="mg-chip">Exemplo</span>' : '') + '</h3>' +
       '<div class="meta">' + esc([l.cidade, 'plano ' + nomePlano(d, l.plano), 'vitrine ' + nomeVitrine(st, l.vitrine), l.dominio || 'sem domínio próprio'].filter(Boolean).join(', ')) + '</div>' +
-      '<div class="meta">Dono: ' + esc((l.dono && l.dono.nome) || '—') + (l.instagram ? ', Instagram @' + esc(l.instagram) : '') + '</div></div>' +
+      '<div class="meta">Dono: ' + esc((l.dono && l.dono.nome) || '—') + (l.instagram ? ', Instagram @' + esc(l.instagram) : '') + '</div>' + linhaIndicacao(d, l.id) + '</div>' +
       '<div>' + u.chipSituacao(l.status) + '</div></div><div class="mg-checks">' + checks + '</div>' + dinheiro + '<div class="mg-botoes">' + b.join('') + '</div></article>';
+  }
+  function linhaIndicacao(d, lojaId) {
+    var i = (d.indicacoes || {})[lojaId], VD = window.Vendedores;
+    if (!i || !VD) return '';
+    var v = (d.vendedores || {})[i.codigo];
+    return '<div class="meta">Indicada por <a href="#vendedores">' + esc(v ? v.nome : i.codigo) + '</a>: ' + esc(VD.STATUS[i.status] ? VD.STATUS[i.status].nome : i.status) + (i.valor != null ? ' (' + brl(i.valor) + ')' : '') + '</div>';
   }
   D.lojas = function (main, st) {
     catalogo(st).then(function () { if (!st.catalogoDesenhado) { st.catalogoDesenhado = true; PN.render(); } });
@@ -287,7 +293,8 @@
   A['loja-ativar'] = function (el, st) {
     var l = st.dados.lojas[el.dataset.id];
     if (!l.vitrine) { PN.aviso('Escolha a vitrine antes de ativar.'); return A['loja-gerar'](el, st); }
-    acaoLoja('ativar', 'Loja ativada')(el, st);
+    var ind = (st.dados.indicacoes || {})[l.id];
+    acaoLoja('ativar', ind && ind.status === 'cadastro' ? 'Loja ativada. A indicação do vendedor é confirmada quando você registrar o 1º pagamento.' : 'Loja ativada')(el, st);
   };
   A['loja-pausar'] = acaoLoja('pausar', 'Loja pausada');
   A['loja-reativar'] = acaoLoja('reativar', 'Loja reativada');
@@ -305,8 +312,11 @@
   };
   F.pagamento = function (f, st) {
     var meses = Math.min(120, Math.max(1, parseInt(f.elements.meses.value, 10) || 1));
+    var ind = (st.dados.indicacoes || {})[f.elements.id.value];
     P.acaoLoja(f.elements.id.value, 'pagamento', { meses: meses }).then(function (l) {
-      PN.fecharModal(); PN.aviso('Pagamento registrado. Pago até ' + u.nomeMes(l.cobranca.pagoAte)); return PN.recarregar();
+      PN.fecharModal();
+      PN.aviso('Pagamento registrado. Pago até ' + u.nomeMes(l.cobranca.pagoAte) + (ind && ind.status === 'cadastro' ? '. Indicação do vendedor confirmada.' : ''));
+      return PN.recarregar();
     }).catch(function (e) { PN.aviso((e && e.message) || 'Não foi possível registrar.'); });
   };
   A['loja-isentar'] = acaoLoja('isentar', 'Mensalidade isenta');
@@ -553,6 +563,7 @@
       [null, 'contrato', 'Contratos', 'Contrato de prestação de serviço assinado online'],
       [null, 'suporte', 'Suporte', 'Chamados das lojas com prazo de resposta'],
       [null, 'megafone', 'Comunicados', 'Avisos para o painel de todas as lojas'],
+      ['vendedores', 'pessoas', 'Vendedores', 'Convites, link de cada vendedor e valor por loja que assinar'],
       [null, 'cupom', 'Cupons e indicação', 'Desconto para loja que indicar outra']]],
     ['Sistema', [
       ['saude', 'pulso', 'Saúde do sistema', 'Versão no ar, último cálculo e domínios'],
@@ -887,5 +898,136 @@
   A['restaurar-exemplos'] = function () {
     if (!window.confirm('Voltar aos dados de exemplo? Tudo o que foi cadastrado neste navegador some.')) return;
     P.restaurarExemplos().then(function () { PN.aviso('Exemplos restaurados'); return PN.recarregar(); });
+  };
+  /* =================== Vendedores (afiliados por convite) =================== */
+  var VD = window.Vendedores;
+  function baseSite() { return new URL('../', location.href).href; }
+  function chipIndicacao(st) {
+    var m = { cadastro: ['info', 'relogio'], confirmada: ['at', 'moedas'], paga: ['ok', 'check'], cancelada: ['', 'x'] }[st] || ['', 'relogio'];
+    return '<span class="mg-chip ' + m[0] + '">' + ic(m[1]) + esc(VD.STATUS[st] ? VD.STATUS[st].curto : st) + '</span>';
+  }
+  function chipVendedor(v) {
+    if (!v.ativo) return '<span class="mg-chip">' + ic('pausa') + 'Desativado</span>';
+    return v.uid ? '<span class="mg-chip ok">' + ic('check') + 'Ativo</span>' : '<span class="mg-chip info">' + ic('relogio') + 'Convite enviado</span>';
+  }
+  T.vendedores = function (d) {
+    if (!VD) return card('Vendedores', '', vazio('Falta carregar shared/vendedores.js.', 'Atualize a página.'));
+    var vend = lista(d.vendedores).sort(function (a, b) { return (b.criadoEm || '') < (a.criadoEm || '') ? -1 : 1; });
+    var inds = lista(d.indicacoes).sort(function (a, b) { return (b.criadaEm || '') < (a.criadaEm || '') ? -1 : 1; });
+    var valor = VD.lerValor(d.vendedoresRegras), tot = VD.resumo(inds);
+    var porVend = {}; inds.forEach(function (i) { (porVend[i.codigo] = porVend[i.codigo] || []).push(i); });
+    var semRegras = d.vendedoresSemRegras ? '<div class="mg-aviso-ex"><span><b>Falta publicar as regras novas do Firestore.</b> Enquanto isso os vendedores não aparecem aqui e os links não contam. O arquivo é o firestore.rules do repositório.</span></div>' : '';
+    var k = '<div class="mg-grade mg-g4">' +
+      kpi('Vendedores ativos', num(vend.filter(function (v) { return v.ativo && v.uid; }).length), num(vend.filter(function (v) { return !v.uid; }).length) + ' convite(s) sem resposta') +
+      kpi('Lojas pelos links', num(tot.total), num(tot.emTeste) + ' nos 15 dias grátis agora') +
+      kpi('Assinaram', num(tot.confirmadas + tot.pagas), 'confirmadas no 1º pagamento') +
+      kpi('Comissão a pagar', brl(tot.aPagar), brl(tot.pago) + ' já pagos') + '</div>';
+    var regras = card('Valor por loja que assinar', 'Vale para as próximas confirmações. As já confirmadas guardam o valor da época.',
+      '<form data-form="vend-regras" novalidate class="mg-form" style="grid-template-columns:minmax(0,220px) auto;align-items:end">' +
+      '<label class="mg-campo">R$ por loja<input name="valor" type="number" min="0" max="10000" step="0.01" value="' + esc(valor) + '"></label>' +
+      '<div><button class="mg-btn pri" type="submit">Salvar valor</button></div></form>' +
+      '<p class="mg-sub" style="margin-top:10px">A indicação conta quando a loja é montada pelo link do vendedor (vale 60 dias depois do clique) e vira comissão quando você registra o 1º pagamento da loja.</p>');
+    var linhasV = vend.map(function (v) {
+      var mi = porVend[v.codigo] || [], r = VD.resumo(mi), link = VD.linkIndicacao(baseSite(), v.codigo);
+      var b = ['<button class="mg-btn mini" type="button" data-acao="vend-convite" data-id="' + esc(v.codigo) + '">' + ic('conversa') + 'Convite</button>'];
+      if (v.uid) b.push('<button class="mg-btn mini" type="button" data-acao="vend-copiar-link" data-id="' + esc(v.codigo) + '">' + ic('link') + 'Copiar link</button>');
+      b.push('<button class="mg-btn mini" type="button" data-acao="vend-editar" data-id="' + esc(v.codigo) + '">' + ic('lapis') + 'Editar</button>');
+      b.push('<button class="mg-btn mini" type="button" data-acao="vend-ativo" data-id="' + esc(v.codigo) + '" data-ativo="' + (v.ativo ? '0' : '1') + '">' + ic(v.ativo ? 'pausa' : 'play') + (v.ativo ? 'Desativar' : 'Reativar') + '</button>');
+      if (!v.uid) b.push('<button class="mg-btn mini perigo" type="button" data-acao="vend-apagar" data-id="' + esc(v.codigo) + '" aria-label="Apagar o convite de ' + esc(v.nome) + '">' + ic('lixo') + '</button>');
+      return '<tr><td><b>' + esc(v.nome) + (v.exemplo ? ' <span class="mg-chip">Exemplo</span>' : '') + '</b><br><span class="mg-sub">' + esc(v.email) + '</span><br><span class="mg-sub">link: ' + esc(link.replace(/^https?:\/\//, '')) + '</span></td>' +
+        '<td>' + chipVendedor(v) + '</td><td class="n">' + num(r.total) + '</td><td class="n">' + num(r.emTeste) + '</td><td class="n">' + num(r.confirmadas + r.pagas) + '</td><td class="n">' + brl(r.aPagar) + '</td>' +
+        '<td><div class="mg-botoes">' + b.join('') + '</div></td></tr>';
+    }).join('');
+    var cardV = card('Vendedores', 'Só entra quem você convidar. O vendedor entra com a conta Google do e-mail do convite.',
+      vend.length ? '<div class="mg-tabela-wrap"><table class="mg-tabela"><thead><tr><th>Vendedor</th><th>Situação</th><th class="n">Lojas</th><th class="n">Dias grátis</th><th class="n">Assinaram</th><th class="n">A pagar</th><th></th></tr></thead><tbody>' + linhasV + '</tbody></table></div>'
+        : vazio('Nenhum vendedor ainda.', 'Convide alguém para oferecer o Provador. Ela recebe um link próprio e você vê aqui cada loja que vier por ele.'),
+      '<button class="mg-btn pri" type="button" data-acao="vend-novo">' + ic('mais') + 'Convidar vendedor</button>');
+    var linhasI = inds.map(function (i) {
+      var v = (d.vendedores || {})[i.codigo], l = (d.lojas || {})[i.lojaId];
+      var b = [];
+      if (i.status === 'confirmada') b.push('<button class="mg-btn mini pri" type="button" data-acao="ind-acao" data-a="pagar" data-id="' + esc(i.lojaId) + '">' + ic('check') + 'Comissão paga</button>');
+      if (i.status === 'cadastro') {
+        b.push('<button class="mg-btn mini" type="button" data-acao="ind-acao" data-a="confirmar" data-id="' + esc(i.lojaId) + '" title="Use se o 1º pagamento foi registrado antes desta tela existir">Confirmar</button>');
+        b.push('<button class="mg-btn mini perigo" type="button" data-acao="ind-acao" data-a="cancelar" data-id="' + esc(i.lojaId) + '">Não assinou</button>');
+      }
+      if (v && v.whatsapp && i.status === 'confirmada') b.push('<a class="mg-btn mini" href="' + esc(u.waLink(v.whatsapp, 'Oi, ' + v.nomeCurto + '! A ' + i.nome + ' assinou o Provador pelo seu link. Sua comissão é de ' + brl(i.valor) + '.')) + '" target="_blank" rel="noopener">' + ic('conversa') + 'Avisar</a>');
+      return '<tr><td><b>' + esc(i.nome) + (i.exemplo ? ' <span class="mg-chip">Exemplo</span>' : '') + '</b><br><span class="mg-sub">plano ' + esc(nomePlano(d, i.plano)) + (l ? ', loja ' + esc(l.status) : ', loja excluída') + '</span></td>' +
+        '<td>' + esc(v ? v.nome : i.codigo) + '</td><td>' + esc(u.diaBR(i.criadaEm)) + '</td><td>' + chipIndicacao(i.status) + '</td>' +
+        '<td class="n">' + (i.valor != null ? brl(i.valor) : '—') + '</td><td><div class="mg-botoes">' + b.join('') + '</div></td></tr>';
+    }).join('');
+    var cardI = card('Lojas indicadas', 'Dos 15 dias grátis até a comissão paga. O 1º pagamento registrado na loja confirma sozinho.',
+      inds.length ? '<div class="mg-tabela-wrap"><table class="mg-tabela"><thead><tr><th>Loja</th><th>Vendedor</th><th>Montou em</th><th>Situação</th><th class="n">Comissão</th><th></th></tr></thead><tbody>' + linhasI + '</tbody></table></div>'
+        : vazio('Nenhuma loja pelos links ainda.', 'Quando alguém montar a loja pelo link de um vendedor, ela aparece aqui.'));
+    return semRegras + k + '<div class="mg-grade" style="margin-top:18px">' + regras + cardV + cardI + '</div>';
+  };
+
+  function formVendedor(v) {
+    v = v || {};
+    var campo = function (rot, nome, val, tipo, extra, dica) {
+      return '<label class="mg-campo">' + esc(rot) + '<input name="' + nome + '" type="' + (tipo || 'text') + '" value="' + esc(val || '') + '"' + (extra || '') + '>' + (dica ? '<small>' + esc(dica) + '</small>' : '') + '</label>';
+    };
+    return '<h2>' + (v.codigo ? 'Editar ' + esc(v.nome) : 'Convidar vendedor') + '</h2><p class="mg-sub">Ele entra em /vendedor/ com a conta Google deste e-mail e recebe o link próprio.</p>' +
+      '<form data-form="vendedor" novalidate style="margin-top:16px"><input type="hidden" name="codigo" value="' + esc(v.codigo || '') + '"><div class="mg-form">' +
+      campo('Nome *', 'nome', v.nome, 'text', ' maxlength="80" required autocomplete="off"') +
+      campo('E-mail da conta Google *', 'email', v.email, 'email', ' maxlength="120" required autocomplete="off"' + (v.uid ? ' readonly' : ''), v.uid ? 'Já aceitou o convite: o e-mail não muda mais.' : 'Precisa ser o e-mail com que ele entra no Google.') +
+      campo('WhatsApp *', 'whatsapp', v.whatsapp, 'tel', ' maxlength="20" required autocomplete="off"') +
+      '</div><div class="rodape"><button class="mg-btn" type="button" data-acao="fechar-modal">Cancelar</button><button class="mg-btn pri" type="submit">' + (v.codigo ? 'Salvar' : 'Criar convite') + '</button></div></form>';
+  }
+  function modalConvite(st, v) {
+    var msg = VD.mensagemConvite(v, baseSite(), VD.lerValor(st.dados.vendedoresRegras));
+    PN.abrirModal('<h2>Convite de ' + esc(v.nome) + '</h2><p class="mg-sub">Mande pelo WhatsApp ou copie. O link só funciona com a conta Google de ' + esc(v.email) + '.</p>' +
+      '<label class="mg-campo" style="margin-top:14px">Mensagem<textarea readonly rows="8" id="mg-convite-txt" style="resize:vertical">' + esc(msg) + '</textarea></label>' +
+      '<div class="rodape"><button class="mg-btn" type="button" data-acao="fechar-modal">Fechar</button><button class="mg-btn" type="button" data-acao="vend-copiar-convite">' + ic('copiar') + 'Copiar</button>' +
+      '<a class="mg-btn pri" href="' + esc(u.waLink(v.whatsapp, msg)) + '" target="_blank" rel="noopener">' + ic('conversa') + 'Mandar no WhatsApp</a></div>');
+  }
+  function copiar(txt, ok) {
+    return (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(function () { PN.aviso(ok); })
+      .catch(function () { window.prompt('Copie:', txt); });
+  }
+  A['vend-novo'] = function () { PN.abrirModal(formVendedor()); };
+  A['vend-editar'] = function (el, st) { PN.abrirModal(formVendedor(st.dados.vendedores[el.dataset.id])); };
+  A['vend-convite'] = function (el, st) { modalConvite(st, st.dados.vendedores[el.dataset.id]); };
+  A['vend-copiar-convite'] = function () { var t = document.getElementById('mg-convite-txt'); if (t) copiar(t.value, 'Convite copiado'); };
+  A['vend-copiar-link'] = function (el) { copiar(VD.linkIndicacao(baseSite(), el.dataset.id), 'Link do vendedor copiado'); };
+  F.vendedor = function (f, st) {
+    var r = VD.validarVendedor({ nome: f.elements.nome.value, email: f.elements.email.value, whatsapp: f.elements.whatsapp.value });
+    if (r.erros.length) { erroCampos(f, r.erros); PN.aviso('Confira os campos marcados.'); return; }
+    var codigo = f.elements.codigo.value, todos = st.dados.vendedores || {};
+    var dup = lista(todos).filter(function (x) { return x.email === r.vendedor.email && x.codigo !== codigo; })[0];
+    if (dup) { erroCampos(f, ['email']); PN.aviso('Este e-mail já é do vendedor ' + dup.nome + '.'); return; }
+    var v = Object.assign({}, codigo ? todos[codigo] : {}, r.vendedor, { codigo: codigo || VD.codigoNovo(r.vendedor.nome, todos) });
+    if (codigo && todos[codigo] && todos[codigo].uid) v.email = todos[codigo].email;
+    delete v.exemplo;
+    P.salvarVendedor(v).then(function (o) {
+      return PN.recarregar().then(function () { if (codigo) { PN.fecharModal(); PN.aviso('Vendedor salvo'); } else modalConvite(st, o); });
+    }).catch(function (e) { PN.aviso((e && e.message) || 'Não foi possível salvar.'); });
+  };
+  A['vend-ativo'] = function (el) {
+    el.disabled = true;
+    var ativo = el.dataset.ativo === '1';
+    P.ativarVendedor(el.dataset.id, ativo).then(function () { PN.aviso(ativo ? 'Vendedor reativado' : 'Vendedor desativado: o link dele para de contar'); return PN.recarregar(); })
+      .catch(function (e) { el.disabled = false; PN.aviso((e && e.message) || 'Não foi possível concluir.'); });
+  };
+  A['vend-apagar'] = function (el, st) {
+    var v = st.dados.vendedores[el.dataset.id];
+    PN.abrirModal('<h2>Apagar o convite de ' + esc(v.nome) + '?</h2><p class="mg-sub">Ele ainda não entrou. O link do convite para de funcionar.</p>' +
+      '<div class="rodape"><button class="mg-btn" type="button" data-acao="fechar-modal">Cancelar</button><button class="mg-btn perigo" type="button" data-acao="vend-apagar-sim" data-id="' + esc(v.codigo) + '">Apagar convite</button></div>');
+  };
+  A['vend-apagar-sim'] = function (el) {
+    el.disabled = true;
+    P.apagarVendedor(el.dataset.id).then(function () { PN.fecharModal(); PN.aviso('Convite apagado'); return PN.recarregar(); })
+      .catch(function (e) { el.disabled = false; PN.aviso((e && e.message) || 'Não foi possível apagar.'); });
+  };
+  A['ind-acao'] = function (el) {
+    el.disabled = true;
+    var a = el.dataset.a, msg = { pagar: 'Comissão marcada como paga', confirmar: 'Indicação confirmada', cancelar: 'Marcada como "não assinou"' }[a];
+    P.acaoIndicacao(el.dataset.id, a).then(function () { PN.aviso(msg); return PN.recarregar(); })
+      .catch(function (e) { el.disabled = false; PN.aviso((e && e.message) || 'Não foi possível concluir.'); });
+  };
+  F['vend-regras'] = function (f) {
+    var v = Number(f.elements.valor.value);
+    if (!(v >= 0 && v <= 10000)) { erroCampos(f, ['valor']); PN.aviso('Use um valor entre R$ 0 e R$ 10.000.'); return; }
+    P.salvarRegrasVendedores({ valorPorLoja: v }).then(function () { PN.aviso('Valor por loja salvo: ' + brl(v)); return PN.recarregar(); })
+      .catch(function (e) { PN.aviso((e && e.message) || 'Não foi possível salvar.'); });
   };
 })();
