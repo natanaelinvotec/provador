@@ -67,6 +67,7 @@
       if (r.outraConta) return aviso404('Convite já aceito', 'Este convite já foi aceito com outra conta Google. Entre com ela, ou peça um convite novo.');
       S.dados = r; desenhar();
     }).catch(function (e) {
+      if (/permission/.test((e && e.code) || '')) return aviso404('Acesso ainda não liberado', 'Esta conta (' + conta.email + ') não tem convite de vendedor liberado. Peça o convite para quem administra o Provador, ou entre com a conta Google do convite.');
       aviso404('Não deu para abrir agora', 'O painel não respondeu (' + ((e && (e.code || e.message)) || 'erro') + '). Tente de novo em instantes.');
     });
   }
