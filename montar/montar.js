@@ -216,7 +216,7 @@
       '<p class="mt-nota">Depois dos 15 dias você escolhe um plano para continuar. Suas fotos e dados ficam só na sua loja.</p>';
   }
   function listaFalta(falta, semPreco) {
-    var ok = '<div class="mt-resumo"><b>' + esc(resumo()) + '</b><span>Vitrine ' + esc(nomeVitrine(S.rz.vitrine)) + '</span></div>';
+    var ok = '<div class="mt-resumo"><b>' + esc(resumo()) + '</b><span>Vitrine ' + esc(nomeVitrine(S.rz.vitrine)) + '</span>' + (S.indicadoPor ? '<span>Indicação de ' + esc(S.indicadoPor) + '</span>' : '') + '</div>';
     if (falta.length) ok += '<p class="mt-falta">Antes de publicar, falta ' + esc(falta.join(', ')) + '.</p>';
     else if (semPreco) ok += '<p class="mt-falta leve">' + semPreco + (semPreco === 1 ? ' foto está' : ' fotos estão') + ' sem preço. Pode publicar e completar depois no painel.</p>';
     return ok;
@@ -229,7 +229,7 @@
   function diasTeste() { var l = S.lojaReal; if (!l) return 0; var ate = l.trialAteMs || Date.parse(l.trialAte); return Math.max(0, Math.ceil((ate - Date.now()) / 864e5)); }
   function linkLoja() { return S.lojaReal ? new URL('../vitrine.html?l=' + encodeURIComponent(S.lojaReal.slug), location.href).href : ''; }
   function telaPlano() {
-    var l = S.lojaReal || {}, dias = diasTeste(), w = String((P.cfg.whatsappComercial || '')).replace(/\D/g, '');
+    var l = S.lojaReal || {}, dias = diasTeste(), w = P.whatsComercial || String((P.cfg.whatsappComercial || '')).replace(/\D/g, '');
     var msg = encodeURIComponent('Oi! Quero assinar o plano da minha loja ' + (l.nome || '') + ' (' + linkLoja() + ').');
     return '<h1>Plano e domínio</h1>' +
       '<div class="mt-cartao">' + (l.status === 'teste' ? '<b>' + (dias ? 'Faltam ' + dias + (dias === 1 ? ' dia' : ' dias') + ' de teste grátis' : 'Seu teste grátis terminou') + '</b><span>Plano escolhido: ' + esc(l.plano || 'loja') + '. Para continuar depois do teste, fale com a gente.</span>' : '<b>Loja ativa</b><span>Plano ' + esc(l.plano || '') + '.</span>') +
@@ -268,7 +268,9 @@
     if (botao) { botao.disabled = true; botao.textContent = 'Publicando sua loja…'; }
     var rz = JSON.parse(JSON.stringify(S.rz));
     rz.itens = rz.itens.map(function (i) { delete i.orig; delete i.avisos; delete i.sujo; return i; });
+    rz.indicacao = P.indicacao ? P.indicacao.ler() : '';
     return P.publicarLojaSozinha(rz, conta).then(function (l) {
+      if (rz.indicacao && P.indicacao) P.indicacao.limpar();
       return P.minhaLoja(conta).then(function (r) { entrarNoPainel(r || { loja: l, itens: rz.itens }); aviso('Sua loja está no ar!'); ir(3); });
     }).catch(function (e) {
       aviso('Não deu para publicar: ' + ((e && (e.code || e.message)) || 'tente de novo'));
@@ -425,6 +427,9 @@
       S.conta = r[2];
       if (q.get('entrar') === '1' && !S.conta) S.entrando = true;
       var depois = function () { desenharPassos(); desenhar(); atualizarPrevia(); };
+      // veio pelo link de um vendedor: mostra de quem é a indicação no passo de publicar
+      var cod = P.indicacao ? P.indicacao.ler() : '';
+      if (cod && P.codigoVendedor) P.codigoVendedor(cod).then(function (cv) { S.indicadoPor = cv && cv.ativo ? cv.nome : ''; if (S.indicadoPor && S.passo === 3 && !S.painel) desenhar(); });
       if (!S.conta) return depois();
       return P.minhaLoja(S.conta).then(function (m) { if (m) entrarNoPainel(m); depois(); }).catch(depois);
     });
