@@ -1,0 +1,92 @@
+[
+ {
+  "numero": 1,
+  "slug": "classico",
+  "nome": "Clássico",
+  "cor": "vinho-delicado"
+ },
+ {
+  "numero": 2,
+  "slug": "arena",
+  "nome": "Arena",
+  "cor": "grafite-lima"
+ },
+ {
+  "numero": 3,
+  "slug": "pulso",
+  "nome": "Pulso",
+  "cor": "laranja-energia"
+ },
+ {
+  "numero": 4,
+  "slug": "aura",
+  "nome": "Aura",
+  "cor": "lavanda-suave"
+ },
+ {
+  "numero": 5,
+  "slug": "impacto",
+  "nome": "Impacto",
+  "cor": "preto-puro"
+ },
+ {
+  "numero": 6,
+  "slug": "cetim",
+  "nome": "Cetim",
+  "cor": "rubi-dourado"
+ },
+ {
+  "numero": 7,
+  "slug": "trilha",
+  "nome": "Trilha",
+  "cor": "verde-mata"
+ },
+ {
+  "numero": 8,
+  "slug": "vibe",
+  "nome": "Vibe",
+  "cor": "pink-pulse"
+ },
+ {
+  "numero": 9,
+  "slug": "leve",
+  "nome": "Leve",
+  "cor": "areia-oliva"
+ },
+ {
+  "numero": 10,
+  "slug": "nobre",
+  "nome": "Nobre",
+  "cor": "editorial-bronze"
+ },
+ {
+  "numero": 11,
+  "slug": "ritmo",
+  "nome": "Ritmo",
+  "cor": "azul-atleta"
+ },
+ {
+  "numero": 12,
+  "slug": "contraste",
+  "nome": "Contraste",
+  "cor": "marinho-classico"
+ },
+ {
+  "numero": 13,
+  "slug": "studio",
+  "nome": "Studio",
+  "cor": "caramelo"
+ },
+ {
+  "numero": 14,
+  "slug": "bloco",
+  "nome": "Bloco",
+  "cor": "pink-pulse"
+ },
+ {
+  "numero": 15,
+  "slug": "foco",
+  "nome": "Foco",
+  "cor": "ceu-pastel"
+ }
+]
