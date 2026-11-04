@@ -198,7 +198,7 @@
   function mostrarOk(loja) {
     $('#pv-form').hidden = true;
     $('#pv-ok-loja').textContent = String(loja || 'sua loja').trim();
-    var w = String(cfg.whatsappComercial || '').replace(/\D/g, '');
+    var w = P.whatsComercial || String(cfg.whatsappComercial || '').replace(/\D/g, '');
     if (w.length >= 12) {
       var b = $('#pv-ok-whats');
       b.href = 'https://wa.me/' + w + '?text=' + encodeURIComponent('Oi! Acabei de pedir uma loja no site (' + String(loja || '').trim() + ').');
