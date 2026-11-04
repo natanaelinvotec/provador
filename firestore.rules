@@ -5,6 +5,7 @@ rules_version = '2';
 // o público só CRIA pedido de loja, com campos e tamanhos conferidos aqui;
 // a lojista que monta a loja sozinha cria a loja dela UMA vez (15 dias grátis) e depois só mexe
 // nos dados da vitrine e nas peças. Status, cobrança, plano e prazo do teste são da plataforma.
+// Vendedores convidados entram com o e-mail do convite e só leem as indicações deles.
 service cloud.firestore {
   match /databases/{database}/documents {
 
@@ -275,6 +276,68 @@ service cloud.firestore {
         && get(/databases/$(database)/documents/lojasPublicas/$(slug)).data.lojaId == request.resource.data.lojaId
         && canaisOk(request.resource.data);
       allow delete: if dono(resource.data.lojaId) || plataforma();
+    }
+
+    // ---------- programa de vendedores (afiliados por convite) ----------
+    // a plataforma cadastra o vendedor; ele entra com o e-mail do convite (Google, e-mail verificado),
+    // aceita uma vez (grava o próprio uid) e passa a ver só as lojas indicadas por ele
+    function codigoOk(c) { return c is string && c.matches('^[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$'); }
+    function doConvite(v) { return logado() && emailVerificado() && request.auth.token.email.lower() == v.email; }
+    function vendedorOk(d) {
+      return d.keys().hasOnly(['codigo', 'nome', 'nomeCurto', 'email', 'whatsapp', 'ativo', 'uid', 'criadoEm', 'aceitoEm'])
+        && texto(d.nome, 2, 80) && texto(d.nomeCurto, 1, 40) && texto(d.email, 5, 120) && d.email == d.email.lower()
+        && digitos(d.whatsapp, 13) && d.ativo is bool && (d.uid == null || d.uid is string) && texto(d.criadoEm, 10, 30);
+    }
+    match /vendedores/{codigo} {
+      allow get, list: if plataforma() || doConvite(resource.data);
+      allow create: if plataforma() && codigoOk(codigo) && request.resource.data.codigo == codigo && vendedorOk(request.resource.data);
+      allow update: if (plataforma() && request.resource.data.codigo == codigo && vendedorOk(request.resource.data))
+        || (doConvite(resource.data) && resource.data.ativo == true && resource.data.uid == null
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['uid', 'aceitoEm'])
+          && request.resource.data.uid == request.auth.uid && texto(request.resource.data.aceitoEm, 10, 30));
+      allow delete: if plataforma();
+    }
+    // o link ?vendedor=CODIGO resolve aqui: só o uid, o primeiro nome e se está ativo (nada de contato)
+    match /codigosVendedor/{codigo} {
+      allow get: if true;
+      allow list: if false;
+      allow create: if codigoOk(codigo)
+        && request.resource.data.keys().hasOnly(['uid', 'nome', 'ativo'])
+        && ((plataforma() && request.resource.data.ativo is bool && texto(request.resource.data.nome, 1, 40))
+          || (logado() && request.resource.data.uid == request.auth.uid && request.resource.data.ativo == true
+            && getAfter(/databases/$(database)/documents/vendedores/$(codigo)).data.uid == request.auth.uid
+            && get(/databases/$(database)/documents/vendedores/$(codigo)).data.ativo == true
+            && request.resource.data.nome == get(/databases/$(database)/documents/vendedores/$(codigo)).data.nomeCurto));
+      allow update: if plataforma() && request.resource.data.keys().hasOnly(['uid', 'nome', 'ativo']);
+      allow delete: if plataforma();
+    }
+    // indicação: criada pela lojista no MESMO lote que cria a loja (nunca depois), com um código ativo e sem indicar a si mesma.
+    // Só a plataforma confirma (1º pagamento), marca como paga ou cancela.
+    match /indicacoes/{lojaId} {
+      allow get, list: if plataforma() || (logado() && resource.data.vendedorUid == request.auth.uid);
+      allow create: if dono(lojaId)
+        && request.resource.data.keys().hasOnly(['lojaId', 'codigo', 'vendedorUid', 'nome', 'slug', 'plano', 'criadaEm', 'status'])
+        && request.resource.data.lojaId == lojaId && request.resource.data.status == 'cadastro'
+        && codigoOk(request.resource.data.codigo)
+        && get(/databases/$(database)/documents/codigosVendedor/$(request.resource.data.codigo)).data.ativo == true
+        && get(/databases/$(database)/documents/codigosVendedor/$(request.resource.data.codigo)).data.uid == request.resource.data.vendedorUid
+        && request.resource.data.vendedorUid != request.auth.uid
+        && !exists(/databases/$(database)/documents/lojas/$(lojaId))
+        && getAfter(/databases/$(database)/documents/lojas/$(lojaId)).data.status == 'teste'
+        && getAfter(/databases/$(database)/documents/lojas/$(lojaId)).data.slug == request.resource.data.slug
+        && getAfter(/databases/$(database)/documents/lojas/$(lojaId)).data.nome == request.resource.data.nome
+        && getAfter(/databases/$(database)/documents/lojas/$(lojaId)).data.plano == request.resource.data.plano
+        && texto(request.resource.data.criadaEm, 10, 10);
+      allow update: if plataforma()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'valor', 'confirmadaEm', 'pagaEm'])
+        && request.resource.data.status in ['cadastro', 'confirmada', 'paga', 'cancelada']
+        && (!('valor' in request.resource.data) || (request.resource.data.valor is number && request.resource.data.valor >= 0 && request.resource.data.valor <= 10000));
+      allow delete: if plataforma();
+    }
+    match /vendedoresConfig/regras {
+      allow get: if logado();
+      allow write: if plataforma() && request.resource.data.keys().hasOnly(['valorPorLoja', 'atualizadoEm'])
+        && request.resource.data.valorPorLoja is number && request.resource.data.valorPorLoja >= 0 && request.resource.data.valorPorLoja <= 10000;
     }
 
     match /{caminho=**} { allow read, write: if false; }
