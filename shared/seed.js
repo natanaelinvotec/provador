@@ -20,7 +20,8 @@
       ex6: { nome: 'Ateliê Lavanda', marcaCurta: 'Lavanda', marcaSub: 'ATELIÊ', cidade: 'Corumbá, MS', instagram: 'atelielavanda', plano: 'loja', vitrine: 'lavanda-suave', dominio: '', status: 'ativa', ativadaEm: diaDoMes(mAnt(4), 15), cobranca: { isento: true }, dono: { nome: 'Lívia A.', celular: '67999990006', email: 'livia@exemplo.com' }, implantacao: { valor: 0, pago: true } },
       ex7: { nome: 'Forte Cross', marcaCurta: 'Forte', marcaSub: 'CROSS', cidade: 'Campo Grande, MS', instagram: 'fortecross', plano: 'loja', vitrine: 'laranja-energia', dominio: '', status: 'pausada', ativadaEm: diaDoMes(mAnt(8), 10), cobranca: { pagoAte: mAnt(3) }, dono: { nome: 'Diego F.', celular: '67999990007', email: 'diego@exemplo.com' }, implantacao: { valor: 1800, pago: true } },
       ex8: { nome: 'Bem Básico', marcaCurta: 'Bem', marcaSub: 'BÁSICO', cidade: 'Ponta Porã, MS', instagram: 'bembasico', plano: 'vitrine', vitrine: 'caramelo', dominio: '', status: 'fila', criadaEm: diaDoMes(m, 1), cobranca: {}, dono: { nome: 'Marina L.', celular: '67999990008', email: 'marina@exemplo.com' }, implantacao: { valor: 600, pago: false } },
-      ex9: { nome: 'Cápsula Store', marcaCurta: 'Cápsula', marcaSub: 'STORE', cidade: 'Campo Grande, MS', instagram: 'capsulastore', plano: 'completo', vitrine: 'editorial-bronze', dominio: '', status: 'rascunho', criadaEm: hoje, cobranca: {}, dono: { nome: 'Helena V.', celular: '67999990009', email: '' }, implantacao: { valor: 3000, pago: false } }
+      ex9: { nome: 'Cápsula Store', marcaCurta: 'Cápsula', marcaSub: 'STORE', cidade: 'Campo Grande, MS', instagram: 'capsulastore', plano: 'completo', vitrine: 'editorial-bronze', dominio: '', status: 'rascunho', criadaEm: hoje, cobranca: {}, dono: { nome: 'Helena V.', celular: '67999990009', email: '' }, implantacao: { valor: 3000, pago: false } },
+      ex10: { nome: 'Garra Fit', marcaCurta: 'Garra', marcaSub: 'FIT', cidade: 'Aquidauana, MS', instagram: 'garrafit', plano: 'loja', vitrine: 'arena-pink-pulse', dominio: '', status: 'teste', origem: 'montador', criadaEm: U.dia(new Date(agora - 6 * 864e5)), trialAte: U.dia(new Date(agora.getTime() + 9 * 864e5)), cobranca: {}, dono: { nome: 'Tainá G.', celular: '67999990010', email: 'taina@exemplo.com' }, implantacao: { valor: 0, pago: false } }
     };
     Object.keys(lojas).forEach(function (id) {
       var l = lojas[id];
@@ -85,8 +86,22 @@
       { quando: new Date(agora - 4 * 864e5).toISOString(), quem: 'servidor', oque: 'Teto de IA em 60%', colecao: 'pedidosIA', alvo: 'Plataforma' }
     ];
 
+    // programa de vendedores: uma vendedora ativa com três lojas e um convite ainda não aceito
+    var vendedores = {
+      'carol-m4x': { codigo: 'carol-m4x', nome: 'Carolina Matos', nomeCurto: 'Carolina', email: 'carol@exemplo.com', whatsapp: '67999997001', ativo: true, uid: 'vend-carol-exemplo-com', criadoEm: new Date(agora - 40 * 864e5).toISOString(), aceitoEm: new Date(agora - 39 * 864e5).toISOString(), exemplo: true },
+      'diego-r7k': { codigo: 'diego-r7k', nome: 'Diego Ramos', nomeCurto: 'Diego', email: 'diego.ramos@exemplo.com', whatsapp: '67999997002', ativo: true, uid: null, criadoEm: new Date(agora - 2 * 864e5).toISOString(), exemplo: true }
+    };
+    var codigosVendedor = { 'carol-m4x': { uid: 'vend-carol-exemplo-com', nome: 'Carolina', ativo: true } };
+    var ind = function (lid, status, extra) { var l = lojas[lid]; return Object.assign({ lojaId: lid, codigo: 'carol-m4x', vendedorUid: 'vend-carol-exemplo-com', nome: l.nome, slug: l.slug, plano: l.plano, criadaEm: l.criadaEm, status: status, exemplo: true }, extra || {}); };
+    var indicacoes = {
+      ex4: ind('ex4', 'paga', { valor: 50, confirmadaEm: new Date(agora - 30 * 864e5).toISOString(), pagaEm: new Date(agora - 25 * 864e5).toISOString() }),
+      ex5: ind('ex5', 'confirmada', { valor: 50, confirmadaEm: new Date(agora - 3 * 864e5).toISOString() }),
+      ex10: ind('ex10', 'cadastro')
+    };
+
     return {
       versao: 1, exemplo: true, criadoEm: agora.toISOString(),
+      vendedores: vendedores, codigosVendedor: codigosVendedor, indicacoes: indicacoes, vendedoresRegras: { valorPorLoja: 50 },
       precos: JSON.parse(JSON.stringify(C.PADRAO)),
       lojas: lojas, vendas: vendas, iaDia: iaDia, contasPagar: contasPagar, leads: leads,
       historico: historico, auditoria: auditoria,
@@ -96,7 +111,7 @@
 
   function vazio(agora) {
     var d = criar(agora);
-    return { versao: 1, exemplo: false, criadoEm: d.criadoEm, precos: d.precos, lojas: {}, vendas: {}, iaDia: {}, contasPagar: {}, leads: {}, historico: {}, auditoria: [], config: d.config };
+    return { versao: 1, exemplo: false, criadoEm: d.criadoEm, precos: d.precos, lojas: {}, vendas: {}, iaDia: {}, contasPagar: {}, leads: {}, historico: {}, auditoria: [], config: d.config, vendedores: {}, codigosVendedor: {}, indicacoes: {}, vendedoresRegras: d.vendedoresRegras };
   }
 
   root.Seed = { criar: criar, vazio: vazio };

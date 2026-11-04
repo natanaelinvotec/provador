@@ -1,0 +1,21 @@
+/* Área do vendedor — usa o visual do painel (painel.css) e acrescenta só o que é dela. */
+.vd-conteudo{width:min(1080px,100%);margin:0 auto;padding:28px max(20px,env(safe-area-inset-right,0px)) 56px max(20px,env(safe-area-inset-left,0px))}
+.vd-topo{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.vd-topo h1{font-family:var(--f-titulo);font-size:clamp(24px,3vw,32px);letter-spacing:-.02em;margin:4px 0 0;text-wrap:balance}
+.vd-marca{display:inline-flex;align-items:center;gap:10px;font:700 13px/1 var(--f-titulo);letter-spacing:.06em;text-transform:uppercase;color:var(--suave);text-decoration:none}
+.vd-marca svg{width:18px;height:auto;fill:var(--trilho)}
+.vd-link{display:grid;grid-template-columns:minmax(0,1fr) 200px;gap:22px;align-items:start}
+.vd-link-url{display:block;padding:12px 14px;border-radius:14px;background:var(--card2);border:1px dashed var(--linha);font-weight:700;color:var(--navy);word-break:break-all;margin:8px 0 12px}
+.vd-qr{display:grid;gap:8px;justify-items:center;text-align:center;font-size:12.5px;color:var(--suave)}
+.vd-qr svg{width:180px;height:180px;border-radius:14px;box-shadow:0 0 0 1px var(--linha)}
+.vd-ganho{display:flex;gap:10px;align-items:center;margin-top:14px;padding:12px 14px;border-radius:14px;background:var(--ok-bg);color:var(--ok);font-weight:700}
+.vd-ganho b{font-family:var(--f-titulo);font-size:20px}
+.vd-msg{width:100%;min-height:150px;padding:12px 14px;border-radius:14px;border:1px solid var(--linha);background:var(--card2);resize:vertical;line-height:1.5}
+.vd-passos{margin:0;padding:0;list-style:none;display:grid;gap:12px;counter-reset:p}
+.vd-passos li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:12px;align-items:start;counter-increment:p}
+.vd-passos li::before{content:counter(p);display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--trilho);color:#fff;font:700 13px/1 var(--f-titulo)}
+.vd-passos b{display:block;font-family:var(--f-titulo);font-size:15px}
+.vd-passos span{color:var(--suave);font-size:14px}
+.vd-login .mg-card{width:min(440px,100%)}
+.vd-login .vd-marca{margin-bottom:6px}
+@media (max-width:760px){.vd-link{grid-template-columns:1fr}.vd-qr{justify-items:start;text-align:left}}
