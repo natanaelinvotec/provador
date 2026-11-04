@@ -45,7 +45,7 @@
     contrato: 'M7 3h7l4 4v14H7zM10 12h6M10 16h6M10 8h2', suporte: 'M4 13v-1a8 8 0 0 1 16 0v1M4 13h3v5H4zM17 13h3v5h-3z',
     megafone: 'M4 10v4h3l7 4V6L7 10zM18 9a3 3 0 0 1 0 6', cupom: 'M4 7h16v3a2 2 0 0 0 0 4v3H4v-3a2 2 0 0 0 0-4zM10 7v10',
     cartao: 'M3 6h18v12H3zM3 10h18M7 15h3', escudo: 'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z', nuvem: 'M7 18a4 4 0 0 1-.5-8A6 6 0 0 1 18 9a4.5 4.5 0 0 1-.5 9z',
-    atualizar: 'M20 11a8 8 0 1 0-2.3 5.7M20 5v6h-6', pausa: 'M9 6v12M15 6v12', play: 'M8 5l11 7-11 7z', pix: 'M12 3l9 9-9 9-9-9zM8 12h8'
+    atualizar: 'M20 11a8 8 0 1 0-2.3 5.7M20 5v6h-6', pessoas: 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5M16 3.6a4 4 0 0 1 0 7.3M18.5 14.8c2.2.7 3.5 3 3.5 6.2', pausa: 'M9 6v12M15 6v12', play: 'M8 5l11 7-11 7z', pix: 'M12 3l9 9-9 9-9-9zM8 12h8'
   };
   var icone = function (k) { return '<svg class="mg-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="' + IC[k] + '"></path></svg>'; };
 
@@ -203,11 +203,11 @@
   var TITULOS = {
     inicio: 'Visão geral', lojas: 'Lojas', receita: 'Receita & split', contas: 'Contas a pagar', inad: 'Inadimplência', ia: 'Custos de IA',
     mais: 'Mais ferramentas', config: 'Configurações', planos: 'Planos & preços', saude: 'Saúde do sistema', auditoria: 'Auditoria',
-    leads: 'Pedidos de loja', vitrines: 'Vitrines', dominios: 'Domínios & chaves'
+    leads: 'Pedidos de loja', vitrines: 'Vitrines', dominios: 'Domínios & chaves', vendedores: 'Vendedores'
   };
   var DO_MAIS = { planos: 1, saude: 1, auditoria: 1, leads: 1, vitrines: 1, config: 0 };
   var TRILHO = [
-    { r: 'inicio', ic: 'casa' }, { r: 'lojas', ic: 'loja' }, { r: 'receita', ic: 'moedas' },
+    { r: 'inicio', ic: 'casa' }, { r: 'lojas', ic: 'loja' }, { r: 'vendedores', ic: 'pessoas' }, { r: 'receita', ic: 'moedas' },
     { r: 'contas', ic: 'calendario', pc: true }, { r: 'inad', ic: 'alerta', pc: true }, { r: 'ia', ic: 'chip', pc: true }, { r: 'dominios', ic: 'globo' }, { r: 'mais', ic: 'grade' }
   ];
 
@@ -232,6 +232,9 @@
     // lojas com domínio cadastrado e passo manual pendente (chave ou Hosting)
     var domPend = 0; Object.keys(d.lojas).forEach(function (k) { var l = d.lojas[k], p = l.dominioPassos || {}; if (l.dominio && (!p.chave || !p.hosting)) domPend++; });
     if (domPend) c.dominios = { n: domPend, urg: false };
+    // comissões de vendedores confirmadas e ainda não pagas
+    var aPagar = 0; Object.keys(d.indicacoes || {}).forEach(function (k) { if (d.indicacoes[k].status === 'confirmada') aPagar++; });
+    if (aPagar) c.vendedores = { n: aPagar, urg: false };
     return c;
   }
   function desenharTrilho() {
