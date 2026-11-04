@@ -15,11 +15,16 @@
  *   leads/{id}                pedidos de loja do site de vendas  (qualquer um cria; só plataforma lê)
  *   contasPagar/{id}, financeiroPlataforma/{precos|resumo|historico}, comandos/{id}, auditoria/{id}
  *   site/planos               tabela de preços do site de vendas (leitura pública)
+ *   vendedores/{codigo}       vendedor convidado: nome, e-mail do convite, WhatsApp, ativo, uid depois que aceita (plataforma; ele lê o dele)
+ *   codigosVendedor/{codigo}  { uid, nome, ativo } — o link ?vendedor=CODIGO resolve aqui (leitura pública, um por vez)
+ *   indicacoes/{lojaId}       loja montada pelo link de um vendedor: cadastro → confirmada (1º pagamento) → paga
+ *   vendedoresConfig/regras   { valorPorLoja } — R$ fixo por loja que assinar
  */
 (function () {
   'use strict';
   var CFG = window.PROVADOR_CONFIG || {};
   var C = window.Calc;
+  var V = window.Vendedores; // shared/vendedores.js (programa de vendedores); as páginas que não usam não carregam
   var KEY = 'provador:demo:v1';
   var SESSAO = 'provador:sessao';
   var FB_VER = '10.12.2';
@@ -157,6 +162,10 @@
       checklist: { logo: true, fotos: !!(rz.itens && rz.itens.length), produtos: !!(rz.itens && rz.itens.length), pagamento: false, dominio: false }
     };
   }
+  // indicação gravada junto com a loja nova (só o que as regras aceitam)
+  function dadosIndicacao(l, uid, cod, cv) {
+    return { lojaId: uid, codigo: cod, vendedorUid: cv.uid, nome: l.nome, slug: l.slug, plano: l.plano, criadaEm: l.criadaEm, status: 'cadastro' };
+  }
   function auditar(d, oque, colecao, alvo) {
     d.auditoria = d.auditoria || [];
     d.auditoria.unshift({ quando: new Date().toISOString(), quem: 'dono', oque: oque, colecao: colecao, alvo: alvo });
@@ -202,7 +211,8 @@
       hist[resumo.mes] = C.linhaHistorico(resumo);
       return Promise.resolve({
         exemplo: !!d.exemplo, lojas: d.lojas, contasPagar: d.contasPagar, leads: d.leads, precos: C.lerPrecos(d.precos),
-        resumo: resumo, historico: hist, auditoria: d.auditoria || [], config: d.config, vendas: d.vendas
+        resumo: resumo, historico: hist, auditoria: d.auditoria || [], config: d.config, vendas: d.vendas,
+        vendedores: d.vendedores || {}, indicacoes: d.indicacoes || {}, vendedoresRegras: d.vendedoresRegras || { valorPorLoja: V ? V.VALOR_PADRAO : 50 }
       });
     },
     recalcular: function () { return API_DEMO.carregarPainel(); },
@@ -227,6 +237,9 @@
         if (!l) throw new Error('Loja não encontrada');
         var r = aplicarAcao(l, acao, extra, C.lerPrecos(d.precos));
         auditar(d, r.oque, 'lojas', l.nome);
+        var ind = (d.indicacoes || {})[k], nova = null;
+        if (ind && V) nova = acao === 'pagamento' ? V.confirmar(ind, V.lerValor(d.vendedoresRegras)) : acao === 'excluir' ? V.cancelar(ind) : null;
+        if (nova) { d.indicacoes[k] = nova; auditar(d, nova.status === 'confirmada' ? 'Indicação confirmada (1º pagamento): ' + nova.codigo : 'Indicação cancelada: ' + nova.codigo, 'vendedores', l.nome); }
         if (!r.loja) { delete d.lojas[k]; delete d.vendas[k]; return null; }
         d.lojas[k] = r.loja;
         return r.loja;
@@ -268,8 +281,8 @@
     salvarConfig: function (cfg) { return Promise.resolve(demo.mudar(function (d) { d.config = Object.assign({}, d.config, cfg); return d.config; })); },
     limparExemplos: function () {
       return Promise.resolve(demo.mudar(function (d) {
-        ['lojas', 'contasPagar', 'leads'].forEach(function (col) {
-          Object.keys(d[col]).forEach(function (k) { if (d[col][k].exemplo) { delete d[col][k]; if (col === 'lojas') delete d.vendas[k]; } });
+        ['lojas', 'contasPagar', 'leads', 'vendedores', 'indicacoes'].forEach(function (col) {
+          Object.keys(d[col] || {}).forEach(function (k) { if (d[col][k].exemplo) { delete d[col][k]; if (col === 'lojas') delete d.vendas[k]; if (col === 'vendedores' && d.codigosVendedor) delete d.codigosVendedor[k]; } });
         });
         d.iaDia = {}; d.historico = {}; d.auditoria = []; d.exemplo = false;
       }));
@@ -288,6 +301,7 @@
     sairLojista: function () { try { sessionStorage.removeItem('provador:lojista'); } catch (e) { /* nada */ } return Promise.resolve(); },
     publicarLojaSozinha: function (rz, conta) {
       return Promise.resolve(demo.mudar(function (d) {
+        var nova = !d.lojas[conta.uid];
         var l = d.lojas[conta.uid] || dadosLojaNova(rz, conta.uid, conta.email);
         var base = slugify(l.marcaCurta || l.instagram || l.nome) || conta.uid.slice(-6);
         l.slug = l.slug || base;
@@ -296,6 +310,8 @@
         d.catalogos = d.catalogos || {};
         d.catalogos[conta.uid] = (rz.itens || []).map(function (i, n) { return Object.assign({ id: i.id || id() }, limparItem(Object.assign({}, i, { ordem: n }))); });
         auditar(d, 'Loja criada pelo montador (15 dias grátis)', 'lojas', l.nome);
+        var cod = nova && V ? V.normalizarCodigo(rz.indicacao) : '', cv = cod ? (d.codigosVendedor || {})[cod] : null;
+        if (cv && cv.ativo && cv.uid !== conta.uid) { d.indicacoes = d.indicacoes || {}; d.indicacoes[conta.uid] = dadosIndicacao(l, conta.uid, cod, cv); }
         return l;
       }));
     },
@@ -311,7 +327,70 @@
         return o;
       }));
     },
-    apagarItemLoja: function (conta, k) { return Promise.resolve(demo.mudar(function (d) { d.catalogos[conta.uid] = (d.catalogos[conta.uid] || []).filter(function (x) { return x.id !== k; }); })); }
+    apagarItemLoja: function (conta, k) { return Promise.resolve(demo.mudar(function (d) { d.catalogos[conta.uid] = (d.catalogos[conta.uid] || []).filter(function (x) { return x.id !== k; }); })); },
+
+    /* ----- programa de vendedores ----- */
+    codigoVendedor: function (codigo) { var c = V && V.normalizarCodigo(codigo); return Promise.resolve(c ? ((demo.ler().codigosVendedor || {})[c] || null) : null); },
+    salvarVendedor: function (v) {
+      return Promise.resolve(demo.mudar(function (d) {
+        d.vendedores = d.vendedores || {};
+        var antes = d.vendedores[v.codigo];
+        var o = Object.assign({ uid: null, ativo: true, criadoEm: new Date().toISOString() }, antes || {}, v);
+        d.vendedores[o.codigo] = o;
+        if ((d.codigosVendedor || {})[o.codigo]) d.codigosVendedor[o.codigo].nome = o.nomeCurto;
+        auditar(d, (antes ? 'Editou o vendedor ' : 'Convidou o vendedor ') + o.codigo, 'vendedores', o.nome);
+        return o;
+      }));
+    },
+    ativarVendedor: function (codigo, ativo) {
+      return Promise.resolve(demo.mudar(function (d) {
+        var v = (d.vendedores || {})[codigo]; if (!v) throw new Error('Vendedor não encontrado');
+        v.ativo = !!ativo;
+        if ((d.codigosVendedor || {})[codigo]) d.codigosVendedor[codigo].ativo = !!ativo;
+        auditar(d, (ativo ? 'Reativou o vendedor ' : 'Desativou o vendedor ') + codigo, 'vendedores', v.nome);
+        return v;
+      }));
+    },
+    apagarVendedor: function (codigo) {
+      return Promise.resolve(demo.mudar(function (d) {
+        var v = (d.vendedores || {})[codigo]; if (!v) return null;
+        if (v.uid) throw new Error('Este vendedor já aceitou o convite. Desative em vez de apagar.');
+        delete d.vendedores[codigo]; auditar(d, 'Apagou o convite de ' + codigo, 'vendedores', v.nome); return null;
+      }));
+    },
+    salvarRegrasVendedores: function (r) {
+      return Promise.resolve(demo.mudar(function (d) { d.vendedoresRegras = { valorPorLoja: V.lerValor(r), atualizadoEm: new Date().toISOString() }; auditar(d, 'Valor por loja dos vendedores: ' + V.brl(d.vendedoresRegras.valorPorLoja), 'vendedores', 'Regras'); return d.vendedoresRegras; }));
+    },
+    acaoIndicacao: function (lojaId, acao) {
+      return Promise.resolve(demo.mudar(function (d) {
+        var ind = (d.indicacoes || {})[lojaId]; if (!ind) throw new Error('Indicação não encontrada');
+        var nova = acao === 'pagar' ? V.pagar(ind) : acao === 'confirmar' ? V.confirmar(ind, V.lerValor(d.vendedoresRegras)) : acao === 'cancelar' ? V.cancelar(ind) : null;
+        if (!nova) throw new Error('Esta indicação não pode mudar assim.');
+        d.indicacoes[lojaId] = nova; auditar(d, 'Indicação ' + nova.codigo + ': ' + V.STATUS[nova.status].nome, 'vendedores', ind.nome);
+        return nova;
+      }));
+    },
+    // lado do vendedor (no modo demonstração entra só com o e-mail do convite)
+    vendedorSessao: function () { try { return Promise.resolve(JSON.parse(sessionStorage.getItem('provador:vendedor-conta'))); } catch (e) { return Promise.resolve(null); } },
+    vendedorEntrar: function (email) {
+      var c = { uid: 'vend-' + slugify(email).slice(0, 24), email: texto(email, 120).toLowerCase() };
+      try { sessionStorage.setItem('provador:vendedor-conta', JSON.stringify(c)); } catch (e) { /* sem sessão */ }
+      return Promise.resolve(c);
+    },
+    vendedorEntrarGoogle: function () { return Promise.reject(new Error('No modo demonstração, entre com o e-mail do convite.')); },
+    vendedorSair: function () { try { sessionStorage.removeItem('provador:vendedor-conta'); } catch (e) { /* nada */ } return Promise.resolve(); },
+    meuPainelVendedor: function (conta) {
+      return Promise.resolve(demo.mudar(function (d) {
+        var email = String(conta.email || '').toLowerCase(), v = null;
+        Object.keys(d.vendedores || {}).forEach(function (k) { if (d.vendedores[k].email === email) v = d.vendedores[k]; });
+        if (!v) return { semConvite: true };
+        if (!v.ativo) return { inativo: true, vendedor: v };
+        if (!v.uid) { v.uid = conta.uid; v.aceitoEm = new Date().toISOString(); d.codigosVendedor = d.codigosVendedor || {}; d.codigosVendedor[v.codigo] = { uid: conta.uid, nome: v.nomeCurto, ativo: true }; }
+        else if (v.uid !== conta.uid) return { outraConta: true, vendedor: v };
+        var ind = Object.keys(d.indicacoes || {}).map(function (k) { return d.indicacoes[k]; }).filter(function (i) { return i.vendedorUid === conta.uid; });
+        return { vendedor: v, indicacoes: ind, regras: d.vendedoresRegras || { valorPorLoja: V.VALOR_PADRAO } };
+      }));
+    }
   };
 
   /* ---------- modo Firebase ---------- */
@@ -379,9 +458,13 @@
           F.getDocs(F.query(F.collection(db, 'leads'), F.orderBy('criadoEm', 'desc'), F.limit(200))),
           F.getDoc(F.doc(db, 'financeiroPlataforma', 'precos')), F.getDoc(F.doc(db, 'financeiroPlataforma', 'resumo')),
           F.getDoc(F.doc(db, 'financeiroPlataforma', 'historico')),
-          F.getDocs(F.query(F.collection(db, 'auditoria'), F.where('colecao', 'in', ['lojas', 'leads', 'pedidosIA', 'contasPagar', 'financeiroPlataforma']), F.orderBy('quando', 'desc'), F.limit(50))),
+          F.getDocs(F.query(F.collection(db, 'auditoria'), F.where('colecao', 'in', ['lojas', 'leads', 'pedidosIA', 'contasPagar', 'financeiroPlataforma', 'vendedores']), F.orderBy('quando', 'desc'), F.limit(50))),
           F.getDocs(F.query(F.collection(db, 'vendasMes'), F.where('mes', '==', C.util.mes(new Date())))),
-          F.getDocs(F.query(F.collection(db, 'usoIA'), F.where('mes', '==', C.util.mes(new Date()))))
+          F.getDocs(F.query(F.collection(db, 'usoIA'), F.where('mes', '==', C.util.mes(new Date())))),
+          // programa de vendedores: sem as regras novas publicadas, volta vazio em vez de travar o painel
+          F.getDocs(F.collection(db, 'vendedores')).catch(function () { return null; }),
+          F.getDocs(F.collection(db, 'indicacoes')).catch(function () { return null; }),
+          F.getDoc(F.doc(db, 'vendedoresConfig', 'regras')).catch(function () { return null; })
         ]).then(function (r) {
           var aud = []; r[6].forEach(function (d) { aud.push(d.data()); });
           var leads = docs(r[2]);
@@ -400,7 +483,10 @@
           }
           return {
             exemplo: false, lojas: lojas, contasPagar: docs(r[1]), leads: leads,
-            precos: precos, resumo: resumo, historico: historico, auditoria: aud, config: {}
+            precos: precos, resumo: resumo, historico: historico, auditoria: aud, config: {},
+            vendedores: r[9] ? docs(r[9]) : {}, indicacoes: r[10] ? docs(r[10]) : {},
+            vendedoresRegras: r[11] && r[11].exists() ? r[11].data() : { valorPorLoja: V ? V.VALOR_PADRAO : 50 },
+            vendedoresSemRegras: !r[9]
           };
         });
       });
@@ -463,14 +549,15 @@
           if (!r[0].exists()) throw new Error('Loja não encontrada');
           var atual = Object.assign({ id: k }, r[0].data());
           var res = aplicarAcao(atual, acao, extra, C.lerPrecos(r[1].exists() ? r[1].data() : {}));
-          if (res.loja) return API_FB.salvarLoja(res.loja, res.oque);
+          var depois = function (x) { return acao === 'pagamento' || acao === 'excluir' ? indicacaoDepoisDaAcao(f, k, acao).then(function () { return x; }, function () { return x; }) : x; };
+          if (res.loja) return API_FB.salvarLoja(res.loja, res.oque).then(depois);
           // excluir: some a loja e todos os endereços públicos dela
           var lote = F.writeBatch(db);
           lote.delete(F.doc(db, 'lojas', k));
           if (atual.slug) lote.delete(F.doc(db, 'lojasPublicas', atual.slug));
           if (atual.dominio) lote.delete(F.doc(db, 'dominios', atual.dominio.replace(/^www\./, '')));
           lote.set(F.doc(F.collection(db, 'auditoria')), { quando: new Date().toISOString(), quem: f.auth.currentUser.email, oque: res.oque, colecao: 'lojas', alvo: atual.nome || k });
-          return lote.commit().then(function () { return null; });
+          return lote.commit().then(function () { return null; }).then(depois);
         });
       });
     },
@@ -542,13 +629,25 @@
           if (atual.exists()) return Object.assign({ id: conta.uid }, atual.data()); // já publicou antes: só atualiza o catálogo
           var l = dadosLojaNova(rz, conta.uid, conta.email);
           var base = slugify(l.marcaCurta || l.instagram || l.nome) || conta.uid.slice(-6);
-          return F.getDoc(F.doc(db, 'lojasPublicas', base)).then(function (s) {
+          var cod = V ? V.normalizarCodigo(rz.indicacao) : '';
+          return Promise.all([
+            F.getDoc(F.doc(db, 'lojasPublicas', base)),
+            cod ? F.getDoc(F.doc(db, 'codigosVendedor', cod)).catch(function () { return null; }) : null
+          ]).then(function (r) {
+            var s = r[0], cv = r[1] && r[1].exists() ? r[1].data() : null;
             l.slug = s.exists() ? (base + '-' + conta.uid.slice(-4).toLowerCase()).slice(0, 40) : base;
             l.trialAteTs = F.Timestamp.fromMillis(l.trialAteMs); delete l.trialAteMs;
-            var lote = F.writeBatch(db);
-            lote.set(ref, l);
-            lote.set(F.doc(db, 'lojasPublicas', l.slug), { slug: l.slug, vitrine: l.vitrine, status: 'teste', dominio: '', marca: marcaDaLoja(l), lojaId: conta.uid, trialAte: l.trialAte, trialAteTs: l.trialAteTs });
-            return lote.commit().then(function () { return l; });
+            var comIndicacao = !!(cv && cv.ativo && cv.uid && cv.uid !== conta.uid);
+            var gravar = function (indicar) {
+              var lote = F.writeBatch(db);
+              lote.set(ref, l);
+              lote.set(F.doc(db, 'lojasPublicas', l.slug), { slug: l.slug, vitrine: l.vitrine, status: 'teste', dominio: '', marca: marcaDaLoja(l), lojaId: conta.uid, trialAte: l.trialAte, trialAteTs: l.trialAteTs });
+              if (indicar) lote.set(F.doc(db, 'indicacoes', conta.uid), dadosIndicacao(l, conta.uid, cod, cv));
+              return lote.commit();
+            };
+            // a loja nunca deixa de ser criada por causa da indicação
+            return gravar(comIndicacao).catch(function (e) { if (comIndicacao && /permission/.test((e && e.code) || '')) return gravar(false); throw e; })
+              .then(function () { return l; });
           });
         }).then(function (l) {
           // fotos em lotes pequenos (cada documento leva uma foto já comprimida)
@@ -590,8 +689,135 @@
         return F.setDoc(F.doc(col, k), o).then(function () { return Object.assign({ id: k }, o); });
       });
     },
-    apagarItemLoja: function (conta, k) { return firebase().then(function (f) { return f.F.deleteDoc(f.F.doc(f.db, 'catalogos', conta.uid, 'itens', k)); }); }
+    apagarItemLoja: function (conta, k) { return firebase().then(function (f) { return f.F.deleteDoc(f.F.doc(f.db, 'catalogos', conta.uid, 'itens', k)); }); },
+
+    /* ----- programa de vendedores ----- */
+    codigoVendedor: function (codigo) {
+      var c = V && V.normalizarCodigo(codigo);
+      if (!c) return Promise.resolve(null);
+      return firebase().then(function (f) { return f.F.getDoc(f.F.doc(f.db, 'codigosVendedor', c)); })
+        .then(function (s) { return s.exists() ? s.data() : null; }).catch(function () { return null; });
+    },
+    salvarVendedor: function (v) {
+      return firebase().then(function (f) {
+        var F = f.F, db = f.db, ref = F.doc(db, 'vendedores', v.codigo);
+        return F.getDoc(ref).then(function (s) {
+          var antes = s.exists() ? s.data() : null, lote = F.writeBatch(db);
+          var o = Object.assign({ uid: null, ativo: true, criadoEm: new Date().toISOString() }, antes || {}, v);
+          if (antes && antes.uid) o.email = antes.email; // depois de aceito, o e-mail do convite não muda
+          lote.set(ref, o);
+          if (antes && antes.uid) lote.set(F.doc(db, 'codigosVendedor', v.codigo), { nome: o.nomeCurto }, { merge: true });
+          lote.set(F.doc(F.collection(db, 'auditoria')), { quando: new Date().toISOString(), quem: f.auth.currentUser.email, oque: (antes ? 'Editou o vendedor ' : 'Convidou o vendedor ') + o.codigo, colecao: 'vendedores', alvo: o.nome });
+          return lote.commit().then(function () { return o; });
+        });
+      });
+    },
+    ativarVendedor: function (codigo, ativo) {
+      return firebase().then(function (f) {
+        var F = f.F, db = f.db;
+        return Promise.all([F.getDoc(F.doc(db, 'vendedores', codigo)), F.getDoc(F.doc(db, 'codigosVendedor', codigo))]).then(function (r) {
+          if (!r[0].exists()) throw new Error('Vendedor não encontrado');
+          var lote = F.writeBatch(db);
+          lote.update(F.doc(db, 'vendedores', codigo), { ativo: !!ativo });
+          if (r[1].exists()) lote.update(F.doc(db, 'codigosVendedor', codigo), { ativo: !!ativo });
+          lote.set(F.doc(F.collection(db, 'auditoria')), { quando: new Date().toISOString(), quem: f.auth.currentUser.email, oque: (ativo ? 'Reativou o vendedor ' : 'Desativou o vendedor ') + codigo, colecao: 'vendedores', alvo: r[0].data().nome });
+          return lote.commit().then(function () { return Object.assign({}, r[0].data(), { ativo: !!ativo }); });
+        });
+      });
+    },
+    apagarVendedor: function (codigo) {
+      return firebase().then(function (f) {
+        var F = f.F, ref = F.doc(f.db, 'vendedores', codigo);
+        return F.getDoc(ref).then(function (s) {
+          if (!s.exists()) return null;
+          if (s.data().uid) throw new Error('Este vendedor já aceitou o convite. Desative em vez de apagar.');
+          return F.deleteDoc(ref).then(function () { return null; });
+        });
+      });
+    },
+    salvarRegrasVendedores: function (r) {
+      return firebase().then(function (f) {
+        var o = { valorPorLoja: V.lerValor(r), atualizadoEm: new Date().toISOString() };
+        return f.F.setDoc(f.F.doc(f.db, 'vendedoresConfig', 'regras'), o).then(function () { return o; });
+      });
+    },
+    acaoIndicacao: function (lojaId, acao) {
+      return firebase().then(function (f) {
+        var F = f.F, db = f.db, ref = F.doc(db, 'indicacoes', lojaId);
+        return Promise.all([F.getDoc(ref), F.getDoc(F.doc(db, 'vendedoresConfig', 'regras'))]).then(function (r) {
+          if (!r[0].exists()) throw new Error('Indicação não encontrada');
+          var ind = r[0].data(), regras = r[1].exists() ? r[1].data() : {};
+          var nova = acao === 'pagar' ? V.pagar(ind) : acao === 'confirmar' ? V.confirmar(ind, V.lerValor(regras)) : acao === 'cancelar' ? V.cancelar(ind) : null;
+          if (!nova) throw new Error('Esta indicação não pode mudar assim.');
+          var mud = {}; ['status', 'valor', 'confirmadaEm', 'pagaEm'].forEach(function (c) { if (nova[c] !== ind[c] && nova[c] != null) mud[c] = nova[c]; });
+          return F.updateDoc(ref, mud).then(function () { return nova; });
+        });
+      });
+    },
+    vendedorSessao: function () {
+      return firebase().then(function (f) {
+        return new Promise(function (ok) { var off = f.A.onAuthStateChanged(f.auth, function (u) { off(); ok(u ? { uid: u.uid, email: u.email, verificado: u.emailVerified } : null); }); });
+      });
+    },
+    vendedorEntrar: function () { return Promise.reject(new Error('Entre com a conta Google do e-mail do convite.')); },
+    vendedorEntrarGoogle: function () {
+      return firebase().then(function (f) { return f.A.signInWithPopup(f.auth, new f.A.GoogleAuthProvider()); })
+        .then(function (c) { return { uid: c.user.uid, email: c.user.email, verificado: c.user.emailVerified }; });
+    },
+    vendedorSair: function () { return firebase().then(function (f) { return f.A.signOut(f.auth); }); },
+    meuPainelVendedor: function (conta) {
+      return firebase().then(function (f) {
+        var F = f.F, db = f.db, email = String(conta.email || '').toLowerCase();
+        return F.getDocs(F.query(F.collection(db, 'vendedores'), F.where('email', '==', email), F.limit(1))).then(function (q) {
+          var v = null; q.forEach(function (d) { v = Object.assign({ codigo: d.id }, d.data()); });
+          if (!v) return { semConvite: true };
+          if (!v.ativo) return { inativo: true, vendedor: v };
+          var aceitar = Promise.resolve();
+          if (!v.uid) {
+            // primeiro acesso: o convite vira dele e o link começa a contar
+            var lote = F.writeBatch(db), quando = new Date().toISOString();
+            lote.update(F.doc(db, 'vendedores', v.codigo), { uid: conta.uid, aceitoEm: quando });
+            lote.set(F.doc(db, 'codigosVendedor', v.codigo), { uid: conta.uid, nome: v.nomeCurto, ativo: true });
+            aceitar = lote.commit().then(function () { v.uid = conta.uid; v.aceitoEm = quando; });
+          } else if (v.uid !== conta.uid) return { outraConta: true, vendedor: v };
+          return aceitar.then(function () {
+            return Promise.all([
+              F.getDocs(F.query(F.collection(db, 'indicacoes'), F.where('vendedorUid', '==', conta.uid))),
+              F.getDoc(F.doc(db, 'vendedoresConfig', 'regras')).catch(function () { return null; })
+            ]);
+          }).then(function (r) {
+            var ind = []; r[0].forEach(function (d) { ind.push(d.data()); });
+            return { vendedor: v, indicacoes: ind, regras: r[1] && r[1].exists() ? r[1].data() : { valorPorLoja: V.VALOR_PADRAO } };
+          });
+        });
+      });
+    }
   };
+
+  // depois de "Registrar pagamento" (confirma) ou "Excluir" (cancela), mexe na indicação da loja, se houver
+  function indicacaoDepoisDaAcao(f, lojaId, acao) {
+    if (!V) return Promise.resolve();
+    var F = f.F, db = f.db, ref = F.doc(db, 'indicacoes', lojaId);
+    return Promise.all([F.getDoc(ref), F.getDoc(F.doc(db, 'vendedoresConfig', 'regras'))]).then(function (r) {
+      if (!r[0].exists()) return;
+      var ind = r[0].data(), nova = acao === 'pagamento' ? V.confirmar(ind, V.lerValor(r[1].exists() ? r[1].data() : {})) : V.cancelar(ind);
+      if (!nova) return;
+      var mud = nova.status === 'confirmada' ? { status: 'confirmada', valor: nova.valor, confirmadaEm: nova.confirmadaEm } : { status: 'cancelada' };
+      return F.updateDoc(ref, mud);
+    });
+  }
+
+  var indicacao = {
+    guardar: function (codigo) {
+      var r = V && V.registro(codigo);
+      if (r) { try { localStorage.setItem(V.CHAVE, JSON.stringify(r)); } catch (e) { /* navegador sem armazenamento */ } }
+      return r ? r.codigo : '';
+    },
+    ler: function () { if (!V) return ''; try { return V.codigoValido(JSON.parse(localStorage.getItem(V.CHAVE))); } catch (e) { return ''; } },
+    limpar: function () { if (V) { try { localStorage.removeItem(V.CHAVE); } catch (e) { /* nada */ } } }
+  };
+  // quem chega pelo link do vendedor fica marcado neste navegador (o último link aberto vale)
+  if (V && typeof location !== 'undefined') { var codUrl = V.codigoDaUrl(location.search); if (codUrl) indicacao.guardar(codUrl); }
 
   var api = modo === 'firebase' ? API_FB : API_DEMO;
   window.Plataforma = Object.assign({
@@ -600,6 +826,10 @@
     fb: function () { return modo === 'firebase' ? firebase() : Promise.reject(new Error('modo demonstração')); },
     demo: demo, limparItem: limparItem,
     aplicarAcao: aplicarAcao,
+    /** WhatsApp comercial da plataforma (config, ou o número oficial). */
+    whatsComercial: soDigitos(CFG.whatsappComercial).length >= 12 ? soDigitos(CFG.whatsappComercial) : '5567992122801',
+    /** Link de vendedor guardado no navegador de quem vai montar a loja (?vendedor=CODIGO, vale 60 dias). */
+    indicacao: indicacao,
     catalogo: function (base) {
       return fetch((base || '') + 'vitrines/catalogo.json', { cache: 'no-cache' }).then(function (r) { return r.json(); });
     },
