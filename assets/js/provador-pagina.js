@@ -3,7 +3,8 @@
  * - Topo: o nome PROVADOR fica parado e as capas dos modelos trocam com a rolagem.
  * - Além do site: o painel de exemplo troca de tela conforme o módulo (rolagem, clique ou toque).
  * - Gráficos do painel (SVG à mão) e a etiqueta com código de barras Code 128 de verdade.
- * - Celular da cliente, planos, perguntas e as entradas das seções.
+ * - O painel por dentro: telas de verdade (assets/img/painel, geradas pelo workflow tools/portfolio), com zoom.
+ * - Celular da cliente, planos, perguntas, portfólio com QR do WhatsApp e as entradas das seções.
  */
 (function () {
   'use strict';
@@ -335,10 +336,12 @@
       ['#provador', '.pv-provador-texto > *, .pv-provador'],
       ['#vitrines', '.pv-cores-topo > *, .pv-item'],
       ['#alem', '.pv-alem-col > h2, .pv-alem-intro, .pv-modulos > li, .pv-alem-palco'],
+      ['#telas', '.pv-telas-cab > *, .pv-telas-abas, .pv-telas-palco'],
       ['#clientes', '.pv-clientes-lista h2, .pv-vantagens > li, .pv-clientes-cel'],
       ['#como', 'h2, .pv-frases > li'],
       ['#planos', '.pv-planos-nomes button, .pv-planos, .pv-split'],
       ['#perguntas', 'h2, .pv-faq > li, .pv-faq-painel'],
+      ['#portfolio', '.pv-port-texto > *, .pv-port-capa, .pv-port-qr'],
       ['#pedido', '.pv-pedido-cartao > *'],
       ['.pv-pe', '.pv-pe-nome, .pv-pe-lugares a, .pv-pe-links']
     ];
@@ -357,14 +360,85 @@
     });
   }
 
-  /* ---------- rodapé: WhatsApp comercial, quando houver ---------- */
+  /* ---------- o painel por dentro: telas de verdade ---------- */
+  var TELAS = [
+    { id: 'montar-modelo', grupo: 'Montar a loja', onde: 'Montador', titulo: 'Escolha o modelo', texto: 'São 15 modelos de site com 15 cores cada. Ao lado aparece a loja pronta, com o seu nome e as suas fotos, antes de publicar.' },
+    { id: 'montar-pecas', grupo: 'Montar a loja', onde: 'Montador', titulo: 'Suba as fotos pelo celular', texto: 'O provador endireita, recorta em 4:5, acerta a luz e descobre a cor. Avisa quando a foto está escura, tremida ou com fundo carregado.' },
+    { id: 'hoje', grupo: 'Dia a dia', onde: 'Painel da loja', titulo: 'Hoje', texto: 'Abre no que precisa de atenção: pedidos para separar e enviar, reposição que chegou, contas a vencer e quem pediu aviso.' },
+    { id: 'vender', grupo: 'Dia a dia', onde: 'Painel da loja', titulo: 'Venda no balcão', texto: 'O leitor USB ou Bluetooth, ou a câmera do celular, lê a etiqueta. Pix, cartão ou dinheiro, e o recibo vai no WhatsApp da cliente.' },
+    { id: 'pedidos', grupo: 'Dia a dia', onde: 'Painel da loja', titulo: 'Pedidos', texto: 'Cada pedido na situação dele, com etiqueta de envio e o link para a cliente acompanhar do pagamento à entrega.' },
+    { id: 'estoque', grupo: 'Estoque', onde: 'Painel da loja', titulo: 'Estoque por tamanho', texto: 'A grade de cada peça avisa o tamanho zerado e a última peça. Tamanho zerado sai sozinho da vitrine e dos canais de venda.' },
+    { id: 'etiquetas', grupo: 'Estoque', onde: 'Painel da loja', titulo: 'Etiquetas com código de barras', texto: 'Folha A4 com 24 etiquetas ou impressora térmica de 50 × 30 mm, com a marca da loja, a peça, o tamanho e o preço.' },
+    { id: 'caixa', grupo: 'Dinheiro', onde: 'Painel da loja', titulo: 'Caixa do mês', texto: 'Entradas por forma de pagamento, lançamentos e contas a pagar. Conta paga vira saída, e a mensal se cria sozinha no mês seguinte.' },
+    { id: 'relatorios', grupo: 'Dinheiro', onde: 'Painel da loja', titulo: 'Relatórios', texto: 'Faturamento por mês, peças mais vendidas, peças paradas e vendas por canal e por forma de pagamento, em 30 ou 90 dias.' },
+    { id: 'clientes', grupo: 'Clientes', onde: 'Painel da loja', titulo: 'Clientes', texto: 'Quem compra, com total e última compra, a lista VIP com link próprio e quem está esperando um tamanho voltar.' },
+    { id: 'canais', grupo: 'Vender mais', onde: 'Painel da loja', titulo: 'Canais de venda', texto: 'Ligou uma vez, o catálogo vai para o Instagram, o WhatsApp, os anúncios, o Google Shopping, a Shopee e a Shein a cada 3 horas.' },
+    { id: 'vitrine', grupo: 'A loja no ar', onde: 'Loja no ar', titulo: 'O que a cliente vê', texto: 'A sua marca, as suas fotos e o modelo que você escolheu, no computador e no celular.' }
+  ];
+  function telas() {
+    var abas = $('#pv-telas-abas'), img = $('#pv-tela-img');
+    if (!abas || !img) return;
+    var n = TELAS.length, atual = 2, dlg = $('#pv-zoom');
+    var src = function (t, p) { return 'assets/img/painel/' + t.id + (p ? '-p' : '') + '.jpg'; };
+    abas.innerHTML = TELAS.map(function (t, i) {
+      return '<button class="pv-aba" type="button" role="tab" id="pv-aba-' + t.id + '" aria-controls="pv-tela-legenda" aria-selected="false" tabindex="-1">' + esc(t.titulo) + '</button>';
+    }).join('');
+    var botoes = $$('.pv-aba', abas);
+    function mostrar(i, foco) {
+      atual = (i + n) % n;
+      var t = TELAS[atual];
+      img.style.opacity = '.35';
+      img.onload = function () { img.style.opacity = ''; };
+      img.srcset = src(t, true) + ' 720w, ' + src(t) + ' 1440w';
+      img.src = src(t);
+      img.alt = 'Tela "' + t.titulo + '" do Provador, com dados de exemplo';
+      $('#pv-tela-titulo').textContent = t.titulo;
+      $('#pv-tela-texto').textContent = t.texto;
+      $('#pv-tela-conta').textContent = t.grupo + ', tela ' + (atual + 1) + ' de ' + n;
+      $('#pv-tela-onde').textContent = t.onde;
+      botoes.forEach(function (b, k) { b.setAttribute('aria-selected', String(k === atual)); b.tabIndex = k === atual ? 0 : -1; });
+      var b = botoes[atual];
+      if (foco) b.focus();
+      if (abas.scrollWidth > abas.clientWidth) abas.scrollTo({ left: b.offsetLeft - abas.clientWidth / 2 + b.offsetWidth / 2, behavior: reduz ? 'auto' : 'smooth' });
+      var prox = new Image(); prox.src = src(TELAS[(atual + 1) % n], window.innerWidth < 760); // a próxima já vem carregando
+    }
+    abas.addEventListener('click', function (e) { var b = e.target.closest('.pv-aba'); if (b) mostrar(botoes.indexOf(b)); });
+    abas.addEventListener('keydown', function (e) {
+      var k = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+      if (k) { e.preventDefault(); mostrar(atual + k, true); }
+      if (e.key === 'Home') { e.preventDefault(); mostrar(0, true); }
+      if (e.key === 'End') { e.preventDefault(); mostrar(n - 1, true); }
+    });
+    $$('[data-tela-passo]').forEach(function (b) { b.addEventListener('click', function () { mostrar(atual + Number(b.getAttribute('data-tela-passo'))); }); });
+    var ampliar = function () {
+      var t = TELAS[atual];
+      if (!dlg || !dlg.showModal) { window.open(src(t), '_blank', 'noopener'); return; }
+      $('#pv-zoom-img').src = src(t); $('#pv-zoom-img').alt = img.alt; $('#pv-zoom-titulo').textContent = t.titulo;
+      dlg.showModal();
+    };
+    $('#pv-tela-zoom').addEventListener('click', ampliar);
+    $$('[data-tela-ampliar]').forEach(function (b) { b.addEventListener('click', ampliar); });
+    if (dlg) {
+      $('[data-zoom-fechar]', dlg).addEventListener('click', function () { dlg.close(); });
+      dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+    }
+    mostrar(atual);
+  }
+
+  /* ---------- WhatsApp comercial, QR code e portfólio ---------- */
   function rodape() {
-    var w = String(cfg.whatsappComercial || '').replace(/\D/g, ''), a = $('#pv-pe-whats');
-    if (a && w.length >= 12) { a.href = 'https://wa.me/' + w; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'WhatsApp comercial'; }
+    var P = window.Plataforma, w = (P && P.whatsComercial) || String(cfg.whatsappComercial || '').replace(/\D/g, '');
+    if (w.length < 12) return;
+    $$('[data-whats-comercial], #pv-pe-whats').forEach(function (a) { a.href = 'https://wa.me/' + w; a.target = '_blank'; a.rel = 'noopener'; });
+    var qr = $('#pv-port-qr');
+    if (qr && window.QR) qr.innerHTML = window.QR.svg('https://wa.me/' + w, { cor: '#0A1630', borda: 2 });
+    // até o workflow gerar o portfólio, a capa some em vez de aparecer quebrada
+    var capa = $('.pv-port-capa img');
+    if (capa) capa.addEventListener('error', function () { capa.closest('.pv-port-capa').hidden = true; });
   }
 
   function iniciar() {
-    etiqueta(); graficos(); modulos(); vantagens(); planos(); perguntas(); entradas(); rodape(); precoMinimo();
+    etiqueta(); graficos(); modulos(); telas(); vantagens(); planos(); perguntas(); entradas(); rodape(); precoMinimo();
     fetch('vitrines/_modelos/modelos.json').then(function (r) { return r.json(); })
       .then(function (d) { montarCapas(d.modelos || []); })
       .catch(function () { /* fica a capa da Trilha que já vem no HTML */ });
